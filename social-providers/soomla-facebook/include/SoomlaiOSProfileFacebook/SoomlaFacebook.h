@@ -8,6 +8,7 @@
 
 #import "ISocialProvider.h"
 
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface SoomlaFacebook : NSObject <ISocialProvider> {
     loginSuccess loginSuccess;
