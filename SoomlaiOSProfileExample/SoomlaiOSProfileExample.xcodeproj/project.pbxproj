@@ -26,7 +26,6 @@
 		EF8361EF19473D52003526D7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361EE19473D52003526D7 /* Security.framework */; };
 		EF8361F119473D57003526D7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361F019473D57003526D7 /* StoreKit.framework */; };
 		EF8361F319473D68003526D7 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361F219473D68003526D7 /* libsqlite3.0.dylib */; };
-		EF8361F7194745BC003526D7 /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8361F6194745BC003526D7 /* SoomlaFacebook.m */; };
 		EFC127791948B09000CDA66B /* MuffinRushAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC127781948B09000CDA66B /* MuffinRushAssets.m */; };
 		EFC127C1194C2F6300CDA66B /* libSoomlaiOSStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361E719473C8A003526D7 /* libSoomlaiOSStore.a */; };
 		EFC127C4194C303300CDA66B /* libSoomlaiOSProfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361D619472A50003526D7 /* libSoomlaiOSProfile.a */; };
@@ -104,8 +103,6 @@
 		EF8361EE19473D52003526D7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EF8361F019473D57003526D7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		EF8361F219473D68003526D7 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		EF8361F5194745BC003526D7 /* SoomlaFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaFacebook.h; sourceTree = "<group>"; };
-		EF8361F6194745BC003526D7 /* SoomlaFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaFacebook.m; sourceTree = "<group>"; };
 		EFC127771948B09000CDA66B /* MuffinRushAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MuffinRushAssets.h; path = "../../../ios-store/SoomlaiOSStoreExample/SoomlaiOSStoreExample/MuffinRushAssets.h"; sourceTree = "<group>"; };
 		EFC127781948B09000CDA66B /* MuffinRushAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MuffinRushAssets.m; path = "../../../ios-store/SoomlaiOSStoreExample/SoomlaiOSStoreExample/MuffinRushAssets.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,8 +186,6 @@
 				EF8361A819472A23003526D7 /* ViewController.m */,
 				EF8361AA19472A23003526D7 /* Images.xcassets */,
 				EF83619619472A23003526D7 /* Supporting Files */,
-				EF8361F5194745BC003526D7 /* SoomlaFacebook.h */,
-				EF8361F6194745BC003526D7 /* SoomlaFacebook.m */,
 			);
 			path = SoomlaiOSProfileExample;
 			sourceTree = "<group>";
@@ -375,7 +370,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF8361F7194745BC003526D7 /* SoomlaFacebook.m in Sources */,
 				EF8361A919472A23003526D7 /* ViewController.m in Sources */,
 				EFC127791948B09000CDA66B /* MuffinRushAssets.m in Sources */,
 				EF8361A019472A23003526D7 /* AppDelegate.m in Sources */,

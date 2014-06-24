@@ -11,7 +11,6 @@
 #import "ProviderLoader.h"
 #import "ProviderNotFoundException.h"
 #import "UserProfileEventHandling.h"
-//#import "EventHandling.h"
 #import "SoomlaUtils.h"
 #import "IAuthProvider.h"
 #import "ISocialProvider.h"
