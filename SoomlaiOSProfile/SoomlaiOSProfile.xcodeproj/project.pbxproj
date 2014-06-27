@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		3AE16BAC195C6D6E00951EA6 /* UniversalLibrary */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3AE16BAF195C6D6E00951EA6 /* Build configuration list for PBXAggregateTarget "UniversalLibrary" */;
+			buildPhases = (
+				3AE16BB2195C6D8E00951EA6 /* ShellScript */,
+			);
+			dependencies = (
+				3AE16BB1195C6D8900951EA6 /* PBXTargetDependency */,
+			);
+			name = UniversalLibrary;
+			productName = UniversalLibrary;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		EF356EFE193C90560081DCE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF356EFD193C90560081DCE0 /* Foundation.framework */; };
 		EF356F03193C90560081DCE0 /* SoomlaProfile.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; };
@@ -40,6 +55,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3AE16BB0195C6D8900951EA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF356EF2193C90560081DCE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF356EF9193C90560081DCE0;
+			remoteInfo = SoomlaiOSProfile;
+		};
 		EF356F10193C90560081DCE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF356EF2193C90560081DCE0 /* Project object */;
@@ -318,6 +340,7 @@
 			targets = (
 				EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */,
 				EF356F09193C90560081DCE0 /* SoomlaiOSProfileTests */,
+				3AE16BAC195C6D6E00951EA6 /* UniversalLibrary */,
 			);
 		};
 /* End PBXProject section */
@@ -333,6 +356,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3AE16BB2195C6D8E00951EA6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${SRCROOT}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target SoomlaiOSProfile ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target SoomlaiOSProfile -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EF356EF6193C90560081DCE0 /* Sources */ = {
@@ -374,6 +413,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3AE16BB1195C6D8900951EA6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */;
+			targetProxy = 3AE16BB0195C6D8900951EA6 /* PBXContainerItemProxy */;
+		};
 		EF356F11193C90560081DCE0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */;
@@ -393,6 +437,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3AE16BAD195C6D6E00951EA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3AE16BAE195C6D6E00951EA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		EF356F1B193C90560081DCE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -532,6 +590,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3AE16BAF195C6D6E00951EA6 /* Build configuration list for PBXAggregateTarget "UniversalLibrary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AE16BAD195C6D6E00951EA6 /* Debug */,
+				3AE16BAE195C6D6E00951EA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EF356EF5193C90560081DCE0 /* Build configuration list for PBXProject "SoomlaiOSProfile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
