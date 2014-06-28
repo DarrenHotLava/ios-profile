@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3ABE080B195F422A008085AA /* SocialActionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE080A195F422A008085AA /* SocialActionUtils.m */; };
 		EF356EFE193C90560081DCE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF356EFD193C90560081DCE0 /* Foundation.framework */; };
 		EF356F03193C90560081DCE0 /* SoomlaProfile.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; };
 		EF356F05193C90560081DCE0 /* SoomlaProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF356F04193C90560081DCE0 /* SoomlaProfile.m */; };
@@ -85,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3ABE080A195F422A008085AA /* SocialActionUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialActionUtils.m; sourceTree = "<group>"; };
 		EF356EFA193C90560081DCE0 /* libSoomlaiOSProfile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfile.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF356EFD193C90560081DCE0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EF356F01193C90560081DCE0 /* SoomlaiOSProfile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoomlaiOSProfile-Prefix.pch"; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				EFAE6BEA193DDB5D0077EF7F /* SocialController.h */,
 				EFAE6BEB193DDB5D0077EF7F /* SocialController.m */,
 				EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */,
+				3ABE080A195F422A008085AA /* SocialActionUtils.m */,
 			);
 			path = SoomlaiOSProfile;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				EF356F35193CB6D60081DCE0 /* UserProfileUtils.m in Sources */,
 				EFAE6BE8193DC6310077EF7F /* UserProfileNotFoundException.m in Sources */,
 				EF356F27193CA1770081DCE0 /* PJSONConsts.m in Sources */,
+				3ABE080B195F422A008085AA /* SocialActionUtils.m in Sources */,
 				EFAE6BDB193DA38E0077EF7F /* ProviderNotFoundException.m in Sources */,
 				EF356F05193C90560081DCE0 /* SoomlaProfile.m in Sources */,
 				EF356F2C193CA52E0081DCE0 /* UserProfile.m in Sources */,
@@ -597,6 +601,7 @@
 				3AE16BAE195C6D6E00951EA6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EF356EF5193C90560081DCE0 /* Build configuration list for PBXProject "SoomlaiOSProfile" */ = {
 			isa = XCConfigurationList;
