@@ -14,3 +14,63 @@ typedef NS_ENUM(NSInteger, SocialActionType) {
     GET_CONTACTS,
     GET_FEEDS
 };
+
+@interface SocialActionUtils : NSObject
+
++ (NSString *)actionEnumToString:(enum SocialActionType)actionType;
+
++ (enum SocialActionType)actionStringToEnum:(NSString *)actionTypeString;
+
+@end
+
+@implementation SocialActionUtils
+
++ (NSString*)actionEnumToString:(enum SocialActionType)actionType {
+    switch (actionType) {
+        case UPDATE_STATUS:
+            return @"UPDATE_STATUS";
+            break;
+        case UPDATE_STORY:
+            return @"UPDATE_STORY";
+            break;
+        case UPLOAD_IMAGE:
+            return @"UPLOAD_IMAGE";
+            break;
+        case GET_CONTACTS:
+            return @"GET_CONTACTS";
+            break;
+        case GET_FEEDS:
+            return @"GET_FEEDS";
+            break;
+            
+        default:
+            break;
+    }
+    
+    return nil;
+}
+
++ (enum SocialActionType)actionStringToEnum:(NSString *)actionTypeString {
+    if ([actionTypeString isEqualToString:@"UPDATE_STATUS"]) {
+        return UPDATE_STATUS;
+    }
+    else if([actionTypeString isEqualToString:@"UPDATE_STORY"]) {
+        return UPDATE_STORY;
+    }
+    else if([actionTypeString isEqualToString:@"UPLOAD_IMAGE"]) {
+        return UPLOAD_IMAGE;
+    }
+    else if([actionTypeString isEqualToString:@"GET_CONTACTS"]) {
+        return GET_CONTACTS;
+    }
+    else if([actionTypeString isEqualToString:@"GET_FEEDS"]) {
+        return GET_FEEDS;
+    }
+    else {
+        [NSException raise:NSGenericException format:@"Unexpected FormatType."];
+    }
+
+    return -1;
+}
+
+@end
