@@ -22,7 +22,7 @@
 
 @implementation UserProfileStorage
 
-static NSString* DB_KEY_PREFIX  = @"soomla.profile";
+static NSString* DB_KEY_PREFIX  = @"soomla.profile.";
 static NSString* TAG            = @"SOOMLA UserProfileStorage";
 
 
