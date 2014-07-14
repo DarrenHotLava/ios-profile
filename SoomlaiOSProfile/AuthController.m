@@ -21,7 +21,6 @@
 #import "UserProfileEventHandling.h"
 #import "IAuthProvider.h"
 #import "Reward.h"
-#import "IAuthProvider.h"
 #import "SoomlaUtils.h"
 
 @implementation AuthController
@@ -64,7 +63,7 @@ static NSString* TAG = @"SOOMLA AuthController";
             [authProvider getUserProfile: ^(UserProfile *userProfile) {
                 [UserProfileStorage setUserProfile:userProfile];
                 [UserProfileEventHandling postLoginFinished:userProfile];
-                
+
                 if (reward) {
                     [reward give];
                 }

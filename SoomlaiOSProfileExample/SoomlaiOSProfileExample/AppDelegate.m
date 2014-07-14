@@ -28,33 +28,11 @@ static NSString* TAG = @"SOOMLA AppDelegate";
     [Soomla initializeWithSecret:@"LukeSkywalker"];
     id<IStoreAssets> storeAssets = [[MuffinRushAssets alloc] init];
     [[SoomlaStore getInstance] initializeWithStoreAssets:storeAssets];
-    [SoomlaProfile getInstance];
 
     self.loginReward = [[VirtualItemReward alloc] initWithRewardId:@"login_reward" andName:@"Login Reward" andAmount:100 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.updateStatusReward = [[VirtualItemReward alloc] initWithRewardId:@"update_status_reward" andName:@"Update Status Reward" andAmount:150 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.updateStatusReward.repeatable = YES;
-    
-    
-    // Whenever a person opens the app, check for a cached session
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded && NO) {
-        LogDebug(TAG, @"Found a cached Facebook session");
-        // If there's one, just open the session silently, without showing the user the login UI
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
-                                           allowLoginUI:NO
-                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                                          // Handler for session state changes
-                                          // This method will be called EACH time the session state changes,
-                                          // also for intermediate states and NOT just when the session open
-//                                          ViewController* viewController = (ViewController*)self.window.rootViewController;
-//                                          [viewController sessionStateChanged:session state:state error:error];
-                                      }];
-        
-        // If there's no cached session, we will show a login button
-    } else {
-//        UIButton *loginButton = [self.viewController loginButton];
-//        [loginButton setTitle:@"Log in with Facebook" forState:UIControlStateNormal];
-    }
-    
+
     // Override point for customization after application launch.
     return YES;
 }

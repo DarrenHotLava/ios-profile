@@ -53,6 +53,39 @@
                                     <action selector="updateStoryButtonTouched:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="hE8-NB-Tdn"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZD-3w-32f">
+                                <rect key="frame" x="22" y="260" width="276" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Upload Image">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadImageTouched:" destination="vXZ-lx-hvc" eventType="touchDown" id="AIl-mY-559"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMD-cQ-ZSO">
+                                <rect key="frame" x="22" y="318" width="276" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Get Contacts">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getContactsButtonTouched:" destination="vXZ-lx-hvc" eventType="touchDown" id="iBO-m3-UQf"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocD-M0-ujW">
+                                <rect key="frame" x="22" y="376" width="276" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Get Feeds">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getFeedsTouched:" destination="vXZ-lx-hvc" eventType="touchDown" id="9n3-Je-7dn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -61,6 +94,9 @@
                         <outlet property="loginButton" destination="ZAl-Gb-aro" id="ilG-uI-3eg"/>
                         <outlet property="updateStatusButton" destination="ZxG-bj-FbG" id="LUz-cQ-ict"/>
                         <outlet property="updateStoryButton" destination="k8R-pg-dNx" id="Jog-5O-VXM"/>
+                        <outlet property="uploadImageButton" destination="lZD-3w-32f" id="AVj-4N-ZWD"/>
+                        <outlet property="getContactsButton" destination="BMD-cQ-ZSO" id="FZW-5d-k3n"/>
+                        <outlet property="getFeedsButton" destination="ocD-M0-ujW" id="xw3-JQ-PUU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
