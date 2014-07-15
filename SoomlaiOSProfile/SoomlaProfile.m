@@ -106,8 +106,8 @@
     [socialController getContactsWith:provider andReward:reward];
 }
 
-- (void)getFeedsWithProvider:(enum Provider)provider andReward:(Reward *)reward {
-    [socialController getFeeds:provider andReward:reward];
+- (void)getFeedWithProvider:(enum Provider)provider andReward:(Reward *)reward {
+    [socialController getFeed:provider andReward:reward];
 }
 
 

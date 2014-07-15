@@ -109,7 +109,7 @@ Fetches the user's feed.
 @param provider The provider to use
 @param reward The reward to grant
 */
-- (void)getFeeds:(enum Provider)provider andReward:(Reward *)reward;
+- (void)getFeed:(enum Provider)provider andReward:(Reward *)reward;
 
 
 @end

@@ -68,7 +68,7 @@
  @param success a contacts fetch success callback
  @param fail a contacts fetch failure callback
  */
-- (void)getFeeds:(feedsActionSuccess)success fail:(feedsActionFail)fail;
+- (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail;
 
 /**
  Shares a photo to the user's feed

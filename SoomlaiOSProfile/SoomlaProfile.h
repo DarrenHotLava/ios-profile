@@ -147,7 +147,7 @@ Fetches the user's feed and grants the user a reward.
 @param provider The provider to use
 @param reward The reward to grant
 */
-- (void)getFeedsWithProvider:(enum Provider)provider andReward:(Reward *)reward;
+- (void)getFeedWithProvider:(enum Provider)provider andReward:(Reward *)reward;
 
 + (SoomlaProfile *)getInstance;
 

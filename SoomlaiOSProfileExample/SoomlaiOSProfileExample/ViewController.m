@@ -97,7 +97,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     [self.updateStoryButton setHidden:NO];
     [self.uploadImageButton setHidden:NO];
     [self.getContactsButton setHidden:NO];
-    [self.getFeedsButton setHidden:NO];
+    [self.getFeedButton setHidden:NO];
 }
 
 - (void)loginFailed:(NSNotification*)notification {
@@ -114,7 +114,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     [self.updateStoryButton setHidden:YES];
     [self.uploadImageButton setHidden:YES];
     [self.getContactsButton setHidden:YES];
-    [self.getFeedsButton setHidden:YES];
+    [self.getFeedButton setHidden:YES];
 }
 
 - (void)logoutFinished:(NSNotification*)notification {
@@ -123,7 +123,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     [self.updateStoryButton setHidden:YES];
     [self.uploadImageButton setHidden:YES];
     [self.getContactsButton setHidden:YES];
-    [self.getFeedsButton setHidden:YES];
+    [self.getFeedButton setHidden:YES];
 }
 
 - (void)currencyBalanceChanged:(NSNotification *)notification {
@@ -160,8 +160,8 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[SoomlaProfile getInstance] getContactsWithProvider:FACEBOOK andReward:nil];
 }
 
-- (IBAction)getFeedsTouched:(id)sender {
-    [[SoomlaProfile getInstance] getFeedsWithProvider:FACEBOOK andReward:nil];
+- (IBAction)getFeedTouched:(id)sender {
+    [[SoomlaProfile getInstance] getFeedWithProvider:FACEBOOK andReward:nil];
 }
 
 @end

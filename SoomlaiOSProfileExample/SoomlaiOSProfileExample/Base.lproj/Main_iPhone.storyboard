@@ -83,7 +83,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="getFeedsTouched:" destination="vXZ-lx-hvc" eventType="touchDown" id="9n3-Je-7dn"/>
+                                    <action selector="getFeedTouched:" destination="vXZ-lx-hvc" eventType="touchDown" id="9n3-Je-7dn"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -96,7 +96,7 @@
                         <outlet property="updateStoryButton" destination="k8R-pg-dNx" id="Jog-5O-VXM"/>
                         <outlet property="uploadImageButton" destination="lZD-3w-32f" id="AVj-4N-ZWD"/>
                         <outlet property="getContactsButton" destination="BMD-cQ-ZSO" id="FZW-5d-k3n"/>
-                        <outlet property="getFeedsButton" destination="ocD-M0-ujW" id="xw3-JQ-PUU"/>
+                        <outlet property="getFeedButton" destination="ocD-M0-ujW" id="xw3-JQ-PUU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

@@ -20,10 +20,10 @@
 
 - (IBAction)uploadImageTouched:(id)sender;
 
-@property(nonatomic, weak) IBOutlet UIButton *getFeedsButton;
+@property(nonatomic, weak) IBOutlet UIButton *getFeedButton;
 
 - (IBAction)getContactsButtonTouched:(id)sender;
 
 
-- (IBAction)getFeedsTouched:(id)sender;
+- (IBAction)getFeedTouched:(id)sender;
 @end
