@@ -6,23 +6,23 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		3AE16BAC195C6D6E00951EA6 /* UniversalLibrary */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3AE16BAF195C6D6E00951EA6 /* Build configuration list for PBXAggregateTarget "UniversalLibrary" */;
-			buildPhases = (
-				3AE16BB2195C6D8E00951EA6 /* ShellScript */,
-			);
-			dependencies = (
-				3AE16BB1195C6D8900951EA6 /* PBXTargetDependency */,
-			);
-			name = UniversalLibrary;
-			productName = UniversalLibrary;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		3ABE080B195F422A008085AA /* SocialActionUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE080A195F422A008085AA /* SocialActionUtils.m */; };
+		3AF01CD21960BCCC0088836B /* SoomlaProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AF01CD31960BCD60088836B /* UserProfileEventHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F2E193CAD580081DCE0 /* UserProfileEventHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AF01CD41960BCDB0088836B /* UserProfileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F33193CB6D60081DCE0 /* UserProfileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AF01CD51960BCE10088836B /* ProviderLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD4193CDEEE0077EF7F /* ProviderLoader.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CD61960BCE50088836B /* AuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BE2193DC2B50077EF7F /* AuthController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CD71960BCE80088836B /* SocialController.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BEA193DDB5D0077EF7F /* SocialController.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CD91960BD1B0088836B /* ProviderNotFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD9193DA38E0077EF7F /* ProviderNotFoundException.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AF01CDA1960BD1E0088836B /* UserProfileNotFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BE6193DC6310077EF7F /* UserProfileNotFoundException.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AF01CDB1960BD350088836B /* ISocialProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD3193CD3F60077EF7F /* ISocialProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CDC1960BD3F0088836B /* IAuthProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD0193CC7980077EF7F /* IAuthProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CDD1960BD500088836B /* UserProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F2A193CA52E0081DCE0 /* UserProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AF01CDE1960BD560088836B /* IProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F32193CB2060081DCE0 /* IProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CDF1960BD6E0088836B /* PJSONConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F25193CA1770081DCE0 /* PJSONConsts.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CE01960BD730088836B /* UserProfileStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F37193CBEEB0081DCE0 /* UserProfileStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		EF356EFE193C90560081DCE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF356EFD193C90560081DCE0 /* Foundation.framework */; };
 		EF356F03193C90560081DCE0 /* SoomlaProfile.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; };
 		EF356F05193C90560081DCE0 /* SoomlaProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF356F04193C90560081DCE0 /* SoomlaProfile.m */; };
@@ -56,13 +56,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3AE16BB0195C6D8900951EA6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EF356EF2193C90560081DCE0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EF356EF9193C90560081DCE0;
-			remoteInfo = SoomlaiOSProfile;
-		};
 		EF356F10193C90560081DCE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF356EF2193C90560081DCE0 /* Project object */;
@@ -284,6 +277,31 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		3AF01CD11960BCC30088836B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AF01CD21960BCCC0088836B /* SoomlaProfile.h in Headers */,
+				3AF01CDD1960BD500088836B /* UserProfile.h in Headers */,
+				3AF01CD31960BCD60088836B /* UserProfileEventHandling.h in Headers */,
+				3AF01CD41960BCDB0088836B /* UserProfileUtils.h in Headers */,
+				3AF01CD91960BD1B0088836B /* ProviderNotFoundException.h in Headers */,
+				3AF01CDA1960BD1E0088836B /* UserProfileNotFoundException.h in Headers */,
+				3AF01CDE1960BD560088836B /* IProvider.h in Headers */,
+				3AF01CDC1960BD3F0088836B /* IAuthProvider.h in Headers */,
+				3AF01CDB1960BD350088836B /* ISocialProvider.h in Headers */,
+				3AF01CD51960BCE10088836B /* ProviderLoader.h in Headers */,
+				3AF01CD61960BCE50088836B /* AuthController.h in Headers */,
+				3AF01CD71960BCE80088836B /* SocialController.h in Headers */,
+				3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */,
+				3AF01CDF1960BD6E0088836B /* PJSONConsts.h in Headers */,
+				3AF01CE01960BD730088836B /* UserProfileStorage.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */ = {
 			isa = PBXNativeTarget;
@@ -291,7 +309,9 @@
 			buildPhases = (
 				EF356EF6193C90560081DCE0 /* Sources */,
 				EF356EF7193C90560081DCE0 /* Frameworks */,
+				3AF01CD11960BCC30088836B /* Headers */,
 				EF356EF8193C90560081DCE0 /* CopyFiles */,
+				3A23D5241960A8FF00F00C9E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -343,7 +363,6 @@
 			targets = (
 				EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */,
 				EF356F09193C90560081DCE0 /* SoomlaiOSProfileTests */,
-				3AE16BAC195C6D6E00951EA6 /* UniversalLibrary */,
 			);
 		};
 /* End PBXProject section */
@@ -361,7 +380,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3AE16BB2195C6D8E00951EA6 /* ShellScript */ = {
+		3A23D5241960A8FF00F00C9E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -372,7 +391,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${SRCROOT}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target SoomlaiOSProfile ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target SoomlaiOSProfile -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"";
+			shellScript = "##########################################\n#\n# c.f. http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n#\n# Version 2.7\n#\n# Latest Change:\n# - Supports iPhone 5 / iPod Touch 5 (uses Apple's workaround to lipo bug)\n#\n# Purpose:\n#   Automatically create a Universal static library for iPhone + iPad + iPhone Simulator from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n\nset -e\nset -o pipefail\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -project \\\"${PROJECT_NAME}.xcodeproj\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\" BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" SYMROOT=\\\"${SYMROOT}\\\"\n\nxcodebuild -configuration \"${CONFIGURATION}\" -project \"${PROJECT_NAME}.xcodeproj\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nif [[ -z $CREATING_UNIVERSAL_DIR ]]\nthen\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\nfi\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\n# rm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir -p \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nxcrun -sdk iphoneos lipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\necho \"Fetching headers from ${PUBLIC_HEADERS_FOLDER_PATH}\"\necho \"  (if you embed your library project in another project, you will need to add\"\necho \"   a \"User Search Headers\" build setting of: (NB INCLUDE THE DOUBLE QUOTES BELOW!)\"\necho '        \"$(TARGET_BUILD_DIR)/usr/local/include/\"'\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\n# * needs to be outside the double quotes?\ncp -r \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}/\"* \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\nfi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -417,11 +436,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3AE16BB1195C6D8900951EA6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */;
-			targetProxy = 3AE16BB0195C6D8900951EA6 /* PBXContainerItemProxy */;
-		};
 		EF356F11193C90560081DCE0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EF356EF9193C90560081DCE0 /* SoomlaiOSProfile */;
@@ -441,20 +455,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		3AE16BAD195C6D6E00951EA6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		3AE16BAE195C6D6E00951EA6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		EF356F1B193C90560081DCE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -488,7 +488,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = /headers/private;
+				PUBLIC_HEADERS_FOLDER_PATH = /headers/public;
 				SDKROOT = iphoneos;
+				SYMROOT = out;
 			};
 			name = Debug;
 		};
@@ -518,7 +521,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRIVATE_HEADERS_FOLDER_PATH = /headers/private;
+				PUBLIC_HEADERS_FOLDER_PATH = /headers/public;
 				SDKROOT = iphoneos;
+				SYMROOT = out;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -532,8 +538,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../../soomla-ios-core/SoomlaiOSCore/**",
+					"$(SRCROOT)/submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
+				LIBRARY_SEARCH_PATHS = "build/**";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -548,8 +556,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../../soomla-ios-core/SoomlaiOSCore/**",
+					"$(SRCROOT)/submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
+				LIBRARY_SEARCH_PATHS = "build/**";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -594,15 +604,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3AE16BAF195C6D6E00951EA6 /* Build configuration list for PBXAggregateTarget "UniversalLibrary" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3AE16BAD195C6D6E00951EA6 /* Debug */,
-				3AE16BAE195C6D6E00951EA6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		EF356EF5193C90560081DCE0 /* Build configuration list for PBXProject "SoomlaiOSProfile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

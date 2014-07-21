@@ -49,6 +49,7 @@
 #define DICT_ELEMENT_SOCIAL_ACTION_TYPE         @"socialActiontype"
 #define DICT_ELEMENT_MESSAGE                    @"message"
 #define DICT_ELEMENT_CONTACTS                   @"contacts"
+#define DICT_ELEMENT_FEEDS                      @"feeds"
 #define DICT_ELEMENT_REWARD                     @"reward"
 #define DICT_ELEMENT_IS_BADGE                   @"isBadge"
 

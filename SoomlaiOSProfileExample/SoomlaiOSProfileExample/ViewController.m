@@ -32,6 +32,11 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginCancelled:) name:EVENT_UP_LOGIN_CANCELLED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutFinished:) name:EVENT_UP_LOGOUT_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currencyBalanceChanged:) name:EVENT_CURRENCY_BALANCE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFinished:) name:EVENT_UP_GET_CONTACTS_FINISHED object:nil];
+}
+
+- (void)getContactsFinished:(NSNotification*)notification {
+    NSLog(notification.userInfo[DICT_ELEMENT_CONTACTS]);
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,7 +64,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-    [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK andStatus:nil andReward:appDelegate.updateStatusReward];
+    [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK andStatus:@"Test status" andReward:appDelegate.updateStatusReward];
 }
 
 - (IBAction)updateStoryButtonTouched:(id)sender {
@@ -67,7 +72,14 @@ static NSString* TAG = @"SOOMLA ViewController";
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    [[SoomlaProfile getInstance] updateStoryWithProvider:FACEBOOK andMessage:nil andName:nil andCaption:nil andDescription:nil andLink:nil andPicture:nil andReward:appDelegate.updateStatusReward];
+    [[SoomlaProfile getInstance] updateStoryWithProvider:FACEBOOK
+                                              andMessage:@"Message"
+                                                 andName:@"Name"
+                                              andCaption:@"Caption"
+                                          andDescription:@"Description"
+                                                 andLink:@"https://developers.facebook.com/docs/ios/share/"
+                                              andPicture:@"http://i.imgur.com/g3Qc1HN.png"
+                                               andReward:appDelegate.updateStatusReward];
 }
 
 - (void)loginStarted:(NSNotification*)notification {
@@ -83,24 +95,35 @@ static NSString* TAG = @"SOOMLA ViewController";
     [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
     [self.updateStatusButton setHidden:NO];
     [self.updateStoryButton setHidden:NO];
+    [self.uploadImageButton setHidden:NO];
+    [self.getContactsButton setHidden:NO];
+    [self.getFeedButton setHidden:NO];
 }
 
 - (void)loginFailed:(NSNotification*)notification {
     LogError(TAG, ([NSString stringWithFormat:@"Login Failed: %@", notification.userInfo[DICT_ELEMENT_MESSAGE]]));
     [self.updateStatusButton setHidden:YES];
     [self.updateStoryButton setHidden:YES];
+    [self.uploadImageButton setHidden:YES];
+    [self.getContactsButton setHidden:YES];
 }
 
 - (void)loginCancelled:(NSNotification*)notification {
     LogDebug(TAG, @"Login Cancelled: you cancelled the login process");
     [self.updateStatusButton setHidden:YES];
     [self.updateStoryButton setHidden:YES];
+    [self.uploadImageButton setHidden:YES];
+    [self.getContactsButton setHidden:YES];
+    [self.getFeedButton setHidden:YES];
 }
 
 - (void)logoutFinished:(NSNotification*)notification {
     [self.loginButton setTitle:@"Login with Facebook to earn 100 coins" forState:UIControlStateNormal];
     [self.updateStatusButton setHidden:YES];
     [self.updateStoryButton setHidden:YES];
+    [self.uploadImageButton setHidden:YES];
+    [self.getContactsButton setHidden:YES];
+    [self.getFeedButton setHidden:YES];
 }
 
 - (void)currencyBalanceChanged:(NSNotification *)notification {
@@ -109,4 +132,37 @@ static NSString* TAG = @"SOOMLA ViewController";
 }
 
 
+- (IBAction)uploadImageTouched:(id)sender {
+    // Open the image picker and set this class as the delegate
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    [imagePicker setDelegate:self];
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+
+    NSString *docDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath =  [docDirPath stringByAppendingPathComponent:@"tmp.png"];
+    NSLog (@"File Path = %@", filePath);
+    // Get PNG data from following method
+    NSData *myData =     UIImagePNGRepresentation(img);
+    // It is better to get JPEG data because jpeg data will store the location and other related information of image.
+    [myData writeToFile:filePath atomically:YES];
+
+    [[SoomlaProfile getInstance] uploadImageWithProvider:FACEBOOK andMessage:@"Text photo message" andFilePath:filePath andReward:nil];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)getContactsButtonTouched:(id)sender {
+    [[SoomlaProfile getInstance] getContactsWithProvider:FACEBOOK andReward:nil];
+}
+
+- (IBAction)getFeedTouched:(id)sender {
+    [[SoomlaProfile getInstance] getFeedWithProvider:FACEBOOK andReward:nil];
+}
+
 @end
+
