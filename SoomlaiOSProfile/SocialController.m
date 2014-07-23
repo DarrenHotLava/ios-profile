@@ -48,15 +48,15 @@ static NSString* TAG = @"SOOMLA SocialController";
     
     
     // Perform update status process
-    [UserProfileEventHandling postSocialActionStarted:UPDATE_STATUS];
+    [UserProfileEventHandling postSocialActionStarted:provider withType:UPDATE_STATUS];
     [socialProvider updateStatus:status success:^{
-        [UserProfileEventHandling postSocialActionFinished:UPDATE_STATUS];
+        [UserProfileEventHandling postSocialActionFinished:provider withType:UPDATE_STATUS];
         
         if (reward) {
             [reward give];
         }
     } fail:^(NSString *message) {
-        [UserProfileEventHandling postSocialActionFailed:UPDATE_STATUS withMessage:message];
+        [UserProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STATUS withMessage:message];
     }];
 }
 
@@ -72,16 +72,16 @@ static NSString* TAG = @"SOOMLA SocialController";
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
     // Perform update story process
-    [UserProfileEventHandling postSocialActionStarted:UPDATE_STORY];
+    [UserProfileEventHandling postSocialActionStarted:provider withType:UPDATE_STORY];
     [socialProvider updateStoryWithMessage:message andName:name andCaption:caption
                             andDescription:description andLink:link andPicture:picture success:^{
         
-        [UserProfileEventHandling postSocialActionFinished:UPDATE_STORY];
+        [UserProfileEventHandling postSocialActionFinished:provider withType:UPDATE_STORY];
         if (reward) {
             [reward give];
         }
     } fail:^(NSString *message) {
-        [UserProfileEventHandling postSocialActionFailed:UPDATE_STORY withMessage:message];
+        [UserProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STORY withMessage:message];
     }];
 }
 
@@ -93,15 +93,15 @@ static NSString* TAG = @"SOOMLA SocialController";
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
     // Perform upload image process
-    [UserProfileEventHandling postSocialActionStarted:UPLOAD_IMAGE];
+    [UserProfileEventHandling postSocialActionStarted:provider withType:UPLOAD_IMAGE];
     [socialProvider uploadImageWithMessage:message andFilePath:filePath success:^{
         
-        [UserProfileEventHandling postSocialActionFinished:UPLOAD_IMAGE];
+        [UserProfileEventHandling postSocialActionFinished:provider withType:UPLOAD_IMAGE];
         if (reward) {
             [reward give];
         }
     } fail:^(NSString *message) {
-        [UserProfileEventHandling postSocialActionFailed:UPLOAD_IMAGE withMessage:message];
+        [UserProfileEventHandling postSocialActionFailed:provider withType:UPLOAD_IMAGE withMessage:message];
     }];
 }
 
@@ -133,15 +133,15 @@ static NSString* TAG = @"SOOMLA SocialController";
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
     // Perform get contacts process
-    [UserProfileEventHandling postGetContactsStarted:GET_CONTACTS];
+    [UserProfileEventHandling postGetContactsStarted:provider withType:GET_CONTACTS];
     [socialProvider getContacts:^(NSArray *contacts) {
 
-        [UserProfileEventHandling postGetContactsFinished:GET_CONTACTS withContacts:contacts];
+        [UserProfileEventHandling postGetContactsFinished:provider withType:GET_CONTACTS withContacts:contacts];
         if (reward) {
             [reward give];
         }
     } fail:^(NSString *message) {
-        [UserProfileEventHandling postGetContactsFailed:GET_CONTACTS withMessage:message];
+        [UserProfileEventHandling postGetContactsFailed:provider withType:GET_CONTACTS withMessage:message];
     }];
 }
 
@@ -150,15 +150,15 @@ static NSString* TAG = @"SOOMLA SocialController";
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
 
     // Perform get contacts process
-    [UserProfileEventHandling postSocialActionStarted:GET_FEEDS];
+    [UserProfileEventHandling postSocialActionStarted:provider withType:GET_FEEDS];
     [socialProvider getFeed:^(NSArray *feeds) {
 
-        [UserProfileEventHandling postSocialActionFinished:GET_FEEDS];
+        [UserProfileEventHandling postSocialActionFinished:provider withType:GET_FEEDS];
         if (reward) {
             [reward give];
         }
     }                  fail:^(NSString *message) {
-        [UserProfileEventHandling postSocialActionFailed:GET_FEEDS withMessage:message];
+        [UserProfileEventHandling postSocialActionFailed:provider withType:GET_FEEDS withMessage:message];
     }];
 }
 

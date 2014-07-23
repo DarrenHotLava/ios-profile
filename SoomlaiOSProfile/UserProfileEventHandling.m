@@ -78,35 +78,44 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGOUT_FAILED object:self userInfo:userInfo];
 }
 
-+ (void)postSocialActionStarted:(enum SocialActionType)socialActionType {
-    NSDictionary *userInfo = @{DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
++ (void)postSocialActionStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SOCIAL_ACTION_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postSocialActionFinished:(enum SocialActionType)socialActionType {
-    NSDictionary *userInfo = @{DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
++ (void)postSocialActionFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SOCIAL_ACTION_FINISHED object:self userInfo:userInfo];
 }
 
-+ (void)postSocialActionFailed:(enum SocialActionType)socialActionType withMessage:(NSString *)message {
-    NSDictionary *userInfo = @{DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType), DICT_ELEMENT_MESSAGE: message};
++ (void)postSocialActionFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_MESSAGE: message};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SOCIAL_ACTION_FAILED object:self userInfo:userInfo];
 }
 
-+ (void)postGetContactsStarted:(enum SocialActionType)socialActionType {
-    NSDictionary *userInfo = @{DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
++ (void)postGetContactsStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postGetContactsFinished:(enum SocialActionType)socialActionType withContacts:(NSArray *)contacts {
-    NSDictionary *userInfo = @{DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType), DICT_ELEMENT_CONTACTS: contacts};
++ (void)postGetContactsFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)contacts {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_CONTACTS: contacts};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_FINISHED object:self userInfo:userInfo];
 }
 
-+ (void)postGetContactsFailed:(enum SocialActionType)socialActionType withMessage:(NSString *)message {
-    NSDictionary *userInfo = @{DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType), DICT_ELEMENT_MESSAGE: message};
++ (void)postGetContactsFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_MESSAGE: message};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_FAILED object:self userInfo:userInfo];
 }
+
+// TODO: add feeds
+
 
 + (void)postRewardGiven:(Reward *)reward {
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
