@@ -68,12 +68,12 @@ static NSString* TAG = @"SOOMLA AuthController";
                     [reward give];
                 }
             } fail:^(NSString *message) {
-                [UserProfileEventHandling postLoginFailed:message];
+                [UserProfileEventHandling postLoginFailed:provider withMessage:message];
             }];
         } fail:^(NSString *message) {
-            [UserProfileEventHandling postLoginFailed:message];
+            [UserProfileEventHandling postLoginFailed:provider withMessage:message];
         } cancel:^{
-            [UserProfileEventHandling postLoginCancelled];
+            [UserProfileEventHandling postLoginCancelled:provider];
         }];
     }];
 }
@@ -95,11 +95,11 @@ static NSString* TAG = @"SOOMLA AuthController";
     [authProvider logout:^() {
         if (userProfile) {
             [UserProfileStorage removeUserProfile:userProfile];
-            [UserProfileEventHandling postLogoutFinished:userProfile];
+            [UserProfileEventHandling postLogoutFinished:provider];
         }
     }
     fail:^(NSString* message) {
-        [UserProfileEventHandling postLogoutFailed:message];
+        [UserProfileEventHandling postLogoutFailed:provider withMessage:message];
     }];
 }
 

@@ -54,12 +54,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_FINISHED object:self userInfo:userInfo];
 }
 
-+ (void)postLoginCancelled {
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_CANCELLED object:self userInfo:nil];
++ (void)postLoginCancelled:(enum Provider)provider {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_CANCELLED object:self userInfo:userInfo];
 }
 
-+ (void)postLoginFailed:(NSString *)message {
-    NSDictionary *userInfo = @{DICT_ELEMENT_MESSAGE: message};
++ (void)postLoginFailed:(enum Provider)provider withMessage:(NSString *)message {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_MESSAGE: message};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_FAILED object:self userInfo:userInfo];
 }
 
@@ -68,13 +69,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGOUT_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postLogoutFinished:(UserProfile *)userProfile {
-    NSDictionary *userInfo = @{DICT_ELEMENT_USER_PROFILE: userProfile};
++ (void)postLogoutFinished:(enum Provider)provider {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider)};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGOUT_FINISHED object:self userInfo:userInfo];
 }
 
-+ (void)postLogoutFailed:(NSString *)message {
-    NSDictionary *userInfo = @{DICT_ELEMENT_MESSAGE: message};
++ (void)postLogoutFailed:(enum Provider)provider withMessage:(NSString *)message {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_MESSAGE: message};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGOUT_FAILED object:self userInfo:userInfo];
 }
 

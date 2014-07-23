@@ -61,11 +61,11 @@
 + (void)postUserProfileUpdated:(UserProfile *)userProfile;
 + (void)postLoginStarted:(enum Provider)provider;
 + (void)postLoginFinished:(UserProfile *)userProfile;
-+ (void)postLoginFailed:(NSString *)message;
-+ (void)postLoginCancelled;
++ (void)postLoginFailed:(enum Provider)provider withMessage:(NSString *)message;
++ (void)postLoginCancelled:(enum Provider)provider;
 + (void)postLogoutStarted:(enum Provider)provider;
-+ (void)postLogoutFinished:(UserProfile *)userProfile;
-+ (void)postLogoutFailed:(NSString *)message;
++ (void)postLogoutFinished:(enum Provider)provider;
++ (void)postLogoutFailed:(enum Provider)provider withMessage:(NSString *)message;
 + (void)postSocialActionStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postSocialActionFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postSocialActionFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
