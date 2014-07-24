@@ -20,13 +20,30 @@
 #import "SocialController.h"
 #import "UserProfileUtils.h"
 
+// if using Unity social provider this is YES
+BOOL UsingExternalProvider;
+
 @implementation SoomlaProfile
 
++ (void)usingExternalProvider:(BOOL)isExternal {
+    
+    UsingExternalProvider = isExternal;
+}
+
++ (BOOL)isUsingExternalProvider {
+    return UsingExternalProvider;
+}
 
 - (id)init {
     if (self = [super init]) {
-        authController = [[AuthController alloc] init];
-        socialController = [[SocialController alloc] init];
+        if (UsingExternalProvider) {
+            authController = [[AuthController alloc] initWithoutLoadingProviders];
+            socialController = [[SocialController alloc] initWithoutLoadingProviders];
+        }
+        else {
+            authController = [[AuthController alloc] init];
+            socialController = [[SocialController alloc] init];
+        }
     }
     
     return self;

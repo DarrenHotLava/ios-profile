@@ -33,6 +33,8 @@
     SocialController* socialController;
 }
 
++ (void)usingExternalProvider:(BOOL)isExternal;
++ (BOOL)isUsingExternalProvider;
 
 /**
  Constructor.
