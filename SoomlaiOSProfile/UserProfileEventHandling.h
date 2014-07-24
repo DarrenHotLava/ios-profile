@@ -34,6 +34,7 @@
 
 #define EVENT_UP_SOCIAL_ACTION_STARTED          @"up_social_action_started"
 #define EVENT_UP_SOCIAL_ACTION_FINISHED         @"up_social_action_finished"
+#define EVENT_UP_SOCIAL_ACTION_CANCELLED        @"up_social_action_cancelled"
 #define EVENT_UP_SOCIAL_ACTION_FAILED           @"up_social_action_failed"
 
 #define EVENT_UP_GET_CONTACTS_STARTED           @"up_get_contacs_started"
@@ -68,6 +69,7 @@
 + (void)postLogoutFailed:(enum Provider)provider withMessage:(NSString *)message;
 + (void)postSocialActionStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postSocialActionFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
++ (void)postSocialActionCancelled:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postSocialActionFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
 + (void)postGetContactsStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postGetContactsFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)contacts;
