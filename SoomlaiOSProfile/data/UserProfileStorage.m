@@ -49,13 +49,13 @@ static NSString* TAG            = @"SOOMLA UserProfileStorage";
     
     NSString* key = [self keyUserProfile:provider];
     NSString* userProfileJSON = [KeyValueStorage getValueForKey:key];
-    
     if (!userProfileJSON || [userProfileJSON length] == 0) {
         return nil;
     }
     
     NSDictionary* userProfileDict = [SoomlaUtils jsonStringToDict:userProfileJSON];
-    return [[UserProfile alloc] initWithDictionary:userProfileDict];
+    UserProfile* userProfile = [[UserProfile alloc] initWithDictionary:userProfileDict];
+    return userProfile;
 }
 
 + (NSString *)keyUserProfile:(enum Provider)provider {

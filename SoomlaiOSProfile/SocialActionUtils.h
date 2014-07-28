@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, SocialActionType) {
     UPDATE_STORY,
     UPLOAD_IMAGE,
     GET_CONTACTS,
-    GET_FEEDS
+    GET_FEED
 };
 
 /**

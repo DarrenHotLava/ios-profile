@@ -32,8 +32,8 @@
         case GET_CONTACTS:
             return @"GET_CONTACTS";
             break;
-        case GET_FEEDS:
-            return @"GET_FEEDS";
+        case GET_FEED:
+            return @"GET_FEED";
             break;
             
         default:
@@ -56,8 +56,8 @@
     else if([actionTypeString isEqualToString:@"GET_CONTACTS"]) {
         return GET_CONTACTS;
     }
-    else if([actionTypeString isEqualToString:@"GET_FEEDS"]) {
-        return GET_FEEDS;
+    else if([actionTypeString isEqualToString:@"GET_FEED"]) {
+        return GET_FEED;
     }
     else {
         [NSException raise:NSGenericException format:@"Unexpected FormatType."];
