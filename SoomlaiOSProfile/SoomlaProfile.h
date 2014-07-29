@@ -151,6 +151,8 @@ Fetches the user's feed and grants the user a reward.
 */
 - (void)getFeedWithProvider:(enum Provider)provider andReward:(Reward *)reward;
 
+- (void)openAppRatingPage;
+
 + (SoomlaProfile *)getInstance;
 
 @end

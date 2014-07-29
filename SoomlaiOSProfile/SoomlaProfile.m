@@ -20,6 +20,8 @@
 #import "SocialController.h"
 #import "UserProfileUtils.h"
 
+#import <UIKit/UIKit.h>
+
 // if using Unity social provider this is YES
 BOOL UsingExternalProvider;
 
@@ -127,7 +129,13 @@ BOOL UsingExternalProvider;
     [socialController getFeed:provider andReward:reward];
 }
 
-
+- (void)openAppRatingPage {
+    NSString* templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
+    NSString* appID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+    NSString* reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+}
 
 // private
 
