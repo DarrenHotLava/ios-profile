@@ -100,8 +100,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3A4D84F4196371760030C5D5 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
-		3AA28FBC1959A78D00207508 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		3A4D84F4196371760030C5D5 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = ../build/libSoomlaiOSCore.a; sourceTree = "<group>"; };
+		3AA28FBC1959A78D00207508 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../ios-profile-facebook/FacebookSDK.framework"; sourceTree = "<group>"; };
 		3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSProfile.xcodeproj; path = ../SoomlaiOSProfile.xcodeproj; sourceTree = "<group>"; };
 		9D23D743196FC14900B22341 /* SoomlaiOSProfileFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSProfileFacebook.xcodeproj; path = "../../ios-profile-facebook/SoomlaiOSProfileFacebook.xcodeproj"; sourceTree = "<group>"; };
 		EF83618C19472A23003526D7 /* SoomlaiOSProfileExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoomlaiOSProfileExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -538,7 +538,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SOOMLA_HOME)/soomla-ios-core/SoomlaiOSCore",
+					"$(SRCROOT)/../submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
@@ -577,7 +577,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SOOMLA_HOME)/soomla-ios-core/SoomlaiOSCore",
+					"$(SRCROOT)/../submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				SDKROOT = iphoneos;
@@ -594,7 +594,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"~/Documents/FacebookSDK",
+					"$(SOOMLA_HOME)/ios-profile-facebook",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
@@ -624,7 +624,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"~/Documents/FacebookSDK",
+					"$(SOOMLA_HOME)/ios-profile-facebook",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";

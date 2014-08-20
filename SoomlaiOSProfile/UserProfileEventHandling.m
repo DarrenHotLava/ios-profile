@@ -121,7 +121,24 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_FAILED object:self userInfo:userInfo];
 }
 
-// TODO: add feeds
++ (void)postGetFeedStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_STARTED object:self userInfo:userInfo];
+}
+
++ (void)postGetFeedFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)feeds {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_FEEDS: feeds};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_FINISHED object:self userInfo:userInfo];
+}
+
++ (void)postGetFeedFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_MESSAGE: message};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_FAILED object:self userInfo:userInfo];
+}
 
 
 + (void)postRewardGiven:(Reward *)reward {

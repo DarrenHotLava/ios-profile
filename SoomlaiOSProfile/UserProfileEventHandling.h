@@ -37,9 +37,13 @@
 #define EVENT_UP_SOCIAL_ACTION_CANCELLED        @"up_social_action_cancelled"
 #define EVENT_UP_SOCIAL_ACTION_FAILED           @"up_social_action_failed"
 
-#define EVENT_UP_GET_CONTACTS_STARTED           @"up_get_contacs_started"
-#define EVENT_UP_GET_CONTACTS_FINISHED          @"up_get_contacs_finished"
-#define EVENT_UP_GET_CONTACTS_FAILED            @"up_get_contacs_failed"
+#define EVENT_UP_GET_CONTACTS_STARTED           @"up_get_contacts_started"
+#define EVENT_UP_GET_CONTACTS_FINISHED          @"up_get_contacts_finished"
+#define EVENT_UP_GET_CONTACTS_FAILED            @"up_get_contacts_failed"
+
+#define EVENT_UP_GET_FEED_STARTED           @"up_get_feed_started"
+#define EVENT_UP_GET_FEED_FINISHED          @"up_get_feed_finished"
+#define EVENT_UP_GET_FEED_FAILED            @"up_get_feed_failed"
 
 #define EVENT_BP_REWARD_GIVEN                   @"bp_reward_given"
 
@@ -74,6 +78,9 @@
 + (void)postGetContactsStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postGetContactsFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)contacts;
 + (void)postGetContactsFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
++ (void)postGetFeedStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
++ (void)postGetFeedFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)feeds;
++ (void)postGetFeedFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
 + (void)postRewardGiven:(Reward *)reward;
 
 @end

@@ -15,6 +15,7 @@
 #import "StoreEventHandling.h"
 #import "SoomlaUtils.h"
 #import "VirtualItemReward.h" // to avoid "incompatible type" warnings
+#import "UserProfile.h"
 
 
 @implementation ViewController
@@ -33,10 +34,9 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutFinished:) name:EVENT_UP_LOGOUT_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(currencyBalanceChanged:) name:EVENT_CURRENCY_BALANCE_CHANGED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFinished:) name:EVENT_UP_GET_CONTACTS_FINISHED object:nil];
-}
-
-- (void)getContactsFinished:(NSNotification*)notification {
-    NSLog(notification.userInfo[DICT_ELEMENT_CONTACTS]);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFailed:) name:EVENT_UP_GET_CONTACTS_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFinished:) name:EVENT_UP_GET_FEED_FINISHED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFailed:) name:EVENT_UP_GET_FEED_FAILED object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -129,6 +129,32 @@ static NSString* TAG = @"SOOMLA ViewController";
 - (void)currencyBalanceChanged:(NSNotification *)notification {
     NSDictionary* userInfo = [notification userInfo];
     self.currencyLabel.text = [NSString stringWithFormat:@"Coins: %d", [[userInfo objectForKey:@"balance"] intValue]];
+}
+
+- (void)getContactsFinished:(NSNotification*)notification {
+    NSArray* contacts = notification.userInfo[DICT_ELEMENT_CONTACTS];
+    for (int i = 0; i < [contacts count]; i++)
+    {
+        UserProfile* current = [contacts objectAtIndex:i];
+        NSLog(@"%@", [current getFullName]);
+    }
+}
+
+- (void)getContactsFailed:(NSNotification*)notification {
+    NSLog(@"%@ Faild: %@", notification.userInfo[DICT_ELEMENT_SOCIAL_ACTION_TYPE], notification.userInfo[DICT_ELEMENT_MESSAGE]);
+}
+
+- (void)getFeedFinished:(NSNotification*)notification {
+    NSArray* feeds = notification.userInfo[DICT_ELEMENT_FEEDS];
+    for (int i = 0; i < [feeds count]; i++)
+    {
+        NSString* current = [feeds objectAtIndex:i];
+        NSLog(@"%@", current);
+    }
+}
+
+- (void)getFeedFailed:(NSNotification*)notification {
+    NSLog(@"%@ Faild: %@", notification.userInfo[DICT_ELEMENT_SOCIAL_ACTION_TYPE], notification.userInfo[DICT_ELEMENT_MESSAGE]);
 }
 
 

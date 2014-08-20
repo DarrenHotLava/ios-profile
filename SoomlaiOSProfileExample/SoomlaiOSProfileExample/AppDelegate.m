@@ -31,7 +31,6 @@ static NSString* TAG = @"SOOMLA AppDelegate";
 
     self.loginReward = [[VirtualItemReward alloc] initWithRewardId:@"login_reward" andName:@"Login Reward" andAmount:100 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.updateStatusReward = [[VirtualItemReward alloc] initWithRewardId:@"update_status_reward" andName:@"Update Status Reward" andAmount:150 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
-    self.updateStatusReward.repeatable = YES;
 
     // Override point for customization after application launch.
     return YES;
