@@ -67,6 +67,14 @@
 - (void)logoutWithProvider:(enum Provider)provider;
 
 /**
+ Checks if the user is logged in with given provider
+ 
+ @param provider The provider to use
+ @return YES if the user is logged-in with the given provider, NO otherwise
+ */
+- (BOOL)isLoggedInWithProvider:(enum Provider)provider;
+
+/**
  Fetches the user's profile for the given provider from the local device storage
  
  @param provider The provider to use

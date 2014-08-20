@@ -37,6 +37,10 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFailed:) name:EVENT_UP_GET_CONTACTS_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFinished:) name:EVENT_UP_GET_FEED_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFailed:) name:EVENT_UP_GET_FEED_FAILED object:nil];
+    
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
+        [self showSocialUI];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,8 +95,16 @@ static NSString* TAG = @"SOOMLA ViewController";
     // TODO: extract user profile object from notification
     // NSDictionary* userInfo = notification.userInfo;
     
+    [self showSocialUI];
+}
+
+- (void)showSocialUI {
     LogDebug(TAG, @"Login Success: you are now logged in to Facebook");
-    [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
+    
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
+        [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
+    }
+    
     [self.updateStatusButton setHidden:NO];
     [self.updateStoryButton setHidden:NO];
     [self.uploadImageButton setHidden:NO];
@@ -177,7 +189,8 @@ static NSString* TAG = @"SOOMLA ViewController";
     // It is better to get JPEG data because jpeg data will store the location and other related information of image.
     [myData writeToFile:filePath atomically:YES];
 
-    [[SoomlaProfile getInstance] uploadImageWithProvider:FACEBOOK andMessage:@"Text photo message" andFilePath:filePath andReward:nil];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [[SoomlaProfile getInstance] uploadImageWithProvider:FACEBOOK andMessage:@"Text photo message" andFilePath:filePath andReward:appDelegate.uploadImageReward];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
