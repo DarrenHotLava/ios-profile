@@ -62,16 +62,16 @@
 - (NSDictionary*)toDictionary {
     return [[NSDictionary alloc] initWithObjectsAndKeys:
             [UserProfileUtils providerEnumToString:self.provider], UP_PROVIDER,
-            self.profileId, UP_PROFILEID,
-            self.username, UP_USERNAME,
-            self.email, UP_EMAIL,
-            self.firstName, UP_FIRSTNAME,
-            self.lastName, UP_LASTNAME,
-            self.avatarLink, UP_AVATAR,
-            self.location, UP_LOCATION,
-            self.gender, UP_GENDER,
-            self.language, UP_LANGUAGE,
-            self.birthday, UP_BIRTHDAY,
+            (self.profileId ?: [NSNull null]), UP_PROFILEID,
+            (self.username ?: [NSNull null]), UP_USERNAME,
+            (self.email ?: [NSNull null]), UP_EMAIL,
+            (self.firstName ?: [NSNull null]), UP_FIRSTNAME,
+            (self.lastName ?: [NSNull null]), UP_LASTNAME,
+            (self.avatarLink ?: [NSNull null]), UP_AVATAR,
+            (self.location ?: [NSNull null]), UP_LOCATION,
+            (self.gender ?: [NSNull null]), UP_GENDER,
+            (self.language ?: [NSNull null]), UP_LANGUAGE,
+            (self.birthday ?: [NSNull null]), UP_BIRTHDAY,
             nil];
 }
 
