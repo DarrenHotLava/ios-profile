@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "SoomlaProfile.h"
 #import "UserProfileEventHandling.h"
+#import "SoomlaEventHandling.h"
 #import "StoreEventHandling.h"
 #import "SoomlaUtils.h"
 #import "VirtualItemReward.h" // to avoid "incompatible type" warnings
@@ -37,6 +38,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getContactsFailed:) name:EVENT_UP_GET_CONTACTS_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFinished:) name:EVENT_UP_GET_FEED_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFailed:) name:EVENT_UP_GET_FEED_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewardGiven:) name:EVENT_REWARD_GIVEN object:nil];
     
     if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
         [self showSocialUI];
@@ -167,6 +169,10 @@ static NSString* TAG = @"SOOMLA ViewController";
 
 - (void)getFeedFailed:(NSNotification*)notification {
     NSLog(@"%@ Faild: %@", notification.userInfo[DICT_ELEMENT_SOCIAL_ACTION_TYPE], notification.userInfo[DICT_ELEMENT_MESSAGE]);
+}
+
+- (void)rewardGiven:(NSNotification*)notification {
+    NSLog(@"Reward Given: %@", [(Reward *)notification.userInfo[DICT_ELEMENT_REWARD] name]);
 }
 
 

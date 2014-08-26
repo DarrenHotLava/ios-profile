@@ -45,8 +45,6 @@
 #define EVENT_UP_GET_FEED_FINISHED          @"up_get_feed_finished"
 #define EVENT_UP_GET_FEED_FAILED            @"up_get_feed_failed"
 
-#define EVENT_BP_REWARD_GIVEN                   @"bp_reward_given"
-
 
 // UserInfo Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
@@ -81,6 +79,5 @@
 + (void)postGetFeedStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
 + (void)postGetFeedFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)feeds;
 + (void)postGetFeedFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
-+ (void)postRewardGiven:(Reward *)reward;
 
 @end
