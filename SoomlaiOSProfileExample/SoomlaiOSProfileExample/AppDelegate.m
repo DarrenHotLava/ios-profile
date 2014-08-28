@@ -19,7 +19,7 @@
 
 @implementation AppDelegate
 
-@synthesize loginReward, updateStatusReward;
+@synthesize loginReward, updateStatusReward, uploadImageReward;
 
 static NSString* TAG = @"SOOMLA AppDelegate";
 
@@ -31,7 +31,7 @@ static NSString* TAG = @"SOOMLA AppDelegate";
 
     self.loginReward = [[VirtualItemReward alloc] initWithRewardId:@"login_reward" andName:@"Login Reward" andAmount:100 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.updateStatusReward = [[VirtualItemReward alloc] initWithRewardId:@"update_status_reward" andName:@"Update Status Reward" andAmount:150 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
-    self.updateStatusReward.repeatable = YES;
+    self.uploadImageReward = [[VirtualItemReward alloc] initWithRewardId:@"update_story_reward" andName:@"Update Story Reward" andAmount:250 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
 
     // Override point for customization after application launch.
     return YES;

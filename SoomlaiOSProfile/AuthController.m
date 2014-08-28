@@ -103,6 +103,11 @@ static NSString* TAG = @"SOOMLA AuthController";
     }];
 }
 
+- (BOOL)isLoggedInWithProvider:(enum Provider)provider {
+    id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
+    return [authProvider isLoggedIn];
+}
+
 - (UserProfile *)getStoredUserProfileWithProvider:(enum Provider)provider {
     UserProfile* userProfile = [UserProfileStorage getUserProfile:provider];
     if (!userProfile) {

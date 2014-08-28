@@ -149,16 +149,16 @@ static NSString* TAG = @"SOOMLA SocialController";
 
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
 
-    // Perform get contacts process
-    [UserProfileEventHandling postSocialActionStarted:provider withType:GET_FEED];
+    // Perform get feed process
+    [UserProfileEventHandling postGetFeedStarted:provider withType:GET_FEED];
     [socialProvider getFeed:^(NSArray *feeds) {
 
-        [UserProfileEventHandling postSocialActionFinished:provider withType:GET_FEED];
+        [UserProfileEventHandling postGetFeedFinished:provider withType:GET_FEED withContacts:feeds];
         if (reward) {
             [reward give];
         }
-    }                  fail:^(NSString *message) {
-        [UserProfileEventHandling postSocialActionFailed:provider withType:GET_FEED withMessage:message];
+    } fail:^(NSString *message) {
+        [UserProfileEventHandling postGetFeedFailed:provider withType:GET_FEED withMessage:message];
     }];
 }
 

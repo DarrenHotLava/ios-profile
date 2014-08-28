@@ -61,4 +61,11 @@ typedef void (^logoutFail)(NSString* message);
  */
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail;
 
+/**
+ Checks if the user is logged-in using the authentication provider
+ 
+ @return YES if the user is already logged-in using the authentication provider, NO otherwise
+ */
+- (BOOL)isLoggedIn;
+
 @end

@@ -37,7 +37,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_CONTACTS_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_CONTACTS_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_CONTACTS_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_BP_REWARD_GIVEN object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_FEED_STARTED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_FEED_FINISHED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_FEED_FAILED object:nil];
 }
 
 + (void)postUserProfileUpdated:(UserProfile *)userProfile {
@@ -121,15 +123,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_FAILED object:self userInfo:userInfo];
 }
 
-// TODO: add feeds
++ (void)postGetFeedStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType)};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_STARTED object:self userInfo:userInfo];
+}
 
++ (void)postGetFeedFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)feeds {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_FEEDS: feeds};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_FINISHED object:self userInfo:userInfo];
+}
 
-+ (void)postRewardGiven:(Reward *)reward {
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              reward, DICT_ELEMENT_REWARD,
-                              [NSNumber numberWithBool:[reward isKindOfClass:[BadgeReward class]]], DICT_ELEMENT_IS_BADGE,
-                              nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_BP_REWARD_GIVEN object:self userInfo:userInfo];
++ (void)postGetFeedFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+                               DICT_ELEMENT_MESSAGE: message};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_FAILED object:self userInfo:userInfo];
 }
 
 

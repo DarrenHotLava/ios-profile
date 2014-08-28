@@ -22,5 +22,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) VirtualItemReward* loginReward;
 @property (strong, nonatomic) VirtualItemReward* updateStatusReward;
+@property (strong, nonatomic) VirtualItemReward* uploadImageReward;
 
 @end

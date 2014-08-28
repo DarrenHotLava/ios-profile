@@ -77,6 +77,18 @@ BOOL UsingExternalProvider;
     }
 }
 
+- (BOOL)isLoggedInWithProvider:(enum Provider)provider {
+    @try {
+        return [authController isLoggedInWithProvider:provider];
+    }
+    @catch (NSException *exception) {
+        
+        // TODO: implement logic like in java that will raise the exception. Currently not raised
+        return [socialController isLoggedInWithProvider:provider];
+    }
+
+}
+
 - (UserProfile *)getStoredUserProfileWithProvider:(enum Provider)provider {
     @try {
         [authController getStoredUserProfileWithProvider:provider];
