@@ -98,6 +98,11 @@ static NSString* TAG = @"SOOMLA ViewController";
     // NSDictionary* userInfo = notification.userInfo;
     
     [self showSocialUI];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    if (appDelegate.likeReward.canGive == YES) {
+        [[SoomlaProfile getInstance] like:FACEBOOK andPageName:@"The.SOOMLA.Project" andReward:appDelegate.likeReward];
+    }
 }
 
 - (void)showSocialUI {

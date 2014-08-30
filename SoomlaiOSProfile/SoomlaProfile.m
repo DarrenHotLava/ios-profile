@@ -141,6 +141,10 @@ BOOL UsingExternalProvider;
     [socialController getFeed:provider andReward:reward];
 }
 
+- (void)like:(enum Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
+    [socialController like:provider andPageName:pageName andReward:reward];
+}
+
 - (void)openAppRatingPage {
     NSString* templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
     NSString* appID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];

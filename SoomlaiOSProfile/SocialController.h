@@ -111,5 +111,15 @@ Fetches the user's feed.
 */
 - (void)getFeed:(enum Provider)provider andReward:(Reward *)reward;
 
+/**
+ Opens up a page to like for the user (external)
+ 
+ @param provider The provider to like page on
+ @param pageName The page to open on the provider
+ @param reward The reward to grant when page is liked
+ */
+- (void)like:(enum Provider)provider
+            andPageName:(NSString *)pageName
+            andReward:(Reward *)reward;
 
 @end

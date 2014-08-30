@@ -162,6 +162,13 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-
+- (void)like:(enum Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
+    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
+    
+    [socialProvider like:pageName];
+    if (reward) {
+        [reward give];
+    }
+}
 
 @end

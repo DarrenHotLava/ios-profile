@@ -23,5 +23,6 @@
 @property (strong, nonatomic) VirtualItemReward* loginReward;
 @property (strong, nonatomic) VirtualItemReward* updateStatusReward;
 @property (strong, nonatomic) VirtualItemReward* uploadImageReward;
+@property (strong, nonatomic) VirtualItemReward* likeReward;
 
 @end
