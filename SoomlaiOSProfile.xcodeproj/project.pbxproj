@@ -53,6 +53,9 @@
 		EFAE6BE9193DC6310077EF7F /* UserProfileNotFoundException.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BE7193DC6310077EF7F /* UserProfileNotFoundException.m */; };
 		EFAE6BEC193DDB5D0077EF7F /* SocialController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BEB193DDB5D0077EF7F /* SocialController.m */; };
 		EFAE6BED193DDB5D0077EF7F /* SocialController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BEB193DDB5D0077EF7F /* SocialController.m */; };
+		F8F9ADBC19B34C8F00F26856 /* SoomlaFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = F8F9ADBA19B34C8F00F26856 /* SoomlaFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8F9ADBD19B34C8F00F26856 /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F9ADBB19B34C8F00F26856 /* SoomlaFacebook.m */; };
+		F8F9ADBF19B34CA500F26856 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +120,9 @@
 		EFAE6BEB193DDB5D0077EF7F /* SocialController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialController.m; sourceTree = "<group>"; };
 		EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialActionUtils.h; sourceTree = "<group>"; };
 		EFC2E6F019449A3A009BA5CF /* SocialCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialCallbacks.h; path = social/SocialCallbacks.h; sourceTree = "<group>"; };
+		F8F9ADBA19B34C8F00F26856 /* SoomlaFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoomlaFacebook.h; path = social/SoomlaFacebook.h; sourceTree = "<group>"; };
+		F8F9ADBB19B34C8F00F26856 /* SoomlaFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoomlaFacebook.m; path = social/SoomlaFacebook.m; sourceTree = "<group>"; };
+		F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +132,7 @@
 			files = (
 				3AFD6F1C1986E174001360D9 /* UIKit.framework in Frameworks */,
 				EF356EFE193C90560081DCE0 /* Foundation.framework in Frameworks */,
+				F8F9ADBF19B34CA500F26856 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +171,7 @@
 		EF356EFC193C90560081DCE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */,
 				3AFD6F1B1986E173001360D9 /* UIKit.framework */,
 				EF356EFD193C90560081DCE0 /* Foundation.framework */,
 				EF356F0B193C90560081DCE0 /* XCTest.framework */,
@@ -258,6 +266,8 @@
 		EFAE6BD2193CD3D80077EF7F /* social */ = {
 			isa = PBXGroup;
 			children = (
+				F8F9ADBA19B34C8F00F26856 /* SoomlaFacebook.h */,
+				F8F9ADBB19B34C8F00F26856 /* SoomlaFacebook.m */,
 				EFAE6BD3193CD3F60077EF7F /* ISocialProvider.h */,
 				EFC2E6F019449A3A009BA5CF /* SocialCallbacks.h */,
 			);
@@ -282,6 +292,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8F9ADBC19B34C8F00F26856 /* SoomlaFacebook.h in Headers */,
 				3AF01CD21960BCCC0088836B /* SoomlaProfile.h in Headers */,
 				3AF01CDD1960BD500088836B /* UserProfile.h in Headers */,
 				3AF01CD31960BCD60088836B /* UserProfileEventHandling.h in Headers */,
@@ -411,6 +422,7 @@
 				3ABE080B195F422A008085AA /* SocialActionUtils.m in Sources */,
 				EFAE6BDB193DA38E0077EF7F /* ProviderNotFoundException.m in Sources */,
 				EF356F05193C90560081DCE0 /* SoomlaProfile.m in Sources */,
+				F8F9ADBD19B34C8F00F26856 /* SoomlaFacebook.m in Sources */,
 				EF356F2C193CA52E0081DCE0 /* UserProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,6 +545,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/SoomlaiOSProfile.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfile/SoomlaiOSProfile-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -551,6 +567,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/SoomlaiOSProfile.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfile/SoomlaiOSProfile-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
