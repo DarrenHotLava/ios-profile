@@ -46,7 +46,7 @@
 #define EVENT_UP_GET_FEED_FAILED            @"up_get_feed_failed"
 
 
-// UserInfo Elements
+// UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
 #define DICT_ELEMENT_PROVIDER                   @"provider"
 #define DICT_ELEMENT_SOCIAL_ACTION_TYPE         @"socialActiontype"
@@ -56,28 +56,185 @@
 #define DICT_ELEMENT_REWARD                     @"reward"
 #define DICT_ELEMENT_IS_BADGE                   @"isBadge"
 
-
+/**
+ * This class is used to register and post all the supported profile events.
+ * Use this class to invoke events on handlers when they occur.
+ *
+ * SOOMLA uses iOS's `NSNotificationCenter` to handle events across the SDK.
+ */
 @interface UserProfileEventHandling : NSObject
 
+/**
+ Subscribes the provider observer to all the profile events at once, 
+ the supplied selector will be called when any of the events fired
+ 
+ @param observer the subscriber to the events
+ @param selector the selector to call on the observer when events are fired
+ */
 + (void)observeAllEventsWithObserver:(id)observer withSelector:(SEL)selector;
 
+/**
+ Called when when a user profile from a provider has been retrieved
+ and updated in the device's local storage. Which fires the 
+ `EVENT_UP_USER_PROFILE_UPDATED` event.
+ 
+ @param userProfile The user's profile which was updated
+ */
 + (void)postUserProfileUpdated:(UserProfile *)userProfile;
+
+/**
+ Called when the login process to a provider has started. Which fires the
+ `EVENT_UP_LOGIN_STARTED` event.
+ 
+ @param provider The provider on where the login has started
+ */
 + (void)postLoginStarted:(enum Provider)provider;
+
+/**
+ Called when the login process finishes successfully. Which fires the
+ `EVENT_UP_LOGIN_FINISHED` event.
+ 
+ @param userProfile The user's profile from the logged in provider
+ */
 + (void)postLoginFinished:(UserProfile *)userProfile;
+
+/**
+ Called when the login process to a provider has failed. Which fires the
+ `EVENT_UP_LOGIN_FAILED` event.
+ 
+ @param provider The provider on which the login has failed
+ @param message a Description of the reason for failure
+ */
 + (void)postLoginFailed:(enum Provider)provider withMessage:(NSString *)message;
+
+/**
+ Called the login process to a provider has been cancelled. Which fires the
+ `EVENT_UP_LOGIN_CANCELLED` event.
+ 
+ @param provider The provider on which the login has failed
+ */
 + (void)postLoginCancelled:(enum Provider)provider;
+
+/**
+ Called when the logout process from a provider has started. Which fires the
+ `EVENT_UP_LOGOUT_STARTED` event.
+ 
+ @param provider The provider on which the login has started.
+ */
 + (void)postLogoutStarted:(enum Provider)provider;
+
+/**
+ Called when the logout process from a provider has finished. Which fires the
+ `EVENT_UP_LOGOUT_FINISHED` event.
+ 
+ @param provider The provider on which the logout has finished
+ */
 + (void)postLogoutFinished:(enum Provider)provider;
+
+/**
+ Called when the logout process from a provider has failed. Which fires the
+ `EVENT_UP_LOGOUT_FAILED` event.
+ 
+ @param provider The provider on which the logout has failed
+ @param message a Description of the reason for failure
+ */
 + (void)postLogoutFailed:(enum Provider)provider withMessage:(NSString *)message;
+
+/**
+ Called when a generic social action on a provider has started. Which fires the
+ `EVENT_UP_SOCIAL_ACTION_STARTED` event.
+ 
+ @param provider The provider on which the social action has started
+ @param socialActionType The social action which started
+ */
 + (void)postSocialActionStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
+
+/**
+ Called when a generic social action on a provider has finished. Which fires the
+ `EVENT_UP_SOCIAL_ACTION_FINISHED` event.
+ 
+ @param provider The provider on which the social action has finished
+ @param socialActionType The social action which finished
+ */
 + (void)postSocialActionFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
+
+/**
+ Called when a generic social action on a provider has been cancelled. Which fires 
+ the `EVENT_UP_SOCIAL_ACTION_CANCELLED` event.
+ 
+ @param provider The provider on which the social action has been cancelled
+ @param socialActionType The social action which was cancelled
+ */
 + (void)postSocialActionCancelled:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
+
+/**
+ Called when a generic social action on a provider has failed. Which fires the
+ `EVENT_UP_SOCIAL_ACTION_FAILED` event.
+ 
+ @param provider The provider on which the social action has failed
+ @param socialActionType The social action which failed
+ @param message a Description of the reason for failure
+ */
 + (void)postSocialActionFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
+
+/**
+ Called when the get contacts process from a provider has started. Which fires the
+ `EVENT_UP_GET_CONTACTS_STARTED` event.
+ 
+ @param provider The provider on which the get contacts process started
+ @param socialActionType The social action which is preformed
+ */
 + (void)postGetContactsStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
+
+/**
+ Called when the get contacts process from a provider has finished. Which fires the
+ `EVENT_UP_GET_CONTACTS_FINISHED` event.
+ 
+ @param provider The provider on which the get contacts process finished
+ @param socialActionType The social action which is preformed
+ @param contacts an Array of contacts represented by `UserProfile`
+ */
 + (void)postGetContactsFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)contacts;
+
+/**
+ Called when the get contacts process from a provider has failed. Which fires the
+ `EVENT_UP_GET_CONTACTS_FAILED` event.
+ 
+ @param provider The provider on which the get contacts process has
+ failed
+ @param socialActionType The social action which is preformed
+ @param message a Description of the reason for failure
+ */
 + (void)postGetContactsFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
+
+/**
+ Called when the get feed process from a provider has started. Which fires the
+ `EVENT_UP_GET_FEED_STARTED` event.
+ 
+ @param provider The provider on which the get feed process started
+ @param socialActionType The social action which is preformed
+ */
 + (void)postGetFeedStarted:(enum Provider)provider withType:(enum SocialActionType)socialActionType;
+
+/**
+ Called when the get feed process from a provider has finished. Which fires the
+ `EVENT_UP_GET_FEED_FINISHED` event.
+ 
+ @param provider The provider on which the get feed process finished
+ @param socialActionType The social action which is preformed
+ @param feeds an Array of feed entries represented by `NSString`
+ */
 + (void)postGetFeedFinished:(enum Provider)provider withType:(enum SocialActionType)socialActionType withContacts:(NSArray *)feeds;
+
+/**
+ Called when the get feed process from a provider has failed. Which fires the
+ `EVENT_UP_GET_FEED_FAILED` event.
+ 
+ @param provider The provider on which the get feed process has
+ failed
+ @param socialActionType The social action which is preformed
+ @param message a Description of the reason for failure
+ */
 + (void)postGetFeedFailed:(enum Provider)provider withType:(enum SocialActionType)socialActionType withMessage:(NSString *)message;
 
 @end

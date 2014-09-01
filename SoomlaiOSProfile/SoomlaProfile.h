@@ -95,12 +95,15 @@
  Shares a story to the user's feed and grants the user a reward.
  
  @param provider The provider to use
- @param message
- @param name
- @param caption
- @param description
- @param link
- @param picture
+ @param message The main text which will appear in the story
+ @param name The headline for the link which will be integrated in the
+ story
+ @param caption The sub-headline for the link which will be
+ integrated in the story
+ @param description The description for the link which will be
+ integrated in the story
+ @param link The link which will be integrated into the user's story
+ @param picture a Link to a picture which will be featured in the link
  @param reward The reward to give the user
  */
 - (void)updateStoryWithProvider:(enum Provider)provider
@@ -111,23 +114,6 @@
                         andLink:(NSString *)link
                      andPicture:(NSString *)picture
                       andReward:(Reward *)reward;
-
-///**
-// Shares a photo to the user's feed and grants the user a reward.
-// 
-// @param provider The provider to use
-// @param message
-// @param fileName
-// @param bitmap
-// @param jpegQuality
-// @param reward The reward to give the user
-// */
-//- (void)uploadImageWithProvider:(enum Provider)provider
-//                     andMessage:(NSString *)message
-//                    andFileName:(NSString *)fileName
-//       andAndroidGraphicsBitmap:(AndroidGraphicsBitmap *)bitmap
-//                 andJpegQuality:(int)jpegQuality
-//                      andReward:(Reward *)reward;
 
 /**
  Shares a photo to the user's feed and grants the user a reward.
@@ -168,8 +154,15 @@ Fetches the user's feed and grants the user a reward.
  */
 - (void)like:(enum Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward;
 
+/**
+ Utility method to open up the market application rating page
+ */
 - (void)openAppRatingPage;
 
+/**
+ Retrieves the singleton instance of `SoomlaProfile`
+ @return the singleton instance of `SoomlaProfile`
+ */
 + (SoomlaProfile *)getInstance;
 
 @end

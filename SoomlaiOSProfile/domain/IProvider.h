@@ -14,14 +14,18 @@
  limitations under the License.
  */
 
+#import "UserProfileUtils.h"
+
 /**
  A protocol that represents a provider, which will be used later for
  authentication and social actions.
  */
-#import "UserProfileUtils.h"
-
 @protocol IProvider <NSObject>
 
+/**
+ Retrieves the `Provider` value of the provider it implements
+ @return the `Provider` value of the provider it implements
+ */
 - (enum Provider)getProvider;
 
 @end

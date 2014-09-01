@@ -17,11 +17,9 @@
 #import "IAuthProvider.h"
 #import "SocialCallbacks.h"
 
-
-
-
 /**
- A provider that exposes social capabilities such as sharing, fetching user feeds, uploading images etc.
+ A provider that exposes social capabilities such as sharing, fetching user 
+ feeds, uploading images etc.
  */
 @protocol ISocialProvider <IAuthProvider>
 
@@ -37,13 +35,16 @@
 /**
  Share a story to the user's feed.  This is very oriented for Facebook.
  
- @param message
- @param name
- @param caption
- @param description
- @param link
- @param picture
- @param socialActionListener
+ @param message The main text which will appear in the story
+ @param name The headline for the link which will be integrated in the
+ story
+ @param caption The sub-headline for the link which will be
+ integrated in the story
+ @param description The description for the link which will be
+ integrated in the story
+ @param link The link which will be integrated into the user's story
+ @param picture a Link to a picture which will be featured in the link
+ @param socialActionListener an update story failure callback
  */
 - (void)updateStoryWithMessage:(NSString *)message
                        andName:(NSString *)name
@@ -82,25 +83,6 @@
                    andFilePath:(NSString *)filePath
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail;
-
-///**
-// Share's a photo to the user's feed
-// 
-// @param message A text that will accompany the image
-// @param fileName Where bitmap will be saved before upload
-// @param bitmap Bitmap to be uploaded
-// @param jpegQuality Hint to the compressor, 0-100. 0 meaning compress for small size,
-//                    100 meaning compress for max quality. Some formats,
-//                    like PNG which is lossless, will ignore the quality setting
-// @param success an upload image success callback
-// @param fail an upload image failure callback
-// */
-//- (void)uploadImageWithMessage:(NSString *)message
-//                   andFileName:(NSString *)fileName
-//                     andBitmap:()bitmap
-//                andJpegQuality:(int)jpegQuality
-//                       success:(socialActionSuccess)success
-//                          fail:(socialActionFail)fail;
 
 /**
  Opens up a page to like for the user (external)

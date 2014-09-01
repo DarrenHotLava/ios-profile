@@ -116,16 +116,6 @@ BOOL UsingExternalProvider;
                                andDescription:description andLink:link andPicture:picture andReward:reward];
 }
 
-//- (void)uploadImageWithProvider:(enum Provider)provider
-//                     andMessage:(NSString *)message
-//                    andFileName:(NSString *)fileName
-//       andAndroidGraphicsBitmap:(AndroidGraphicsBitmap *)bitmap
-//                 andJpegQuality:(int)jpegQuality
-//                      andReward:(Reward *)reward {
-//    [socialController uploadImageWithProvider:provider andMessage:message andFileName:fileName
-//                                    andBitmap:bitmap andJpegQuality:jpegQuality andReward:reward];
-//}
-
 - (void)uploadImageWithProvider:(enum Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath

@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-
+/**
+ an Enumaration listing all the social networks which are supported (or will be)
+ */
 typedef NS_ENUM(NSInteger, Provider) {
     FACEBOOK,
     FOURSQUARE,
@@ -30,11 +32,28 @@ typedef NS_ENUM(NSInteger, Provider) {
     FLICKR
 };
 
-
+/**
+ Utility class to help convert `Provider` enum to `NSString` and back
+ */
 @interface UserProfileUtils : NSObject
 
+/**
+ Converts `Provider` enum to a string representation
+ 
+ @param provider The provider value to convert
+ @return a String representation if the supplied provider
+ @exception NSException when the supplied provider is unspported
+ */
 + (NSString *)providerEnumToString:(enum Provider)provider;
 
+/**
+ Converts the supplied `NSString` to `Provider` if possible
+ 
+ @param providerTypeString The string to convert to `Provider`
+ @return The `Provider` value corresponding to the supplied string
+ @exception NSException when the supplied string does not have a corresponding
+ `Provider` value
+ */
 + (enum Provider)providerStringToEnum:(NSString *)provider;
 
 @end

@@ -14,7 +14,9 @@
  limitations under the License.
  */
 
-
+/**
+ an Enumaration listing all the social actions which are supported
+ */
 typedef NS_ENUM(NSInteger, SocialActionType) {
     UPDATE_STATUS,
     UPDATE_STORY,

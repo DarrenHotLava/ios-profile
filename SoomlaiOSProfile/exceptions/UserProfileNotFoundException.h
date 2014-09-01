@@ -16,6 +16,10 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ This exception is thrown when a `UserProfile` is not found on
+ the device's local storage
+ */
 @interface UserProfileNotFoundException : NSException
 
 @end

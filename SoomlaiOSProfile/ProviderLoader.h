@@ -30,11 +30,30 @@
 
 @property (strong, nonatomic) NSMutableDictionary* providers;
 
-
+/**
+ Constructor
+ 
+ @exception NSInternalInconsistencyException if trying to instantiate 
+ `ProviderLoader` itself
+ */
 - (id)init;
 
+/**
+ Loads and instatiates all providers implementing the supplied protocol
+ 
+ @param protocol The protocol which the providers should implement
+ @return YES if all providers were loaded, NO otherwise
+ */
 - (BOOL)loadProvidersWithProtocol:(Protocol *)protocol;
 
+/**
+ Retrieves an instance of a class which implements provider logic for the
+ supplied social network
+ 
+ @param provider The provider to get a concrete instance of
+ @return The instance handling social interaction with the supplied provider
+ @exception ProviderNotFoundException if the provider is not supported
+ */
 - (id<IProvider>)getProvider:(enum Provider)provider;
 
 

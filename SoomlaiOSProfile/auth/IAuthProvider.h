@@ -21,7 +21,6 @@
 
 // Define block signatures for authentication callbacks
 
-// TODO: Check if provider parameter is needed into this block.  It's not needed in the social blocks
 typedef void (^loginSuccess)(enum Provider provider);
 typedef void (^loginFail)(NSString* message);
 typedef void (^loginCancel)();

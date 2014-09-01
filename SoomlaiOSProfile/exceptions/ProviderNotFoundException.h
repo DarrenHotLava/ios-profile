@@ -16,8 +16,17 @@
 
 #import "UserProfileUtils.h"
 
+/**
+ This exception is thrown when the supplied provider is not supported
+ by the framework
+ */
 @interface ProviderNotFoundException : NSException
 
+/**
+ Constructor
+ 
+ @param provider The provider which the action was tried to be preformed on
+ */
 - (id)initWithProvider:(enum Provider)provider;
 
 @end

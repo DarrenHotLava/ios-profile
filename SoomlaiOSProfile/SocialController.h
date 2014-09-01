@@ -41,20 +41,25 @@
  @param provider the provider to use
  @param status the text to share
  @param reward the reward to grant for sharing
+ @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)updateStatusWithProvider:(enum Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
 
 /**
  Shares a story to the user's feed.  This is very oriented for Facebook.
  
- @param provider
- @param message
- @param name
- @param caption
- @param description
- @param link
- @param picture
- @param reward
+ @param provider The provider to use
+ @param message The main text which will appear in the story
+ @param name The headline for the link which will be integrated in the
+ story
+ @param caption The sub-headline for the link which will be
+ integrated in the story
+ @param description The description for the link which will be
+ integrated in the story
+ @param link The link which will be integrated into the user's story
+ @param picture a Link to a picture which will be featured in the link
+ @param reward The reward to give the user
+ @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)updateStoryWithProvider:(enum Provider)provider
                      andMessage:(NSString *)message
@@ -70,36 +75,21 @@
  
  @param provider The provider to use
  @param message A text that will accompany the image
- @param filePath The desired image's location on the device
+ @param filePath The desired image's location on the device (full path)
  @param reward The reward to grant for sharing the photo
+ @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)uploadImageWithProvider:(enum Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
                       andReward:(Reward *)reward;
 
-///**
-// * Shares a photo to the user's feed.  This is very oriented for Facebook.
-// *
-// * @param provider The provider to use
-// * @param message A text that will accompany the image
-// * @param fileName The desired image's file name
-// * @param bitmap The image to share
-// * @param jpegQuality The image's numeric quality
-// * @param reward The reward to grant for sharing the photo
-// */
-//- (void)uploadImageWithProvider:(enum Provider)provider
-//                     andMessage:(NSString *)message
-//                    andFileName:(NSString *)fileName
-//                      andBitmap:(Bitmap *)bitmap
-//                 andJpegQuality:(int)jpegQuality
-//                      andReward:(Reward *)reward;
-
 /**
  Fetches the user's contact list
  
  @param provider The provider to use
  @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)getContactsWith:(enum Provider)provider andReward:(Reward *)reward;
 
@@ -108,6 +98,7 @@ Fetches the user's feed.
 
 @param provider The provider to use
 @param reward The reward to grant
+@exception ProviderNotFoundException if the provider is not supported
 */
 - (void)getFeed:(enum Provider)provider andReward:(Reward *)reward;
 
@@ -117,6 +108,7 @@ Fetches the user's feed.
  @param provider The provider to like page on
  @param pageName The page to open on the provider
  @param reward The reward to grant when page is liked
+ @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)like:(enum Provider)provider
             andPageName:(NSString *)pageName

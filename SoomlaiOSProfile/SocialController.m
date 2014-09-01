@@ -105,29 +105,6 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-
-//- (void)uploadImageWithProvider:(enum Provider)provider
-//                     andMessage:(NSString *)message
-//                    andFileName:(NSString *)fileName
-//                      andBitmap:(Bitmap *)bitmap
-//                 andJpegQuality:(int)jpegQuality
-//                      andReward:(Reward *)reward {
-//    
-//    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
-//    
-//    // Perform upload image process
-//    [UserProfileEventHandling postSocialActionStarted:UPLOAD_IMAGE];
-//    [socialProvider uploadImageWithMessage:message andFileName:fileName andBitmap:bitmap andJpegQuality:jpegQuality success:^{
-//
-//        [UserProfileEventHandling postSocialActionFinished:UPLOAD_IMAGE];
-//        if (reward) {
-//            [reward give];
-//        }
-//    } fail:^(NSString *message) {
-//        [UserProfileEventHandling postSocialActionFailed:UPLOAD_IMAGE withMessage:message];
-//    }];
-//}
-
 - (void)getContactsWith:(enum Provider)provider andReward:(Reward *)reward {
     
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
