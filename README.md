@@ -3,9 +3,9 @@
 Haven't you ever wanted an in-app purchase one liner that looks like this ?!
 
 ```objective-c
-    [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK
-                                 andStatus:@"I Love This GAME !"
-                                 andReward:appDelegate.updateStatusReward];
+[[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK
+                             andStatus:@"I Love This GAME !"
+                             andReward:appDelegate.updateStatusReward];
 ```
 
 ios-profile
@@ -13,8 +13,8 @@ ios-profile
 
 *SOOMLA's Profile Module for iOS*
 
-**android-profile** is an open code initiative as part of The SOOMLA Project. It is a Objective-C API that unifies interaction with social and identity providers APIs, and optionally ties it together with the game's virtual economy.
-This enables to easily reward players with social actions they perform in-game, and leveraging user profiles.
+**android-profile** is an open code initiative as part of The SOOMLA Project. It is an Objective-C API that unifies interaction with social and identity providers APIs, and optionally ties it together with the game's virtual economy.
+This enables to easily reward players with social actions they perform in-game, and to leverage user profiles.
 
 ![SOOMLA's Profile Module](http://know.soom.la/img/tutorial_img/soomla_diagrams/Profile.png)
 
@@ -33,21 +33,21 @@ Getting Started
 1. Initialize **Soomla** with a secret that you chose to encrypt the user data. (For those who came from older versions, this should be the same as the old "custom secret"):
 
     ```objective-c
-     [Soomla initializeWithSecret:@"[YOUR CUSTOM GAME SECRET HERE]"];
+    [Soomla initializeWithSecret:@"[YOUR CUSTOM GAME SECRET HERE]"];
     ```
 > The secret is your encryption secret for data saved in the DB.
 
-1. If integrating with virtual economy module, please see [ios-store](https://github.com/soomla/ios-store) for store setup.
+1. If integrating a virtual economy with the store module, please see [ios-store](https://github.com/soomla/ios-store) for store setup.
 
 1. Refer to the [next section](https://github.com/soomla/ios-profile#whats-next-selecting-social-providers) for information of selecting social providers and setting them up.
 
 1. Access the Profile functionality through `SoomlaProfile`
 
     ```objective-c
-      [[SoomlaProfile getInstance] ...]
+    [[SoomlaProfile getInstance] ...]
     ```
 
-And that's it ! You have social network capabilities capabilities.
+And that's it ! You have social network capabilities.
 
 ## What's next? Selecting Social Providers
 
@@ -55,7 +55,7 @@ And that's it ! You have social network capabilities capabilities.
 
 ### Facebook
 
-Facebook is supported out-of-the-box you just have to follow the next steps to make it work:
+Facebook is supported out-of-the-box, you just have to follow the next steps to make it work:
 
 1. Add the Facebook SDK for iOS to the project's Frameworks and make sure your project links to the project
 
@@ -68,31 +68,29 @@ As part of a login call to a provider, Soomla will internally try to also fetch 
 Later, this can be retrieved locally (in offline mode) via:
 
 ```objective-c
-  UserProfile *userProfile = [[SoomlaProfile getInstance] getStoredUserProfileWithProvider:FACEBOOK];
+UserProfile *userProfile = [[SoomlaProfile getInstance] getStoredUserProfileWithProvider:FACEBOOK];
 ```
 
- This can throw a `UserProfileNotFoundException` if something strange happens to the local storage,
- in that case, you need to require a new login to get the `UserProfile` again.
+This can throw a `UserProfileNotFoundException` if something strange happens to the local storage, in that case, you need to require a new login to get the `UserProfile` again.
 
 ## Rewards feature
 
 One of the big benefits of using Soomla's profile module for social networks interactions is that you can easily tie it in with the game's virtual economy.
-This is done by the ability to specify a `Reward` (perhaps more specifically, a `VirtualItemRewrad`) to most social actions defined in `SoomlaProfile`.
+This is done by the ability to specify a `Reward` (perhaps more specifically, a `VirtualItemReward`) to most social actions defined in `SoomlaProfile`.
 
 For example, to reward a user with a "sword" virtual item upon login to Facebook:
 
-  ```objective-c
-    Reward *reward = [[VirtualItemReward alloc] initWithRewardId:@"..."
-                                                andName:@"Update Status for sword"
-                                                andAmount:1
-                                                andAssociatedItemId:@"sword"];
-    [[SoomlaProfile getInstance] loginWithProvider:FACEBOOK andReward:reward];
-  ```
+```objective-c
+Reward *reward = [[VirtualItemReward alloc] initWithRewardId:@"..."
+                                            andName:@"Update Status for sword"
+                                            andAmount:1
+                                            andAssociatedItemId:@"sword"];
+[[SoomlaProfile getInstance] loginWithProvider:FACEBOOK andReward:reward];
+```
 
-  Once login completes sucessfully (wait for `EVENT_UP_LOGIN_FINISHED`), the
-  reward will be automatically given, and synchronized with Soomla's storage.
+Once login completes sucessfully (wait for `EVENT_UP_LOGIN_FINISHED`), the reward will be automatically given, and synchronized with Soomla's storage.
 
-  The reward id is something you manage and should be unique, much like virtual items.
+The reward ID is something you manage and should be unique, much like virtual items.
 
 
 ## Debugging
@@ -118,17 +116,17 @@ SOOMLA lets you get notifications on various events and implement your own appli
 
 > Your behavior is an addition to the default behavior implemented by SOOMLA. You don't replace SOOMLA's behavior.
 
-In order to observe store events you need to import EventHandling.h and then you can add a notification to *NSNotificationCenter*:
+In order to observe store events you need to import `EventHandling.h` and then you can add a notification to `NSNotificationCenter`:
 
-  ```objective-c
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yourCustomSelector:) name:EVENT_UP_LOGIN_STARTED object:nil];
-  ```
+```objective-c
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yourCustomSelector:) name:EVENT_UP_LOGIN_STARTED object:nil];
+```
 
 OR, you can observe all events with the same selector by calling:
 
-  ```objective-c
-  [UserProfileEventHandling observeAllEventsWithObserver:self withSelector:@selector(yourCustomSelector:)];
-  ```
+```objective-c
+[UserProfileEventHandling observeAllEventsWithObserver:self withSelector:@selector(yourCustomSelector:)];
+```
 
 [List of events](https://github.com/soomla/ios-profile/blob/master/SoomlaiOSProfile/UserProfileEventHandling.h)
 
