@@ -64,7 +64,7 @@ static NSString* TAG = @"SOOMLA ProviderLoader";
     return YES;
 }
 
-- (id<IProvider>)getProvider:(enum Provider)provider {
+- (id<IProvider>)getProvider:(Provider)provider {
     id<IProvider> p = [self.providers objectForKey:@(provider)];
     if (!p) {
         @throw [[ProviderNotFoundException alloc] initWithProvider:provider];

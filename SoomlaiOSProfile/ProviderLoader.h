@@ -54,7 +54,7 @@
  @return The instance handling social interaction with the supplied provider
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (id<IProvider>)getProvider:(enum Provider)provider;
+- (id<IProvider>)getProvider:(Provider)provider;
 
 
 @end

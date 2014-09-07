@@ -18,7 +18,7 @@
 
 @implementation UserProfileUtils
 
-+ (NSString *)providerEnumToString:(enum Provider)provider {
++ (NSString *)providerEnumToString:(Provider)provider {
     
     switch(provider) {
         case FACEBOOK:
@@ -52,8 +52,8 @@
     return nil;
 }
 
-+ (enum Provider)providerStringToEnum:(NSString *)provider {
-    enum Provider result;
++ (Provider)providerStringToEnum:(NSString *)provider {
+    Provider result;
     
     if ([provider isEqualToString:@"facebook"]) {
         result = FACEBOOK;

@@ -42,7 +42,7 @@ static NSString* TAG = @"SOOMLA SocialController";
     return self;
 }
 
-- (void)updateStatusWithProvider:(enum Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
     
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
@@ -60,7 +60,7 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)updateStoryWithProvider:(enum Provider)provider
+- (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
                      andCaption:(NSString *)caption
@@ -85,7 +85,7 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)uploadImageWithProvider:(enum Provider)provider
+- (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
                       andReward:(Reward *)reward {
@@ -105,7 +105,7 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)getContactsWith:(enum Provider)provider andReward:(Reward *)reward {
+- (void)getContactsWith:(Provider)provider andReward:(Reward *)reward {
     
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
@@ -122,7 +122,7 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)getFeed:(enum Provider)provider andReward:(Reward *)reward {
+- (void)getFeed:(Provider)provider andReward:(Reward *)reward {
 
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
 
@@ -139,7 +139,7 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)like:(enum Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
+- (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
     [socialProvider like:pageName];

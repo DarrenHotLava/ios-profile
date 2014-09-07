@@ -27,6 +27,6 @@
  
  @param provider The provider which the action was tried to be preformed on
  */
-- (id)initWithProvider:(enum Provider)provider;
+- (id)initWithProvider:(Provider)provider;
 
 @end

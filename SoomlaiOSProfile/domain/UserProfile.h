@@ -36,7 +36,7 @@
     NSString* birthday;
 }
 
-@property (readonly, nonatomic) enum Provider provider;
+@property (readonly, nonatomic) Provider provider;
 @property (strong, nonatomic) NSString* profileId;
 @property (strong, nonatomic) NSString* username;
 @property (strong, nonatomic) NSString* email;
@@ -58,7 +58,7 @@
  @param oFirstName the user's first name
  @param oLastName the user's last name
  */
-- (id)initWithProvider:(enum Provider)oProvider
+- (id)initWithProvider:(Provider)oProvider
           andProfileId:(NSString *)oProfileId
            andUsername:(NSString *)oUsername
               andEmail:(NSString *)oEmail

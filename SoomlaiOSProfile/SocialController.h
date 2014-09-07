@@ -43,7 +43,7 @@
  @param reward the reward to grant for sharing
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStatusWithProvider:(enum Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
 
 /**
  Shares a story to the user's feed.  This is very oriented for Facebook.
@@ -61,7 +61,7 @@
  @param reward The reward to give the user
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStoryWithProvider:(enum Provider)provider
+- (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
                      andCaption:(NSString *)caption
@@ -79,7 +79,7 @@
  @param reward The reward to grant for sharing the photo
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)uploadImageWithProvider:(enum Provider)provider
+- (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
                       andReward:(Reward *)reward;
@@ -91,7 +91,7 @@
  @param reward The reward to grant
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)getContactsWith:(enum Provider)provider andReward:(Reward *)reward;
+- (void)getContactsWith:(Provider)provider andReward:(Reward *)reward;
 
 /**
 Fetches the user's feed.
@@ -100,7 +100,7 @@ Fetches the user's feed.
 @param reward The reward to grant
 @exception ProviderNotFoundException if the provider is not supported
 */
-- (void)getFeed:(enum Provider)provider andReward:(Reward *)reward;
+- (void)getFeed:(Provider)provider andReward:(Reward *)reward;
 
 /**
  Opens up a page to like for the user (external)
@@ -110,7 +110,7 @@ Fetches the user's feed.
  @param reward The reward to grant when page is liked
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)like:(enum Provider)provider
+- (void)like:(Provider)provider
             andPageName:(NSString *)pageName
             andReward:(Reward *)reward;
 

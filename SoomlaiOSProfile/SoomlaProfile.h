@@ -48,7 +48,7 @@
  
  @param provider The provider to use
  */
-- (void)loginWithProvider:(enum Provider)provider;
+- (void)loginWithProvider:(Provider)provider;
 
 /**
  * Login to the given provider and grant the user a reward.
@@ -57,14 +57,14 @@
  * @param reward The reward to give the user for logging in.
  *               If you want your reward to be given more than once, make it repeatable
  */
-- (void)loginWithProvider:(enum Provider)provider andReward:(Reward *)reward;
+- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward;
 
 /**
  Logout of the given provider
  
  @param provider The provider to use
  */
-- (void)logoutWithProvider:(enum Provider)provider;
+- (void)logoutWithProvider:(Provider)provider;
 
 /**
  Checks if the user is logged in with given provider
@@ -72,7 +72,7 @@
  @param provider The provider to use
  @return YES if the user is logged-in with the given provider, NO otherwise
  */
-- (BOOL)isLoggedInWithProvider:(enum Provider)provider;
+- (BOOL)isLoggedInWithProvider:(Provider)provider;
 
 /**
  Fetches the user's profile for the given provider from the local device storage
@@ -80,7 +80,7 @@
  @param provider The provider to use
  @return The user profile
  */
-- (UserProfile *)getStoredUserProfileWithProvider:(enum Provider)provider;
+- (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider;
 
 /**
  Shares the given status to the user's feed and grants the user a reward.
@@ -89,7 +89,7 @@
  @param status The text to share
  @param reward The reward to give the user
  */
-- (void)updateStatusWithProvider:(enum Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
 
 /**
  Shares a story to the user's feed and grants the user a reward.
@@ -106,7 +106,7 @@
  @param picture a Link to a picture which will be featured in the link
  @param reward The reward to give the user
  */
-- (void)updateStoryWithProvider:(enum Provider)provider
+- (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
                      andCaption:(NSString *)caption
@@ -123,7 +123,7 @@
  @param filePath The desired image's location on the device
  @param reward The reward to give the user
  */
-- (void)uploadImageWithProvider:(enum Provider)provider
+- (void)uploadImageWithProvider:(Provider)provider
                    andMessage:(NSString *)message
                    andFilePath:(NSString *)filePath
                       andReward:(Reward *)reward;
@@ -135,7 +135,7 @@
  @param provider The provider to use
  @param reward The reward to grant
  */
-- (void)getContactsWithProvider:(enum Provider)provider andReward:(Reward *)reward;
+- (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward;
 
 /**
 Fetches the user's feed and grants the user a reward.
@@ -143,7 +143,7 @@ Fetches the user's feed and grants the user a reward.
 @param provider The provider to use
 @param reward The reward to grant
 */
-- (void)getFeedWithProvider:(enum Provider)provider andReward:(Reward *)reward;
+- (void)getFeedWithProvider:(Provider)provider andReward:(Reward *)reward;
 
 /**
  Opens up a page to like for the user (external)
@@ -152,7 +152,7 @@ Fetches the user's feed and grants the user a reward.
  @param pageName The page to open on the provider
  @param reward The reward to grant when page is liked
  */
-- (void)like:(enum Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward;
+- (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward;
 
 /**
  Utility method to open up the market application rating page

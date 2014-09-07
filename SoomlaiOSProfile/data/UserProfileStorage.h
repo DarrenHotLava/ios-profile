@@ -46,6 +46,6 @@
  @param provider the provider which will be used to fetch the user profile
  @return a user profile
  */
-+ (UserProfile *)getUserProfile:(enum Provider)provider;
++ (UserProfile *)getUserProfile:(Provider)provider;
 
 @end

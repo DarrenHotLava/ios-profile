@@ -50,7 +50,7 @@ static NSString* TAG = @"SOOMLA AuthController";
     return self;
 }
 
-- (void)loginWithProvider:(enum Provider)provider andReward:(Reward *)reward {
+- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward {
     
     
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
@@ -59,7 +59,7 @@ static NSString* TAG = @"SOOMLA AuthController";
     // Perform login process
     // TODO: Check if need to change any nonatomic properties
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [authProvider login:^(enum Provider provider) {
+        [authProvider login:^(Provider provider) {
             [authProvider getUserProfile: ^(UserProfile *userProfile) {
                 [UserProfileStorage setUserProfile:userProfile];
                 [UserProfileEventHandling postLoginFinished:userProfile];
@@ -78,7 +78,7 @@ static NSString* TAG = @"SOOMLA AuthController";
     }];
 }
 
-- (void)logoutWithProvider:(enum Provider)provider {
+- (void)logoutWithProvider:(Provider)provider {
     
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
     UserProfile* userProfile = nil;
@@ -103,12 +103,12 @@ static NSString* TAG = @"SOOMLA AuthController";
     }];
 }
 
-- (BOOL)isLoggedInWithProvider:(enum Provider)provider {
+- (BOOL)isLoggedInWithProvider:(Provider)provider {
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
     return [authProvider isLoggedIn];
 }
 
-- (UserProfile *)getStoredUserProfileWithProvider:(enum Provider)provider {
+- (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider {
     UserProfile* userProfile = [UserProfileStorage getUserProfile:provider];
     if (!userProfile) {
         @throw [[UserProfileNotFoundException alloc] init];

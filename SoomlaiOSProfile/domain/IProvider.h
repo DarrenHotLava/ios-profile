@@ -26,6 +26,6 @@
  Retrieves the `Provider` value of the provider it implements
  @return the `Provider` value of the provider it implements
  */
-- (enum Provider)getProvider;
+- (Provider)getProvider;
 
 @end

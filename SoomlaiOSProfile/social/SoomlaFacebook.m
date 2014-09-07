@@ -67,7 +67,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     }
 }
 
-- (enum Provider)getProvider {
+- (Provider)getProvider {
     return FACEBOOK;
 }
 

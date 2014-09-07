@@ -17,20 +17,20 @@
 /**
  an Enumaration listing all the social networks which are supported (or will be)
  */
-typedef NS_ENUM(NSInteger, Provider) {
-    FACEBOOK,
-    FOURSQUARE,
-    GOOGLE,
-    LINKEDIN,
-    MYSPACE,
-    TWITTER,
-    YAHOO,
-    SALESFORCE,
-    YAMMER,
-    RUNKEEPER,
-    INSTAGRAM,
-    FLICKR
-};
+typedef enum {
+    FACEBOOK = 0,
+    FOURSQUARE = 1,
+    GOOGLE = 2,
+    LINKEDIN = 3,
+    MYSPACE = 4,
+    TWITTER = 5,
+    YAHOO = 6,
+    SALESFORCE = 7,
+    YAMMER = 8,
+    RUNKEEPER = 9,
+    INSTAGRAM = 10,
+    FLICKR = 11
+} Provider;
 
 /**
  Utility class to help convert `Provider` enum to `NSString` and back
@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, Provider) {
  @return a String representation if the supplied provider
  @exception NSException when the supplied provider is unspported
  */
-+ (NSString *)providerEnumToString:(enum Provider)provider;
++ (NSString *)providerEnumToString:(Provider)provider;
 
 /**
  Converts the supplied `NSString` to `Provider` if possible
@@ -54,6 +54,6 @@ typedef NS_ENUM(NSInteger, Provider) {
  @exception NSException when the supplied string does not have a corresponding
  `Provider` value
  */
-+ (enum Provider)providerStringToEnum:(NSString *)provider;
++ (Provider)providerStringToEnum:(NSString *)provider;
 
 @end

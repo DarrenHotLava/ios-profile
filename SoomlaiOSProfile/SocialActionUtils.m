@@ -18,7 +18,7 @@
 
 @implementation SocialActionUtils
 
-+ (NSString*)actionEnumToString:(enum SocialActionType)actionType {
++ (NSString*)actionEnumToString:(SocialActionType)actionType {
     switch (actionType) {
         case UPDATE_STATUS:
             return @"UPDATE_STATUS";
@@ -43,7 +43,7 @@
     return nil;
 }
 
-+ (enum SocialActionType)actionStringToEnum:(NSString *)actionTypeString {
++ (SocialActionType)actionStringToEnum:(NSString *)actionTypeString {
     if ([actionTypeString isEqualToString:@"UPDATE_STATUS"]) {
         return UPDATE_STATUS;
     }

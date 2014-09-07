@@ -48,7 +48,7 @@
  @param reward The reward to grant the user for logging in
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)loginWithProvider:(enum Provider)provider andReward:(Reward *)reward;
+- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward;
 
 /**
  Logs out of the given provider
@@ -56,7 +56,7 @@
  @param provider The provider to logout from
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)logoutWithProvider:(enum Provider)provider;
+- (void)logoutWithProvider:(Provider)provider;
 
 /**
  Checks if the user is logged in with given provider
@@ -65,7 +65,7 @@
  @return YES if the user is logged-in with the given provider, NO otherwise
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (BOOL)isLoggedInWithProvider:(enum Provider)provider;
+- (BOOL)isLoggedInWithProvider:(Provider)provider;
 
 /**
  Fetches the user profile for the given provider from the device's storage.
@@ -74,6 +74,6 @@
  @return The user profile for the given provider
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (UserProfile *)getStoredUserProfileWithProvider:(enum Provider)provider;
+- (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider;
 
 @end

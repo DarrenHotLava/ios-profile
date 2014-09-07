@@ -45,7 +45,7 @@ static NSString* TAG            = @"SOOMLA UserProfileStorage";
     [KeyValueStorage deleteValueForKey:key];
 }
 
-+ (UserProfile *)getUserProfile:(enum Provider)provider {
++ (UserProfile *)getUserProfile:(Provider)provider {
     
     NSString* key = [self keyUserProfile:provider];
     NSString* userProfileJSON = [KeyValueStorage getValueForKey:key];
@@ -58,7 +58,7 @@ static NSString* TAG            = @"SOOMLA UserProfileStorage";
     return userProfile;
 }
 
-+ (NSString *)keyUserProfile:(enum Provider)provider {
++ (NSString *)keyUserProfile:(Provider)provider {
     return [NSString stringWithFormat:@"%@userprofile.%@", DB_KEY_PREFIX, [UserProfileUtils providerEnumToString:provider]];
 }
 

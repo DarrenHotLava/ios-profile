@@ -21,7 +21,7 @@
 
 // Define block signatures for authentication callbacks
 
-typedef void (^loginSuccess)(enum Provider provider);
+typedef void (^loginSuccess)(Provider provider);
 typedef void (^loginFail)(NSString* message);
 typedef void (^loginCancel)();
 typedef void (^userProfileSuccess)(UserProfile* userProfile);

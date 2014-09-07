@@ -18,7 +18,7 @@
 
 @implementation ProviderNotFoundException
 
-- (id)initWithProvider:(enum Provider)provider {
+- (id)initWithProvider:(Provider)provider {
     NSString* reason = [NSString stringWithFormat:@"Provider not found when search with '%@'", [UserProfileUtils providerEnumToString:provider]];
     NSDictionary* userInfo = @{@"provider" : @(provider)};
 

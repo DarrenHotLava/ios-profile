@@ -17,13 +17,13 @@
 /**
  an Enumaration listing all the social actions which are supported
  */
-typedef NS_ENUM(NSInteger, SocialActionType) {
-    UPDATE_STATUS,
-    UPDATE_STORY,
-    UPLOAD_IMAGE,
-    GET_CONTACTS,
-    GET_FEED
-};
+typedef enum {
+    UPDATE_STATUS = 0,
+    UPDATE_STORY = 1,
+    UPLOAD_IMAGE = 2,
+    GET_CONTACTS = 3,
+    GET_FEED = 4
+} SocialActionType;
 
 /**
  Utility methods
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, SocialActionType) {
  @param actionType The action enum to map
  @return A string representing the action enum
  */
-+ (NSString *)actionEnumToString:(enum SocialActionType)actionType;
++ (NSString *)actionEnumToString:(SocialActionType)actionType;
 
 /**
  Maps an action string to its corresponding enum value
@@ -44,6 +44,6 @@ typedef NS_ENUM(NSInteger, SocialActionType) {
  @param actionTypeString The action string to map
  @return An enum representing the action string
  */
-+ (enum SocialActionType)actionStringToEnum:(NSString *)actionTypeString;
++ (SocialActionType)actionStringToEnum:(NSString *)actionTypeString;
 
 @end

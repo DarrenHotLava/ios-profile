@@ -22,7 +22,7 @@
 @synthesize provider, profileId, email, username, firstName, lastName, avatarLink, location, gender, language, birthday;
 
 
-- (id)initWithProvider:(enum Provider)oProvider
+- (id)initWithProvider:(Provider)oProvider
           andProfileId:(NSString *)oProfileId
            andUsername:(NSString *)oUsername
               andEmail:(NSString *)oEmail

@@ -51,11 +51,11 @@ BOOL UsingExternalProvider;
     return self;
 }
 
-- (void)loginWithProvider:(enum Provider)provider {
+- (void)loginWithProvider:(Provider)provider {
     [self loginWithProvider:provider andReward:nil];
 }
 
-- (void)loginWithProvider:(enum Provider)provider andReward:(Reward *)reward {
+- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward {
     @try {
         [authController loginWithProvider:provider andReward:reward];
     }
@@ -66,7 +66,7 @@ BOOL UsingExternalProvider;
     }
 }
 
-- (void)logoutWithProvider:(enum Provider)provider {
+- (void)logoutWithProvider:(Provider)provider {
     @try {
         [authController logoutWithProvider:provider];
     }
@@ -77,7 +77,7 @@ BOOL UsingExternalProvider;
     }
 }
 
-- (BOOL)isLoggedInWithProvider:(enum Provider)provider {
+- (BOOL)isLoggedInWithProvider:(Provider)provider {
     @try {
         return [authController isLoggedInWithProvider:provider];
     }
@@ -89,7 +89,7 @@ BOOL UsingExternalProvider;
 
 }
 
-- (UserProfile *)getStoredUserProfileWithProvider:(enum Provider)provider {
+- (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider {
     @try {
         [authController getStoredUserProfileWithProvider:provider];
     }
@@ -100,11 +100,11 @@ BOOL UsingExternalProvider;
     }
 }
 
-- (void)updateStatusWithProvider:(enum Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
     [socialController updateStatusWithProvider:provider andStatus:status andReward:reward];
 }
 
-- (void)updateStoryWithProvider:(enum Provider)provider
+- (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
                      andCaption:(NSString *)caption
@@ -116,22 +116,22 @@ BOOL UsingExternalProvider;
                                andDescription:description andLink:link andPicture:picture andReward:reward];
 }
 
-- (void)uploadImageWithProvider:(enum Provider)provider
+- (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
                       andReward:(Reward *)reward {
     [socialController uploadImageWithProvider:provider andMessage:message andFilePath:filePath andReward:reward];
 }
 
-- (void)getContactsWithProvider:(enum Provider)provider andReward:(Reward *)reward {
+- (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward {
     [socialController getContactsWith:provider andReward:reward];
 }
 
-- (void)getFeedWithProvider:(enum Provider)provider andReward:(Reward *)reward {
+- (void)getFeedWithProvider:(Provider)provider andReward:(Reward *)reward {
     [socialController getFeed:provider andReward:reward];
 }
 
-- (void)like:(enum Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
+- (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
     [socialController like:provider andPageName:pageName andReward:reward];
 }
 
