@@ -25,6 +25,8 @@
 
 #define EVENT_UP_USER_PROFILE_UPDATED           @"up_user_profile_updated"
 
+#define EVENT_UP_APP_RATING_PAGE_OPENED         @"up_app_rating_page_opened"
+
 #define EVENT_UP_LOGIN_STARTED                  @"up_login_started"
 #define EVENT_UP_LOGIN_FINISHED                 @"up_login_finished"
 #define EVENT_UP_LOGIN_FAILED                   @"up_login_failed"
@@ -79,6 +81,11 @@
 Called when the service has been initializedt.
 */
 + (void)postProfileInitialized;
+
+/**
+ Called when the app's rating page is opened
+ */
++ (void)postMarketAppPageOpened;
 
 /**
  Called when a user profile from a provider has been retrieved

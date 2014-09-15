@@ -23,6 +23,7 @@
 
 + (void)observeAllEventsWithObserver:(id)observer withSelector:(SEL)selector {
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_PROFILE_INITIALIZED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_APP_RATING_PAGE_OPENED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_USER_PROFILE_UPDATED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_LOGIN_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_LOGIN_FINISHED object:nil];
@@ -45,6 +46,10 @@
 
 + (void)postProfileInitialized {
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_PROFILE_INITIALIZED object:self userInfo:@{}];
+}
+
++ (void)postMarketAppPageOpened {
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_APP_RATING_PAGE_OPENED object:self userInfo:@{}];
 }
 
 + (void)postUserProfileUpdated:(UserProfile *)userProfile {

@@ -144,6 +144,8 @@ BOOL UsingExternalProvider;
     NSString* reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+    
+    [UserProfileEventHandling postMarketAppPageOpened];
 }
 
 // private
