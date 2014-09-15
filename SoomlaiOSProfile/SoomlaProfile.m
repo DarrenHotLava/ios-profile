@@ -19,6 +19,7 @@
 #import "AuthController.h"
 #import "SocialController.h"
 #import "UserProfileUtils.h"
+#import "UserProfileEventHandling.h"
 
 #import <UIKit/UIKit.h>
 
@@ -46,6 +47,8 @@ BOOL UsingExternalProvider;
             authController = [[AuthController alloc] init];
             socialController = [[SocialController alloc] init];
         }
+
+        [UserProfileEventHandling postProfileInitialized];
     }
     
     return self;
