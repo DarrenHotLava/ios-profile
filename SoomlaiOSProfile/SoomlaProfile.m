@@ -145,7 +145,7 @@ BOOL UsingExternalProvider;
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
     
-    [UserProfileEventHandling postMarketAppPageOpened];
+    [UserProfileEventHandling postUserRating];
 }
 
 // private
