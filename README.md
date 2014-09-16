@@ -39,12 +39,16 @@ Getting Started
 
 1. If integrating a virtual economy with the store module, please see [ios-store](https://github.com/soomla/ios-store) for store setup.
 
+1. Initalize Soomla Profile:
+  ```objective-c
+  [[SoomlaProfile getInstance] initialize];
+  ```
 1. Refer to the [next section](https://github.com/soomla/ios-profile#whats-next-selecting-social-providers) for information of selecting social providers and setting them up.
 
 1. Access the Profile functionality through `SoomlaProfile`
 
     ```objective-c
-    [[SoomlaProfile getInstance] ...]
+    [[SoomlaProfile getInstance] ...];
     ```
 
 And that's it ! You have social network capabilities.

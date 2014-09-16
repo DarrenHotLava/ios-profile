@@ -41,7 +41,7 @@
  
  Initializes the Profile module.  Call this method after <code>Soomla.initialize()</code>
  */
-- (id)init;
+- (void)initialize;
 
 /**
  Login to the given provider

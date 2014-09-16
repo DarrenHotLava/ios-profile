@@ -47,7 +47,9 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFinished:) name:EVENT_UP_GET_FEED_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedFailed:) name:EVENT_UP_GET_FEED_FAILED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewardGiven:) name:EVENT_REWARD_GIVEN object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileInitialized:) name:EVENT_UP_PROFILE_INITIALIZED object:nil];
     
+    [[SoomlaProfile getInstance] initialize];
     if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
         [self showSocialUI];
     }
@@ -188,6 +190,9 @@ static NSString* TAG = @"SOOMLA ViewController";
     NSLog(@"Reward Given: %@", [(Reward *)notification.userInfo[DICT_ELEMENT_REWARD] name]);
 }
 
+- (void)profileInitialized:(NSNotification*)notification {
+    NSLog(@"PROFILE was initalized!");
+}
 
 - (IBAction)uploadImageTouched:(id)sender {
     // Open the image picker and set this class as the delegate

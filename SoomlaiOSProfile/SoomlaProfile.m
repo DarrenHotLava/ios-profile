@@ -37,21 +37,17 @@ BOOL UsingExternalProvider;
     return UsingExternalProvider;
 }
 
-- (id)init {
-    if (self = [super init]) {
-        if (UsingExternalProvider) {
-            authController = [[AuthController alloc] initWithoutLoadingProviders];
-            socialController = [[SocialController alloc] initWithoutLoadingProviders];
-        }
-        else {
-            authController = [[AuthController alloc] init];
-            socialController = [[SocialController alloc] init];
-        }
-
-        [UserProfileEventHandling postProfileInitialized];
+- (void)initialize {
+    if (UsingExternalProvider) {
+        authController = [[AuthController alloc] initWithoutLoadingProviders];
+        socialController = [[SocialController alloc] initWithoutLoadingProviders];
+    }
+    else {
+        authController = [[AuthController alloc] init];
+        socialController = [[SocialController alloc] init];
     }
     
-    return self;
+    [UserProfileEventHandling postProfileInitialized];
 }
 
 - (void)loginWithProvider:(Provider)provider {
