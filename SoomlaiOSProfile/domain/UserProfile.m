@@ -15,6 +15,8 @@
  */
 
 #import "UserProfile.h"
+#import "JSONConsts.h"
+#import "SoomlaUtils.h"
 #import "PJSONConsts.h"
 
 @implementation UserProfile
@@ -61,6 +63,7 @@
 
 - (NSDictionary*)toDictionary {
     return [[NSDictionary alloc] initWithObjectsAndKeys:
+            [SoomlaUtils getClassName:self], SOOM_CLASSNAME,
             [UserProfileUtils providerEnumToString:self.provider], UP_PROVIDER,
             (self.profileId ?: [NSNull null]), UP_PROFILEID,
             (self.username ?: [NSNull null]), UP_USERNAME,
