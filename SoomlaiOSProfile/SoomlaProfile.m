@@ -90,7 +90,7 @@ BOOL UsingExternalProvider;
 
 - (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider {
     @try {
-        [authController getStoredUserProfileWithProvider:provider];
+        return [authController getStoredUserProfileWithProvider:provider];
     }
     @catch (NSException *exception) {
         
