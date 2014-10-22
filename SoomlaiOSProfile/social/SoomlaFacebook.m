@@ -105,7 +105,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
  */
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail {
     LogDebug(TAG, @"Getting user profile");
-    [self checkPermissions: @[@"public_profile", @"user_birthday"]
+    [self checkPermissions: @[@"public_profile", @"user_birthday"] withWrite:NO
                    success:^() {
 
         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -161,7 +161,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
     LogDebug(TAG, @"Updating status");
 
-    [self checkPermissions: @[@"publish_actions"]
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES
                    success:^() {
 
         // NOTE: pre-filling fields associated with Facebook posts,
@@ -193,7 +193,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail {
 
-    [self checkPermissions: @[@"publish_actions"]
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES
                    success:^() {
 
 // NOTE: pre-filling fields associated with Facebook posts,
@@ -228,7 +228,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 - (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail {
 //    NSLog(@"============================ getContacts ============================");
 
-    [self checkPermissions: @[@"user_friends"]
+    [self checkPermissions: @[@"user_friends"] withWrite:NO
                    success:^() {
 
         /* make the API call */
@@ -278,7 +278,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 - (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail {
 //    NSLog(@"============================ getFeed ============================");
 
-    [self checkPermissions: @[@"read_stream"]
+    [self checkPermissions: @[@"read_stream"] withWrite:NO
                    success:^() {
 
         /* make the API call */
@@ -318,7 +318,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail {
 
-    [self checkPermissions: @[@"publish_actions"]
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES
                    success:^() {
         UIImage *image = [UIImage imageWithContentsOfFile:filePath];
         // Put together the dialog parameters
@@ -456,7 +456,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 A helper method for requesting user data from Facebook.
 */
 
-- (void)checkPermissions: (NSArray*)permissionsNeeded success:(void (^)())success fail:(void(^)(NSString* message))fail {
+- (void)checkPermissions: (NSArray*)permissionsNeeded withWrite:(BOOL)writePermissions success:(void (^)())success fail:(void(^)(NSString* message))fail {
     LogDebug(TAG, @"Getting user profile");
 
     // Request the permissions the user currently has
@@ -486,17 +486,34 @@ A helper method for requesting user data from Facebook.
 
             // If we have permissions to request
             if ([requestPermissions count] > 0) {
-                // Ask for the missing permissions
-                [FBSession.activeSession
-                        requestNewReadPermissions:requestPermissions
-                                completionHandler:^(FBSession *session, NSError *error) {
-                    if (!error) {
-                        // Permission granted, we can go on
-                        success();
-                    } else {
-                        fail(error.description);
-                    }
-                }];
+                
+                if (writePermissions) {
+                    // Ask for the missing read permissions
+                    [FBSession.activeSession
+                     requestNewPublishPermissions:requestPermissions
+                     defaultAudience:FBSessionDefaultAudienceFriends 
+                     completionHandler:^(FBSession *session, NSError *error) {
+                         if (!error) {
+                             // Permission granted, we can go on
+                             success();
+                         } else {
+                             fail(error.description);
+                         }
+                     }];
+                }
+                else {
+                    // Ask for the missing publish permissions
+                    [FBSession.activeSession
+                     requestNewReadPermissions:requestPermissions
+                     completionHandler:^(FBSession *session, NSError *error) {
+                         if (!error) {
+                             // Permission granted, we can go on
+                             success();
+                         } else {
+                             fail(error.description);
+                         }
+                     }];
+                }
             } else {
                 // Permissions are present
                 // We can go on
