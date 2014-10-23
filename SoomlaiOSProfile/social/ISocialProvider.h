@@ -33,6 +33,16 @@
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail;
 
 /**
+ Shares the given status and link to the user's feed using the provider's
+ native dialog (when available)
+ 
+ @param link the link to share (could be nil when not needed)
+ @param success a status update success callback
+ @param fail a status update failure callback
+ */
+- (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail;
+
+/**
  Share a story to the user's feed.  This is very oriented for Facebook.
  
  @param message The main text which will appear in the story
@@ -54,6 +64,28 @@
                     andPicture:(NSString *)picture
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail;
+
+/**
+ Share a story to the user's feed.  This is very oriented for Facebook.
+ Using the provider's native dialog (when available)
+ 
+ @param name The headline for the link which will be integrated in the
+ story
+ @param caption The sub-headline for the link which will be
+ integrated in the story
+ @param description The description for the link which will be
+ integrated in the story
+ @param link The link which will be integrated into the user's story
+ @param picture a Link to a picture which will be featured in the link
+ @param socialActionListener an update story failure callback
+ */
+- (void)updateStoryWithMessageDialog:(NSString *)name
+                          andCaption:(NSString *)caption
+                      andDescription:(NSString *)description
+                             andLink:(NSString *)link
+                          andPicture:(NSString *)picture
+                             success:(socialActionSuccess)success
+                                fail:(socialActionFail)fail;
 
 /**
  Fetches the user's contact list

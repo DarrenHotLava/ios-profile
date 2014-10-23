@@ -81,6 +81,9 @@ static NSString* TAG = @"SOOMLA ViewController";
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
     [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK andStatus:@"Test status" andReward:appDelegate.updateStatusReward];
+    
+    // Or with dialog
+    //[[SoomlaProfile getInstance] updateStatusWithProviderDialog:FACEBOOK andLink:@"http://www.soom.la" andReward:appDelegate.updateStatusReward];
 }
 
 - (IBAction)updateStoryButtonTouched:(id)sender {
@@ -96,6 +99,14 @@ static NSString* TAG = @"SOOMLA ViewController";
                                                  andLink:@"https://developers.facebook.com/docs/ios/share/"
                                               andPicture:@"http://i.imgur.com/g3Qc1HN.png"
                                                andReward:appDelegate.updateStatusReward];
+    // Or with dialog
+    // [[SoomlaProfile getInstance] updateStoryWithProviderDialog:FACEBOOK
+    //                                             andName:@"Name"
+    //                                          andCaption:@"Caption"
+    //                                      andDescription:@"Description"
+    //                                             andLink:@"http://www.soom.la"
+    //                                          andPicture:@"http://i.imgur.com/g3Qc1HN.png"
+    //                                           andReward:appDelegate.updateStatusReward];
 }
 
 - (void)loginStarted:(NSNotification*)notification {

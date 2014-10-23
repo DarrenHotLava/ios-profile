@@ -92,6 +92,17 @@
 - (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
 
 /**
+ Shares the given status and link to the user's feed using the provider's
+ native dialog (when available)
+ 
+ @param provider the provider to use
+ @param link the link to share (could be nil when not needed)
+ @param reward the reward to grant for sharing
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andReward:(Reward *)reward;
+
+/**
  Shares a story to the user's feed and grants the user a reward.
  
  @param provider The provider to use
@@ -108,6 +119,29 @@
  */
 - (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
+                        andName:(NSString *)name
+                     andCaption:(NSString *)caption
+                 andDescription:(NSString *)description
+                        andLink:(NSString *)link
+                     andPicture:(NSString *)picture
+                      andReward:(Reward *)reward;
+
+/**
+ Shares a story to the user's feed and grants the user a reward, using the
+ provider's native dialog (when available)
+ 
+ @param provider The provider to use
+ @param name The headline for the link which will be integrated in the
+ story
+ @param caption The sub-headline for the link which will be
+ integrated in the story
+ @param description The description for the link which will be
+ integrated in the story
+ @param link The link which will be integrated into the user's story
+ @param picture a Link to a picture which will be featured in the link
+ @param reward The reward to give the user
+ */
+- (void)updateStoryWithProviderDialog:(Provider)provider
                         andName:(NSString *)name
                      andCaption:(NSString *)caption
                  andDescription:(NSString *)description

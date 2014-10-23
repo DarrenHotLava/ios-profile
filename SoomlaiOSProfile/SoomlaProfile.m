@@ -103,6 +103,10 @@ BOOL UsingExternalProvider;
     [socialController updateStatusWithProvider:provider andStatus:status andReward:reward];
 }
 
+- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andReward:(Reward *)reward {
+    [socialController updateStatusWithProviderDialog:provider andLink:link andReward:reward];
+}
+
 - (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
@@ -112,6 +116,17 @@ BOOL UsingExternalProvider;
                      andPicture:(NSString *)picture
                       andReward:(Reward *)reward {
     [socialController updateStoryWithProvider:provider andMessage:message andName:name andCaption:caption
+                               andDescription:description andLink:link andPicture:picture andReward:reward];
+}
+
+- (void)updateStoryWithProviderDialog:(Provider)provider
+                                  andName:(NSString *)name
+                               andCaption:(NSString *)caption
+                           andDescription:(NSString *)description
+                                  andLink:(NSString *)link
+                               andPicture:(NSString *)picture
+                                andReward:(Reward *)reward {
+    [socialController updateStoryWithProviderDialog:provider andName:name andCaption:caption
                                andDescription:description andLink:link andPicture:picture andReward:reward];
 }
 

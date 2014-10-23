@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb6037895039</string>
+				<string>fb409611972431183</string>
 			</array>
 		</dict>
 	</array>
@@ -36,7 +36,7 @@
 	<key>FacebookAppID</key>
 	<string>409611972431183</string>
 	<key>FacebookDisplayName</key>
-	<string>SoomlaiOSProfileExample</string>
+	<string>SOOMLA</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>

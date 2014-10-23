@@ -60,6 +60,23 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
+- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andReward:(Reward *)reward {
+    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
+    
+    
+    // Perform update status process with dialog
+    [UserProfileEventHandling postSocialActionStarted:provider withType:UPDATE_STATUS];
+    [socialProvider updateStatusWithProviderDialog:link success:^{
+        [UserProfileEventHandling postSocialActionFinished:provider withType:UPDATE_STATUS];
+        
+        if (reward) {
+            [reward give];
+        }
+    } fail:^(NSString *message) {
+        [UserProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STATUS withMessage:message];
+    }];
+}
+
 - (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
@@ -83,6 +100,29 @@ static NSString* TAG = @"SOOMLA SocialController";
     } fail:^(NSString *message) {
         [UserProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STORY withMessage:message];
     }];
+}
+
+- (void)updateStoryWithProviderDialog:(Provider)provider
+                              andName:(NSString *)name
+                           andCaption:(NSString *)caption
+                       andDescription:(NSString *)description
+                              andLink:(NSString *)link
+                           andPicture:(NSString *)picture
+                            andReward:(Reward *)reward {
+    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
+    
+    // Perform update story process
+    [UserProfileEventHandling postSocialActionStarted:provider withType:UPDATE_STORY];
+    [socialProvider updateStoryWithMessageDialog:name andCaption:caption
+                            andDescription:description andLink:link andPicture:picture success:^{
+                                
+                                [UserProfileEventHandling postSocialActionFinished:provider withType:UPDATE_STORY];
+                                if (reward) {
+                                    [reward give];
+                                }
+                            } fail:^(NSString *message) {
+                                [UserProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STORY withMessage:message];
+                            }];
 }
 
 - (void)uploadImageWithProvider:(Provider)provider

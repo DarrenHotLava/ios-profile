@@ -184,6 +184,118 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     }];
 }
 
+- (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail {
+    LogDebug(TAG, @"Updating status");
+    
+    [self openDialog:link andName:nil andCaption:nil andDescription:nil andPicture:nil success:success fail:fail];
+}
+
+-(void) openDialog:(NSString *)link
+           andName:(NSString *)name
+        andCaption:(NSString *)caption
+    andDescription:(NSString *)description
+        andPicture:(NSString *)picture
+           success:(socialActionSuccess)success
+              fail:(socialActionFail)fail {
+    [self checkPermissions:@[@"publish_actions"] withWrite:YES success:^{
+        
+        FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
+        if (link) {
+            params.link = [NSURL URLWithString:link];
+            if (name) {
+                params.name = name;
+            }
+            if (caption) {
+                params.caption = caption;
+            }
+            if (description) {
+                params.linkDescription = description;
+            }
+            if (picture) {
+                params.picture = [NSURL URLWithString:picture];
+            }
+        }
+        
+        // If the Facebook app is installed and we can present the share dialog
+        if ([FBDialogs canPresentShareDialogWithParams:params]) {
+            [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                if (!error) {
+                    NSString *postId = results[@"postId"];
+                    if (postId) {
+                        success();
+                    }
+                    else {
+                        fail(@"User did not complete share operation");
+                    }
+                } else {
+                    // An error occurred, we need to handle the error
+                    // See: https://developers.facebook.com/docs/ios/errors
+                    fail(error.description);
+                }
+            }];
+        } else {
+            // If the Facebook app is not installed fallback to web dialogs
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            if (link) {
+                [params setObject:link forKey:@"link"];
+                if (name) {
+                    [params setObject:name forKey:@"name"];
+                }
+                if (caption) {
+                    [params setObject:caption forKey:@"caption"];
+                }
+                if (description) {
+                    [params setObject:description forKey:@"description"];
+                }
+                if (picture) {
+                    [params setObject:picture forKey:@"picture"];
+                }
+            }
+            
+            // Invoke the dialog
+            [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                                   parameters:params
+                                                      handler:
+             ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                 if (error) {
+                     fail(error.description);
+                 } else {
+                     if (result == FBWebDialogResultDialogNotCompleted) {
+                         // User clicked the "x" icon
+                         fail(@"User canceled story publishing.");
+                     } else {
+                         // Handle the publish feed callback
+                         NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                         if (![urlParams valueForKey:@"post_id"]) {
+                             // User clicked the Cancel button
+                             fail(@"User canceled story publishing.");
+                         } else {
+                             success();
+                         }
+                     }
+                 }
+             }];
+        }
+    } fail:^(NSString *errorMessage) {
+        fail(errorMessage);
+    }];
+}
+
+/**
+ * A function for parsing URL parameters.
+ */
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
+
 - (void)updateStoryWithMessage:(NSString *)message
                        andName:(NSString *)name
                     andCaption:(NSString *)caption
@@ -223,6 +335,18 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     } fail:^(NSString *errorMessage) {
         fail(errorMessage);
     }];
+}
+
+- (void)updateStoryWithMessageDialog:(NSString *)name
+                          andCaption:(NSString *)caption
+                      andDescription:(NSString *)description
+                             andLink:(NSString *)link
+                          andPicture:(NSString *)picture
+                             success:(socialActionSuccess)success
+                                fail:(socialActionFail)fail {
+    LogDebug(TAG, @"Updating story");
+    
+    [self openDialog:link andName:name andCaption:caption andDescription:description andPicture:picture success:success fail:fail];
 }
 
 - (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail {
