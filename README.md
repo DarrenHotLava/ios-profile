@@ -143,6 +143,24 @@ In order to run the project follow this steps:
 1. Open the `SoomlaiOSProfileExample.xcodeproj` project in XCode
 1. Run the project on Simulator or on Device
 
+## Facebook Caveats
+
+1. **Facebook Application** - You must create a Facebook application and use its details in your Profile-based application (with Facebook)
+
+1. **Facebook ID and Display name** - The Facebook application's ID and Name must be used in your application, this information must be added to the application's `plist` file, under `FacebookAppID` (App ID) and `FacebookDisplayName` (Application name)
+
+1. **URL Schemes and openURL** - To support web-based authorization and dialogs the application needs to handle URL schemes (see [here](https://developers.facebook.com/docs/facebook-login/ios/v2.1) for more information):
+  1. Under the project's info add an entry to `URL Types` and under `URL Schemes` add the string `fbxxxxxxx` the x's should be replaced with your Facebook App ID.
+  1. Also in your `AppDelegate` add the following code:
+
+  ```objective-c
+  - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+      BOOL urlWasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication fallbackHandler:^(FBAppCall *call) {
+        return urlWasHandled;
+      }
+  ```
+1. **Facebook Permissions** - Profile will request `publish_actions` from the user of the application, to test the application please make sure you test with either Admin, Developer or Tester roles
+
 Our way of saying "Thanks !"
 ---
 
