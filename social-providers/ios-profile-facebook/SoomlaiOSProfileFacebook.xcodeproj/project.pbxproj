@@ -11,7 +11,7 @@
 		F80C71B019FFA2610027AF9A /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */; };
 		F80C71B219FFA2910027AF9A /* SoomlaFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C71B419FFA4AA0027AF9A /* Foundation.framework */; };
-		F80C71B919FFA4E40027AF9A /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C71B819FFA4E40027AF9A /* FacebookSDK.framework */; };
+		F85EFA4619FFC80D006092AB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F85EFA4519FFC80D006092AB /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +43,8 @@
 		F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaFacebook.h; sourceTree = "<group>"; };
 		F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaFacebook.m; sourceTree = "<group>"; };
 		F80C71B419FFA4AA0027AF9A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F80C71B819FFA4E40027AF9A /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = sdk/FacebookSDK.framework; sourceTree = "<group>"; };
 		F80C71BC19FFAEA30027AF9A /* SoomlaiOSProfileFacebook.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoomlaiOSProfileFacebook.pch; path = SoomlaiOSProfileFacebook/SoomlaiOSProfileFacebook.pch; sourceTree = SOURCE_ROOT; };
+		F85EFA4519FFC80D006092AB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = libs/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */,
-				F80C71B919FFA4E40027AF9A /* FacebookSDK.framework in Frameworks */,
+				F85EFA4619FFC80D006092AB /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +116,7 @@
 		F80C71B619FFA4B20027AF9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F80C71B819FFA4E40027AF9A /* FacebookSDK.framework */,
+				F85EFA4519FFC80D006092AB /* FacebookSDK.framework */,
 				F80C71B419FFA4AA0027AF9A /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -352,6 +352,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/sdk",
+					"$(PROJECT_DIR)/libs",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -372,6 +373,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/sdk",
+					"$(PROJECT_DIR)/libs",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
