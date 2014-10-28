@@ -25,7 +25,7 @@
 		3AF01CE01960BD730088836B /* UserProfileStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F37193CBEEB0081DCE0 /* UserProfileStorage.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3AFD6F1C1986E174001360D9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AFD6F1B1986E173001360D9 /* UIKit.framework */; };
 		EF356EFE193C90560081DCE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF356EFD193C90560081DCE0 /* Foundation.framework */; };
-		EF356F03193C90560081DCE0 /* SoomlaProfile.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; };
+		EF356F03193C90560081DCE0 /* SoomlaProfile.h in Copy Files */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; };
 		EF356F05193C90560081DCE0 /* SoomlaProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF356F04193C90560081DCE0 /* SoomlaProfile.m */; };
 		EF356F0C193C90560081DCE0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF356F0B193C90560081DCE0 /* XCTest.framework */; };
 		EF356F0D193C90560081DCE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF356EFD193C90560081DCE0 /* Foundation.framework */; };
@@ -53,9 +53,6 @@
 		EFAE6BE9193DC6310077EF7F /* UserProfileNotFoundException.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BE7193DC6310077EF7F /* UserProfileNotFoundException.m */; };
 		EFAE6BEC193DDB5D0077EF7F /* SocialController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BEB193DDB5D0077EF7F /* SocialController.m */; };
 		EFAE6BED193DDB5D0077EF7F /* SocialController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BEB193DDB5D0077EF7F /* SocialController.m */; };
-		F8F9ADBC19B34C8F00F26856 /* SoomlaFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = F8F9ADBA19B34C8F00F26856 /* SoomlaFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8F9ADBD19B34C8F00F26856 /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F9ADBB19B34C8F00F26856 /* SoomlaFacebook.m */; };
-		F8F9ADBF19B34CA500F26856 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,14 +66,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		EF356EF8193C90560081DCE0 /* CopyFiles */ = {
+		EF356EF8193C90560081DCE0 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				EF356F03193C90560081DCE0 /* SoomlaProfile.h in CopyFiles */,
+				EF356F03193C90560081DCE0 /* SoomlaProfile.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -132,7 +130,6 @@
 			files = (
 				3AFD6F1C1986E174001360D9 /* UIKit.framework in Frameworks */,
 				EF356EFE193C90560081DCE0 /* Foundation.framework in Frameworks */,
-				F8F9ADBF19B34CA500F26856 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +289,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8F9ADBC19B34C8F00F26856 /* SoomlaFacebook.h in Headers */,
 				3AF01CD21960BCCC0088836B /* SoomlaProfile.h in Headers */,
 				3AF01CDD1960BD500088836B /* UserProfile.h in Headers */,
 				3AF01CD31960BCD60088836B /* UserProfileEventHandling.h in Headers */,
@@ -321,7 +317,7 @@
 				EF356EF6193C90560081DCE0 /* Sources */,
 				EF356EF7193C90560081DCE0 /* Frameworks */,
 				3AF01CD11960BCC30088836B /* Headers */,
-				EF356EF8193C90560081DCE0 /* CopyFiles */,
+				EF356EF8193C90560081DCE0 /* Copy Files */,
 				3A23D5241960A8FF00F00C9E /* ShellScript */,
 			);
 			buildRules = (
@@ -422,7 +418,6 @@
 				3ABE080B195F422A008085AA /* SocialActionUtils.m in Sources */,
 				EFAE6BDB193DA38E0077EF7F /* ProviderNotFoundException.m in Sources */,
 				EF356F05193C90560081DCE0 /* SoomlaProfile.m in Sources */,
-				F8F9ADBD19B34C8F00F26856 /* SoomlaFacebook.m in Sources */,
 				EF356F2C193CA52E0081DCE0 /* UserProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

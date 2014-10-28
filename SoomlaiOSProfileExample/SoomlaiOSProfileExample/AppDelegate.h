@@ -15,7 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
+//#import <FacebookSDK/FacebookSDK.h>
 
 
 @class VirtualItemReward;

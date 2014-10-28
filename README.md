@@ -65,6 +65,8 @@ Facebook is supported out-of-the-box, you just have to follow the next steps to 
 
 1. Refer to [Getting Started with the Facebook iOS SDK](https://developers.facebook.com/docs/ios/getting-started/) for more information
 
+1. Add `-lSoomlaiOSProfileFacebook` to the project's "Other Linker Flags"
+
 ## UserProfile
 
 As part of a login call to a provider, Soomla will internally try to also fetch the online user profile details via

@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-#import <FacebookSDK/FacebookSDK.h>
-
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "SoomlaProfile.h"
@@ -62,8 +60,7 @@ static NSString* TAG = @"SOOMLA ViewController";
 }
 - (IBAction)buttonTouched:(id)sender {
     
-    if (FBSession.activeSession.state == FBSessionStateOpen
-        || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
         
         [[SoomlaProfile getInstance] logoutWithProvider:FACEBOOK];
     } else {

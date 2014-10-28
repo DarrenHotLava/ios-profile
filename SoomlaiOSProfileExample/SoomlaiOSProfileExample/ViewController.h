@@ -15,7 +15,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 
 /**
  Main view of the application.
