@@ -50,18 +50,18 @@ BOOL UsingExternalProvider;
     [UserProfileEventHandling postProfileInitialized];
 }
 
-- (void)loginWithProvider:(Provider)provider {
-    [self loginWithProvider:provider andReward:nil];
+- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload {
+    [self loginWithProvider:provider andPayload:payload andReward:nil];
 }
 
-- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward {
+- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
     @try {
-        [authController loginWithProvider:provider andReward:reward];
+        [authController loginWithProvider:provider andPayload:payload andReward:reward];
     }
     @catch (NSException *exception) {
 
         // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController loginWithProvider:provider andReward:reward];
+        [socialController loginWithProvider:provider andPayload:payload andReward:reward];
     }
 }
 
@@ -99,12 +99,12 @@ BOOL UsingExternalProvider;
     }
 }
 
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
-    [socialController updateStatusWithProvider:provider andStatus:status andReward:reward];
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward];
 }
 
-- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andReward:(Reward *)reward {
-    [socialController updateStatusWithProviderDialog:provider andLink:link andReward:reward];
+- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController updateStatusWithProviderDialog:provider andLink:link andPayload:payload andReward:reward];
 }
 
 - (void)updateStoryWithProvider:(Provider)provider
@@ -114,9 +114,10 @@ BOOL UsingExternalProvider;
                  andDescription:(NSString *)description
                         andLink:(NSString *)link
                      andPicture:(NSString *)picture
+                     andPayload:(NSString *)payload
                       andReward:(Reward *)reward {
     [socialController updateStoryWithProvider:provider andMessage:message andName:name andCaption:caption
-                               andDescription:description andLink:link andPicture:picture andReward:reward];
+                               andDescription:description andLink:link andPicture:picture andPayload:payload andReward:reward];
 }
 
 - (void)updateStoryWithProviderDialog:(Provider)provider
@@ -125,24 +126,26 @@ BOOL UsingExternalProvider;
                            andDescription:(NSString *)description
                                   andLink:(NSString *)link
                                andPicture:(NSString *)picture
+                           andPayload:(NSString *)payload
                                 andReward:(Reward *)reward {
     [socialController updateStoryWithProviderDialog:provider andName:name andCaption:caption
-                               andDescription:description andLink:link andPicture:picture andReward:reward];
+                               andDescription:description andLink:link andPicture:picture andPayload:payload andReward:reward];
 }
 
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
+                     andPayload:(NSString *)payload
                       andReward:(Reward *)reward {
-    [socialController uploadImageWithProvider:provider andMessage:message andFilePath:filePath andReward:reward];
+    [socialController uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:payload andReward:reward];
 }
 
-- (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andReward:reward];
+- (void)getContactsWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController getContactsWith:provider andPayload:payload andReward:reward];
 }
 
-- (void)getFeedWithProvider:(Provider)provider andReward:(Reward *)reward {
-    [socialController getFeed:provider andReward:reward];
+- (void)getFeedWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController getFeed:provider andPayload:payload andReward:reward];
 }
 
 - (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {

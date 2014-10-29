@@ -118,8 +118,6 @@
 		EFAE6BEB193DDB5D0077EF7F /* SocialController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialController.m; sourceTree = "<group>"; };
 		EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialActionUtils.h; sourceTree = "<group>"; };
 		EFC2E6F019449A3A009BA5CF /* SocialCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialCallbacks.h; path = social/SocialCallbacks.h; sourceTree = "<group>"; };
-		F8F9ADBA19B34C8F00F26856 /* SoomlaFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoomlaFacebook.h; path = social/SoomlaFacebook.h; sourceTree = "<group>"; };
-		F8F9ADBB19B34C8F00F26856 /* SoomlaFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoomlaFacebook.m; path = social/SoomlaFacebook.m; sourceTree = "<group>"; };
 		F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -263,8 +261,6 @@
 		EFAE6BD2193CD3D80077EF7F /* social */ = {
 			isa = PBXGroup;
 			children = (
-				F8F9ADBA19B34C8F00F26856 /* SoomlaFacebook.h */,
-				F8F9ADBB19B34C8F00F26856 /* SoomlaFacebook.m */,
 				EFAE6BD3193CD3F60077EF7F /* ISocialProvider.h */,
 				EFC2E6F019449A3A009BA5CF /* SocialCallbacks.h */,
 			);

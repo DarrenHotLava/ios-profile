@@ -50,11 +50,11 @@ static NSString* TAG = @"SOOMLA AuthController";
     return self;
 }
 
-- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward {
+- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
     
     
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
-    [UserProfileEventHandling postLoginStarted:provider];
+    [UserProfileEventHandling postLoginStarted:provider withPayload:payload];
     
     // Perform login process
     // TODO: Check if need to change any nonatomic properties
@@ -62,18 +62,18 @@ static NSString* TAG = @"SOOMLA AuthController";
         [authProvider login:^(Provider provider) {
             [authProvider getUserProfile: ^(UserProfile *userProfile) {
                 [UserProfileStorage setUserProfile:userProfile];
-                [UserProfileEventHandling postLoginFinished:userProfile];
+                [UserProfileEventHandling postLoginFinished:userProfile withPayload:payload];
 
                 if (reward) {
                     [reward give];
                 }
             } fail:^(NSString *message) {
-                [UserProfileEventHandling postLoginFailed:provider withMessage:message];
+                [UserProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
             }];
         } fail:^(NSString *message) {
-            [UserProfileEventHandling postLoginFailed:provider withMessage:message];
+            [UserProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
         } cancel:^{
-            [UserProfileEventHandling postLoginCancelled:provider];
+            [UserProfileEventHandling postLoginCancelled:provider withPayload:payload];
         }];
     }];
 }

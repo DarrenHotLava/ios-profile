@@ -46,9 +46,10 @@
  
  @param provider The provider to login with
  @param reward The reward to grant the user for logging in
+ @param payload a String to receive when the function returns.
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward;
+- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Logs out of the given provider

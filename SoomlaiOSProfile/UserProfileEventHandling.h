@@ -53,6 +53,7 @@
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
 #define DICT_ELEMENT_PROVIDER                   @"provider"
+#define DICT_ELEMENT_PAYLOAD                    @"payload"
 #define DICT_ELEMENT_SOCIAL_ACTION_TYPE         @"socialActiontype"
 #define DICT_ELEMENT_MESSAGE                    @"message"
 #define DICT_ELEMENT_CONTACTS                   @"contacts"
@@ -102,7 +103,7 @@ Called when the service has been initializedt.
  
  @param provider The provider on where the login has started
  */
-+ (void)postLoginStarted:(Provider)provider;
++ (void)postLoginStarted:(Provider)provider withPayload:(NSString *)payload;
 
 /**
  Called when the login process finishes successfully. Which fires the
@@ -110,7 +111,7 @@ Called when the service has been initializedt.
  
  @param userProfile The user's profile from the logged in provider
  */
-+ (void)postLoginFinished:(UserProfile *)userProfile;
++ (void)postLoginFinished:(UserProfile *)userProfile withPayload:(NSString *)payload;
 
 /**
  Called when the login process to a provider has failed. Which fires the
@@ -119,7 +120,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the login has failed
  @param message a Description of the reason for failure
  */
-+ (void)postLoginFailed:(Provider)provider withMessage:(NSString *)message;
++ (void)postLoginFailed:(Provider)provider withMessage:(NSString *)message withPayload:(NSString *)payload;
 
 /**
  Called the login process to a provider has been cancelled. Which fires the
@@ -127,7 +128,7 @@ Called when the service has been initializedt.
  
  @param provider The provider on which the login has failed
  */
-+ (void)postLoginCancelled:(Provider)provider;
++ (void)postLoginCancelled:(Provider)provider withPayload:(NSString *)payload;
 
 /**
  Called when the logout process from a provider has started. Which fires the
@@ -161,7 +162,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the social action has started
  @param socialActionType The social action which started
  */
-+ (void)postSocialActionStarted:(Provider)provider withType:(SocialActionType)socialActionType;
++ (void)postSocialActionStarted:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
 
 /**
  Called when a generic social action on a provider has finished. Which fires the
@@ -170,7 +171,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the social action has finished
  @param socialActionType The social action which finished
  */
-+ (void)postSocialActionFinished:(Provider)provider withType:(SocialActionType)socialActionType;
++ (void)postSocialActionFinished:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
 
 /**
  Called when a generic social action on a provider has been cancelled. Which fires 
@@ -179,7 +180,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the social action has been cancelled
  @param socialActionType The social action which was cancelled
  */
-+ (void)postSocialActionCancelled:(Provider)provider withType:(SocialActionType)socialActionType;
++ (void)postSocialActionCancelled:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
 
 /**
  Called when a generic social action on a provider has failed. Which fires the
@@ -189,7 +190,7 @@ Called when the service has been initializedt.
  @param socialActionType The social action which failed
  @param message a Description of the reason for failure
  */
-+ (void)postSocialActionFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message;
++ (void)postSocialActionFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withPayload:(NSString *)payload;
 
 /**
  Called when the get contacts process from a provider has started. Which fires the
@@ -198,7 +199,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the get contacts process started
  @param socialActionType The social action which is preformed
  */
-+ (void)postGetContactsStarted:(Provider)provider withType:(SocialActionType)socialActionType;
++ (void)postGetContactsStarted:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
 
 /**
  Called when the get contacts process from a provider has finished. Which fires the
@@ -208,7 +209,7 @@ Called when the service has been initializedt.
  @param socialActionType The social action which is preformed
  @param contacts an Array of contacts represented by `UserProfile`
  */
-+ (void)postGetContactsFinished:(Provider)provider withType:(SocialActionType)socialActionType withContacts:(NSArray *)contacts;
++ (void)postGetContactsFinished:(Provider)provider withType:(SocialActionType)socialActionType withContacts:(NSArray *)contacts withPayload:(NSString *)payload;
 
 /**
  Called when the get contacts process from a provider has failed. Which fires the
@@ -219,7 +220,7 @@ Called when the service has been initializedt.
  @param socialActionType The social action which is preformed
  @param message a Description of the reason for failure
  */
-+ (void)postGetContactsFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message;
++ (void)postGetContactsFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withPayload:(NSString *)payload;
 
 /**
  Called when the get feed process from a provider has started. Which fires the
@@ -228,7 +229,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the get feed process started
  @param socialActionType The social action which is preformed
  */
-+ (void)postGetFeedStarted:(Provider)provider withType:(SocialActionType)socialActionType;
++ (void)postGetFeedStarted:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
 
 /**
  Called when the get feed process from a provider has finished. Which fires the
@@ -238,7 +239,7 @@ Called when the service has been initializedt.
  @param socialActionType The social action which is preformed
  @param feeds an Array of feed entries represented by `NSString`
  */
-+ (void)postGetFeedFinished:(Provider)provider withType:(SocialActionType)socialActionType withContacts:(NSArray *)feeds;
++ (void)postGetFeedFinished:(Provider)provider withType:(SocialActionType)socialActionType withContacts:(NSArray *)feeds withPayload:(NSString *)payload;
 
 /**
  Called when the get feed process from a provider has failed. Which fires the
@@ -249,6 +250,6 @@ Called when the service has been initializedt.
  @param socialActionType The social action which is preformed
  @param message a Description of the reason for failure
  */
-+ (void)postGetFeedFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message;
++ (void)postGetFeedFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withPayload:(NSString *)payload;
 
 @end

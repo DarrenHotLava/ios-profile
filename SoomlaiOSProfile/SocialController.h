@@ -40,10 +40,11 @@
  
  @param provider the provider to use
  @param status the text to share
+ @param payload a String to receive when the function returns.
  @param reward the reward to grant for sharing
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Shares the given status and link to the user's feed using the provider's
@@ -51,10 +52,11 @@
  
  @param provider the provider to use
  @param link the link to share (could be nil when not needed)
+ @param payload a String to receive when the function returns.
  @param reward the reward to grant for sharing
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andReward:(Reward *)reward;
+- (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Shares a story to the user's feed.  This is very oriented for Facebook.
@@ -69,6 +71,7 @@
  integrated in the story
  @param link The link which will be integrated into the user's story
  @param picture a Link to a picture which will be featured in the link
+ @param payload a String to receive when the function returns.
  @param reward The reward to give the user
  @exception ProviderNotFoundException if the provider is not supported
  */
@@ -79,6 +82,7 @@
                  andDescription:(NSString *)description
                         andLink:(NSString *)link
                      andPicture:(NSString *)picture
+                     andPayload:(NSString *)payload
                       andReward:(Reward *)reward;
 
 /**
@@ -94,6 +98,7 @@
  integrated in the story
  @param link The link which will be integrated into the user's story
  @param picture a Link to a picture which will be featured in the link
+ @param payload a String to receive when the function returns.
  @param reward The reward to give the user
  */
 - (void)updateStoryWithProviderDialog:(Provider)provider
@@ -102,6 +107,7 @@
                        andDescription:(NSString *)description
                               andLink:(NSString *)link
                            andPicture:(NSString *)picture
+                           andPayload:(NSString *)payload
                             andReward:(Reward *)reward;
 
 /**
@@ -110,31 +116,35 @@
  @param provider The provider to use
  @param message A text that will accompany the image
  @param filePath The desired image's location on the device (full path)
+ @param payload a String to receive when the function returns.
  @param reward The reward to grant for sharing the photo
  @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
+                     andPayload:(NSString *)payload
                       andReward:(Reward *)reward;
 
 /**
  Fetches the user's contact list
  
  @param provider The provider to use
+ @param payload a String to receive when the function returns.
  @param reward The reward to grant
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)getContactsWith:(Provider)provider andReward:(Reward *)reward;
+- (void)getContactsWith:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
-Fetches the user's feed.
-
-@param provider The provider to use
-@param reward The reward to grant
-@exception ProviderNotFoundException if the provider is not supported
+ Fetches the user's feed.
+ 
+ @param provider The provider to use
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
 */
-- (void)getFeed:(Provider)provider andReward:(Reward *)reward;
+- (void)getFeed:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Opens up a page to like for the user (external)
