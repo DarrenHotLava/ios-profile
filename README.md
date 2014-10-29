@@ -13,7 +13,7 @@ ios-profile
 
 *SOOMLA's Profile Module for iOS*
 
-**android-profile** is an open code initiative as part of The SOOMLA Project. It is an Objective-C API that unifies interaction with social and identity providers APIs, and optionally ties it together with the game's virtual economy.
+**ios-profile** is an open code initiative as part of The SOOMLA Project. It is an Objective-C API that unifies interaction with social and identity providers APIs, and optionally ties it together with the game's virtual economy.
 This enables to easily reward players with social actions they perform in-game, and to leverage user profiles.
 
 ![SOOMLA's Profile Module](http://know.soom.la/img/tutorial_img/soomla_diagrams/Profile.png)
