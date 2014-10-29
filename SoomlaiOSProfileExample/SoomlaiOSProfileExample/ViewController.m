@@ -69,7 +69,7 @@ static NSString* TAG = @"SOOMLA ViewController";
         // Retrieve the app delegate
         AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-        [[SoomlaProfile getInstance] loginWithProvider:FACEBOOK andPayload:@"login" andReward:appDelegate.loginReward];
+        [[SoomlaProfile getInstance] loginWithProvider:FACEBOOK andPayload:@"" andReward:appDelegate.loginReward];
     }
 }
 
@@ -78,7 +78,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-    [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK andStatus:@"Test status" andPayload:@"status" andReward:appDelegate.updateStatusReward];
+    [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK andStatus:@"Test status" andReward:appDelegate.updateStatusReward];
     
     // Or with dialog
     //[[SoomlaProfile getInstance] updateStatusWithProviderDialog:FACEBOOK andLink:@"http://www.soom.la" andPayload:@"status" andReward:appDelegate.updateStatusReward];
@@ -96,7 +96,6 @@ static NSString* TAG = @"SOOMLA ViewController";
                                           andDescription:@"Description"
                                                  andLink:@"https://developers.facebook.com/docs/ios/share/"
                                               andPicture:@"http://i.imgur.com/g3Qc1HN.png"
-                                              andPayload:@"story"
                                                andReward:appDelegate.updateStatusReward];
     // Or with dialog
     // [[SoomlaProfile getInstance] updateStoryWithProviderDialog:FACEBOOK
@@ -229,17 +228,17 @@ static NSString* TAG = @"SOOMLA ViewController";
     [myData writeToFile:filePath atomically:YES];
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [[SoomlaProfile getInstance] uploadImageWithProvider:FACEBOOK andMessage:@"Text photo message" andFilePath:filePath andPayload:@"image" andReward:appDelegate.uploadImageReward];
+    [[SoomlaProfile getInstance] uploadImageWithProvider:FACEBOOK andMessage:@"Text photo message" andFilePath:filePath andReward:appDelegate.uploadImageReward];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)getContactsButtonTouched:(id)sender {
-    [[SoomlaProfile getInstance] getContactsWithProvider:FACEBOOK andPayload:@"contacts" andReward:nil];
+    [[SoomlaProfile getInstance] getContactsWithProvider:FACEBOOK andReward:nil];
 }
 
 - (IBAction)getFeedTouched:(id)sender {
-    [[SoomlaProfile getInstance] getFeedWithProvider:FACEBOOK andPayload:@"feed" andReward:nil];
+    [[SoomlaProfile getInstance] getFeedWithProvider:FACEBOOK andReward:nil];
 }
 
 @end
