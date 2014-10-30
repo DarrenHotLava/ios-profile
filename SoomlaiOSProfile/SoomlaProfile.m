@@ -54,6 +54,10 @@ BOOL UsingExternalProvider;
     [self loginWithProvider:provider andPayload:@"" andReward:nil];
 }
 
+- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward {
+    [self loginWithProvider:provider andPayload:@"" andReward:reward];
+}
+
 - (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
     @try {
         [authController loginWithProvider:provider andPayload:payload andReward:reward];

@@ -54,6 +54,15 @@
  Login to the given provider and grant the user a reward.
  
  @param provider The provider to use
+ @param reward The reward to give the user for logging in.
+ If you want your reward to be given more than once, make it repeatable
+ */
+- (void)loginWithProvider:(Provider)provider andReward:(Reward *)reward;
+
+/**
+ Login to the given provider and grant the user a reward.
+ 
+ @param provider The provider to use
  @param payload a String to receive when the function returns.
  @param reward The reward to give the user for logging in.
                If you want your reward to be given more than once, make it repeatable
