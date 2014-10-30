@@ -118,7 +118,6 @@
 		EFAE6BEB193DDB5D0077EF7F /* SocialController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialController.m; sourceTree = "<group>"; };
 		EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialActionUtils.h; sourceTree = "<group>"; };
 		EFC2E6F019449A3A009BA5CF /* SocialCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialCallbacks.h; path = social/SocialCallbacks.h; sourceTree = "<group>"; };
-		F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +165,6 @@
 		EF356EFC193C90560081DCE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F8F9ADBE19B34CA500F26856 /* FacebookSDK.framework */,
 				3AFD6F1B1986E173001360D9 /* UIKit.framework */,
 				EF356EFD193C90560081DCE0 /* Foundation.framework */,
 				EF356F0B193C90560081DCE0 /* XCTest.framework */,
