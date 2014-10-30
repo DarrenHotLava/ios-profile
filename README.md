@@ -156,10 +156,17 @@ In order to run the project follow this steps:
   1. Also in your `AppDelegate` add the following code:
 
   ```objective-c
-  - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-      BOOL urlWasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication fallbackHandler:^(FBAppCall *call) {
-        return urlWasHandled;
-      }
+  - (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+           BOOL urlWasHandled = [FBAppCall handleOpenURL:url
+                                sourceApplication:sourceApplication
+                                fallbackHandler:^(FBAppCall *call) {
+                                      // Deep linking handling
+                                }];
+           return urlWasHandled;
+     }
   ```
 1. **Facebook Permissions** - Profile will request `publish_actions` from the user of the application, to test the application please make sure you test with either Admin, Developer or Tester roles
 
