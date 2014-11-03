@@ -120,7 +120,8 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     else {
         self.twitter = [STTwitterAPI twitterAPIOSWithFirstAccount];
         
-        [_twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
+        [self.twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
+            loggedInUser = username;
             success([self getProvider]);
         } errorBlock:^(NSError *error) {
             if (error.code == STTwitterOSUserDeniedAccessToTheirAccounts) {
@@ -175,27 +176,24 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
                                                      oauthToken:oauthToken oauthTokenSecret:oauthSecret];
     
     [self.twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
+        loggedInUser = username;
         success([self getProvider]);
     } errorBlock:^(NSError *error) {
         // Something's wrong with my oauth tokens, retry login from web
-        [KeyValueStorage deleteValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
-        [KeyValueStorage deleteValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_SECRET]];
+        [self cleanTokensFromDB];
         [self loginWithWeb:success fail:fail cancel:cancel];
     }];
     
     return YES;
 }
 
-- (NSString *) getURLScheme {
-    return [[NSString stringWithFormat:@"tw%@", self.consumerKey] lowercaseString];
-}
-
 - (void) applyOauthTokens:(NSString *)token andVerifier:(NSString *)verifier {
-    [_twitter postAccessTokenRequestWithPIN:verifier successBlock:^(NSString *oauthToken, NSString *oauthTokenSecret, NSString *userID, NSString *screenName) {
+    [self.twitter postAccessTokenRequestWithPIN:verifier successBlock:^(NSString *oauthToken, NSString *oauthTokenSecret, NSString *userID, NSString *screenName) {
         
         [KeyValueStorage setValue:oauthToken forKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
         [KeyValueStorage setValue:oauthTokenSecret forKey:[self getTwitterStorageKey:TWITTER_OAUTH_SECRET]];
         
+        loggedInUser = screenName;
         self.loginSuccess([self getProvider]);
         
         [self clearLoginBlocks];
@@ -206,13 +204,58 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail {
+    [self.twitter getUserInformationFor:loggedInUser successBlock:^(NSDictionary *user) {
+        NSString *fullName = user[@"name"];
+        NSString *firstName = @"";
+        NSString *lastName = @"";
+        if (fullName) {
+            NSArray *names = [fullName componentsSeparatedByString:@" "];
+            if (names && ([names count] > 0)) {
+                firstName = names[0];
+                if ([names count] > 1) {
+                    lastName = names[1];
+                }
+            }
+        }
+        
+        // According to: https://dev.twitter.com/rest/reference/get/users/show
+        //
+        // - Twitter does not supply email access: https://dev.twitter.com/faq#26
+        UserProfile *userProfile = [[UserProfile alloc] initWithProvider:TWITTER
+                                                            andProfileId:user[@"id_str"]
+                                                             andUsername:user[@"screen_name"]
+                                                                andEmail:@""
+                                                            andFirstName:firstName
+                                                             andLastName:lastName];
+        
+        // No gender information on Twitter:
+        // https://twittercommunity.com/t/how-to-find-male-female-accounts-in-following-list/7367
+        userProfile.gender = @"";
+        
+        // No birthday on Twitter:
+        // https://twittercommunity.com/t/how-can-i-get-email-of-user-if-i-use-api/7019/16
+        userProfile.birthday = @"";
+        
+        userProfile.language = user[@"lang"];
+        userProfile.location = user[@"location"];
+        userProfile.avatarLink = user[@"profile_image_url"];
+        
+        success(userProfile);
+    } errorBlock:^(NSError *error) {
+        fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+    }];
 }
 
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail {
+    loggedInUser = nil;
+    [self cleanTokensFromDB];
+    self.twitter = nil;
+    
+    success();
 }
 
 - (BOOL)isLoggedIn {
-    return NO;
+    return ![self isEmptyString:loggedInUser] && self.twitter;
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
@@ -272,6 +315,10 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 }
 
+- (NSString *) getURLScheme {
+    return [[NSString stringWithFormat:@"tw%@", self.consumerKey] lowercaseString];
+}
+
 + (SoomlaTwitter *) getInstance {
     return instance;
 }
@@ -289,6 +336,11 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     self.loginSuccess = nil;
     self.loginFail = nil;
     self.loginCancel = nil;
+}
+
+- (void)cleanTokensFromDB {
+    [KeyValueStorage deleteValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
+    [KeyValueStorage deleteValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_SECRET]];
 }
 
 - (BOOL) isEmptyString:(NSString *)target {

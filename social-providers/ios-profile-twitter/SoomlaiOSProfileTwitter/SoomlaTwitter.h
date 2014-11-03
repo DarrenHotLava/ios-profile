@@ -31,7 +31,6 @@
     loginSuccess loginSuccess;
     loginFail loginFail;
     loginCancel loginCancel;
-    logoutSuccess logoutSuccess;
     
     @private
     BOOL webOnly;
@@ -39,6 +38,7 @@
     @private
     BOOL webAvailable;
     
+    @private
     NSString *loggedInUser;
 }
 
