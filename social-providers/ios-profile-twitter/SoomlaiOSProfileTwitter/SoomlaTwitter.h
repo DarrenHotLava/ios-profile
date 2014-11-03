@@ -38,12 +38,12 @@
     
     @private
     BOOL webAvailable;
+    
+    NSString *loggedInUser;
 }
 
-@property (strong, nonatomic) STTwitterAPI *twitter;
-
-@property (strong, nonatomic) NSString *consumerKey;
-@property (strong, nonatomic) NSString *consumerSecret;
+@property (strong, nonatomic, readonly) NSString *consumerKey;
+@property (strong, nonatomic, readonly) NSString *consumerSecret;
 
 @property (strong, nonatomic) loginSuccess loginSuccess;
 @property (strong, nonatomic) loginFail loginFail;

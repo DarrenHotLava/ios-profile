@@ -17,13 +17,29 @@
 #import <UIKit/UIKit.h>
 
 #import "STTwitterOS.h"
+#import "STTwitterOAuth.h"
 
 #import "SoomlaTwitter.h"
 #import "UserProfile.h"
+#import "UserProfileStorage.h"
+
 #import "SoomlaUtils.h"
+#import "KeyValueStorage.h"
+
+NSString *const TWITTER_OAUTH_TOKEN     = @"oauth.token";
+NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+// Private properties
+
+@interface SoomlaTwitter ()
+
+@property (strong, nonatomic) STTwitterAPI *twitter;
+
+@end
+
 @implementation SoomlaTwitter
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -31,14 +47,15 @@
 
 static SoomlaTwitter *instance;
 
-static NSString *TAG = @"SOOMLA SoomlaTwitter";
+static NSString* DB_KEY_PREFIX  = @"soomla.profile.twitter.";
+static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (id)init {
     self = [super init];
     if (!self) return nil;
     
-    self.consumerKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerKey"];
-    self.consumerSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerSecret"];
+    _consumerKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerKey"];
+    _consumerSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerSecret"];
     
     if ([self isEmptyString:self.consumerKey] || [self isEmptyString:self.consumerSecret]) {
         LogDebug(TAG, @"Either consumer key or consumer secret were not provided in plist, falling back to native only");
@@ -61,10 +78,6 @@ static NSString *TAG = @"SOOMLA SoomlaTwitter";
     }
 
     return self;
-}
-
-- (BOOL) isEmptyString:(NSString *)target {
-    return !target || ([target length] == 0);
 }
 
 - (void)dealloc {
@@ -128,6 +141,10 @@ static NSString *TAG = @"SOOMLA SoomlaTwitter";
         return;
     }
     
+    if ([self tryLoginFromDB:success fail:fail cancel:cancel]) {
+        return;
+    }
+    
     self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:self.consumerKey
                                                  consumerSecret:self.consumerSecret];
     
@@ -146,6 +163,29 @@ static NSString *TAG = @"SOOMLA SoomlaTwitter";
                     }];
 }
 
+- (BOOL)tryLoginFromDB:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel {
+    NSString *oauthToken = [KeyValueStorage getValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
+    NSString *oauthSecret = [KeyValueStorage getValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_SECRET]];
+    
+    if ([self isEmptyString:oauthToken] || [self isEmptyString:oauthSecret]) {
+        return NO;
+    }
+    
+    self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:_consumerKey consumerSecret:_consumerSecret
+                                                     oauthToken:oauthToken oauthTokenSecret:oauthSecret];
+    
+    [self.twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
+        success([self getProvider]);
+    } errorBlock:^(NSError *error) {
+        // Something's wrong with my oauth tokens, retry login from web
+        [KeyValueStorage deleteValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
+        [KeyValueStorage deleteValueForKey:[self getTwitterStorageKey:TWITTER_OAUTH_SECRET]];
+        [self loginWithWeb:success fail:fail cancel:cancel];
+    }];
+    
+    return YES;
+}
+
 - (NSString *) getURLScheme {
     return [[NSString stringWithFormat:@"tw%@", self.consumerKey] lowercaseString];
 }
@@ -153,23 +193,12 @@ static NSString *TAG = @"SOOMLA SoomlaTwitter";
 - (void) applyOauthTokens:(NSString *)token andVerifier:(NSString *)verifier {
     [_twitter postAccessTokenRequestWithPIN:verifier successBlock:^(NSString *oauthToken, NSString *oauthTokenSecret, NSString *userID, NSString *screenName) {
         
-        //TODO: save tokens
-        /*
-         At this point, the user can use the API and you can read his access tokens with:
-         
-         _twitter.oauthAccessToken;
-         _twitter.oauthAccessTokenSecret;
-         
-         You can store these tokens (in user default, or in keychain) so that the user doesn't need to authenticate again on next launches.
-         
-         Next time, just instanciate STTwitter with the class method:
-         
-         +[STTwitterAPI twitterAPIWithOAuthConsumerKey:consumerSecret:oauthToken:oauthTokenSecret:]
-         
-         Don't forget to call the -[STTwitter verifyCredentialsWithSuccessBlock:errorBlock:] after that.
-         */
+        [KeyValueStorage setValue:oauthToken forKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
+        [KeyValueStorage setValue:oauthTokenSecret forKey:[self getTwitterStorageKey:TWITTER_OAUTH_SECRET]];
+        
         self.loginSuccess([self getProvider]);
         
+        [self clearLoginBlocks];
     } errorBlock:^(NSError *error) {
         LogError(TAG, @"Unable to login via web");
         self.loginFail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
@@ -260,6 +289,14 @@ static NSString *TAG = @"SOOMLA SoomlaTwitter";
     self.loginSuccess = nil;
     self.loginFail = nil;
     self.loginCancel = nil;
+}
+
+- (BOOL) isEmptyString:(NSString *)target {
+    return !target || ([target length] == 0);
+}
+
+- (NSString *) getTwitterStorageKey:(NSString *)postfix {
+    return [NSString stringWithFormat:@"%@%@", DB_KEY_PREFIX, postfix];
 }
 
 @end
