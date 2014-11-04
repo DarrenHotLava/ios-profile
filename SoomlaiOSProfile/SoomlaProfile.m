@@ -212,6 +212,14 @@ BOOL UsingExternalProvider;
     [UserProfileEventHandling postUserRating];
 }
 
+- (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [socialController tryHandleOpenURL:provider openURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [socialController tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+
 // private
 
 + (SoomlaProfile*)getInstance {

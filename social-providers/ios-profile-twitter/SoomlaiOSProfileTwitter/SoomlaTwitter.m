@@ -45,8 +45,6 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 @synthesize loginSuccess, loginFail, loginCancel,
             logoutSuccess;
 
-static SoomlaTwitter *instance;
-
 static NSString* DB_KEY_PREFIX  = @"soomla.profile.twitter.";
 static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
@@ -57,18 +55,15 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     _consumerKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerKey"];
     _consumerSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerSecret"];
     
+    NSNumber *forceWeb = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterForceWeb"];
+    webOnly = forceWeb ? [forceWeb boolValue] : NO;
+    
     if ([self isEmptyString:self.consumerKey] || [self isEmptyString:self.consumerSecret]) {
         LogDebug(TAG, @"Either consumer key or consumer secret were not provided in plist, falling back to native only");
         webAvailable = NO;
     }
     else {
         webAvailable = YES;
-    }
-    
-    @synchronized( self ) {
-        if( instance == nil ) {
-            instance = self;
-        }
     }
 
     return self;
@@ -192,6 +187,40 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (BOOL)isLoggedIn {
     return ![self isEmptyString:loggedInUser] && self.twitter;
+}
+
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    NSString *expectedScheme = [self getURLScheme];
+    
+    if ([[url scheme] isEqualToString:expectedScheme] == NO) return NO;
+    
+    NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
+    
+    NSString *token = d[@"oauth_token"];
+    NSString *verifier = d[@"oauth_verifier"];
+    
+    [self applyOauthTokens:token andVerifier:verifier];
+    
+    return YES;
+}
+
+- (NSDictionary *)parametersDictionaryFromQueryString:(NSString *)queryString {
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    
+    NSArray *queryComponents = [queryString componentsSeparatedByString:@"&"];
+    
+    for(NSString *s in queryComponents) {
+        NSArray *pair = [s componentsSeparatedByString:@"="];
+        if([pair count] != 2) continue;
+        
+        NSString *key = pair[0];
+        NSString *value = pair[1];
+        
+        md[key] = value;
+    }
+    
+    return md;
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
@@ -327,10 +356,6 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (NSString *) getURLScheme {
     return [[NSString stringWithFormat:@"tw%@", self.consumerKey] lowercaseString];
-}
-
-+ (SoomlaTwitter *) getInstance {
-    return instance;
 }
 
 //

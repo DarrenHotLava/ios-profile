@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-#import <FacebookSDK/FacebookSDK.h>
-
 #import "AppDelegate.h"
 #import "Soomla.h"
 #import "MuffinRushAssets.h"
@@ -55,20 +53,14 @@ static NSString* TAG = @"SOOMLA AppDelegate";
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
+    BOOL urlWasHandled = [[SoomlaProfile getInstance] tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
     
+    if (urlWasHandled) {
+        return urlWasHandled;
+    }
     
-    BOOL urlWasHandled = [FBAppCall handleOpenURL:url
-                                sourceApplication:sourceApplication
-                                  fallbackHandler:^(FBAppCall *call) {
-                                      LogDebug(TAG, ([NSString stringWithFormat:@"Unhandled deep link: %@", url]));
-                                      // Here goes the code to handle the links
-                                      // Use the links to show a relevant view of your app to the user
-                                  }];
-    
-    return urlWasHandled;
-
-    
-//    return [FBSession.activeSession handleOpenURL:url];
+    // do some custom handling
+    return NO;
 }
 
 

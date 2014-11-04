@@ -50,12 +50,6 @@
 @property (strong, nonatomic) loginCancel loginCancel;
 @property (strong, nonatomic) logoutSuccess logoutSuccess;
 
-- (void) applyOauthTokens:(NSString *)token andVerifier:(NSString *)verifier;
-
-- (NSString *) getURLScheme;
-
-+ (SoomlaTwitter *) getInstance;
-
 @end
 
 #pragma clang diagnostic pop

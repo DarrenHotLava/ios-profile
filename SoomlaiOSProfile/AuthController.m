@@ -116,5 +116,21 @@ static NSString* TAG = @"SOOMLA AuthController";
     return userProfile;
 }
 
+- (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
+    return [authProvider tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    for(id key in self.providers) {
+        id<IAuthProvider> value = [self.providers objectForKey:key];
+        if ([value tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 
 @end

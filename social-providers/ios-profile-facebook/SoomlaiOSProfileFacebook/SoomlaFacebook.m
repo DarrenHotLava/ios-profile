@@ -158,6 +158,16 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                                                   || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)));
 }
 
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [FBAppCall handleOpenURL:url
+                           sourceApplication:sourceApplication
+                             fallbackHandler:^(FBAppCall *call) {
+                                 LogDebug(TAG, ([NSString stringWithFormat:@"Unhandled deep link: %@", url]));
+                                 // Here goes the code to handle the links
+                                 // Use the links to show a relevant view of your app to the user
+                             }];
+}
+
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
     LogDebug(TAG, @"Updating status");
 
