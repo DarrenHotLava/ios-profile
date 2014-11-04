@@ -64,12 +64,6 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     else {
         webAvailable = YES;
     }
-
-//    LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(innerHandleOpenURL:)
-//                                                 name:@"kUnityOnOpenURL"
-//                                               object:nil];
     
     @synchronized( self ) {
         if( instance == nil ) {
@@ -81,31 +75,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (void)dealloc {
-//    LogDebug(TAG, @"removeObserver kUnityOnOpenURL notification");
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-//- (void)innerHandleOpenURL:(NSNotification *)notification {
-//    // TODO: Check it
-//    if ([[notification name] isEqualToString:@"kUnityOnOpenURL"]) {
-//        LogDebug(TAG, @"Successfully received the kUnityOnOpenURL notification!");
-//
-//        NSURL *url = [[notification userInfo] valueForKey:@"url"];
-//        NSString *sourceApplication = [[notification userInfo] valueForKey:@"sourceApplication"];
-////        id annotation = [[notification userInfo] valueForKey:@"annotation"];
-//        BOOL urlWasHandled = [FBAppCall handleOpenURL:url
-//                                    sourceApplication:sourceApplication
-//                                      fallbackHandler:^(FBAppCall *call) {
-//                    LogDebug(TAG, ([NSString stringWithFormat:@"Unhandled deep link: %@", url]));
-//                    // Here goes the code to handle the links
-//                    // Use the links to show a relevant view of your app to the user
-//                }];
-//
-//        LogDebug(TAG,
-//                        ([NSString stringWithFormat:@"urlWasHandled: %@",
-//                                                    urlWasHandled ? @"True" : @"False"]));
-//    }
-//}
 
 - (Provider)getProvider {
     return TWITTER;
@@ -155,7 +125,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         self.loginCancel = cancel;
         [[UIApplication sharedApplication] openURL:url];
     } authenticateInsteadOfAuthorize:NO
-                    forceLogin:@(YES)
+                    forceLogin:@(NO)
                     screenName:nil
                  oauthCallback:[NSString stringWithFormat:@"%@://twitter_access_tokens/", [self getURLScheme]]
                     errorBlock:^(NSError *error) {
@@ -205,41 +175,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail {
     [self.twitter getUserInformationFor:loggedInUser successBlock:^(NSDictionary *user) {
-        NSString *fullName = user[@"name"];
-        NSString *firstName = @"";
-        NSString *lastName = @"";
-        if (fullName) {
-            NSArray *names = [fullName componentsSeparatedByString:@" "];
-            if (names && ([names count] > 0)) {
-                firstName = names[0];
-                if ([names count] > 1) {
-                    lastName = names[1];
-                }
-            }
-        }
-        
-        // According to: https://dev.twitter.com/rest/reference/get/users/show
-        //
-        // - Twitter does not supply email access: https://dev.twitter.com/faq#26
-        UserProfile *userProfile = [[UserProfile alloc] initWithProvider:TWITTER
-                                                            andProfileId:user[@"id_str"]
-                                                             andUsername:user[@"screen_name"]
-                                                                andEmail:@""
-                                                            andFirstName:firstName
-                                                             andLastName:lastName];
-        
-        // No gender information on Twitter:
-        // https://twittercommunity.com/t/how-to-find-male-female-accounts-in-following-list/7367
-        userProfile.gender = @"";
-        
-        // No birthday on Twitter:
-        // https://twittercommunity.com/t/how-can-i-get-email-of-user-if-i-use-api/7019/16
-        userProfile.birthday = @"";
-        
-        userProfile.language = user[@"lang"];
-        userProfile.location = user[@"location"];
-        userProfile.avatarLink = user[@"profile_image_url"];
-        
+        UserProfile *userProfile = [self parseUserProfile:user];
         success(userProfile);
     } errorBlock:^(NSError *error) {
         fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
@@ -259,21 +195,22 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
-
+    if (![self testLoggedIn:fail]) {
+        return;
+    }
+    
+    LogDebug(TAG, @"Updating status");
+    [self.twitter postStatusUpdate:status inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:nil trimUser:nil successBlock:^(NSDictionary *status) {
+        LogDebug(TAG, @"Updating status success");
+        success();
+    } errorBlock:^(NSError *error) {
+        fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+    }];
 }
 
 - (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail {
-
-}
-
--(void) openDialog:(NSString *)link
-           andName:(NSString *)name
-        andCaption:(NSString *)caption
-    andDescription:(NSString *)description
-        andPicture:(NSString *)picture
-           success:(socialActionSuccess)success
-              fail:(socialActionFail)fail {
-
+    LogDebug(TAG, @"Dialogs are not available in Twitter");
+    fail(@"Dialogs are not available in Twitter");
 }
 
 - (void)updateStoryWithMessage:(NSString *)message
@@ -284,7 +221,10 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
                     andPicture:(NSString *)picture
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail {
-
+    // These parameters cannot be added to the tweet.
+    // Please use cards (https://dev.twitter.com/cards) and add these parameters
+    // to the supplied link's HTML
+    [self updateStatus:[NSString stringWithFormat:@"%@ %@", message, link] success:success fail:fail];
 }
 
 - (void)updateStoryWithMessageDialog:(NSString *)name
@@ -294,25 +234,95 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
                           andPicture:(NSString *)picture
                              success:(socialActionSuccess)success
                                 fail:(socialActionFail)fail {
+    LogDebug(TAG, @"Dialogs are not available in Twitter");
+    fail(@"Dialogs are not available in Twitter");
 }
 
 - (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail {
-
+    if (![self testLoggedIn:fail]) {
+        return;
+    }
+    
+    LogDebug(TAG, @"Getting contacts");
+    
+    [self.twitter getFriendsListForUserID:loggedInUser orScreenName:loggedInUser cursor:nil count:@"200" skipStatus:@(YES) includeUserEntities:@(YES)
+                             successBlock:^(NSArray *users, NSString *previousCursor, NSString *nextCursor) {
+                                 LogDebug(TAG, ([NSString stringWithFormat:@"Get contacts success: %@", users]));
+                                 
+                                 NSMutableArray *contacts = [NSMutableArray array];
+                                 
+                                 for (NSDictionary *userDict in users) {
+                                     UserProfile *contact = [self parseUserProfile:userDict];
+                                     [contacts addObject:contact];
+                                 }
+                                 
+                                 success(contacts);
+                                 
+                             } errorBlock:^(NSError *error) {
+                                 LogError(TAG, ([NSString stringWithFormat:@"Get contacts error: %@", error.localizedDescription]));
+                                 
+                                 fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+                             }];
 }
 
 - (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail {
-
+    if (![self testLoggedIn:fail]) {
+        return;
+    }
+    
+    LogDebug(TAG, @"Getting feed");
+    
+    [self.twitter getUserTimelineWithScreenName:loggedInUser count:200
+                                   successBlock:^(NSArray *statuses) {
+                                       LogDebug(TAG, ([NSString stringWithFormat:@"Get feed success: %@", statuses]));
+                                       
+                                       NSMutableArray *feeds = [NSMutableArray array];
+                                       for (NSDictionary *statusDict in statuses) {
+                                           NSString *str;
+                                           str = statusDict[@"text"];
+                                           if (str) {
+                                               [feeds addObject:str];
+                                           }
+                                       }
+                                       success(feeds);
+                                       
+                                   } errorBlock:^(NSError *error) {
+                                       LogError(TAG, ([NSString stringWithFormat:@"Get feed error: %@", error]));
+                                   }];
 }
 
 - (void)uploadImageWithMessage:(NSString *)message
                    andFilePath:(NSString *)filePath
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail {
-
+    if (![self testLoggedIn:fail]) {
+        return;
+    }
+    
+    LogDebug(TAG, @"Uploading image");
+    
+    [self.twitter postMediaUpload:[NSURL fileURLWithPath:filePath]
+              uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+                  // nothing to do here
+              } successBlock:^(NSDictionary *imageDictionary, NSString *mediaID, NSString *size) {
+                  [self.twitter postStatusUpdate:message inReplyToStatusID:nil
+                                        mediaIDs:[NSArray arrayWithObject:mediaID] latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil
+                                    successBlock:^(NSDictionary *status) {
+                                        LogDebug(TAG, ([NSString stringWithFormat:@"Upload image (status) success: %@", status]));
+                                        success();
+                                    } errorBlock:^(NSError *error) {
+                                        LogError(TAG, ([NSString stringWithFormat:@"Upload image (status) error: %@", error]));
+                                        fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+                                    }];
+              } errorBlock:^(NSError *error) {
+                  LogError(TAG, ([NSString stringWithFormat:@"Upload image error: %@", error]));
+                  fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+              }];
 }
 
 - (void)like:(NSString *)pageName {
-
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://www.twitter.com/", pageName]];
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 - (NSString *) getURLScheme {
@@ -349,6 +359,53 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (NSString *) getTwitterStorageKey:(NSString *)postfix {
     return [NSString stringWithFormat:@"%@%@", DB_KEY_PREFIX, postfix];
+}
+
+- (BOOL)testLoggedIn:(socialActionFail)fail {
+    if (![self isLoggedIn]) {
+        fail(@"User did not login to Twitter, did you forget to login?");
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (UserProfile *)parseUserProfile:(NSDictionary *)user {
+    NSString *fullName = user[@"name"];
+    NSString *firstName = @"";
+    NSString *lastName = @"";
+    if (fullName) {
+        NSArray *names = [fullName componentsSeparatedByString:@" "];
+        if (names && ([names count] > 0)) {
+            firstName = names[0];
+            if ([names count] > 1) {
+                lastName = names[1];
+            }
+        }
+    }
+    
+    // According to: https://dev.twitter.com/rest/reference/get/users/show
+    //
+    // - Twitter does not supply email access: https://dev.twitter.com/faq#26
+    UserProfile *userProfile = [[UserProfile alloc] initWithProvider:TWITTER
+                                                        andProfileId:user[@"id_str"]
+                                                         andUsername:user[@"screen_name"]
+                                                            andEmail:@""
+                                                        andFirstName:firstName
+                                                         andLastName:lastName];
+    
+    // No gender information on Twitter:
+    // https://twittercommunity.com/t/how-to-find-male-female-accounts-in-following-list/7367
+    userProfile.gender = @"";
+    
+    // No birthday on Twitter:
+    // https://twittercommunity.com/t/how-can-i-get-email-of-user-if-i-use-api/7019/16
+    userProfile.birthday = @"";
+    
+    userProfile.language = user[@"lang"];
+    userProfile.location = user[@"location"];
+    userProfile.avatarLink = user[@"profile_image_url"];
+    return userProfile;
 }
 
 @end
