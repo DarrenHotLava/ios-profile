@@ -4,5 +4,9 @@ mkdir build
 xcodebuild -configuration Release -sdk iphoneos7.1 -project submodules/soomla-ios-core/SoomlaiOSCore.xcodeproj -target SoomlaiOSCore clean build CREATING_UNIVERSAL_DIR=$PWD/build
 xcodebuild -configuration Release -sdk iphoneos7.1 -project SoomlaiOSProfile.xcodeproj -target SoomlaiOSProfile clean build CREATING_UNIVERSAL_DIR=$PWD/build
 
-xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios-profile-facebook/SoomlaiOSProfileFacebook.xcodeproj -target SoomlaiOSProfileFacebook clean build CREATING_UNIVERSAL_DIR=$PWD/build
-xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios-profile-twitter/SoomlaiOSProfileTwitter.xcodeproj -target SoomlaiOSProfileTwitter clean build CREATING_UNIVERSAL_DIR=$PWD/build
+mkdir -p build/ios-profile-facebook
+xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios-profile-facebook/SoomlaiOSProfileFacebook.xcodeproj -target SoomlaiOSProfileFacebook clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-facebook
+
+mkdir -p build/ios-profile-twitter
+xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios-profile-twitter/SoomlaiOSProfileTwitter.xcodeproj -target SoomlaiOSProfileTwitter clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-twitter
+cp social-providers/ios-profile-twitter/libs/* $PWD/build/ios-profile-twitter/
