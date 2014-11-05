@@ -63,8 +63,25 @@ typedef void (^logoutFail)(NSString* message);
 /**
  Checks if the user is logged-in using the authentication provider
  
- @return YES if the user is already logged-in using the authentication provider, NO otherwise
+ @return YES if the user is already logged-in using the authentication provider, 
+ NO otherwise
  */
 - (BOOL)isLoggedIn;
+
+/**
+ Helper method to assist with browser-based authentication for the provider.
+ Based on the URL scheme defined for the provider, it will try and handle the
+ callback of browser authentication
+ 
+ @param url The URL which caused the application to launch and receive a 
+ callback
+ @param sourceApplication The bundle ID of the app that is requesting your app 
+ to open the URL (url).
+ @param annotation A property list object supplied by the source app to 
+ communicate information to the receiving app.
+ 
+ @return YES if the provider was able to handle the URL, NO otherwise
+ */
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
 @end

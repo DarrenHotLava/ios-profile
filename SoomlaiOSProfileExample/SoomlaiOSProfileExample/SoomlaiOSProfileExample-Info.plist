@@ -30,6 +30,14 @@
 				<string>fb409611972431183</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tw1qR0orDyLSZNRK2eMAs9ou8OT</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
@@ -39,6 +47,10 @@
 	<string>SOOMLA</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>SoomlaTwitterConsumerKey</key>
+	<string>1qR0orDyLSZNRK2eMAs9ou8OT</string>
+	<key>SoomlaTwitterConsumerSecret</key>
+	<string>dyBn2v3HK64DRo95RH8Vj7BVOZ4DkcxNViFbqjX8BETohdTDqR</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>

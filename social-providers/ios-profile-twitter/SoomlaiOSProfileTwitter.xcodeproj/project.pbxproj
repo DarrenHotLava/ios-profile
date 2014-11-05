@@ -7,117 +7,161 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F80C71A019FF92760027AF9A /* libSoomlaiOSProfileFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */; };
-		F80C71B019FFA2610027AF9A /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */; };
-		F80C71B219FFA2910027AF9A /* SoomlaFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C71B419FFA4AA0027AF9A /* Foundation.framework */; };
-		F85EFA4619FFC80D006092AB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F85EFA4519FFC80D006092AB /* FacebookSDK.framework */; };
+		F842F69B1A0908EE00CDCA7C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842F69A1A0908EE00CDCA7C /* Accounts.framework */; };
+		F842F69D1A0908F300CDCA7C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842F69C1A0908F300CDCA7C /* Social.framework */; };
+		F8B62F031A065F3A0014EDB5 /* SoomlaTwitter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = F8B62F021A065F3A0014EDB5 /* SoomlaTwitter.h */; };
+		F8B62F051A065F3A0014EDB5 /* SoomlaTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62F041A065F3A0014EDB5 /* SoomlaTwitter.m */; };
+		F8B62F0B1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B62EFF1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a */; };
+		F8B62F1D1A0661680014EDB5 /* SoomlaTwitter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8B62F021A065F3A0014EDB5 /* SoomlaTwitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F8B62F6D1A06881B0014EDB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B62F6C1A06881B0014EDB5 /* Foundation.framework */; };
+		F8B62F711A0688240014EDB5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B62F701A0688240014EDB5 /* Twitter.framework */; };
+		F8B62F741A068A200014EDB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B62F6E1A0688200014EDB5 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F80C71A119FF92760027AF9A /* PBXContainerItemProxy */ = {
+		F8B62F0C1A065F3A0014EDB5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F80C718C19FF92750027AF9A /* Project object */;
+			containerPortal = F8B62EF71A065F3A0014EDB5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F80C719319FF92750027AF9A;
-			remoteInfo = SoomlaiOSProfileFacebook;
+			remoteGlobalIDString = F8B62EFE1A065F3A0014EDB5;
+			remoteInfo = SoomlaiOSProfileTwitter;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F80C719219FF92750027AF9A /* CopyFiles */ = {
+		F8B62EFD1A065F3A0014EDB5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				F8B62F031A065F3A0014EDB5 /* SoomlaTwitter.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		F80C719F19FF92760027AF9A /* SoomlaiOSProfileFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F80C71A519FF92760027AF9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaFacebook.h; sourceTree = "<group>"; };
-		F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaFacebook.m; sourceTree = "<group>"; };
-		F80C71B419FFA4AA0027AF9A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F80C71BC19FFAEA30027AF9A /* SoomlaiOSProfileFacebook.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoomlaiOSProfileFacebook.pch; path = SoomlaiOSProfileFacebook/SoomlaiOSProfileFacebook.pch; sourceTree = SOURCE_ROOT; };
-		F85EFA4519FFC80D006092AB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = libs/FacebookSDK.framework; sourceTree = "<group>"; };
+		F842F69A1A0908EE00CDCA7C /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		F842F69C1A0908F300CDCA7C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		F842F6AF1A090D2700CDCA7C /* STTwitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTwitter.h; sourceTree = "<group>"; };
+		F842F6B11A090D2700CDCA7C /* STTwitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STTwitter.m; sourceTree = "<group>"; };
+		F842F6BD1A090D2700CDCA7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8B62EFF1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileTwitter.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B62F021A065F3A0014EDB5 /* SoomlaTwitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaTwitter.h; sourceTree = "<group>"; };
+		F8B62F041A065F3A0014EDB5 /* SoomlaTwitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaTwitter.m; sourceTree = "<group>"; };
+		F8B62F0A1A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileTwitterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B62F101A065F3A0014EDB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8B62F1A1A06614D0014EDB5 /* SoomlaiOSProfileTwitter.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaiOSProfileTwitter.pch; sourceTree = "<group>"; };
+		F8B62F6C1A06881B0014EDB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F8B62F6E1A0688200014EDB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F8B62F701A0688240014EDB5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F80C719119FF92750027AF9A /* Frameworks */ = {
+		F8B62EFC1A065F3A0014EDB5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */,
-				F85EFA4619FFC80D006092AB /* FacebookSDK.framework in Frameworks */,
+				F842F69D1A0908F300CDCA7C /* Social.framework in Frameworks */,
+				F842F69B1A0908EE00CDCA7C /* Accounts.framework in Frameworks */,
+				F8B62F741A068A200014EDB5 /* UIKit.framework in Frameworks */,
+				F8B62F711A0688240014EDB5 /* Twitter.framework in Frameworks */,
+				F8B62F6D1A06881B0014EDB5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F80C719C19FF92760027AF9A /* Frameworks */ = {
+		F8B62F071A065F3A0014EDB5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F80C71A019FF92760027AF9A /* libSoomlaiOSProfileFacebook.a in Frameworks */,
+				F8B62F0B1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F80C718B19FF92750027AF9A = {
+		F842F6AE1A090D2700CDCA7C /* STTwitter */ = {
 			isa = PBXGroup;
 			children = (
-				F80C719619FF92750027AF9A /* SoomlaiOSProfileFacebook */,
-				F80C71A319FF92760027AF9A /* SoomlaiOSProfileFacebookTests */,
-				F80C719519FF92750027AF9A /* Products */,
-				F80C71B619FFA4B20027AF9A /* Frameworks */,
+				F842F6AF1A090D2700CDCA7C /* STTwitter.h */,
+				F842F6B11A090D2700CDCA7C /* STTwitter.m */,
 			);
+			path = STTwitter;
 			sourceTree = "<group>";
 		};
-		F80C719519FF92750027AF9A /* Products */ = {
+		F842F6BB1A090D2700CDCA7C /* STTwitterTests */ = {
 			isa = PBXGroup;
 			children = (
-				F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */,
-				F80C719F19FF92760027AF9A /* SoomlaiOSProfileFacebookTests.xctest */,
+				F842F6BC1A090D2700CDCA7C /* Supporting Files */,
 			);
-			name = Products;
+			path = STTwitterTests;
 			sourceTree = "<group>";
 		};
-		F80C719619FF92750027AF9A /* SoomlaiOSProfileFacebook */ = {
+		F842F6BC1A090D2700CDCA7C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */,
-				F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */,
-			);
-			path = SoomlaiOSProfileFacebook;
-			sourceTree = "<group>";
-		};
-		F80C71A319FF92760027AF9A /* SoomlaiOSProfileFacebookTests */ = {
-			isa = PBXGroup;
-			children = (
-				F80C71A419FF92760027AF9A /* Supporting Files */,
-			);
-			path = SoomlaiOSProfileFacebookTests;
-			sourceTree = "<group>";
-		};
-		F80C71A419FF92760027AF9A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F80C71BC19FFAEA30027AF9A /* SoomlaiOSProfileFacebook.pch */,
-				F80C71A519FF92760027AF9A /* Info.plist */,
+				F842F6BD1A090D2700CDCA7C /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F80C71B619FFA4B20027AF9A /* Frameworks */ = {
+		F8B62EF61A065F3A0014EDB5 = {
 			isa = PBXGroup;
 			children = (
-				F85EFA4519FFC80D006092AB /* FacebookSDK.framework */,
-				F80C71B419FFA4AA0027AF9A /* Foundation.framework */,
+				F842F6AE1A090D2700CDCA7C /* STTwitter */,
+				F842F6BB1A090D2700CDCA7C /* STTwitterTests */,
+				F8B62F721A06883D0014EDB5 /* Frameworks */,
+				F8B62F011A065F3A0014EDB5 /* SoomlaiOSProfileTwitter */,
+				F8B62F0E1A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests */,
+				F8B62F001A065F3A0014EDB5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F8B62F001A065F3A0014EDB5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8B62EFF1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a */,
+				F8B62F0A1A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8B62F011A065F3A0014EDB5 /* SoomlaiOSProfileTwitter */ = {
+			isa = PBXGroup;
+			children = (
+				F8B62F1A1A06614D0014EDB5 /* SoomlaiOSProfileTwitter.pch */,
+				F8B62F021A065F3A0014EDB5 /* SoomlaTwitter.h */,
+				F8B62F041A065F3A0014EDB5 /* SoomlaTwitter.m */,
+			);
+			path = SoomlaiOSProfileTwitter;
+			sourceTree = "<group>";
+		};
+		F8B62F0E1A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests */ = {
+			isa = PBXGroup;
+			children = (
+				F8B62F0F1A065F3A0014EDB5 /* Supporting Files */,
+			);
+			path = SoomlaiOSProfileTwitterTests;
+			sourceTree = "<group>";
+		};
+		F8B62F0F1A065F3A0014EDB5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F8B62F101A065F3A0014EDB5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F8B62F721A06883D0014EDB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F842F69C1A0908F300CDCA7C /* Social.framework */,
+				F842F69A1A0908EE00CDCA7C /* Accounts.framework */,
+				F8B62F701A0688240014EDB5 /* Twitter.framework */,
+				F8B62F6E1A0688200014EDB5 /* UIKit.framework */,
+				F8B62F6C1A06881B0014EDB5 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,91 +169,91 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		F80C71B119FFA27C0027AF9A /* Headers */ = {
+		F8B62F1B1A0661610014EDB5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F80C71B219FFA2910027AF9A /* SoomlaFacebook.h in Headers */,
+				F8B62F1D1A0661680014EDB5 /* SoomlaTwitter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F80C719319FF92750027AF9A /* SoomlaiOSProfileFacebook */ = {
+		F8B62EFE1A065F3A0014EDB5 /* SoomlaiOSProfileTwitter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F80C71A819FF92760027AF9A /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileFacebook" */;
+			buildConfigurationList = F8B62F131A065F3A0014EDB5 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileTwitter" */;
 			buildPhases = (
-				F80C719019FF92750027AF9A /* Sources */,
-				F80C719119FF92750027AF9A /* Frameworks */,
-				F80C719219FF92750027AF9A /* CopyFiles */,
-				F80C71B119FFA27C0027AF9A /* Headers */,
-				F80C71BD19FFAF220027AF9A /* Run Script */,
+				F8B62EFB1A065F3A0014EDB5 /* Sources */,
+				F8B62EFC1A065F3A0014EDB5 /* Frameworks */,
+				F8B62EFD1A065F3A0014EDB5 /* CopyFiles */,
+				F8B62F1B1A0661610014EDB5 /* Headers */,
+				F8B62F1C1A0661640014EDB5 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SoomlaiOSProfileFacebook;
-			productName = SoomlaiOSProfileFacebook;
-			productReference = F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */;
+			name = SoomlaiOSProfileTwitter;
+			productName = SoomlaiOSProfileTwitter;
+			productReference = F8B62EFF1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		F80C719E19FF92760027AF9A /* SoomlaiOSProfileFacebookTests */ = {
+		F8B62F091A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F80C71AB19FF92760027AF9A /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileFacebookTests" */;
+			buildConfigurationList = F8B62F161A065F3A0014EDB5 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileTwitterTests" */;
 			buildPhases = (
-				F80C719B19FF92760027AF9A /* Sources */,
-				F80C719C19FF92760027AF9A /* Frameworks */,
-				F80C719D19FF92760027AF9A /* Resources */,
+				F8B62F061A065F3A0014EDB5 /* Sources */,
+				F8B62F071A065F3A0014EDB5 /* Frameworks */,
+				F8B62F081A065F3A0014EDB5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F80C71A219FF92760027AF9A /* PBXTargetDependency */,
+				F8B62F0D1A065F3A0014EDB5 /* PBXTargetDependency */,
 			);
-			name = SoomlaiOSProfileFacebookTests;
-			productName = SoomlaiOSProfileFacebookTests;
-			productReference = F80C719F19FF92760027AF9A /* SoomlaiOSProfileFacebookTests.xctest */;
+			name = SoomlaiOSProfileTwitterTests;
+			productName = SoomlaiOSProfileTwitterTests;
+			productReference = F8B62F0A1A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		F80C718C19FF92750027AF9A /* Project object */ = {
+		F8B62EF71A065F3A0014EDB5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "SOOMLA Inc.";
 				TargetAttributes = {
-					F80C719319FF92750027AF9A = {
+					F8B62EFE1A065F3A0014EDB5 = {
 						CreatedOnToolsVersion = 6.1;
 					};
-					F80C719E19FF92760027AF9A = {
+					F8B62F091A065F3A0014EDB5 = {
 						CreatedOnToolsVersion = 6.1;
 					};
 				};
 			};
-			buildConfigurationList = F80C718F19FF92750027AF9A /* Build configuration list for PBXProject "SoomlaiOSProfileFacebook" */;
+			buildConfigurationList = F8B62EFA1A065F3A0014EDB5 /* Build configuration list for PBXProject "SoomlaiOSProfileTwitter" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = F80C718B19FF92750027AF9A;
-			productRefGroup = F80C719519FF92750027AF9A /* Products */;
+			mainGroup = F8B62EF61A065F3A0014EDB5;
+			productRefGroup = F8B62F001A065F3A0014EDB5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F80C719319FF92750027AF9A /* SoomlaiOSProfileFacebook */,
-				F80C719E19FF92760027AF9A /* SoomlaiOSProfileFacebookTests */,
+				F8B62EFE1A065F3A0014EDB5 /* SoomlaiOSProfileTwitter */,
+				F8B62F091A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F80C719D19FF92760027AF9A /* Resources */ = {
+		F8B62F081A065F3A0014EDB5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -219,14 +263,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F80C71BD19FFAF220027AF9A /* Run Script */ = {
+		F8B62F1C1A0661640014EDB5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,15 +279,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F80C719019FF92750027AF9A /* Sources */ = {
+		F8B62EFB1A065F3A0014EDB5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F80C71B019FFA2610027AF9A /* SoomlaFacebook.m in Sources */,
+				F8B62F051A065F3A0014EDB5 /* SoomlaTwitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F80C719B19FF92760027AF9A /* Sources */ = {
+		F8B62F061A065F3A0014EDB5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -254,15 +297,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F80C71A219FF92760027AF9A /* PBXTargetDependency */ = {
+		F8B62F0D1A065F3A0014EDB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F80C719319FF92750027AF9A /* SoomlaiOSProfileFacebook */;
-			targetProxy = F80C71A119FF92760027AF9A /* PBXContainerItemProxy */;
+			target = F8B62EFE1A065F3A0014EDB5 /* SoomlaiOSProfileTwitter */;
+			targetProxy = F8B62F0C1A065F3A0014EDB5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		F80C71A619FF92760027AF9A /* Debug */ = {
+		F8B62F111A065F3A0014EDB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -285,7 +328,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SoomlaiOSProfileFacebook/SoomlaiOSProfileFacebook.pch;
+				GCC_PREFIX_HEADER = SoomlaiOSProfileTwitter/SoomlaiOSProfileTwitter.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -307,7 +350,7 @@
 			};
 			name = Debug;
 		};
-		F80C71A719FF92760027AF9A /* Release */ = {
+		F8B62F121A065F3A0014EDB5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -329,7 +372,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SoomlaiOSProfileFacebook/SoomlaiOSProfileFacebook.pch;
+				GCC_PREFIX_HEADER = SoomlaiOSProfileTwitter/SoomlaiOSProfileTwitter.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -346,49 +389,41 @@
 			};
 			name = Release;
 		};
-		F80C71A919FF92760027AF9A /* Debug */ = {
+		F8B62F141A065F3A0014EDB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/sdk",
-					"$(PROJECT_DIR)/libs",
-				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
 					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+					"$(SRCROOT)/STTwitter/**",
 				);
-				LIBRARY_SEARCH_PATHS = "sdk/**";
+				LIBRARY_SEARCH_PATHS = "libs/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		F80C71AA19FF92760027AF9A /* Release */ = {
+		F8B62F151A065F3A0014EDB5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/sdk",
-					"$(PROJECT_DIR)/libs",
-				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
 					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+					"$(SRCROOT)/STTwitter/**",
 				);
-				LIBRARY_SEARCH_PATHS = "sdk/**";
+				LIBRARY_SEARCH_PATHS = "libs/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		F80C71AC19FF92760027AF9A /* Debug */ = {
+		F8B62F171A065F3A0014EDB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
@@ -399,20 +434,20 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = SoomlaiOSProfileFacebookTests/Info.plist;
+				INFOPLIST_FILE = SoomlaiOSProfileTwitterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		F80C71AD19FF92760027AF9A /* Release */ = {
+		F8B62F181A065F3A0014EDB5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = SoomlaiOSProfileFacebookTests/Info.plist;
+				INFOPLIST_FILE = SoomlaiOSProfileTwitterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -421,34 +456,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F80C718F19FF92750027AF9A /* Build configuration list for PBXProject "SoomlaiOSProfileFacebook" */ = {
+		F8B62EFA1A065F3A0014EDB5 /* Build configuration list for PBXProject "SoomlaiOSProfileTwitter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F80C71A619FF92760027AF9A /* Debug */,
-				F80C71A719FF92760027AF9A /* Release */,
+				F8B62F111A065F3A0014EDB5 /* Debug */,
+				F8B62F121A065F3A0014EDB5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F80C71A819FF92760027AF9A /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileFacebook" */ = {
+		F8B62F131A065F3A0014EDB5 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileTwitter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F80C71A919FF92760027AF9A /* Debug */,
-				F80C71AA19FF92760027AF9A /* Release */,
+				F8B62F141A065F3A0014EDB5 /* Debug */,
+				F8B62F151A065F3A0014EDB5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F80C71AB19FF92760027AF9A /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileFacebookTests" */ = {
+		F8B62F161A065F3A0014EDB5 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileTwitterTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F80C71AC19FF92760027AF9A /* Debug */,
-				F80C71AD19FF92760027AF9A /* Release */,
+				F8B62F171A065F3A0014EDB5 /* Debug */,
+				F8B62F181A065F3A0014EDB5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = F80C718C19FF92750027AF9A /* Project object */;
+	rootObject = F8B62EF71A065F3A0014EDB5 /* Project object */;
 }

@@ -310,6 +310,37 @@ Fetches the user's feed and grants the user a reward.
 - (void)openAppRatingPage;
 
 /**
+ Helper method to assist with browser-based authentication using a sepcific
+ underlying authentication provider.
+ 
+ @param provider The provider to handle open URL
+ @param url The URL which caused the application to launch and receive a
+ callback
+ @param sourceApplication The bundle ID of the app that is requesting your app
+ to open the URL (url).
+ @param annotation A property list object supplied by the source app to
+ communicate information to the receiving app.
+ 
+ @return YES if the provider was able to handle the URL, NO otherwise
+ */
+- (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+
+/**
+ Helper method to assist with browser-based authentication using some underlying
+ authentication providers.
+ 
+ @param url The URL which caused the application to launch and receive a
+ callback
+ @param sourceApplication The bundle ID of the app that is requesting your app
+ to open the URL (url).
+ @param annotation A property list object supplied by the source app to
+ communicate information to the receiving app.
+ 
+ @return YES if a provider was able to handle the URL, NO otherwise
+ */
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+
+/**
  Retrieves the singleton instance of `SoomlaProfile`
  @return the singleton instance of `SoomlaProfile`
  */

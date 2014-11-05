@@ -25,7 +25,7 @@ Getting Started
 
 1. The static libs and headers you need are in the folder [build](https://github.com/soomla/ios-profile/tree/master/build).
 
-  * Set your project's "Library Search Paths" and "Header Search Paths" to that folder.
+  * Set your project's "Library Search Paths" and "Header Search Paths" to that folder with `recursive` option.
   * Add `-ObjC -lSoomlaiOSProfile -lSoomlaiOSCore` to the project's "Other Linker Flags".
 
 1. Make sure you have the following frameworks in your application's project: **Security, libsqlite3.0.dylib**.
@@ -55,7 +55,7 @@ And that's it ! You have social network capabilities.
 
 ## What's next? Selecting Social Providers
 
-**ios-profile** is structured to support multiple social networks (Facebook, Twitter, etc.), at the time of writing this the framework only supports Facebook integration.
+**ios-profile** is structured to support multiple social networks (Facebook, Twitter, etc.), at the time of writing this the framework only supports Facebook, Twitter and Google+ integration.
 
 ### Facebook
 
@@ -66,6 +66,50 @@ Facebook is supported out-of-the-box, you just have to follow the next steps to 
 1. Refer to [Getting Started with the Facebook iOS SDK](https://developers.facebook.com/docs/ios/getting-started/) for more information
 
 1. Add `-lSoomlaiOSProfileFacebook` to the project's "Other Linker Flags"
+
+### Twitter
+
+Twitter is supported out-of-the-box, authentication is done either through the signed in Twitter account (iOS 5+) or through web browser (fallback). Follow the next steps to make it work:
+
+1. Create your Twitter app at https://apps.twitter.com/
+
+1. In the application's plist add the following rows:
+  1. `SoomlaTwitterConsumerKey` (String) - Consumer Key (API Key) from your app's `Keys and Access Tokens` on Twitter
+  1. `SoomlaTwitterConsumerSecret` (String) - Consumer Secret (API Secret) from your app's `Keys and Access Tokens` on Twitter
+  1. (optional) `SoomlaTwitterForceWeb` (Boolean) - Force web browser authentication
+
+1. Add a URL scheme to your application:
+  1. Go to the application's "Info" section in the build target
+  1. Under "URL Types" add a new URL type
+  1. In the "URL Schemes" fill in `tw<Your Twitter app consumer key>` (without the braces)
+
+1. Make sure you have the following frameworks in your application's project: **Twitter, Social, Accounts**.
+
+1. Add `-lSoomlaiOSProfileTwitter -lSTTwitter` to the project's "Other Linker Flags"
+  > **ios-profile** uses the [STTWitter](https://github.com/nst/STTwitter) library (v 0.1.5) to support Twitter integration
+
+### Browser-based Authentication
+
+Most social framework SDKs support authentication through your web browser, when the user finishes authenticating through the browser your application will be called dependent on the URL schemes you have defined.
+
+The callback to this process is `openURL` which should be defined in your `AppDelegate`, **ios-profile** provides you with a helper method to handle the `openURL` callback through its providers. Add the following code to your `AppDelegate` to handle this properly:
+
+```objective-c
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    BOOL urlWasHandled = [[SoomlaProfile getInstance] tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+
+    if (urlWasHandled) {
+        return urlWasHandled;
+    }
+
+    // Profile was unable to handle callback, do some custom handling
+    return NO;
+}
+```
 
 ## UserProfile
 
@@ -169,6 +213,12 @@ In order to run the project follow this steps:
      }
   ```
 1. **Facebook Permissions** - Profile will request `publish_actions` from the user of the application, to test the application please make sure you test with either Admin, Developer or Tester roles
+
+## Twitter Caveats
+
+1. **Login method returns 401 error** - this could be the result of a few issues:
+  1. Have you supplied the correct consumer key and secret in your application's plist?
+  1. Have you supplied a `Callback URL` in your Twitter application settings?
 
 Our way of saying "Thanks !"
 ---
