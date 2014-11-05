@@ -561,8 +561,7 @@
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
-					"/Users/simong/source/ios-profile/submodules/soomla-ios-core/build",
-					"/Users/simong/source/ios-profile/build/**",
+					"$(SRCROOT)/../build/**",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -597,8 +596,7 @@
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
-					"/Users/simong/source/ios-profile/submodules/soomla-ios-core/build",
-					"/Users/simong/source/ios-profile/build/**",
+					"$(SRCROOT)/../build/**",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
