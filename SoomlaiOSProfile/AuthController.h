@@ -31,8 +31,9 @@
  Constructor
  
  Loads all authentication providers
+ @param providerParams Special initialization parameters for loaded providers
  */
-- (id)init;
+- (id)initWithParameters:(NSDictionary *)providerParams;
 
 /**
  Auxilliary initializer for internal use by `SocialController`.

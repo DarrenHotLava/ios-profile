@@ -27,11 +27,11 @@
 static NSString* TAG = @"SOOMLA SocialController";
 
 
-- (id)init {
+- (id)initWithParameters:(NSDictionary *)providerParams {
     if (self = [super initWithoutLoadingProviders]) {
         
         // TODO: Check if providerPkgPrefix can be omitted completely in iOS
-        if (![self loadProvidersWithProtocol:@protocol(ISocialProvider)]) {
+        if (![self loadProvidersWithProtocol:@protocol(ISocialProvider) andProviderParams:providerParams]) {
             NSString* msg = @"You don't have a ISocialProvider service attached. \
             Decide which ISocialProvider you want, and add its static libraries \
             and headers to the target's search path.";

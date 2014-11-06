@@ -52,24 +52,32 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     self = [super init];
     if (!self) return nil;
     
-    _consumerKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerKey"];
-    _consumerSecret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterConsumerSecret"];
-    
-    NSNumber *forceWeb = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SoomlaTwitterForceWeb"];
-    webOnly = forceWeb ? [forceWeb boolValue] : NO;
+    return self;
+}
+
+- (void)dealloc {
+}
+
+- (void)applyParams:(NSDictionary *)providerParams {
+    if (providerParams) {
+        _consumerKey = [providerParams objectForKey:@"consumerKey"];
+        _consumerSecret = [providerParams objectForKey:@"consumerSecret"];
+        
+        NSNumber *forceWeb = [providerParams objectForKey:@"forceWeb"];
+        webOnly = forceWeb ? [forceWeb boolValue] : NO;
+    }
+    else {
+        webOnly = NO;
+    }
     
     if ([self isEmptyString:self.consumerKey] || [self isEmptyString:self.consumerSecret]) {
-        LogDebug(TAG, @"Either consumer key or consumer secret were not provided in plist, falling back to native only");
+        LogDebug(TAG, @"Either consumer key or consumer secret were not provided, falling back to native only");
         webAvailable = NO;
     }
     else {
         webAvailable = YES;
     }
 
-    return self;
-}
-
-- (void)dealloc {
 }
 
 - (Provider)getProvider {
@@ -104,6 +112,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 - (void)loginWithWeb:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel {
     
     if (!webAvailable) {
+        LogError(TAG, @"Consumer key and secret were not defined, please provide them in initialization");
         return;
     }
     

@@ -47,10 +47,6 @@
 	<string>SOOMLA</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>SoomlaTwitterConsumerKey</key>
-	<string>1qR0orDyLSZNRK2eMAs9ou8OT</string>
-	<key>SoomlaTwitterConsumerSecret</key>
-	<string>dyBn2v3HK64DRo95RH8Vj7BVOZ4DkcxNViFbqjX8BETohdTDqR</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>

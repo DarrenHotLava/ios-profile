@@ -32,8 +32,9 @@
  Constructor
  
  Loads all social providers
+ @param providerParams Special initialization parameters for loaded providers
  */
-- (id)init;
+- (id)initWithParameters:(NSDictionary *)providerParams;
 
 /**
  Shares the given status to the user's feed

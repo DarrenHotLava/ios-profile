@@ -42,9 +42,10 @@
  Loads and instatiates all providers implementing the supplied protocol
  
  @param protocol The protocol which the providers should implement
+ @param providerParams Special initialization parameters for loaded providers
  @return YES if all providers were loaded, NO otherwise
  */
-- (BOOL)loadProvidersWithProtocol:(Protocol *)protocol;
+- (BOOL)loadProvidersWithProtocol:(Protocol *)protocol andProviderParams:(NSDictionary *)providerParams;
 
 /**
  Retrieves an instance of a class which implements provider logic for the
