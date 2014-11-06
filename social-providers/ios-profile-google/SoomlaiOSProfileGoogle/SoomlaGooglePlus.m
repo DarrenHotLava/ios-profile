@@ -7,11 +7,13 @@
 //
 
 #import "SoomlaGooglePlus.h"
+#import "UserProfile.h"
+#import "SoomlaUtils.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
 @implementation SoomlaGooglePlus
 
-@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, GooglePlusAppId;
+@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
@@ -25,27 +27,36 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     return self;
 }
 
+- (void)applyParams:(NSDictionary *)providerParams{
+    if (providerParams){
+        clientId = [providerParams objectForKey:@"clientId"];
+    }
+}
+
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
+    LogDebug(TAG, @"Login");
+    
     //set login handlers
     self.loginSuccess = success;
     self.loginFail = fail;
     self.loginCancel = cancel;
     
     //check if app id is set
-    if (!GooglePlusAppId)
+    if (!clientId)
         self.loginFail(@"GooglePlus app id is not set!");
     
     //auth
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     signIn.shouldFetchGooglePlusUser = YES;
-    signIn.clientID = self.GooglePlusAppId;
+    signIn.clientID = self.clientId;
     signIn.scopes = @[ kGTLAuthScopePlusLogin ];
+    signIn.shouldFetchGoogleUserEmail = YES;
+    signIn.delegate = self;
     [signIn authenticate];
 }
 
 - (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
                    error: (NSError *) error {
-    NSLog(@"Received error %@ and auth object %@",error, auth);
     if (error) {
        self.loginFail([error localizedDescription]);
     } else {
@@ -61,15 +72,42 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
         // Perform other actions here, such as showing a sign-out button
     } else {
         loggedIn = NO;
+        [self clearLoginBlocks];
         self.loginFail(@"GooglePlus Authentication failed.");
     }
 }
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail{
-    //TODO
+    LogDebug(TAG, @"Getting user profile");
+    GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+    plusService.retryEnabled = YES;
+    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+    
+    GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
+    [plusService executeQuery:query
+            completionHandler:^(GTLServiceTicket *ticket,
+                                GTLPlusPerson *person,
+                                NSError *error) {
+                if (error) {
+                    fail([error localizedDescription]);
+                } else {
+                    UserProfile *userProfile = [[UserProfile alloc] initWithProvider:GOOGLE
+                                                                        andProfileId:person.identifier
+                                                                         andUsername:@"" //user name is not available!
+                                                                         andEmail:[person.emails objectAtIndex:0]                                                           andFirstName:person.name.givenName
+                                                                         andLastName:person.name.familyName];
+                    userProfile.gender = person.gender;
+                    userProfile.birthday = person.birthday;
+                    userProfile.location = person.currentLocation;
+                    userProfile.avatarLink = person.image.url;
+                    
+                    success(userProfile);
+                }
+            }];
 }
 
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail{
+    LogDebug(TAG, @"Logout");
     //will be required in case of disconnect!
 //    self.logoutSuccess = success;
 //    self.logoutFail = fail;
@@ -89,6 +127,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 //}
 
 - (BOOL)isLoggedIn{
+    LogDebug(TAG, @"isLoggedIn");
     return loggedIn;
 }
 
@@ -99,11 +138,15 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail{
-    //TODO
+    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+    [shareBuilder setPrefillText:status];
+    [shareBuilder open];
 }
 
 - (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail{
-    //TODO
+    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+    [shareBuilder setURLToShare:[NSURL URLWithString:link]];
+    [shareBuilder open];
 }
 
 - (void)updateStoryWithMessage:(NSString *)message
@@ -115,7 +158,11 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail
 {
-    //TODO
+    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+    [shareBuilder setPrefillText:message];
+    [shareBuilder setTitle:name description:description thumbnailURL:[NSURL URLWithString:picture]];
+    [shareBuilder setURLToShare:[NSURL URLWithString:link]];
+    [shareBuilder open];
 }
 
 - (void)updateStoryWithMessageDialog:(NSString *)name
@@ -130,7 +177,46 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail{
-    //TODO
+    GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+    plusService.retryEnabled = YES;
+    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+    
+    GTLQueryPlus *query =
+    [GTLQueryPlus queryForPeopleListWithUserId:@"me"
+                                    collection:kGTLPlusCollectionVisible];
+    [plusService executeQuery:query
+            completionHandler:^(GTLServiceTicket *ticket,
+                                GTLPlusPeopleFeed *peopleFeed,
+                                NSError *error) {
+                if (error) {
+                    fail([error localizedDescription]);
+                } else {
+                    // Get an array of people from GTLPlusPeopleFeed
+                    NSArray* rawContacts = peopleFeed.items;
+                    
+                    NSMutableArray *contacts = [NSMutableArray array];
+                    
+                    for (GTLPlusPerson *rawContact in rawContacts) {
+                        UserProfile *contact = [[UserProfile alloc] initWithProvider:GOOGLE
+                                                                        andProfileId:rawContact.identifier                                                                         andUsername: @""
+                                                                            andEmail:[rawContact.emails objectAtIndex:0]
+                                                                        andFirstName:rawContact.name.givenName
+                                                                         andLastName:rawContact.name.familyName];
+                        contact.gender = rawContact.gender;
+                        contact.birthday = rawContact.birthday;
+                        if (rawContact.currentLocation) {
+                            contact.location = rawContact.currentLocation;
+                        }
+                                                
+                        contact.avatarLink = [rawContact.image url];
+                        
+                        [contacts addObject:contact];
+                    }
+                    
+                    success(contacts);
+                }
+            }];
+    
 }
 
 - (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail{
@@ -142,7 +228,10 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail
 {
-    //TODO
+    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+    [shareBuilder setPrefillText:message];
+    [shareBuilder attachImage:[UIImage imageNamed:filePath]];
+    [shareBuilder open];
 }
 
 - (Provider)getProvider {
@@ -150,7 +239,14 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (void)like:(NSString *)pageName{
-    //TODO
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://plus.google.com/+", pageName]];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)clearLoginBlocks {
+    self.loginSuccess = nil;
+    self.loginFail = nil;
+    self.loginCancel = nil;
 }
 
 @end

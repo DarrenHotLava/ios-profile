@@ -25,6 +25,6 @@
 @property (strong, nonatomic) loginCancel loginCancel;
 @property (strong, nonatomic) logoutSuccess logoutSuccess;
 @property (strong, nonatomic) logoutFail logoutFail;
-@property (nonatomic) NSString *GooglePlusAppId;
+@property (strong, nonatomic, readonly) NSString *clientId;
 
 @end
