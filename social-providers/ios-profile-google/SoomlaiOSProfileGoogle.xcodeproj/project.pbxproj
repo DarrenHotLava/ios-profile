@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32CDBD051A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CDBD041A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.h */; };
-		32CDBD071A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CDBD061A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.m */; };
+		32CDBD051A0A9528001DF8A1 /* SoomlaGooglePlus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */; };
+		32CDBD071A0A9528001DF8A1 /* SoomlaGooglePlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */; };
 		32CDBD0D1A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD011A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a */; };
-		32CDBD291A0A9A8C001DF8A1 /* SoomlaiOSProfileGoogle.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CDBD041A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32CDBD291A0A9A8C001DF8A1 /* SoomlaGooglePlus.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32CDBD321A0AA13E001DF8A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD311A0AA13E001DF8A1 /* Foundation.framework */; };
 		32CDBD341A0AA15B001DF8A1 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD331A0AA15B001DF8A1 /* GoogleOpenSource.framework */; };
 		32CDBD361A0AA168001DF8A1 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD351A0AA168001DF8A1 /* GooglePlus.framework */; };
@@ -54,7 +54,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				32CDBD051A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.h in CopyFiles */,
+				32CDBD051A0A9528001DF8A1 /* SoomlaGooglePlus.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,8 +62,8 @@
 
 /* Begin PBXFileReference section */
 		32CDBD011A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileGoogle.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		32CDBD041A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaiOSProfileGoogle.h; sourceTree = "<group>"; };
-		32CDBD061A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaiOSProfileGoogle.m; sourceTree = "<group>"; };
+		32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaGooglePlus.h; sourceTree = "<group>"; };
+		32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaGooglePlus.m; sourceTree = "<group>"; };
 		32CDBD0C1A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileGoogleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CDBD121A0A9528001DF8A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaiOSProfileGoogle.pch; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 		32CDBD031A0A9528001DF8A1 /* SoomlaiOSProfileGoogle */ = {
 			isa = PBXGroup;
 			children = (
-				32CDBD041A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.h */,
-				32CDBD061A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.m */,
+				32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */,
+				32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */,
 				32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */,
 			);
 			path = SoomlaiOSProfileGoogle;
@@ -178,7 +178,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32CDBD291A0A9A8C001DF8A1 /* SoomlaiOSProfileGoogle.h in Headers */,
+				32CDBD291A0A9A8C001DF8A1 /* SoomlaGooglePlus.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32CDBD071A0A9528001DF8A1 /* SoomlaiOSProfileGoogle.m in Sources */,
+				32CDBD071A0A9528001DF8A1 /* SoomlaGooglePlus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +402,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -414,6 +420,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
