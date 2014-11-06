@@ -36,16 +36,17 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
     LogDebug(TAG, @"Login");
     
-    //set login handlers
-    self.loginSuccess = success;
-    self.loginFail = fail;
-    self.loginCancel = cancel;
-    
-    //check if app id is set
+    //check if clientId was set
     if (!clientId)
-        self.loginFail(@"GooglePlus app id is not set!");
+        fail(@"GooglePlus client id is not set!");
     
-    //auth
+    [self setLoginBlocks:success fail:fail cancel:cancel];
+    
+    [self authenticate];
+}
+
+//Initialize 
+- (void)authenticate{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     signIn.shouldFetchGooglePlusUser = YES;
     signIn.clientID = self.clientId;
@@ -55,6 +56,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [signIn authenticate];
 }
 
+//callback for GPPSignIn end of authentication process
 - (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
                    error: (NSError *) error {
     if (error) {
@@ -64,12 +66,12 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     }
 }
 
+//check if authentication status and update
 -(void)refreshInterfaceBasedOnSignIn {
     if ([[GPPSignIn sharedInstance] authentication]) {
         // The user is signed in.
         loggedIn = YES;
         self.loginSuccess(GOOGLE);
-        // Perform other actions here, such as showing a sign-out button
     } else {
         loggedIn = NO;
         [self clearLoginBlocks];
@@ -241,6 +243,12 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)like:(NSString *)pageName{
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://plus.google.com/+", pageName]];
     [[UIApplication sharedApplication] openURL:url];
+}
+
+-(void)setLoginBlocks:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
+    self.loginSuccess = success;
+    self.logoutFail = fail;
+    self.loginCancel = cancel;
 }
 
 - (void)clearLoginBlocks {
