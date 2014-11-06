@@ -7,17 +7,24 @@
 //
 
 #import "ISocialProvider.h"
+#import <GooglePlus/GooglePlus.h>
 
-@interface SoomlaGooglePlus : NSObject<ISocialProvider>{
+@interface SoomlaGooglePlus : NSObject<ISocialProvider, GPPSignInDelegate>{
     loginSuccess loginSuccess;
     loginFail loginFail;
     loginCancel loginCancel;
     logoutSuccess logoutSuccess;
+    logoutFail logoutFail;
+    
+    @private
+    BOOL loggedIn;
 }
 
 @property (strong, nonatomic) loginSuccess loginSuccess;
 @property (strong, nonatomic) loginFail loginFail;
 @property (strong, nonatomic) loginCancel loginCancel;
 @property (strong, nonatomic) logoutSuccess logoutSuccess;
+@property (strong, nonatomic) logoutFail logoutFail;
+@property (nonatomic) NSString *GooglePlusAppId;
 
 @end

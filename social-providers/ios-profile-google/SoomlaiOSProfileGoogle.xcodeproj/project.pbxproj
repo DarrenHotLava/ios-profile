@@ -444,6 +444,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+				);
 				INFOPLIST_FILE = SoomlaiOSProfileGoogleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -456,6 +462,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
 				);
 				INFOPLIST_FILE = SoomlaiOSProfileGoogleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

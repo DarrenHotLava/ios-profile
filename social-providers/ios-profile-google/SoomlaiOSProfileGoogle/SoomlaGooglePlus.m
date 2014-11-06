@@ -7,16 +7,62 @@
 //
 
 #import "SoomlaGooglePlus.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
 @implementation SoomlaGooglePlus
 
-@synthesize loginSuccess, loginFail, loginCancel,
-logoutSuccess;
+@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, GooglePlusAppId;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
+//aClientId - the client ID from Google Developers Console project
+- (id)init{
+    self = [super init];
+    
+    if (!self)
+        return nil;
+    
+    return self;
+}
+
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
-    //TODO
+    //set login handlers
+    self.loginSuccess = success;
+    self.loginFail = fail;
+    self.loginCancel = cancel;
+    
+    //check if app id is set
+    if (!GooglePlusAppId)
+        self.loginFail(@"GooglePlus app id is not set!");
+    
+    //auth
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    signIn.shouldFetchGooglePlusUser = YES;
+    signIn.clientID = self.GooglePlusAppId;
+    signIn.scopes = @[ kGTLAuthScopePlusLogin ];
+    [signIn authenticate];
+}
+
+- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
+                   error: (NSError *) error {
+    NSLog(@"Received error %@ and auth object %@",error, auth);
+    if (error) {
+       self.loginFail([error localizedDescription]);
+    } else {
+        [self refreshInterfaceBasedOnSignIn];
+    }
+}
+
+-(void)refreshInterfaceBasedOnSignIn {
+    if ([[GPPSignIn sharedInstance] authentication]) {
+        // The user is signed in.
+        loggedIn = YES;
+        self.loginSuccess(GOOGLE);
+        // Perform other actions here, such as showing a sign-out button
+    } else {
+        loggedIn = NO;
+        self.loginFail(@"GooglePlus Authentication failed.");
+    }
 }
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail{
@@ -24,20 +70,33 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail{
-    //TODO
+    //will be required in case of disconnect!
+//    self.logoutSuccess = success;
+//    self.logoutFail = fail;
+    [[GPPSignIn sharedInstance] signOut];
 }
 
+//In case of calling [[GPPSignIn sharedInstance] disconnect] => signout vs disconect???
+//- (void)didDisconnectWithError:(NSError *)error {
+//    if (error) {
+//        self.logoutFail([error localizedDescription]);
+//    } else {
+//        // The user is signed out and disconnected.
+//        // Clean up user data as specified by the Google+ terms.
+//        loggedIn = NO;
+//        self.logoutSuccess();
+//    }
+//}
+
 - (BOOL)isLoggedIn{
-    //TODO
-    return NO;
+    return loggedIn;
 }
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    //TODO
-    return NO;
+    return [GPPURLHandler handleURL:url
+           sourceApplication:sourceApplication
+                         annotation:annotation];
 }
-
-
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail{
     //TODO
