@@ -23,6 +23,13 @@
 @protocol IProvider <NSObject>
 
 /**
+ Applies special initialization parameters to the provider
+ 
+ @param providerParams the parameters needed by the provider to initialize
+ */
+- (void)applyParams:(NSDictionary *)providerParams;
+
+/**
  Retrieves the `Provider` value of the provider it implements
  @return the `Provider` value of the provider it implements
  */

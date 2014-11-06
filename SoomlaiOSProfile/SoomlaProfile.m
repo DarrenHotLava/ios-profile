@@ -38,13 +38,17 @@ BOOL UsingExternalProvider;
 }
 
 - (void)initialize {
+    [self initialize:nil];
+}
+
+- (void)initialize:(NSDictionary *)customParams {
     if (UsingExternalProvider) {
         authController = [[AuthController alloc] initWithoutLoadingProviders];
         socialController = [[SocialController alloc] initWithoutLoadingProviders];
     }
     else {
-        authController = [[AuthController alloc] init];
-        socialController = [[SocialController alloc] init];
+        authController = [[AuthController alloc] initWithParameters:customParams];
+        socialController = [[SocialController alloc] initWithParameters:customParams];
     }
     
     [UserProfileEventHandling postProfileInitialized];

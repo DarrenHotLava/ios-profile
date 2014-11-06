@@ -43,6 +43,14 @@ Getting Started
   ```objective-c
   [[SoomlaProfile getInstance] initialize];
   ```
+  Note that some providers will need initialization parameters (see their sections below), in that case you'll need to supply their parameters here, each with its dictionary:
+  ```objective-c
+  NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
+     @{ ... }, @(TWITTER),
+     ...,
+     nil];
+    [[SoomlaProfile getInstance] initialize:providerParams];
+  ```
 1. Refer to the [next section](https://github.com/soomla/ios-profile#whats-next-selecting-social-providers) for information of selecting social providers and setting them up.
 
 1. Access the Profile functionality through `SoomlaProfile`
@@ -67,16 +75,13 @@ Facebook is supported out-of-the-box, you just have to follow the next steps to 
 
 1. Add `-lSoomlaiOSProfileFacebook` to the project's "Other Linker Flags"
 
+1. Facebook integration does not need any extra parameters in `SoomlaProfile` initialization
+
 ### Twitter
 
 Twitter is supported out-of-the-box, authentication is done either through the signed in Twitter account (iOS 5+) or through web browser (fallback). Follow the next steps to make it work:
 
 1. Create your Twitter app at https://apps.twitter.com/
-
-1. In the application's plist add the following rows:
-  1. `SoomlaTwitterConsumerKey` (String) - Consumer Key (API Key) from your app's `Keys and Access Tokens` on Twitter
-  1. `SoomlaTwitterConsumerSecret` (String) - Consumer Secret (API Secret) from your app's `Keys and Access Tokens` on Twitter
-  1. (optional) `SoomlaTwitterForceWeb` (Boolean) - Force web browser authentication
 
 1. Add a URL scheme to your application:
   1. Go to the application's "Info" section in the build target
@@ -87,6 +92,20 @@ Twitter is supported out-of-the-box, authentication is done either through the s
 
 1. Add `-lSoomlaiOSProfileTwitter -lSTTwitter` to the project's "Other Linker Flags"
   > **ios-profile** uses the [STTWitter](https://github.com/nst/STTwitter) library (v 0.1.5) to support Twitter integration
+
+1. Please provide `SoomlaProfile` with Consumer Key and Consumer Secret from the "Keys and Access Tokens" section in [Twitter Apps](https://apps.twitter.com/), like so:
+```objective-c
+NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
+    ...,
+    @{ @"consumerKey": @"[YOUR CONSUMER KEY]", @"consumerSecret": @"[YOUR CONSUMER SECRET]" }, @(TWITTER),
+    ...,
+   nil];
+  [[SoomlaProfile getInstance] initialize:providerParams];
+```
+  1. (OPTIONAL) You can supply the `forceWeb` key in the parameters (with a `BOOL`) value if you would like to force browser-based authorization, like so:
+  ```objective-c
+      @{ ..., @"forceWeb": @(YES) }, @(TWITTER),
+  ```
 
 ### Browser-based Authentication
 

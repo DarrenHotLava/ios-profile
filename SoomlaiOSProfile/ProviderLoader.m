@@ -40,7 +40,7 @@ static NSString* TAG = @"SOOMLA ProviderLoader";
     return self;
 }
 
-- (BOOL)loadProvidersWithProtocol:(Protocol *)protocol {
+- (BOOL)loadProvidersWithProtocol:(Protocol *)protocol andProviderParams:(NSDictionary *)providerParams {
 
     // Fetch a list of provider classes
     NSArray* providerClasses = [self tryFetchProvidersWithProtocol:protocol];
@@ -54,7 +54,11 @@ static NSString* TAG = @"SOOMLA ProviderLoader";
     for (Class klass in providerClasses) {
         @try {
             id provider = [[klass alloc] init];
-            self.providers[@([provider getProvider])] = provider;
+            id targetProvider = @([provider getProvider]);
+            if (providerParams) {
+                [provider applyParams:[providerParams objectForKey:targetProvider]];
+            }
+            self.providers[targetProvider] = provider;
         }
         @catch (NSException *exception) {
             LogError(TAG, @"Couldn't instantiate provider class. Something's totally wrong here.");

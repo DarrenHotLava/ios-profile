@@ -67,6 +67,10 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     }
 }
 
+- (void)applyParams:(NSDictionary *)providerParams {
+    // Nothing to do here, FB deals with AppID and AppName
+}
+
 - (Provider)getProvider {
     return FACEBOOK;
 }
