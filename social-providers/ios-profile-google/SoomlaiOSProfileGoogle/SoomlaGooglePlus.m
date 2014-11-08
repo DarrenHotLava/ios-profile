@@ -18,9 +18,7 @@
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
-static NSString *kDefaultContactInfoValue = @"";
 
-//aClientId - the client ID from Google Developers Console project
 - (id)init{
     self = [super init];
     
@@ -48,7 +46,8 @@ static NSString *kDefaultContactInfoValue = @"";
     [self startAuth];
 }
 
-//Initialize 
+//sets scopes and additional flags for google plus connection
+//and triggers authentication
 - (void)startAuth{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     signIn.shouldFetchGoogleUserEmail = YES;
@@ -81,7 +80,7 @@ static NSString *kDefaultContactInfoValue = @"";
 }
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail{
-    LogDebug(TAG, @"Getting user profile");
+    LogDebug(TAG, @"getUserProfile");
     GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
     plusService.retryEnabled = YES;
     [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
@@ -92,17 +91,18 @@ static NSString *kDefaultContactInfoValue = @"";
                                 GTLPlusPerson *person,
                                 NSError *error) {
                 if (error) {
+                    LogError(TAG, @"Failed getting user profile");
                     fail([error localizedDescription]);
                 } else {
-                    UserProfile *userProfile = [self getProfileFromGoogleContact:person];
-                    
+                    UserProfile *userProfile = [self googleContactToUserProfile:person];
+                    userProfile.email = [[[GPPSignIn sharedInstance] authentication]userEmail];
                     success(userProfile);
                 }
             }];
 }
 
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail{
-    LogDebug(TAG, @"Logout");
+    LogDebug(TAG, @"logout");
     self.logoutSuccess = success;
     self.logoutFail = fail;
     [[GPPSignIn sharedInstance] disconnect];
@@ -193,6 +193,7 @@ static NSString *kDefaultContactInfoValue = @"";
 }
 
 - (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail{
+    LogDebug(TAG, @"getContacts");
     GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
     plusService.retryEnabled = YES;
     [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
@@ -205,6 +206,7 @@ static NSString *kDefaultContactInfoValue = @"";
                                 GTLPlusPeopleFeed *peopleFeed,
                                 NSError *error) {
                 if (error) {
+                    LogError(TAG, @"Failed getting contacts");
                     fail([error localizedDescription]);
                 } else {
                     // Get an array of people from GTLPlusPeopleFeed
@@ -213,7 +215,7 @@ static NSString *kDefaultContactInfoValue = @"";
                     NSMutableArray *contacts = [NSMutableArray array];
                     
                     for (GTLPlusPerson *rawContact in rawContacts) {
-                        UserProfile *contact = [self getProfileFromGoogleContact:rawContact];
+                        UserProfile *contact = [self googleContactToUserProfile:rawContact];
                         
                         [contacts addObject:contact];
                     }
@@ -224,29 +226,8 @@ static NSString *kDefaultContactInfoValue = @"";
     
 }
 
--(UserProfile *) getProfileFromGoogleContact: (GTLPlusPerson *)googleContact{
-    GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
-    UserProfile * profile =
-    [[UserProfile alloc] initWithProvider:GOOGLE
-                             andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
-                              andUsername: kDefaultContactInfoValue //TODO
-                                 andEmail:[self parseGoogleContactInfoString:[email value]]
-                                andFirstName:[self parseGoogleContactInfoString:googleContact.name.givenName]
-                              andLastName:[self parseGoogleContactInfoString:googleContact.name.familyName]];
-    profile.gender = [self parseGoogleContactInfoString:googleContact.gender];
-    profile.birthday = [self parseGoogleContactInfoString:googleContact.birthday];
-    profile.location = [self parseGoogleContactInfoString:googleContact.currentLocation];
-    profile.avatarLink = [self parseGoogleContactInfoString:[googleContact.image url]];
-    profile.language = [self parseGoogleContactInfoString:googleContact.language];
-    return profile;
-    
-}
-
-- (NSString *)parseGoogleContactInfoString:(NSString * )orig{
-    return (orig) ? orig : kDefaultContactInfoValue;
-}
-
 - (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail{
+    LogDebug(TAG, @"getFeed");
     fail(@"getFeed is not implemented!");
 }
 
@@ -255,6 +236,7 @@ static NSString *kDefaultContactInfoValue = @"";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail
 {
+    LogDebug(TAG, @"uploadImage");
     @try {
         id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
         [shareBuilder setPrefillText:message];
@@ -275,6 +257,33 @@ static NSString *kDefaultContactInfoValue = @"";
 - (void)like:(NSString *)pageName{
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://plus.google.com/+", pageName]];
     [[UIApplication sharedApplication] openURL:url];
+}
+
+//Private methods
+
+static NSString *kDefaultContactInfoValue = @"";
+
+//given an istance of GTLPlusPerson, returns an instance of UserProfile
+-(UserProfile *) googleContactToUserProfile: (GTLPlusPerson *)googleContact{
+    GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
+    UserProfile * profile =
+    [[UserProfile alloc] initWithProvider:GOOGLE
+                             andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
+                              andUsername: kDefaultContactInfoValue //TODO
+                                 andEmail:[self parseGoogleContactInfoString:[email value]]
+                             andFirstName:[self parseGoogleContactInfoString:googleContact.name.givenName]
+                              andLastName:[self parseGoogleContactInfoString:googleContact.name.familyName]];
+    profile.gender = [self parseGoogleContactInfoString:googleContact.gender];
+    profile.birthday = [self parseGoogleContactInfoString:googleContact.birthday];
+    profile.location = [self parseGoogleContactInfoString:googleContact.currentLocation];
+    profile.avatarLink = [self parseGoogleContactInfoString:[googleContact.image url]];
+    profile.language = [self parseGoogleContactInfoString:googleContact.language];
+    return profile;
+    
+}
+
+- (NSString *)parseGoogleContactInfoString:(NSString * )orig{
+    return (orig) ? orig : kDefaultContactInfoValue;
 }
 
 -(void)setLoginBlocks:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{

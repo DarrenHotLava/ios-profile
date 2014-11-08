@@ -2,8 +2,7 @@
 //  SoomlaiOSProfileGoogle.h
 //  SoomlaiOSProfileGoogle
 //
-//  Created by Dima on 11/5/14.
-//  Copyright (c) 2014 SOOMLA Inc. All rights reserved.
+//  SOOMLA wrapper for GooglePlus framework
 //
 
 #import "ISocialProvider.h"
