@@ -10,3 +10,6 @@ xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios
 mkdir -p build/ios-profile-twitter
 xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios-profile-twitter/SoomlaiOSProfileTwitter.xcodeproj -target SoomlaiOSProfileTwitter clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-twitter
 cp social-providers/ios-profile-twitter/libs/* $PWD/build/ios-profile-twitter/
+
+mkdir -p build/ios-profile-google
+xcodebuild -configuration Release -sdk iphoneos7.1 -project social-providers/ios-profile-google/SoomlaiOSProfileGoogle.xcodeproj -target SoomlaiOSProfileGoogle clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-google
