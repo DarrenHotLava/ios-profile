@@ -15,9 +15,6 @@
     loginCancel loginCancel;
     logoutSuccess logoutSuccess;
     logoutFail logoutFail;
-    
-    @private
-    BOOL loggedIn;
 }
 
 @property (strong, nonatomic) loginSuccess loginSuccess;

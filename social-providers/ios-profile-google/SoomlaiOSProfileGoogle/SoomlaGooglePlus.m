@@ -11,11 +11,14 @@
 #import "SoomlaUtils.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
-@implementation SoomlaGooglePlus
+@implementation SoomlaGooglePlus{
+//    GPPSignIn *signIn;
+}
 
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
+static NSString *kDefaultContactInfoValue = @"";
 
 //aClientId - the client ID from Google Developers Console project
 - (id)init{
@@ -42,16 +45,16 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     
     [self setLoginBlocks:success fail:fail cancel:cancel];
     
-    [self authenticate];
+    [self startAuth];
 }
 
 //Initialize 
-- (void)authenticate{
+- (void)startAuth{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    signIn.shouldFetchGoogleUserEmail = YES;
     signIn.shouldFetchGooglePlusUser = YES;
     signIn.clientID = self.clientId;
     signIn.scopes = @[ kGTLAuthScopePlusLogin ];
-    signIn.shouldFetchGoogleUserEmail = YES;
     signIn.delegate = self;
     [signIn authenticate];
 }
@@ -70,10 +73,8 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 -(void)refreshInterfaceBasedOnSignIn {
     if ([[GPPSignIn sharedInstance] authentication]) {
         // The user is signed in.
-        loggedIn = YES;
         self.loginSuccess(GOOGLE);
     } else {
-        loggedIn = NO;
         [self clearLoginBlocks];
         self.loginFail(@"GooglePlus Authentication failed.");
     }
@@ -93,15 +94,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                 if (error) {
                     fail([error localizedDescription]);
                 } else {
-                    UserProfile *userProfile = [[UserProfile alloc] initWithProvider:GOOGLE
-                                                                        andProfileId:person.identifier
-                                                                         andUsername:@"" //user name is not available!
-                                                                         andEmail:[person.emails objectAtIndex:0]                                                           andFirstName:person.name.givenName
-                                                                         andLastName:person.name.familyName];
-                    userProfile.gender = person.gender;
-                    userProfile.birthday = person.birthday;
-                    userProfile.location = person.currentLocation;
-                    userProfile.avatarLink = person.image.url;
+                    UserProfile *userProfile = [self getProfileFromGoogleContact:person];
                     
                     success(userProfile);
                 }
@@ -110,27 +103,25 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail{
     LogDebug(TAG, @"Logout");
-    //will be required in case of disconnect!
-//    self.logoutSuccess = success;
-//    self.logoutFail = fail;
-    [[GPPSignIn sharedInstance] signOut];
+    self.logoutSuccess = success;
+    self.logoutFail = fail;
+    [[GPPSignIn sharedInstance] disconnect];
 }
 
-//In case of calling [[GPPSignIn sharedInstance] disconnect] => signout vs disconect???
-//- (void)didDisconnectWithError:(NSError *)error {
-//    if (error) {
-//        self.logoutFail([error localizedDescription]);
-//    } else {
-//        // The user is signed out and disconnected.
-//        // Clean up user data as specified by the Google+ terms.
-//        loggedIn = NO;
-//        self.logoutSuccess();
-//    }
-//}
+- (void)didDisconnectWithError:(NSError *)error {
+    if (error) {
+        self.logoutFail([error localizedDescription]);
+    } else {
+        // The user is signed out and disconnected.
+        // Clean up user data as specified by the Google+ terms.
+        [self clearLoginBlocks];
+        self.logoutSuccess();
+    }
+}
 
 - (BOOL)isLoggedIn{
     LogDebug(TAG, @"isLoggedIn");
-    return loggedIn;
+    return ([GPPSignIn sharedInstance].authentication != nil);
 }
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
@@ -140,15 +131,32 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail{
-    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
-    [shareBuilder setPrefillText:status];
-    [shareBuilder open];
+    LogDebug(TAG, @"updateStatus");
+    @try{
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setPrefillText:status];
+        [shareBuilder open];
+        success();
+    }
+    @catch(NSException *exception){
+        LogError(TAG, @"Failed updating status.");
+        fail([NSString stringWithFormat:@"Failed updating status with exception %@", [exception reason]]);
+    }
+    
 }
 
 - (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail{
-    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
-    [shareBuilder setURLToShare:[NSURL URLWithString:link]];
-    [shareBuilder open];
+    LogDebug(TAG, @"updateStatus");
+    @try {
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setURLToShare:[NSURL URLWithString:link]];
+        [shareBuilder open];
+        success();
+    }
+    @catch (NSException *exception) {
+        LogError(TAG, @"Failed updating status with dialog");
+        fail([NSString stringWithFormat:@"Failed updating status with dialog with exception %@", [exception reason]]);
+    }
 }
 
 - (void)updateStoryWithMessage:(NSString *)message
@@ -160,11 +168,17 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail
 {
-    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
-    [shareBuilder setPrefillText:message];
-    [shareBuilder setTitle:name description:description thumbnailURL:[NSURL URLWithString:picture]];
-    [shareBuilder setURLToShare:[NSURL URLWithString:link]];
-    [shareBuilder open];
+    @try {
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setPrefillText:message];
+        [shareBuilder setTitle:name description:description thumbnailURL:[NSURL URLWithString:picture]];
+        [shareBuilder setURLToShare:[NSURL URLWithString:link]];
+        [shareBuilder open];
+    }
+    @catch (NSException *exception) {
+        LogError(TAG, @"Failed updating story");
+        fail([NSString stringWithFormat:@"Failed updating story with exception %@", [exception reason]]);
+    }
 }
 
 - (void)updateStoryWithMessageDialog:(NSString *)name
@@ -175,7 +189,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                              success:(socialActionSuccess)success
                                 fail:(socialActionFail)fail
 {
-    //TODO
+    fail(@"updateStoryWithMessageDialog is not implemented");
 }
 
 - (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail{
@@ -199,18 +213,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                     NSMutableArray *contacts = [NSMutableArray array];
                     
                     for (GTLPlusPerson *rawContact in rawContacts) {
-                        UserProfile *contact = [[UserProfile alloc] initWithProvider:GOOGLE
-                                                                        andProfileId:rawContact.identifier                                                                         andUsername: @""
-                                                                            andEmail:[rawContact.emails objectAtIndex:0]
-                                                                        andFirstName:rawContact.name.givenName
-                                                                         andLastName:rawContact.name.familyName];
-                        contact.gender = rawContact.gender;
-                        contact.birthday = rawContact.birthday;
-                        if (rawContact.currentLocation) {
-                            contact.location = rawContact.currentLocation;
-                        }
-                                                
-                        contact.avatarLink = [rawContact.image url];
+                        UserProfile *contact = [self getProfileFromGoogleContact:rawContact];
                         
                         [contacts addObject:contact];
                     }
@@ -221,8 +224,30 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     
 }
 
+-(UserProfile *) getProfileFromGoogleContact: (GTLPlusPerson *)googleContact{
+    GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
+    UserProfile * profile =
+    [[UserProfile alloc] initWithProvider:GOOGLE
+                             andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
+                              andUsername: kDefaultContactInfoValue //TODO
+                                 andEmail:[self parseGoogleContactInfoString:[email value]]
+                                andFirstName:[self parseGoogleContactInfoString:googleContact.name.givenName]
+                              andLastName:[self parseGoogleContactInfoString:googleContact.name.familyName]];
+    profile.gender = [self parseGoogleContactInfoString:googleContact.gender];
+    profile.birthday = [self parseGoogleContactInfoString:googleContact.birthday];
+    profile.location = [self parseGoogleContactInfoString:googleContact.currentLocation];
+    profile.avatarLink = [self parseGoogleContactInfoString:[googleContact.image url]];
+    profile.language = [self parseGoogleContactInfoString:googleContact.language];
+    return profile;
+    
+}
+
+- (NSString *)parseGoogleContactInfoString:(NSString * )orig{
+    return (orig) ? orig : kDefaultContactInfoValue;
+}
+
 - (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail{
-    //TODO
+    fail(@"getFeed is not implemented!");
 }
 
 - (void)uploadImageWithMessage:(NSString *)message
@@ -230,10 +255,17 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail
 {
-    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
-    [shareBuilder setPrefillText:message];
-    [shareBuilder attachImage:[UIImage imageNamed:filePath]];
-    [shareBuilder open];
+    @try {
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setPrefillText:message];
+        [shareBuilder attachImage:[UIImage imageNamed:filePath]];
+        [shareBuilder open];
+        success();
+    }
+    @catch (NSException *exception) {
+        LogError(TAG, @"Failed uploading image.");
+        fail([NSString stringWithFormat:@"Failed uploading image with exception %@", [exception reason]]);
+    }
 }
 
 - (Provider)getProvider {
