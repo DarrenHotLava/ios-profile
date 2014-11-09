@@ -1,0 +1,511 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		32CDBD051A0A9528001DF8A1 /* SoomlaGooglePlus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */; };
+		32CDBD071A0A9528001DF8A1 /* SoomlaGooglePlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */; };
+		32CDBD0D1A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD011A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a */; };
+		32CDBD291A0A9A8C001DF8A1 /* SoomlaGooglePlus.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32CDBD321A0AA13E001DF8A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD311A0AA13E001DF8A1 /* Foundation.framework */; };
+		32CDBD341A0AA15B001DF8A1 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD331A0AA15B001DF8A1 /* GoogleOpenSource.framework */; };
+		32CDBD361A0AA168001DF8A1 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD351A0AA168001DF8A1 /* GooglePlus.framework */; };
+		32CDBD381A0AA17F001DF8A1 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD371A0AA17F001DF8A1 /* AddressBook.framework */; };
+		32CDBD3A1A0AA187001DF8A1 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD391A0AA187001DF8A1 /* AssetsLibrary.framework */; };
+		32CDBD3C1A0AA197001DF8A1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD3B1A0AA197001DF8A1 /* CoreLocation.framework */; };
+		32CDBD3E1A0AA19E001DF8A1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD3D1A0AA19E001DF8A1 /* CoreMotion.framework */; };
+		32CDBD401A0AA1A5001DF8A1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD3F1A0AA1A5001DF8A1 /* CoreGraphics.framework */; };
+		32CDBD421A0AA1AC001DF8A1 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD411A0AA1AC001DF8A1 /* CoreText.framework */; };
+		32CDBD441A0AA1B3001DF8A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD431A0AA1B3001DF8A1 /* MediaPlayer.framework */; };
+		32CDBD461A0AA1B9001DF8A1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD451A0AA1B9001DF8A1 /* Security.framework */; };
+		32CDBD481A0AA1C2001DF8A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD471A0AA1C2001DF8A1 /* SystemConfiguration.framework */; };
+		32CDBD4A1A0AA1CA001DF8A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD491A0AA1CA001DF8A1 /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		32CDBD4B1A0AA27B001DF8A1 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		32CDBD0E1A0A9528001DF8A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32CDBCF91A0A9528001DF8A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32CDBD001A0A9528001DF8A1;
+			remoteInfo = SoomlaiOSProfileGoogle;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		32CDBCFF1A0A9528001DF8A1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				32CDBD051A0A9528001DF8A1 /* SoomlaGooglePlus.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		32CDBD011A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileGoogle.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaGooglePlus.h; sourceTree = "<group>"; };
+		32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaGooglePlus.m; sourceTree = "<group>"; };
+		32CDBD0C1A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileGoogleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		32CDBD121A0A9528001DF8A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaiOSProfileGoogle.pch; sourceTree = "<group>"; };
+		32CDBD311A0AA13E001DF8A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		32CDBD331A0AA15B001DF8A1 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = libs/GoogleOpenSource.framework; sourceTree = "<group>"; };
+		32CDBD351A0AA168001DF8A1 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = libs/GooglePlus.framework; sourceTree = "<group>"; };
+		32CDBD371A0AA17F001DF8A1 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		32CDBD391A0AA187001DF8A1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		32CDBD3B1A0AA197001DF8A1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		32CDBD3D1A0AA19E001DF8A1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		32CDBD3F1A0AA1A5001DF8A1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		32CDBD411A0AA1AC001DF8A1 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		32CDBD431A0AA1B3001DF8A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		32CDBD451A0AA1B9001DF8A1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		32CDBD471A0AA1C2001DF8A1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		32CDBD491A0AA1CA001DF8A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		32CDBCFE1A0A9528001DF8A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CDBD4A1A0AA1CA001DF8A1 /* UIKit.framework in Frameworks */,
+				32CDBD481A0AA1C2001DF8A1 /* SystemConfiguration.framework in Frameworks */,
+				32CDBD461A0AA1B9001DF8A1 /* Security.framework in Frameworks */,
+				32CDBD441A0AA1B3001DF8A1 /* MediaPlayer.framework in Frameworks */,
+				32CDBD421A0AA1AC001DF8A1 /* CoreText.framework in Frameworks */,
+				32CDBD401A0AA1A5001DF8A1 /* CoreGraphics.framework in Frameworks */,
+				32CDBD3E1A0AA19E001DF8A1 /* CoreMotion.framework in Frameworks */,
+				32CDBD3C1A0AA197001DF8A1 /* CoreLocation.framework in Frameworks */,
+				32CDBD3A1A0AA187001DF8A1 /* AssetsLibrary.framework in Frameworks */,
+				32CDBD381A0AA17F001DF8A1 /* AddressBook.framework in Frameworks */,
+				32CDBD361A0AA168001DF8A1 /* GooglePlus.framework in Frameworks */,
+				32CDBD341A0AA15B001DF8A1 /* GoogleOpenSource.framework in Frameworks */,
+				32CDBD321A0AA13E001DF8A1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32CDBD091A0A9528001DF8A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CDBD0D1A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		32CDBCF81A0A9528001DF8A1 = {
+			isa = PBXGroup;
+			children = (
+				32CDBD491A0AA1CA001DF8A1 /* UIKit.framework */,
+				32CDBD471A0AA1C2001DF8A1 /* SystemConfiguration.framework */,
+				32CDBD451A0AA1B9001DF8A1 /* Security.framework */,
+				32CDBD431A0AA1B3001DF8A1 /* MediaPlayer.framework */,
+				32CDBD411A0AA1AC001DF8A1 /* CoreText.framework */,
+				32CDBD3F1A0AA1A5001DF8A1 /* CoreGraphics.framework */,
+				32CDBD3D1A0AA19E001DF8A1 /* CoreMotion.framework */,
+				32CDBD3B1A0AA197001DF8A1 /* CoreLocation.framework */,
+				32CDBD391A0AA187001DF8A1 /* AssetsLibrary.framework */,
+				32CDBD371A0AA17F001DF8A1 /* AddressBook.framework */,
+				32CDBD351A0AA168001DF8A1 /* GooglePlus.framework */,
+				32CDBD331A0AA15B001DF8A1 /* GoogleOpenSource.framework */,
+				32CDBD311A0AA13E001DF8A1 /* Foundation.framework */,
+				32CDBD031A0A9528001DF8A1 /* SoomlaiOSProfileGoogle */,
+				32CDBD101A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests */,
+				32CDBD021A0A9528001DF8A1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		32CDBD021A0A9528001DF8A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32CDBD011A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a */,
+				32CDBD0C1A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32CDBD031A0A9528001DF8A1 /* SoomlaiOSProfileGoogle */ = {
+			isa = PBXGroup;
+			children = (
+				32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */,
+				32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */,
+				32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */,
+			);
+			path = SoomlaiOSProfileGoogle;
+			sourceTree = "<group>";
+		};
+		32CDBD101A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests */ = {
+			isa = PBXGroup;
+			children = (
+				32CDBD111A0A9528001DF8A1 /* Supporting Files */,
+			);
+			path = SoomlaiOSProfileGoogleTests;
+			sourceTree = "<group>";
+		};
+		32CDBD111A0A9528001DF8A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				32CDBD121A0A9528001DF8A1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		32CDBD281A0A9A84001DF8A1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CDBD291A0A9A8C001DF8A1 /* SoomlaGooglePlus.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		32CDBD001A0A9528001DF8A1 /* SoomlaiOSProfileGoogle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32CDBD151A0A9528001DF8A1 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileGoogle" */;
+			buildPhases = (
+				32CDBCFD1A0A9528001DF8A1 /* Sources */,
+				32CDBCFE1A0A9528001DF8A1 /* Frameworks */,
+				32CDBCFF1A0A9528001DF8A1 /* CopyFiles */,
+				32CDBD281A0A9A84001DF8A1 /* Headers */,
+				32CDBD2A1A0A9A96001DF8A1 /* ShellScript */,
+			);
+			buildRules = (
+				32CDBD4B1A0AA27B001DF8A1 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = SoomlaiOSProfileGoogle;
+			productName = SoomlaiOSProfileGoogle;
+			productReference = 32CDBD011A0A9528001DF8A1 /* libSoomlaiOSProfileGoogle.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		32CDBD0B1A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32CDBD181A0A9528001DF8A1 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileGoogleTests" */;
+			buildPhases = (
+				32CDBD081A0A9528001DF8A1 /* Sources */,
+				32CDBD091A0A9528001DF8A1 /* Frameworks */,
+				32CDBD0A1A0A9528001DF8A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				32CDBD0F1A0A9528001DF8A1 /* PBXTargetDependency */,
+			);
+			name = SoomlaiOSProfileGoogleTests;
+			productName = SoomlaiOSProfileGoogleTests;
+			productReference = 32CDBD0C1A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		32CDBCF91A0A9528001DF8A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "SOOMLA Inc.";
+				TargetAttributes = {
+					32CDBD001A0A9528001DF8A1 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					32CDBD0B1A0A9528001DF8A1 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 32CDBCFC1A0A9528001DF8A1 /* Build configuration list for PBXProject "SoomlaiOSProfileGoogle" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 32CDBCF81A0A9528001DF8A1;
+			productRefGroup = 32CDBD021A0A9528001DF8A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				32CDBD001A0A9528001DF8A1 /* SoomlaiOSProfileGoogle */,
+				32CDBD0B1A0A9528001DF8A1 /* SoomlaiOSProfileGoogleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		32CDBD0A1A0A9528001DF8A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32CDBD2A1A0A9A96001DF8A1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "##########################################\n#\n# c.f. http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n#\n# Version 2.7\n#\n# Latest Change:\n# - Supports iPhone 5 / iPod Touch 5 (uses Apple's workaround to lipo bug)\n#\n# Purpose:\n#   Automatically create a Universal static library for iPhone + iPad + iPhone Simulator from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n\nset -e\nset -o pipefail\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -project \\\"${PROJECT_NAME}.xcodeproj\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\" BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" SYMROOT=\\\"${SYMROOT}\\\"\n\nxcodebuild -configuration \"${CONFIGURATION}\" -project \"${PROJECT_NAME}.xcodeproj\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nif [[ -z $CREATING_UNIVERSAL_DIR ]]\nthen\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\nfi\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\n# rm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir -p \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nxcrun -sdk iphoneos lipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\necho \"Fetching headers from ${PUBLIC_HEADERS_FOLDER_PATH}\"\necho \"  (if you embed your library project in another project, you will need to add\"\necho \"   a \"User Search Headers\" build setting of: (NB INCLUDE THE DOUBLE QUOTES BELOW!)\"\necho '        \"$(TARGET_BUILD_DIR)/usr/local/include/\"'\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}/headers/${PROJECT_NAME}\"\n# * needs to be outside the double quotes?\ncp -r \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}/\"* \"${CREATING_UNIVERSAL_DIR}/headers/${PROJECT_NAME}\"\nfi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		32CDBCFD1A0A9528001DF8A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CDBD071A0A9528001DF8A1 /* SoomlaGooglePlus.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32CDBD081A0A9528001DF8A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		32CDBD0F1A0A9528001DF8A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 32CDBD001A0A9528001DF8A1 /* SoomlaiOSProfileGoogle */;
+			targetProxy = 32CDBD0E1A0A9528001DF8A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		32CDBD131A0A9528001DF8A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SoomlaiOSProfileGoogle/SoomlaiOSProfileGoogle.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = /headers/private;
+				PUBLIC_HEADERS_FOLDER_PATH = /headers/public;
+				SDKROOT = iphoneos;
+				SYMROOT = out;
+			};
+			name = Debug;
+		};
+		32CDBD141A0A9528001DF8A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = SoomlaiOSProfileGoogle/SoomlaiOSProfileGoogle.pch;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /headers/private;
+				PUBLIC_HEADERS_FOLDER_PATH = /headers/public;
+				SDKROOT = iphoneos;
+				SYMROOT = out;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		32CDBD161A0A9528001DF8A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		32CDBD171A0A9528001DF8A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		32CDBD191A0A9528001DF8A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+				);
+				INFOPLIST_FILE = SoomlaiOSProfileGoogleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		32CDBD1A1A0A9528001DF8A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../SoomlaiOSProfile/**",
+					"$(SRCROOT)/../../submodules/soomla-ios-core/SoomlaiOSCore/**",
+				);
+				INFOPLIST_FILE = SoomlaiOSProfileGoogleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32CDBCFC1A0A9528001DF8A1 /* Build configuration list for PBXProject "SoomlaiOSProfileGoogle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32CDBD131A0A9528001DF8A1 /* Debug */,
+				32CDBD141A0A9528001DF8A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32CDBD151A0A9528001DF8A1 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileGoogle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32CDBD161A0A9528001DF8A1 /* Debug */,
+				32CDBD171A0A9528001DF8A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32CDBD181A0A9528001DF8A1 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileGoogleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32CDBD191A0A9528001DF8A1 /* Debug */,
+				32CDBD1A1A0A9528001DF8A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 32CDBCF91A0A9528001DF8A1 /* Project object */;
+}

@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.soomla.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.soomla.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -36,6 +36,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>tw1qR0orDyLSZNRK2eMAs9ou8OT</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.soomla.SoomlaiOSProfileExample</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.soomla.SoomlaiOSProfileExample</string>
 			</array>
 		</dict>
 	</array>

@@ -107,6 +107,39 @@ NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
       @{ ..., @"forceWeb": @(YES) }, @(TWITTER),
   ```
 
+### Google+
+
+Google+ is supported out-of-the-box, authentication is done either through the signed in Google+ account or through web browser (fallback). Follow the next steps to make it work:
+
+1. Create your Google Plus app at https://console.developers.google.com/project
+1. Add a URL scheme to your application:
+1. Go to the application's "Info" section in the build target and add a URL type and enter your bundle ID as the identifier and scheme.
+1. Make sure you have the following frameworks in your application's project: **GooglePlus, GoogleOpenSource, GooglePlus.bundle**.
+1. Add additional frameworks if you still haven't:
+    * AddressBook.framework
+    * AssetsLibrary.framework
+    * Foundation.framework
+    * CoreLocation.framework
+    * CoreMotion.framework
+    * CoreGraphics.framework
+    * CoreText.framework
+    * MediaPlayer.framework
+    * Security.framework
+    * SystemConfiguration.framework
+    * UIKit.framework
+
+1. Add `-lSoomlaiOSProfileGoogle` to the project's "Other Linker Flags"
+
+1. Please provide `SoomlaProfile` with Client ID from the "API&Auth, credentials" section like so:
+```objective-c
+NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
+    ...,
+    @{ @"consumerId": @"[YOUR CLIENT ID]" }, @(GOOGLE),
+    ...,
+   nil];
+  [[SoomlaProfile getInstance] initialize:providerParams];
+```
+
 ### Browser-based Authentication
 
 Most social framework SDKs support authentication through your web browser, when the user finishes authenticating through the browser your application will be called dependent on the URL schemes you have defined.
@@ -238,6 +271,10 @@ In order to run the project follow this steps:
 1. **Login method returns 401 error** - this could be the result of a few issues:
   1. Have you supplied the correct consumer key and secret in your application's plist?
   1. Have you supplied a `Callback URL` in your Twitter application settings?
+
+## Google Plue Caveats
+
+1. **401. That's an error. Error:invalid_client** - did you supply the correct client id?
 
 Our way of saying "Thanks !"
 ---
