@@ -107,9 +107,9 @@ NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
       @{ ..., @"forceWeb": @(YES) }, @(TWITTER),
   ```
 
-### Google Plus
+### Google+
 
-Google Plus is supported out-of-the-box, authentication is done either through the signed in GooglePlus account (iOS 5+) or through web browser (fallback). Follow the next steps to make it work:
+Google+ is supported out-of-the-box, authentication is done either through the signed in Google+ account or through web browser (fallback). Follow the next steps to make it work:
 
 1. Create your Google Plus app at https://console.developers.google.com/project
 1. Add a URL scheme to your application:
