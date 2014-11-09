@@ -131,11 +131,11 @@ Google Plus is supported out-of-the-box, authentication is done either through t
 
 1. Add `-lSoomlaiOSProfileGoogle` to the project's "Other Linker Flags"
 
-1. Please provide `SoomlaProfile` with Client ID and Client Secret from the "API&Auth, credentials" section like so:
+1. Please provide `SoomlaProfile` with Client ID from the "API&Auth, credentials" section like so:
 ```objective-c
 NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
     ...,
-    @{ @"consumerId": @"[YOUR CLIENT ID]", @"clientSecret": @"[YOUR CLIENT SECRET]" }, @(GOOGLE),
+    @{ @"consumerId": @"[YOUR CLIENT ID]" }, @(GOOGLE),
     ...,
    nil];
   [[SoomlaProfile getInstance] initialize:providerParams];

@@ -15,7 +15,7 @@
 //    GPPSignIn *signIn;
 }
 
-@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId, clientSecret;
+@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
@@ -31,7 +31,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
         clientId = [providerParams objectForKey:@"clientId"];
-        clientSecret = [providerParams objectForKey:@"clientSecret"];
     }
 }
 
@@ -291,7 +290,7 @@ static NSString *kDefaultContactInfoValue = @"";
 
 -(void)setLoginBlocks:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
     self.loginSuccess = success;
-    self.logoutFail = fail;
+    self.loginFail = fail;
     self.loginCancel = cancel;
 }
 
@@ -304,8 +303,6 @@ static NSString *kDefaultContactInfoValue = @"";
 - (NSString *)checkAuthParams{
     if (!clientId)
         return @"Missing client id";
-    if (!clientSecret)
-        return @"Missing client secret";
     return nil;
 }
 
