@@ -11,9 +11,7 @@
 #import "SoomlaUtils.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
-@implementation SoomlaGooglePlus{
-//    GPPSignIn *signIn;
-}
+@implementation SoomlaGooglePlus
 
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
 
@@ -24,6 +22,12 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     
     if (!self)
         return nil;
+    
+    LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(innerHandleOpenURL:)
+                                                 name:@"kUnityOnOpenURL"
+                                               object:nil];
     
     return self;
 }
@@ -65,7 +69,10 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
                    error: (NSError *) error {
     if (error) {
-       self.loginFail([error localizedDescription]);
+        if ([error code] == -1)
+            self.loginCancel();
+        else
+            self.loginFail([error localizedDescription]);
     } else {
         [self refreshInterfaceBasedOnSignIn];
     }
@@ -262,8 +269,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [[UIApplication sharedApplication] openURL:url];
 }
 
-//Private methods
-
 static NSString *kDefaultContactInfoValue = @"";
 
 -(UserProfile *) googleContactToUserProfile: (GTLPlusPerson *)googleContact{
@@ -304,6 +309,28 @@ static NSString *kDefaultContactInfoValue = @"";
     if (!clientId)
         return @"Missing client id";
     return nil;
+}
+
+- (void)innerHandleOpenURL:(NSNotification *)notification {
+    if ([[notification name] isEqualToString:@"kUnityOnOpenURL"]) {
+        LogDebug(TAG, @"Successfully received the kUnityOnOpenURL notification!");
+        
+        NSURL *url = [[notification userInfo] valueForKey:@"url"];
+        NSString *sourceApplication = [[notification userInfo] valueForKey:@"sourceApplication"];
+        id annotation = [[notification userInfo] valueForKey:@"annotation"];
+        BOOL urlWasHandled = [GPPURLHandler handleURL:url
+                                    sourceApplication:sourceApplication
+                                           annotation:annotation];
+        
+        LogDebug(TAG,
+                 ([NSString stringWithFormat:@"urlWasHandled: %@",
+                   urlWasHandled ? @"True" : @"False"]));
+    }
+}
+
+- (void)dealloc {
+    LogDebug(TAG, @"removeObserver kUnityOnOpenURL notification");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
