@@ -15,7 +15,7 @@
 //    GPPSignIn *signIn;
 }
 
-@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
+@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId, clientSecret;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
@@ -31,24 +31,28 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
         clientId = [providerParams objectForKey:@"clientId"];
+        clientSecret = [providerParams objectForKey:@"clientSecret"];
     }
 }
 
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
     LogDebug(TAG, @"Login");
     
-    //check if clientId was set
-    if (!clientId)
-        fail(@"GooglePlus client id is not set!");
-    
     [self setLoginBlocks:success fail:fail cancel:cancel];
     
-    [self startAuth];
+    NSString *authParamsCheckResult = [self checkAuthParams];
+    
+    if (authParamsCheckResult){
+        fail([NSString stringWithFormat:@"Authentication params check failed: %@", authParamsCheckResult]);
+        return;
+    }
+    
+    [self startGooglePlusAuth];
 }
 
 //sets scopes and additional flags for google plus connection
 //and triggers authentication
-- (void)startAuth{
+- (void)startGooglePlusAuth{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     signIn.shouldFetchGoogleUserEmail = YES;
     signIn.shouldFetchGooglePlusUser = YES;
@@ -263,7 +267,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
 static NSString *kDefaultContactInfoValue = @"";
 
-//given an istance of GTLPlusPerson, returns an instance of UserProfile
 -(UserProfile *) googleContactToUserProfile: (GTLPlusPerson *)googleContact{
     GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
     UserProfile * profile =
@@ -296,6 +299,14 @@ static NSString *kDefaultContactInfoValue = @"";
     self.loginSuccess = nil;
     self.loginFail = nil;
     self.loginCancel = nil;
+}
+
+- (NSString *)checkAuthParams{
+    if (!clientId)
+        return @"Missing client id";
+    if (!clientSecret)
+        return @"Missing client secret";
+    return nil;
 }
 
 @end

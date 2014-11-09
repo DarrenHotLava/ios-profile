@@ -22,5 +22,6 @@
 @property (strong, nonatomic) logoutSuccess logoutSuccess;
 @property (strong, nonatomic) logoutFail logoutFail;
 @property (strong, nonatomic, readonly) NSString *clientId;
+@property (strong, nonatomic, readonly) NSString *clientSecret;
 
 @end
