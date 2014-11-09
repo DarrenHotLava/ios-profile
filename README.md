@@ -113,8 +113,7 @@ Google+ is supported out-of-the-box, authentication is done either through the s
 
 1. Create your Google Plus app at https://console.developers.google.com/project
 1. Add a URL scheme to your application:
-1. Go to the application's "Info" section in the build target
-1. Add a URL type and enter your bundle ID as the identifier and scheme.
+1. Go to the application's "Info" section in the build target and add a URL type and enter your bundle ID as the identifier and scheme.
 1. Make sure you have the following frameworks in your application's project: **GooglePlus, GoogleOpenSource, GooglePlus.bundle**.
 1. Add additional frameworks if you still haven't:
     * AddressBook.framework
