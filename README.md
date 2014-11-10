@@ -45,10 +45,8 @@ Getting Started
   ```
   Note that some providers will need initialization parameters (see their sections below), in that case you'll need to supply their parameters here, each with its dictionary:
   ```objective-c
-  NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-     @{ ... }, @(TWITTER),
-     ...,
-     nil];
+  NSDictionary* providerParams = @{ @(TWITTER) : @{...}
+                                    ... };
     [[SoomlaProfile getInstance] initialize:providerParams];
   ```
 1. Refer to the [next section](https://github.com/soomla/ios-profile#whats-next-selecting-social-providers) for information of selecting social providers and setting them up.
@@ -76,36 +74,6 @@ Facebook is supported out-of-the-box, you just have to follow the next steps to 
 1. Add `-lSoomlaiOSProfileFacebook` to the project's "Other Linker Flags"
 
 1. Facebook integration does not need any extra parameters in `SoomlaProfile` initialization
-
-### Twitter
-
-Twitter is supported out-of-the-box, authentication is done either through the signed in Twitter account (iOS 5+) or through web browser (fallback). Follow the next steps to make it work:
-
-1. Create your Twitter app at https://apps.twitter.com/
-
-1. Add a URL scheme to your application:
-  1. Go to the application's "Info" section in the build target
-  1. Under "URL Types" add a new URL type
-  1. In the "URL Schemes" fill in `tw<Your Twitter app consumer key>` (without the braces)
-
-1. Make sure you have the following frameworks in your application's project: **Twitter, Social, Accounts**.
-
-1. Add `-lSoomlaiOSProfileTwitter -lSTTwitter` to the project's "Other Linker Flags"
-  > **ios-profile** uses the [STTWitter](https://github.com/nst/STTwitter) library (v 0.1.5) to support Twitter integration
-
-1. Please provide `SoomlaProfile` with Consumer Key and Consumer Secret from the "Keys and Access Tokens" section in [Twitter Apps](https://apps.twitter.com/), like so:
-```objective-c
-NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-    ...,
-    @{ @"consumerKey": @"[YOUR CONSUMER KEY]", @"consumerSecret": @"[YOUR CONSUMER SECRET]" }, @(TWITTER),
-    ...,
-   nil];
-  [[SoomlaProfile getInstance] initialize:providerParams];
-```
-  1. (OPTIONAL) You can supply the `forceWeb` key in the parameters (with a `BOOL`) value if you would like to force browser-based authorization, like so:
-  ```objective-c
-      @{ ..., @"forceWeb": @(YES) }, @(TWITTER),
-  ```
 
 ### Google+
 
@@ -138,6 +106,34 @@ NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
     ...,
    nil];
   [[SoomlaProfile getInstance] initialize:providerParams];
+```
+
+### Twitter
+
+Twitter is supported out-of-the-box, authentication is done either through the signed in Twitter account (iOS 5+) or through web browser (fallback). Follow the next steps to make it work:
+
+1. Create your Twitter app at https://apps.twitter.com/
+
+1. Add a URL scheme to your application:
+  1. Go to the application's "Info" section in the build target
+  1. Under "URL Types" add a new URL type
+  1. In the "URL Schemes" fill in `tw<Your Twitter app consumer key>` (without the braces)
+
+1. Make sure you have the following frameworks in your application's project: **Twitter, Social, Accounts**.
+
+1. Add `-lSoomlaiOSProfileTwitter -lSTTwitter` to the project's "Other Linker Flags"
+  > **ios-profile** uses the [STTWitter](https://github.com/nst/STTwitter) library (v 0.1.5) to support Twitter integration
+
+1. Please provide `SoomlaProfile` with Consumer Key and Consumer Secret from the "Keys and Access Tokens" section in [Twitter Apps](https://apps.twitter.com/), like so:
+```objective-c
+  NSDictionary* providerParams = @{ @(TWITTER) :
+                                          @{ @"consumerKey": @"[YOUR CONSUMER KEY]",
+                                             @"consumerSecret": @"[YOUR CONSUMER SECRET]" } };
+  [[SoomlaProfile getInstance] initialize:providerParams];
+```
+  1. (OPTIONAL) You can supply the `forceWeb` key in the parameters (with a `BOOL`) value if you would like to force browser-based authorization, like so:
+```objective-c
+  @{ ..., @"forceWeb": @(YES) }, @(TWITTER),
 ```
 
 ### Browser-based Authentication
@@ -203,16 +199,14 @@ In order to debug ios-profile, set `DEBUG_LOG` (see [SoomlaConfig](https://githu
 
 The on-device storage is encrypted and kept in a SQLite database. SOOMLA is preparing a cloud-based storage service that will allow this SQLite to be synced to a cloud-based repository that you'll define.
 
-Security
----
+## Security
 
 If you want to protect your application from 'bad people' (and who doesn't?!), you might want to follow some guidelines:
 
 + SOOMLA keeps the game's data in an encrypted database. In order to encrypt your data, SOOMLA generates a private key out of several parts of information. Soomla's secret (before v3.4.0 is was known as custom secret) is one of them. SOOMLA recommends that you change this value before you release your game. BE CAREFUL: You can change this value once! If you try to change it again, old data from the database will become unavailable.
 
 
-Event Handling
----
+## Event Handling
 
 SOOMLA lets you get notifications on various events and implement your own application specific behavior.
 
@@ -249,32 +243,18 @@ In order to run the project follow this steps:
 
 1. **URL Schemes and openURL** - To support web-based authorization and dialogs the application needs to handle URL schemes (see [here](https://developers.facebook.com/docs/facebook-login/ios/v2.1) for more information):
   1. Under the project's info add an entry to `URL Types` and under `URL Schemes` add the string `fbxxxxxxx` the x's should be replaced with your Facebook App ID.
-  1. Also in your `AppDelegate` add the following code:
-
-  ```objective-c
-  - (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-           BOOL urlWasHandled = [FBAppCall handleOpenURL:url
-                                sourceApplication:sourceApplication
-                                fallbackHandler:^(FBAppCall *call) {
-                                      // Deep linking handling
-                                }];
-           return urlWasHandled;
-     }
-  ```
+  1. See [Browser-based Authentication](#browser-based-authentication)
 1. **Facebook Permissions** - Profile will request `publish_actions` from the user of the application, to test the application please make sure you test with either Admin, Developer or Tester roles
+
+## Google Plus Caveats
+
+1. **401. That's an error. Error:invalid_client** - did you supply the correct client id?
 
 ## Twitter Caveats
 
 1. **Login method returns 401 error** - this could be the result of a few issues:
-  1. Have you supplied the correct consumer key and secret in your application's plist?
+  1. Have you supplied the correct consumer key and secret SoomlaProfile initialization?
   1. Have you supplied a `Callback URL` in your Twitter application settings?
-
-## Google Plue Caveats
-
-1. **401. That's an error. Error:invalid_client** - did you supply the correct client id?
 
 Our way of saying "Thanks !"
 ---

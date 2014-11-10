@@ -56,7 +56,7 @@ static NSString* TAG = @"SOOMLA ProviderLoader";
             id provider = [[klass alloc] init];
             id targetProvider = @([provider getProvider]);
             if (providerParams) {
-                [provider applyParams:[providerParams objectForKey:targetProvider]];
+                [provider applyParams:providerParams[targetProvider]];
             }
             self.providers[targetProvider] = provider;
         }

@@ -48,9 +48,9 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewardGiven:) name:EVENT_REWARD_GIVEN object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileInitialized:) name:EVENT_UP_PROFILE_INITIALIZED object:nil];
     
-    NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-     @{ @"consumerKey": @"1qR0orDyLSZNRK2eMAs9ou8OT", @"consumerSecret": @"dyBn2v3HK64DRo95RH8Vj7BVOZ4DkcxNViFbqjX8BETohdTDqR" }, @(TWITTER),
-     nil];
+    NSDictionary* providerParams = @{ @(TWITTER) :
+                                          @{ @"consumerKey": @"1qR0orDyLSZNRK2eMAs9ou8OT",
+                                             @"consumerSecret": @"dyBn2v3HK64DRo95RH8Vj7BVOZ4DkcxNViFbqjX8BETohdTDqR" } };
     [[SoomlaProfile getInstance] initialize:providerParams];
     
     if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {

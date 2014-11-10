@@ -44,9 +44,6 @@
 /* Begin PBXFileReference section */
 		F842F69A1A0908EE00CDCA7C /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F842F69C1A0908F300CDCA7C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		F842F6AF1A090D2700CDCA7C /* STTwitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTwitter.h; sourceTree = "<group>"; };
-		F842F6B11A090D2700CDCA7C /* STTwitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STTwitter.m; sourceTree = "<group>"; };
-		F842F6BD1A090D2700CDCA7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8B62EFF1A065F3A0014EDB5 /* libSoomlaiOSProfileTwitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileTwitter.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B62F021A065F3A0014EDB5 /* SoomlaTwitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoomlaTwitter.h; sourceTree = "<group>"; };
 		F8B62F041A065F3A0014EDB5 /* SoomlaTwitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaTwitter.m; sourceTree = "<group>"; };
@@ -82,36 +79,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F842F6AE1A090D2700CDCA7C /* STTwitter */ = {
-			isa = PBXGroup;
-			children = (
-				F842F6AF1A090D2700CDCA7C /* STTwitter.h */,
-				F842F6B11A090D2700CDCA7C /* STTwitter.m */,
-			);
-			path = STTwitter;
-			sourceTree = "<group>";
-		};
-		F842F6BB1A090D2700CDCA7C /* STTwitterTests */ = {
-			isa = PBXGroup;
-			children = (
-				F842F6BC1A090D2700CDCA7C /* Supporting Files */,
-			);
-			path = STTwitterTests;
-			sourceTree = "<group>";
-		};
-		F842F6BC1A090D2700CDCA7C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F842F6BD1A090D2700CDCA7C /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		F8B62EF61A065F3A0014EDB5 = {
 			isa = PBXGroup;
 			children = (
-				F842F6AE1A090D2700CDCA7C /* STTwitter */,
-				F842F6BB1A090D2700CDCA7C /* STTwitterTests */,
 				F8B62F721A06883D0014EDB5 /* Frameworks */,
 				F8B62F011A065F3A0014EDB5 /* SoomlaiOSProfileTwitter */,
 				F8B62F0E1A065F3A0014EDB5 /* SoomlaiOSProfileTwitterTests */,

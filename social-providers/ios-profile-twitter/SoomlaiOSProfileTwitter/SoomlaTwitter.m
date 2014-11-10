@@ -60,10 +60,11 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (void)applyParams:(NSDictionary *)providerParams {
     if (providerParams) {
-        _consumerKey = [providerParams objectForKey:@"consumerKey"];
-        _consumerSecret = [providerParams objectForKey:@"consumerSecret"];
+        _consumerKey = providerParams[@"consumerKey"];
+        _consumerSecret = providerParams[@"consumerSecret"];
         
-        NSNumber *forceWeb = [providerParams objectForKey:@"forceWeb"];
+        // Allows the user to force web browser authentication
+        NSNumber *forceWeb = providerParams[@"forceWeb"];
         webOnly = forceWeb ? [forceWeb boolValue] : NO;
     }
     else {
@@ -91,6 +92,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         [self loginWithWeb:success fail:fail cancel:cancel];
     }
     else {
+        // Try to verify account using native Twitter support in iOS
         self.twitter = [STTwitterAPI twitterAPIOSWithFirstAccount];
         
         [self.twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
@@ -98,6 +100,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
             success([self getProvider]);
         } errorBlock:^(NSError *error) {
             if (error.code == STTwitterOSUserDeniedAccessToTheirAccounts) {
+                // User has literally blocked your application
                 LogError(TAG, @"User denied access");
                 fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
             }
@@ -116,6 +119,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         return;
     }
     
+    // Try logging in to Twitter using stored OAuth tokens
     if ([self tryLoginFromDB:success fail:fail cancel:cancel]) {
         return;
     }
@@ -123,7 +127,11 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:self.consumerKey
                                                  consumerSecret:self.consumerSecret];
     
+    // Get request token to launch a browser instance
+    // Provides meaningful URL Scheme to make the browser call the application back
     [_twitter postTokenRequest:^(NSURL *url, NSString *oauthToken) {
+        // Launch browser to have the user verify your application
+        // Should eventually return to tryHandleOpenURL
         self.loginSuccess = success;
         self.loginFail = fail;
         self.loginCancel = cancel;
@@ -149,6 +157,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:_consumerKey consumerSecret:_consumerSecret
                                                      oauthToken:oauthToken oauthTokenSecret:oauthSecret];
     
+    // Try to use stored OAuth tokens to verify the application
     [self.twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
         loggedInUser = username;
         success([self getProvider]);
@@ -162,6 +171,14 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (void) applyOauthTokens:(NSString *)token andVerifier:(NSString *)verifier {
+    // No tokens when user cancels
+    if (!token || !verifier) {
+        self.loginCancel([self getProvider]);
+        return;
+    }
+    
+    // Uses provided OAuth tokens from callback URL to verify credentials
+    // Final step in authentication
     [self.twitter postAccessTokenRequestWithPIN:verifier successBlock:^(NSString *oauthToken, NSString *oauthTokenSecret, NSString *userID, NSString *screenName) {
         
         [KeyValueStorage setValue:oauthToken forKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
@@ -205,6 +222,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     
     NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
     
+    // Gets OAuth authentication tokens from URL
     NSString *token = d[@"oauth_token"];
     NSString *verifier = d[@"oauth_verifier"];
     

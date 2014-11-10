@@ -42,6 +42,7 @@
 		F842F7D11A0930B800CDCA7C /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D278A11A0775E10058C109 /* Twitter.framework */; };
 		F842F7D21A0930C300CDCA7C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842F6A41A09093100CDCA7C /* Social.framework */; };
 		F85EFA4C19FFC832006092AB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F85EFA4B19FFC832006092AB /* FacebookSDK.framework */; };
+		F8A87ECB1A1124A200CCB663 /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A87ECA1A1124A200CCB663 /* libSoomlaiOSCore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,7 @@
 		F842F6A11A09091F00CDCA7C /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		F842F6A41A09093100CDCA7C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F85EFA4B19FFC832006092AB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../social-providers/ios-profile-facebook/libs/FacebookSDK.framework"; sourceTree = "<group>"; };
+		F8A87ECA1A1124A200CCB663 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../Library/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
 		F8D278A11A0775E10058C109 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		F8F9ADC919B34EC900F26856 /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../submodules/soomla-ios-core/build/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A87ECB1A1124A200CCB663 /* libSoomlaiOSCore.a in Frameworks */,
 				328450CB1A0F99D5006E0E95 /* SystemConfiguration.framework in Frameworks */,
 				328450C91A0F99C9006E0E95 /* MediaPlayer.framework in Frameworks */,
 				328450C71A0F99C1006E0E95 /* CoreText.framework in Frameworks */,
@@ -209,6 +212,7 @@
 		EF83618E19472A23003526D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8A87ECA1A1124A200CCB663 /* libSoomlaiOSCore.a */,
 				328450CA1A0F99D5006E0E95 /* SystemConfiguration.framework */,
 				328450C81A0F99C9006E0E95 /* MediaPlayer.framework */,
 				328450C61A0F99C1006E0E95 /* CoreText.framework */,
@@ -588,7 +592,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../social-providers/ios-profile-facebook/libs",
 					"$(SRCROOT)/../social-providers/ios-profile-google/libs",
-					"/Users/dima/Soomla/profile/ios-profile/social-providers/ios-profile-google/libs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
@@ -602,14 +605,15 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
 					"$(SRCROOT)/../build/**",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
 					"-lSoomlaiOSProfileFacebook",
-					"-lSoomlaiOSProfileTwitter",
 					"-lSTTwitter",
 					"-lSoomlaiOSProfileGoogle",
+					"-lSoomlaiOSProfileTwitter",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -626,7 +630,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../social-providers/ios-profile-facebook/libs",
 					"$(SRCROOT)/../social-providers/ios-profile-google/libs",
-					"/Users/dima/Soomla/profile/ios-profile/social-providers/ios-profile-google/libs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
@@ -640,14 +643,15 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
 					"$(SRCROOT)/../build/**",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
 					"-lSoomlaiOSProfileFacebook",
-					"-lSoomlaiOSProfileTwitter",
 					"-lSTTwitter",
 					"-lSoomlaiOSProfileGoogle",
+					"-lSoomlaiOSProfileTwitter",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
