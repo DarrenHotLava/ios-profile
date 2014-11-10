@@ -133,7 +133,7 @@ Twitter is supported out-of-the-box, authentication is done either through the s
 ```
   1. (OPTIONAL) You can supply the `forceWeb` key in the parameters (with a `BOOL`) value if you would like to force browser-based authorization, like so:
 ```objective-c
-  @{ ..., @"forceWeb": @(YES) }, @(TWITTER),
+  @(TWITTER): @{ ..., @"forceWeb": @(YES) },
 ```
 
 ### Browser-based Authentication
