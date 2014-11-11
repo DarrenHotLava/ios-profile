@@ -28,6 +28,8 @@
 @implementation ViewController
 
 static NSString* TAG = @"SOOMLA ViewController";
+// Change this to test different social networks
+static Provider TARGET_PROVIDER = FACEBOOK;
 
 - (void)viewDidLoad
 {
@@ -49,11 +51,11 @@ static NSString* TAG = @"SOOMLA ViewController";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileInitialized:) name:EVENT_UP_PROFILE_INITIALIZED object:nil];
     
     NSDictionary* providerParams = @{ @(TWITTER) :
-                                          @{ @"consumerKey": @"1qR0orDyLSZNRK2eMAs9ou8OT",
-                                             @"consumerSecret": @"dyBn2v3HK64DRo95RH8Vj7BVOZ4DkcxNViFbqjX8BETohdTDqR" } };
+                                          @{ @"consumerKey": @"T8NMGwKq6USYCjZox86Bxd2RJ",
+                                             @"consumerSecret": @"TO88J9QjIJlSGfuyfza9Ox2OgTsLc1rjcmaJknlIMuUw0T1I30" } };
     [[SoomlaProfile getInstance] initialize:providerParams];
     
-    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
         [self showSocialUI];
     }
 }
@@ -65,15 +67,15 @@ static NSString* TAG = @"SOOMLA ViewController";
 }
 - (IBAction)buttonTouched:(id)sender {
     
-    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
         
-        [[SoomlaProfile getInstance] logoutWithProvider:FACEBOOK];
+        [[SoomlaProfile getInstance] logoutWithProvider:TARGET_PROVIDER];
     } else {
         
         // Retrieve the app delegate
         AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-        [[SoomlaProfile getInstance] loginWithProvider:FACEBOOK andPayload:@"" andReward:appDelegate.loginReward];
+        [[SoomlaProfile getInstance] loginWithProvider:TARGET_PROVIDER andPayload:@"" andReward:appDelegate.loginReward];
     }
 }
 
@@ -82,10 +84,10 @@ static NSString* TAG = @"SOOMLA ViewController";
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
 
-    [[SoomlaProfile getInstance] updateStatusWithProvider:FACEBOOK andStatus:@"Test status" andReward:appDelegate.updateStatusReward];
+    [[SoomlaProfile getInstance] updateStatusWithProvider:TARGET_PROVIDER andStatus:@"Test status" andReward:appDelegate.updateStatusReward];
     
     // Or with dialog
-    //[[SoomlaProfile getInstance] updateStatusWithProviderDialog:FACEBOOK andLink:@"http://www.soom.la" andPayload:@"status" andReward:appDelegate.updateStatusReward];
+    //[[SoomlaProfile getInstance] updateStatusWithProviderDialog:TARGET_PROVIDER andLink:@"http://www.soom.la" andPayload:@"status" andReward:appDelegate.updateStatusReward];
 }
 
 - (IBAction)updateStoryButtonTouched:(id)sender {
@@ -93,7 +95,7 @@ static NSString* TAG = @"SOOMLA ViewController";
     // Retrieve the app delegate
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
-    [[SoomlaProfile getInstance] updateStoryWithProvider:FACEBOOK
+    [[SoomlaProfile getInstance] updateStoryWithProvider:TARGET_PROVIDER
                                               andMessage:@"Message"
                                                  andName:@"Name"
                                               andCaption:@"Caption"
@@ -102,7 +104,7 @@ static NSString* TAG = @"SOOMLA ViewController";
                                               andPicture:@"http://i.imgur.com/g3Qc1HN.png"
                                                andReward:appDelegate.updateStatusReward];
     // Or with dialog
-    // [[SoomlaProfile getInstance] updateStoryWithProviderDialog:FACEBOOK
+    // [[SoomlaProfile getInstance] updateStoryWithProviderDialog:TARGET_PROVIDER
     //                                             andName:@"Name"
     //                                          andCaption:@"Caption"
     //                                      andDescription:@"Description"
@@ -125,14 +127,14 @@ static NSString* TAG = @"SOOMLA ViewController";
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     if (appDelegate.likeReward.canGive == YES) {
-        [[SoomlaProfile getInstance] like:FACEBOOK andPageName:@"The.SOOMLA.Project" andReward:appDelegate.likeReward];
+        [[SoomlaProfile getInstance] like:TARGET_PROVIDER andPageName:@"The.SOOMLA.Project" andReward:appDelegate.likeReward];
     }
 }
 
 - (void)showSocialUI {
     LogDebug(TAG, @"Login Success: you are now logged in to Facebook");
     
-    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:FACEBOOK]) {
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
         [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
     }
     
@@ -232,17 +234,17 @@ static NSString* TAG = @"SOOMLA ViewController";
     [myData writeToFile:filePath atomically:YES];
 
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [[SoomlaProfile getInstance] uploadImageWithProvider:FACEBOOK andMessage:@"Text photo message" andFilePath:filePath andReward:appDelegate.uploadImageReward];
+    [[SoomlaProfile getInstance] uploadImageWithProvider:TARGET_PROVIDER andMessage:@"Text photo message" andFilePath:filePath andReward:appDelegate.uploadImageReward];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)getContactsButtonTouched:(id)sender {
-    [[SoomlaProfile getInstance] getContactsWithProvider:FACEBOOK andReward:nil];
+    [[SoomlaProfile getInstance] getContactsWithProvider:TARGET_PROVIDER andReward:nil];
 }
 
 - (IBAction)getFeedTouched:(id)sender {
-    [[SoomlaProfile getInstance] getFeedWithProvider:FACEBOOK andReward:nil];
+    [[SoomlaProfile getInstance] getFeedWithProvider:TARGET_PROVIDER andReward:nil];
 }
 
 @end

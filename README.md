@@ -100,11 +100,8 @@ Google+ is supported out-of-the-box, authentication is done either through the s
 
 1. Please provide `SoomlaProfile` with Client ID from the "API&Auth, credentials" section like so:
 ```objective-c
-NSDictionary* providerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-    ...,
-    @{ @"consumerId": @"[YOUR CLIENT ID]" }, @(GOOGLE),
-    ...,
-   nil];
+  NSDictionary* providerParams = @{ @(GOOGLE) :
+                                          @{ @"clientId": @"[YOUR CLIENT ID]" } };
   [[SoomlaProfile getInstance] initialize:providerParams];
 ```
 
