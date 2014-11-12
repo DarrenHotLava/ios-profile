@@ -29,7 +29,7 @@
 
 static NSString* TAG = @"SOOMLA ViewController";
 // Change this to test different social networks
-static Provider TARGET_PROVIDER = FACEBOOK;
+static Provider TARGET_PROVIDER = GOOGLE;
 
 - (void)viewDidLoad
 {
@@ -52,7 +52,9 @@ static Provider TARGET_PROVIDER = FACEBOOK;
     
     NSDictionary* providerParams = @{ @(TWITTER) :
                                           @{ @"consumerKey": @"T8NMGwKq6USYCjZox86Bxd2RJ",
-                                             @"consumerSecret": @"TO88J9QjIJlSGfuyfza9Ox2OgTsLc1rjcmaJknlIMuUw0T1I30" } };
+                                             @"consumerSecret": @"TO88J9QjIJlSGfuyfza9Ox2OgTsLc1rjcmaJknlIMuUw0T1I30" },
+                                      @(GOOGLE) :
+                                          @ {@"clientId": @"833688084302-aojkncr5afnj8ddh6peviri2f8orckai.apps.googleusercontent.com"} };
     [[SoomlaProfile getInstance] initialize:providerParams];
     
     if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
