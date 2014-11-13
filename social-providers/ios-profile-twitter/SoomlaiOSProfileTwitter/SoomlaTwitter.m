@@ -52,10 +52,33 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     self = [super init];
     if (!self) return nil;
     
+    LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(innerHandleOpenURL:)
+                                                 name:@"kUnityOnOpenURL"
+                                               object:nil];
+    
     return self;
 }
 
+- (void)innerHandleOpenURL:(NSNotification *)notification {
+    if ([[notification name] isEqualToString:@"kUnityOnOpenURL"]) {
+        LogDebug(TAG, @"Successfully received the kUnityOnOpenURL notification!");
+        
+        NSURL *url = [[notification userInfo] valueForKey:@"url"];
+        NSString *sourceApplication = [[notification userInfo] valueForKey:@"sourceApplication"];
+        id annotation = [[notification userInfo] valueForKey:@"annotation"];
+        BOOL urlWasHandled = [self tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
+        
+        LogDebug(TAG,
+                 ([NSString stringWithFormat:@"urlWasHandled: %@",
+                   urlWasHandled ? @"True" : @"False"]));
+    }
+}
+
 - (void)dealloc {
+    LogDebug(TAG, @"removeObserver kUnityOnOpenURL notification");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)applyParams:(NSDictionary *)providerParams {

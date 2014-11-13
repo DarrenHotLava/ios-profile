@@ -50,7 +50,7 @@ Getting Started
     [[SoomlaProfile getInstance] initialize:providerParams];
   ```
   1. **Facebook** - No parameters
-  1. **Google+** - Please provide `SoomlaProfile` with **Client ID** from the "API&Auth, credentials" section like so:
+  1. **Google+** - Please provide **Client ID** from the "API&Auth, credentials" section like so:
     ```objective-c
       @(GOOGLE) : @{ @"clientId": @"[YOUR CLIENT ID]" }
     ```
