@@ -182,9 +182,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [self setSocialActionBlocks:success fail:fail];
     id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
     [shareBuilder setPrefillText:message];
-    [shareBuilder setTitle:name description:description thumbnailURL:[NSURL URLWithString:picture]];
-//    [shareBuilder setContentDeepLinkID:[NSURL URLWithString:link]];
-    [shareBuilder setContentDeepLinkID:link];
+    [shareBuilder setURLToShare:[NSURL URLWithString:link]];
     [shareBuilder open];
 }
 
