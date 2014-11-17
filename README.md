@@ -258,8 +258,8 @@ In order to run the project follow this steps:
 
 1. **401. That's an error. Error:invalid_client** - this could be the result of a few issues:
   1. Have you supplied the correct client id in `SoomlaProfile` initialization?
-  1. Did you set BUNDLE ID of your google+ app to the bundle identifier of your app?
-  1. Did you add a URL type with identifier and Url Schemes set to your bundle identifier?
+  1. Does your google+ app BUNDLE ID equal to the Bundle Identifier of your iOS app?
+  1. Did you add a URL type with identifier and Url Schemes set to your Bundle Identifier?
 1. Did you add all required the frameworks?
 
 Our way of saying "Thanks !"
