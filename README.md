@@ -111,6 +111,8 @@ Google Plus is supported out-of-the-box, authentication is done either through t
 
 1. Follow [Step 1. Creating the Google Developers Console project](https://developers.google.com/+/mobile/ios/getting-started#step_1_creating_the_console_name_project) and create a google+ app for iOS.
 
+  > **NOTE:** Set the BUNDLE ID of the google+ app to the bundle identifier of your app.
+
 1. Follow [Step 3. Add a URL type](https://developers.google.com/+/mobile/ios/getting-started#step_3_add_a_url_type) and add url type to your application to allow browser based authentication.
 
 1. Navigate to [social-providers/ios-profile-google/libs](https://github.com/soomla/ios-profile/tree/master/social-providers/ios-profile-google/libs) and add the following frameworks to your application:
@@ -134,10 +136,6 @@ Google Plus is supported out-of-the-box, authentication is done either through t
     * UIKit.framework
 
 1. Add `-lSoomlaiOSProfileGoogle` to the project's "Other Linker Flags"
-
-1. Set the "bundle identifier" of your application to the "BUNDLE ID" of your google+ app.
-
-  > BUNDLE ID is located under "APIs & auth" -> "Credentials" -> "Client ID for iOS application" in your google+ app page.
 
 ### Browser-based Authentication
 
@@ -260,7 +258,7 @@ In order to run the project follow this steps:
 
 1. **401. That's an error. Error:invalid_client** - this could be the result of a few issues:
   1. Have you supplied the correct client id in `SoomlaProfile` initialization?
-  1. Did you set the bundle identifier of your project to the BUNDLE ID of your google+ client app?
+  1. Did you set BUNDLE ID of your google+ app to the bundle identifier of your app?
   1. Did you add a URL type with identifier and Url Schemes set to your bundle identifier?
 1. Did you add all required the frameworks?
 
