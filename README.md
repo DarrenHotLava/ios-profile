@@ -52,9 +52,9 @@ Getting Started
     [[SoomlaProfile getInstance] initialize:providerParams];
   ```
   1. **Facebook** - No parameters
-  1. **Google+** - Please provide **Client ID** from the "API&Auth, credentials" section like so:
+  1. **Google+** - Please provide **CLIENT ID** from the "API&Auth" -> "Credentials" -> "Client ID for iOS applicatio" section in [Google Developer Console Projects](https://console.developers.google.com/project/), like so:
     ```objective-c
-      @(GOOGLE) : @{ @"clientId": @"[YOUR CLIENT ID]" }
+      @(GOOGLE) : @{ @"clientId": @"[CLIENT ID]" }
     ```
   1. **Twitter** - Please provide **Consumer Key** and **Consumer Secret** from the "Keys and Access Tokens" section in [Twitter Apps](https://apps.twitter.com/), like so:
     ```objective-c
@@ -89,29 +89,6 @@ Facebook is supported out-of-the-box, you just have to follow the next steps to 
 
 1. Add `-lSoomlaiOSProfileFacebook` to the project's "Other Linker Flags"
 
-### Google+
-
-Google+ is supported out-of-the-box, authentication is done either through the signed in Google+ account or through web browser (fallback). Follow the next steps to make it work:
-
-1. Create your Google Plus app at https://console.developers.google.com/project
-1. Add a URL scheme to your application:
-1. Go to the application's "Info" section in the build target and add a URL type and enter your bundle ID as the identifier and scheme.
-1. Make sure you have the following frameworks in your application's project: **GooglePlus, GoogleOpenSource, GooglePlus.bundle**.
-1. Add additional frameworks if you still haven't:
-    * AddressBook.framework
-    * AssetsLibrary.framework
-    * Foundation.framework
-    * CoreLocation.framework
-    * CoreMotion.framework
-    * CoreGraphics.framework
-    * CoreText.framework
-    * MediaPlayer.framework
-    * Security.framework
-    * SystemConfiguration.framework
-    * UIKit.framework
-
-1. Add `-lSoomlaiOSProfileGoogle` to the project's "Other Linker Flags"
-
 ### Twitter
 
 Twitter is supported out-of-the-box, authentication is done either through the signed in Twitter account (iOS 5+) or through web browser (fallback). Follow the next steps to make it work:
@@ -127,6 +104,40 @@ Twitter is supported out-of-the-box, authentication is done either through the s
 
 1. Add `-lSoomlaiOSProfileTwitter -lSTTwitter` to the project's "Other Linker Flags"
   > **ios-profile** uses the [STTWitter](https://github.com/nst/STTwitter) library (v 0.1.5) to support Twitter integration
+
+### Google+
+
+Google+ is supported out-of-the-box, authentication is done either through the signed in Google+ account or through web browser (fallback). Follow the next steps to make it work:
+
+1. Follow [Step 1. Creating the Google Developers Console project](https://developers.google.com/+/mobile/ios/getting-started#step_1_creating_the_console_name_project) and create a google+ app for iOS.
+
+1. Follow [Step 3. Add a URL type](https://developers.google.com/+/mobile/ios/getting-started#step_3_add_a_url_type) and add url type to your application to allow browser based authentication.
+
+1. Navigate to [social-providers/ios-profile-google/libs](https://github.com/soomla/ios-profile/tree/master/social-providers/ios-profile-google/libs) and add the following frameworks to your application:
+    * GooglePlus.framework
+    * GoogleOpenSource.framework
+    * GooglePlus.bundle
+
+  > **ios-profile** uses [Google Plus SDK 1.7.1](https://developers.google.com/+/mobile/ios/upgrading-sdk) to support Google Plus integration.
+
+1. Add additional frameworks to your project:
+    * AddressBook.framework
+    * AssetsLibrary.framework
+    * Foundation.framework
+    * CoreLocation.framework
+    * CoreMotion.framework
+    * CoreGraphics.framework
+    * CoreText.framework
+    * MediaPlayer.framework
+    * Security.framework
+    * SystemConfiguration.framework
+    * UIKit.framework
+
+1. Add `-lSoomlaiOSProfileGoogle` to the project's "Other Linker Flags"
+
+1. Set the "bundle identifier" of your application to the "BUNDLE ID" of your google+ app.
+
+  > BUNDLE ID is located under "APIs & auth" -> "Credentials" -> "Client ID for iOS application" in your google+ app page.
 
 ### Browser-based Authentication
 
@@ -238,15 +249,20 @@ In order to run the project follow this steps:
   1. See [Browser-based Authentication](#browser-based-authentication)
 1. **Facebook Permissions** - Profile will request `publish_actions` from the user of the application, to test the application please make sure you test with either Admin, Developer or Tester roles
 
-## Google Plus Caveats
-
-1. **401. That's an error. Error:invalid_client** - did you supply the correct client id?
 
 ## Twitter Caveats
 
 1. **Login method returns 401 error** - this could be the result of a few issues:
-  1. Have you supplied the correct consumer key and secret SoomlaProfile initialization?
+  1. Have you supplied the correct consumer key and secret in `SoomlaProfile` initialization?
   1. Have you supplied a `Callback URL` in your Twitter application settings?
+
+## Google Plus Caveats
+
+1. **401. That's an error. Error:invalid_client** - this could be the result of a few issues:
+  1. Have you supplied the correct client id in `SoomlaProfile` initialization?
+  1. Did you set the bundle identifier of your project to the BUNDLE ID of your google+ client app?
+  1. Did you add a URL type with identifier and Url Schemes set to your bundle identifier?
+1. Did you add all required the frameworks?
 
 Our way of saying "Thanks !"
 ---

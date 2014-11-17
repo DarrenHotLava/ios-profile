@@ -31,6 +31,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     if (!self)
         return nil;
     
+    //subscribe to notification from unity via UnityAppController AppController_SendNotificationWithArg(kUnityOnOpenURL, notifData)
     LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(innerHandleOpenURL:)
@@ -61,8 +62,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [self startGooglePlusAuth];
 }
 
-//sets scopes and additional flags for google plus connection
-//and triggers authentication
 - (void)startGooglePlusAuth{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     GPPShare *share = [GPPShare sharedInstance];
@@ -74,13 +73,15 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     signIn.clientID = self.clientId;
     signIn.scopes = scopes;
     
+    //sign in, share and disconnect delegates: finishedWithAuth, finishedSharingWithError, didDisconnectWithError
     signIn.delegate = self;
     share.delegate = self;
     
+    //trigger google+ authentication
     [signIn authenticate];
 }
 
-//callback for GPPSignIn end of authentication process
+//sign in delegate
 - (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
                    error: (NSError *) error {
     if (error) {
@@ -120,7 +121,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                     fail([error localizedDescription]);
                 } else {
                     UserProfile *userProfile = [self parseGoogleContact:person];
-//                    userProfile.email = [[[GPPSignIn sharedInstance] authentication]userEmail];
                     success(userProfile);
                 }
             }];
@@ -133,6 +133,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [[GPPSignIn sharedInstance] disconnect];
 }
 
+//disconnect delegate
 - (void)didDisconnectWithError:(NSError *)error {
     if (error) {
         self.logoutFail([error localizedDescription]);
@@ -211,7 +212,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [shareBuilder open];
 }
 
-//callback for GPPShare end of share
+// share delegate
 - (void)finishedSharingWithError:(NSError *)error {
     
     if (!error) {
