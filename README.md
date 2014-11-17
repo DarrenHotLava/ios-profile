@@ -105,9 +105,9 @@ Twitter is supported out-of-the-box, authentication is done either through the s
 1. Add `-lSoomlaiOSProfileTwitter -lSTTwitter` to the project's "Other Linker Flags"
   > **ios-profile** uses the [STTWitter](https://github.com/nst/STTwitter) library (v 0.1.5) to support Twitter integration
 
-### Google+
+### Google Plus
 
-Google+ is supported out-of-the-box, authentication is done either through the signed in Google+ account or through web browser (fallback). Follow the next steps to make it work:
+Google Plus is supported out-of-the-box, authentication is done either through the signed in Google Plus account or through web browser (fallback). Follow the next steps to make it work:
 
 1. Follow [Step 1. Creating the Google Developers Console project](https://developers.google.com/+/mobile/ios/getting-started#step_1_creating_the_console_name_project) and create a google+ app for iOS.
 
