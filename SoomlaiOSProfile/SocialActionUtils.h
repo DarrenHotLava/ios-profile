@@ -37,6 +37,7 @@ typedef enum {
  @return A string representing the action enum
  */
 + (NSString *)actionEnumToString:(SocialActionType)actionType;
++ (NSString *)actionNumberToString:(NSNumber*)actionNumber;
 
 /**
  Maps an action string to its corresponding enum value

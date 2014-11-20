@@ -28,11 +28,6 @@
 		EF8361A619472A23003526D7 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF8361A419472A23003526D7 /* Main_iPad.storyboard */; };
 		EF8361A919472A23003526D7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8361A819472A23003526D7 /* ViewController.m */; };
 		EF8361AB19472A23003526D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF8361AA19472A23003526D7 /* Images.xcassets */; };
-		EF8361B219472A23003526D7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361B119472A23003526D7 /* XCTest.framework */; };
-		EF8361B319472A23003526D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF83618F19472A23003526D7 /* Foundation.framework */; };
-		EF8361B419472A23003526D7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF83619319472A23003526D7 /* UIKit.framework */; };
-		EF8361BC19472A23003526D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EF8361BA19472A23003526D7 /* InfoPlist.strings */; };
-		EF8361BE19472A23003526D7 /* SoomlaiOSProfileExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8361BD19472A23003526D7 /* SoomlaiOSProfileExampleTests.m */; };
 		EF8361EF19473D52003526D7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361EE19473D52003526D7 /* Security.framework */; };
 		EF8361F119473D57003526D7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361F019473D57003526D7 /* StoreKit.framework */; };
 		EF8361F319473D68003526D7 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8361F219473D68003526D7 /* libsqlite3.0.dylib */; };
@@ -66,13 +61,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = EF356F0A193C90560081DCE0;
 			remoteInfo = SoomlaiOSProfileTests;
-		};
-		EF8361B519472A23003526D7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EF83618419472A23003526D7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EF83618B19472A23003526D7;
-			remoteInfo = SoomlaiOSProfileExample;
 		};
 		EF8361E619473C8A003526D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -117,11 +105,7 @@
 		EF8361A719472A23003526D7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		EF8361A819472A23003526D7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		EF8361AA19472A23003526D7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		EF8361B019472A23003526D7 /* SoomlaiOSProfileExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8361B119472A23003526D7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		EF8361B919472A23003526D7 /* SoomlaiOSProfileExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoomlaiOSProfileExampleTests-Info.plist"; sourceTree = "<group>"; };
-		EF8361BB19472A23003526D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EF8361BD19472A23003526D7 /* SoomlaiOSProfileExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoomlaiOSProfileExampleTests.m; sourceTree = "<group>"; };
 		EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSStore.xcodeproj; path = "../../ios-store/SoomlaiOSStore.xcodeproj"; sourceTree = "<group>"; };
 		EF8361EE19473D52003526D7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EF8361F019473D57003526D7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -166,16 +150,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EF8361AD19472A23003526D7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EF8361B219472A23003526D7 /* XCTest.framework in Frameworks */,
-				EF8361B419472A23003526D7 /* UIKit.framework in Frameworks */,
-				EF8361B319472A23003526D7 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -194,7 +168,6 @@
 				3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */,
 				EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */,
 				EF83619519472A23003526D7 /* SoomlaiOSProfileExample */,
-				EF8361B719472A23003526D7 /* SoomlaiOSProfileExampleTests */,
 				EF83618E19472A23003526D7 /* Frameworks */,
 				EF83618D19472A23003526D7 /* Products */,
 			);
@@ -204,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				EF83618C19472A23003526D7 /* SoomlaiOSProfileExample.app */,
-				EF8361B019472A23003526D7 /* SoomlaiOSProfileExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,24 +239,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EF8361B719472A23003526D7 /* SoomlaiOSProfileExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				EF8361BD19472A23003526D7 /* SoomlaiOSProfileExampleTests.m */,
-				EF8361B819472A23003526D7 /* Supporting Files */,
-			);
-			path = SoomlaiOSProfileExampleTests;
-			sourceTree = "<group>";
-		};
-		EF8361B819472A23003526D7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				EF8361B919472A23003526D7 /* SoomlaiOSProfileExampleTests-Info.plist */,
-				EF8361BA19472A23003526D7 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		EF8361E319473C8A003526D7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,24 +269,6 @@
 			productReference = EF83618C19472A23003526D7 /* SoomlaiOSProfileExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		EF8361AF19472A23003526D7 /* SoomlaiOSProfileExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EF8361C419472A23003526D7 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileExampleTests" */;
-			buildPhases = (
-				EF8361AC19472A23003526D7 /* Sources */,
-				EF8361AD19472A23003526D7 /* Frameworks */,
-				EF8361AE19472A23003526D7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				EF8361B619472A23003526D7 /* PBXTargetDependency */,
-			);
-			name = SoomlaiOSProfileExampleTests;
-			productName = SoomlaiOSProfileExampleTests;
-			productReference = EF8361B019472A23003526D7 /* SoomlaiOSProfileExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -341,11 +277,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Soomla;
-				TargetAttributes = {
-					EF8361AF19472A23003526D7 = {
-						TestTargetID = EF83618B19472A23003526D7;
-					};
-				};
 			};
 			buildConfigurationList = EF83618719472A23003526D7 /* Build configuration list for PBXProject "SoomlaiOSProfileExample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -371,7 +302,6 @@
 			projectRoot = "";
 			targets = (
 				EF83618B19472A23003526D7 /* SoomlaiOSProfileExample */,
-				EF8361AF19472A23003526D7 /* SoomlaiOSProfileExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -413,14 +343,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EF8361AE19472A23003526D7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EF8361BC19472A23003526D7 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -435,14 +357,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EF8361AC19472A23003526D7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EF8361BE19472A23003526D7 /* SoomlaiOSProfileExampleTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -450,11 +364,6 @@
 			isa = PBXTargetDependency;
 			name = SoomlaiOSProfile;
 			targetProxy = 3A4D84EE1961BE460030C5D5 /* PBXContainerItemProxy */;
-		};
-		EF8361B619472A23003526D7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EF83618B19472A23003526D7 /* SoomlaiOSProfileExample */;
-			targetProxy = EF8361B519472A23003526D7 /* PBXContainerItemProxy */;
 		};
 		EFC127C0194C2F5D00CDA66B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -486,14 +395,6 @@
 				EF8361A519472A23003526D7 /* Base */,
 			);
 			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		EF8361BA19472A23003526D7 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EF8361BB19472A23003526D7 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -659,46 +560,6 @@
 			};
 			name = Release;
 		};
-		EF8361C519472A23003526D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SoomlaiOSProfileExample.app/SoomlaiOSProfileExample";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "SoomlaiOSProfileExampleTests/SoomlaiOSProfileExampleTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		EF8361C619472A23003526D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SoomlaiOSProfileExample.app/SoomlaiOSProfileExample";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Prefix.pch";
-				INFOPLIST_FILE = "SoomlaiOSProfileExampleTests/SoomlaiOSProfileExampleTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -716,15 +577,6 @@
 			buildConfigurations = (
 				EF8361C219472A23003526D7 /* Debug */,
 				EF8361C319472A23003526D7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		EF8361C419472A23003526D7 /* Build configuration list for PBXNativeTarget "SoomlaiOSProfileExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EF8361C519472A23003526D7 /* Debug */,
-				EF8361C619472A23003526D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

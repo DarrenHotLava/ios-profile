@@ -34,6 +34,10 @@
     return nil;
 }
 
++ (NSString *)providerNumberToString:(NSNumber*)providerNumber {
+    return [self providerEnumToString:(Provider) [providerNumber intValue]];
+}
+
 + (Provider)providerStringToEnum:(NSString *)provider {
     Provider result;
     

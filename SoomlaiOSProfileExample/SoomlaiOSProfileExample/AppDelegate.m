@@ -40,8 +40,33 @@ static NSString* TAG = @"SOOMLA AppDelegate";
     self.uploadImageReward = [[VirtualItemReward alloc] initWithRewardId:@"update_story_reward" andName:@"Update Story Reward" andAmount:250 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.likeReward = [[VirtualItemReward alloc] initWithRewardId:@"like_page_reward" andName:@"Like Page Reward" andAmount:350 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
 
+    Class klass = NSClassFromString(@"SoomlaProfile");
+    if (!klass) {
+        return NO;
+    }
+    
+    SEL observeAllSelector
+    = NSSelectorFromString(@"observeAllEventsWithObserver:withSelector:");
+    
+    IMP methodImplementation
+    = [NSClassFromString(@"UserProfileEventHandling") methodForSelector: observeAllSelector];
+    
+    methodImplementation(self, observeAllSelector, self, @selector(onEvent:));
+    
+    
     // Override point for customization after application launch.
     return YES;
+}
+
+- (void)onEvent:(NSNotification*)notification {
+    if ([notification.name isEqualToString:@"up_social_action_started"]) {
+    NSDictionary* extra = notification.userInfo;
+
+//    NSDictionary* userProfile = [extra[@"userProfile"] performSelector:@selector(toDictionary)];
+    NSString* action = [NSClassFromString(@"SocialActionUtils") performSelector:@selector(actionNumberToString:) withObject:(NSNumber*)notification.userInfo[@"socialActiontype"]];
+//    NSString* provider = [NSClassFromString(@"UserProfileUtils") performSelector:@selector(providerNumberToString:) withObject:(NSNumber*)extra[@"provider"]];
+        NSLog(@"ASDJCASDCJASDJASDADSVJASDVJAVJ");
+    }
 }
 
 

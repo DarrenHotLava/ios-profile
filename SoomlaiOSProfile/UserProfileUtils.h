@@ -38,6 +38,7 @@ typedef enum {
  @exception NSException when the supplied provider is unspported
  */
 + (NSString *)providerEnumToString:(Provider)provider;
++ (NSString *)providerNumberToString:(NSNumber*)providerNumber;
 
 /**
  Converts the supplied `NSString` to `Provider` if possible

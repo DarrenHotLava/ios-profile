@@ -58,7 +58,7 @@
 }
 
 + (void)postLoginStarted:(Provider)provider withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_PAYLOAD: payload};
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: [NSNumber numberWithInt:provider], DICT_ELEMENT_PAYLOAD: payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_STARTED object:self userInfo:userInfo];
 }
 

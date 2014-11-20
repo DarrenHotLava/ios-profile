@@ -42,6 +42,9 @@
     
     return nil;
 }
++ (NSString *)actionNumberToString:(NSNumber*)actionNumber {
+    return [self actionEnumToString:(SocialActionType) [actionNumber intValue]];
+}
 
 + (SocialActionType)actionStringToEnum:(NSString *)actionTypeString {
     if ([actionTypeString isEqualToString:@"UPDATE_STATUS"]) {
