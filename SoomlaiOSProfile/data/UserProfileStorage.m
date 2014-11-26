@@ -16,7 +16,7 @@
 
 #import "UserProfileStorage.h"
 #import "UserProfile.h"
-#import "UserProfileEventHandling.h"
+#import "ProfileEventHandling.h"
 #import "KeyValueStorage.h"
 #import "SoomlaUtils.h"
 
@@ -36,7 +36,7 @@ static NSString* TAG            = @"SOOMLA UserProfileStorage";
     NSString* key = [self keyUserProfile:userProfile.provider];
     [KeyValueStorage setValue:value forKey:key];
     if (notify) {
-        [UserProfileEventHandling postUserProfileUpdated:userProfile];
+        [ProfileEventHandling postUserProfileUpdated:userProfile];
     }
 }
 

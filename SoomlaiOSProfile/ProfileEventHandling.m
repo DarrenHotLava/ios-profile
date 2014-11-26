@@ -14,12 +14,12 @@
  limitations under the License.
  */
 
-#import "UserProfileEventHandling.h"
+#import "ProfileEventHandling.h"
 #import "UserProfile.h"
 #import "BadgeReward.h"
 
 
-@implementation UserProfileEventHandling
+@implementation ProfileEventHandling
 
 + (void)observeAllEventsWithObserver:(id)observer withSelector:(SEL)selector {
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_PROFILE_INITIALIZED object:nil];
