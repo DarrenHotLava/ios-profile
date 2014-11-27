@@ -19,7 +19,7 @@
 #import "AuthController.h"
 #import "SocialController.h"
 #import "UserProfileUtils.h"
-#import "UserProfileEventHandling.h"
+#import "ProfileEventHandling.h"
 
 #import <UIKit/UIKit.h>
 
@@ -51,7 +51,7 @@ BOOL UsingExternalProvider;
         socialController = [[SocialController alloc] initWithParameters:customParams];
     }
     
-    [UserProfileEventHandling postProfileInitialized];
+    [ProfileEventHandling postProfileInitialized];
 }
 
 - (void)loginWithProvider:(Provider)provider {
@@ -213,7 +213,7 @@ BOOL UsingExternalProvider;
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
     
-    [UserProfileEventHandling postUserRating];
+    [ProfileEventHandling postUserRating];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

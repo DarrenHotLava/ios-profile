@@ -67,7 +67,7 @@
  *
  * SOOMLA uses iOS's `NSNotificationCenter` to handle events across the SDK.
  */
-@interface UserProfileEventHandling : NSObject
+@interface ProfileEventHandling : NSObject
 
 /**
  Subscribes the provider observer to all the profile events at once, 

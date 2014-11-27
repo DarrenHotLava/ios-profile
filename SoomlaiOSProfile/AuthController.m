@@ -18,7 +18,7 @@
 #import "UserProfile.h"
 #import "UserProfileStorage.h"
 #import "UserProfileNotFoundException.h"
-#import "UserProfileEventHandling.h"
+#import "ProfileEventHandling.h"
 #import "IAuthProvider.h"
 #import "Reward.h"
 #import "SoomlaUtils.h"
@@ -54,7 +54,7 @@ static NSString* TAG = @"SOOMLA AuthController";
     
     
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
-    [UserProfileEventHandling postLoginStarted:provider withPayload:payload];
+    [ProfileEventHandling postLoginStarted:provider withPayload:payload];
     
     // Perform login process
     // TODO: Check if need to change any nonatomic properties
@@ -62,18 +62,18 @@ static NSString* TAG = @"SOOMLA AuthController";
         [authProvider login:^(Provider provider) {
             [authProvider getUserProfile: ^(UserProfile *userProfile) {
                 [UserProfileStorage setUserProfile:userProfile];
-                [UserProfileEventHandling postLoginFinished:userProfile withPayload:payload];
+                [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
 
                 if (reward) {
                     [reward give];
                 }
             } fail:^(NSString *message) {
-                [UserProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
+                [ProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
             }];
         } fail:^(NSString *message) {
-            [UserProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
+            [ProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
         } cancel:^{
-            [UserProfileEventHandling postLoginCancelled:provider withPayload:payload];
+            [ProfileEventHandling postLoginCancelled:provider withPayload:payload];
         }];
     }];
 }
@@ -91,15 +91,15 @@ static NSString* TAG = @"SOOMLA AuthController";
     }
     
     // Perform logout process
-    [UserProfileEventHandling postLogoutStarted:provider];
+    [ProfileEventHandling postLogoutStarted:provider];
     [authProvider logout:^() {
         if (userProfile) {
             [UserProfileStorage removeUserProfile:userProfile];
-            [UserProfileEventHandling postLogoutFinished:provider];
+            [ProfileEventHandling postLogoutFinished:provider];
         }
     }
     fail:^(NSString* message) {
-        [UserProfileEventHandling postLogoutFailed:provider withMessage:message];
+        [ProfileEventHandling postLogoutFailed:provider withMessage:message];
     }];
 }
 
