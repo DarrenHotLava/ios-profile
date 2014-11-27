@@ -22,6 +22,10 @@
 #import "VirtualItemReward.h"
 #import "SoomlaUtils.h"
 #import "ViewController.h"
+#import "SoomlaConfig.h"
+#import "SoomlaHighway.h"
+#import "HighwayConfig.h"
+#import "Schedule.h"
 
 @implementation AppDelegate
 
@@ -31,28 +35,28 @@ static NSString* TAG = @"SOOMLA AppDelegate";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    DEBUG_LOG = YES;
+    
     [Soomla initializeWithSecret:@"LukeSkywalker"];
+    
+    [[SoomlaHighway getInstance] initializeWithGameKey:@"ebc1aaf5-02fd-4f62-8492-faf053094789" andEnvKey:@"c3ab08a6-bd81-4293-8869-d34e5dd18717"];
+    [SoomlaHighway getInstance].config.url = @"http://10.0.0.16:3002";
+    //    [growService registerEventHandlerForKey:@"TEST_EVENT" withBlock:^NSDictionary *(NSString *eventKey, NSDictionary *extra) {
+    //        return @{
+    //                @"field1": extra[@"data"],
+    //                @"field2": @"value2"
+    //        };
+    //    }];
+    [[SoomlaHighway getInstance] start];
+    
     id<IStoreAssets> storeAssets = [[MuffinRushAssets alloc] init];
     [[SoomlaStore getInstance] initializeWithStoreAssets:storeAssets];
 
     self.loginReward = [[VirtualItemReward alloc] initWithRewardId:@"login_reward" andName:@"Login Reward" andAmount:100 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.updateStatusReward = [[VirtualItemReward alloc] initWithRewardId:@"update_status_reward" andName:@"Update Status Reward" andAmount:150 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
+    self.updateStatusReward.schedule = [Schedule AnyTimeUnlimited];
     self.uploadImageReward = [[VirtualItemReward alloc] initWithRewardId:@"update_story_reward" andName:@"Update Story Reward" andAmount:250 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
     self.likeReward = [[VirtualItemReward alloc] initWithRewardId:@"like_page_reward" andName:@"Like Page Reward" andAmount:350 andAssociatedItemId:MUFFINS_CURRENCY_ITEM_ID];
-
-    Class klass = NSClassFromString(@"SoomlaProfile");
-    if (!klass) {
-        return NO;
-    }
-    
-    SEL observeAllSelector
-    = NSSelectorFromString(@"observeAllEventsWithObserver:withSelector:");
-    
-    IMP methodImplementation
-    = [NSClassFromString(@"UserProfileEventHandling") methodForSelector: observeAllSelector];
-    
-    methodImplementation(self, observeAllSelector, self, @selector(onEvent:));
-    
     
     // Override point for customization after application launch.
     return YES;

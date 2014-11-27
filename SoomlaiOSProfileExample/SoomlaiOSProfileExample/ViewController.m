@@ -29,7 +29,7 @@
 
 static NSString* TAG = @"SOOMLA ViewController";
 // Change this to test different social networks
-static Provider TARGET_PROVIDER = GOOGLE;
+static Provider TARGET_PROVIDER = FACEBOOK;
 
 - (void)viewDidLoad
 {
