@@ -20,12 +20,18 @@ This enables to easily reward players with social actions they perform in-game, 
 
 ![SOOMLA's Profile Module](http://know.soom.la/img/tutorial_img/soomla_diagrams/Profile.png)
 
+## Download
+
+####Pre baked libraries:
+
+[ios-profile 1.0.1](http://library.soom.la/fetch/ios-profile/1.0.1?cf=github)
+
 Getting Started
 ---
 
 #### **WE USE ARC !**
 
-1. The static libs and headers you need are in the folder [build](https://github.com/soomla/ios-profile/tree/master/build).
+1. The static libs and headers you need are in the zip you downloaded from the link above.
 
   * Set your project's "Library Search Paths" and "Header Search Paths" to that folder with `recursive` option.
   * Add `-ObjC -lSoomlaiOSProfile -lSoomlaiOSCore` to the project's "Other Linker Flags".

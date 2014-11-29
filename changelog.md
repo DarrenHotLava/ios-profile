@@ -1,3 +1,8 @@
+### v1.0.1 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.0...v1.0.1)
+
+* Changes
+  * Fixed the name of event handling class.
+
 ### v1.0.0 (17.11.14)
 * Features
   * The module is integrated with Facebook, Google Plus and Twitter
