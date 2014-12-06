@@ -50,18 +50,6 @@ static NSString* TAG = @"SOOMLA AppDelegate";
     return YES;
 }
 
-- (void)onEvent:(NSNotification*)notification {
-    if ([notification.name isEqualToString:@"up_social_action_started"]) {
-    NSDictionary* extra = notification.userInfo;
-
-//    NSDictionary* userProfile = [extra[@"userProfile"] performSelector:@selector(toDictionary)];
-    NSString* action = [NSClassFromString(@"SocialActionUtils") performSelector:@selector(actionNumberToString:) withObject:(NSNumber*)notification.userInfo[@"socialActiontype"]];
-//    NSString* provider = [NSClassFromString(@"UserProfileUtils") performSelector:@selector(providerNumberToString:) withObject:(NSNumber*)extra[@"provider"]];
-        NSLog(@"ASDJCASDCJASDJASDADSVJASDVJAVJ");
-    }
-}
-
-
 // During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
 // After authentication, your app will be called back with the session information.
 // Override application:openURL:sourceApplication:annotation to call the FBsession object that handles the incoming URL
