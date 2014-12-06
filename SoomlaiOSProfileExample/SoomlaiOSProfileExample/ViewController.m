@@ -17,7 +17,7 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "SoomlaProfile.h"
-#import "UserProfileEventHandling.h"
+#import "ProfileEventHandling.h"
 #import "SoomlaEventHandling.h"
 #import "StoreEventHandling.h"
 #import "SoomlaUtils.h"

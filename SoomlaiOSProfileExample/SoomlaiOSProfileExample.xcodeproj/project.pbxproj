@@ -17,7 +17,6 @@
 		328450C71A0F99C1006E0E95 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328450C61A0F99C1006E0E95 /* CoreText.framework */; };
 		328450C91A0F99C9006E0E95 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328450C81A0F99C9006E0E95 /* MediaPlayer.framework */; };
 		3A4D84F3196371740030C5D5 /* libSoomlaiOSProfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF01CEA1960C98D0088836B /* libSoomlaiOSProfile.a */; };
-		C0443EC51A279829004C0E5F /* libSoomlaiOSRoadster.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0443EC01A279693004C0E5F /* libSoomlaiOSRoadster.a */; };
 		C0443EC71A2798BE004C0E5F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0443EC61A2798BE004C0E5F /* AdSupport.framework */; };
 		C0443EC91A279A17004C0E5F /* libSoomlaiOSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0443EC81A279A17004C0E5F /* libSoomlaiOSCore.a */; };
 		EF83619019472A23003526D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF83618F19472A23003526D7 /* Foundation.framework */; };
@@ -56,20 +55,6 @@
 			remoteGlobalIDString = EF356EFA193C90560081DCE0;
 			remoteInfo = SoomlaiOSProfile;
 		};
-		C0443EBF1A279693004C0E5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C0443EBB1A279692004C0E5F /* SoomlaiOSRoadster.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C02CEC42160DC870000AA0D2;
-			remoteInfo = SoomlaiOSRoadster;
-		};
-		C0443EC31A279823004C0E5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C0443EBB1A279692004C0E5F /* SoomlaiOSRoadster.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C02CEC41160DC870000AA0D2;
-			remoteInfo = SoomlaiOSRoadster;
-		};
 		EF8361E619473C8A003526D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */;
@@ -98,7 +83,6 @@
 		328450C81A0F99C9006E0E95 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		328450CA1A0F99D5006E0E95 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSProfile.xcodeproj; path = ../SoomlaiOSProfile.xcodeproj; sourceTree = "<group>"; };
-		C0443EBB1A279692004C0E5F /* SoomlaiOSRoadster.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoomlaiOSRoadster.xcodeproj; path = "../../ios-roadster/SoomlaiOSRoadster.xcodeproj"; sourceTree = "<group>"; };
 		C0443EC61A2798BE004C0E5F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		C0443EC81A279A17004C0E5F /* libSoomlaiOSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoomlaiOSCore.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-hgqjbzjccesicgbhsfwwashvohwm/Build/Products/Debug-iphoneos/libSoomlaiOSCore.a"; sourceTree = "<group>"; };
 		EF83618C19472A23003526D7 /* SoomlaiOSProfileExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoomlaiOSProfileExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,7 +122,6 @@
 			files = (
 				C0443EC91A279A17004C0E5F /* libSoomlaiOSCore.a in Frameworks */,
 				C0443EC71A2798BE004C0E5F /* AdSupport.framework in Frameworks */,
-				C0443EC51A279829004C0E5F /* libSoomlaiOSRoadster.a in Frameworks */,
 				328450C91A0F99C9006E0E95 /* MediaPlayer.framework in Frameworks */,
 				328450C71A0F99C1006E0E95 /* CoreText.framework in Frameworks */,
 				EF83619219472A23003526D7 /* CoreGraphics.framework in Frameworks */,
@@ -173,18 +156,9 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C0443EBC1A279692004C0E5F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C0443EC01A279693004C0E5F /* libSoomlaiOSRoadster.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		EF83618319472A23003526D7 = {
 			isa = PBXGroup;
 			children = (
-				C0443EBB1A279692004C0E5F /* SoomlaiOSRoadster.xcodeproj */,
 				3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */,
 				EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */,
 				EF83619519472A23003526D7 /* SoomlaiOSProfileExample */,
@@ -283,7 +257,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C0443EC41A279823004C0E5F /* PBXTargetDependency */,
 				3A4D84EF1961BE460030C5D5 /* PBXTargetDependency */,
 				EFC127C0194C2F5D00CDA66B /* PBXTargetDependency */,
 			);
@@ -318,10 +291,6 @@
 					ProjectRef = 3AF01CE41960C98D0088836B /* SoomlaiOSProfile.xcodeproj */;
 				},
 				{
-					ProductGroup = C0443EBC1A279692004C0E5F /* Products */;
-					ProjectRef = C0443EBB1A279692004C0E5F /* SoomlaiOSRoadster.xcodeproj */;
-				},
-				{
 					ProductGroup = EF8361E319473C8A003526D7 /* Products */;
 					ProjectRef = EF8361E219473C8A003526D7 /* SoomlaiOSStore.xcodeproj */;
 				},
@@ -339,13 +308,6 @@
 			fileType = archive.ar;
 			path = libSoomlaiOSProfile.a;
 			remoteRef = 3AF01CE91960C98D0088836B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C0443EC01A279693004C0E5F /* libSoomlaiOSRoadster.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSoomlaiOSRoadster.a;
-			remoteRef = C0443EBF1A279693004C0E5F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		EF8361E719473C8A003526D7 /* libSoomlaiOSStore.a */ = {
@@ -391,11 +353,6 @@
 			isa = PBXTargetDependency;
 			name = SoomlaiOSProfile;
 			targetProxy = 3A4D84EE1961BE460030C5D5 /* PBXContainerItemProxy */;
-		};
-		C0443EC41A279823004C0E5F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SoomlaiOSRoadster;
-			targetProxy = C0443EC31A279823004C0E5F /* PBXContainerItemProxy */;
 		};
 		EFC127C0194C2F5D00CDA66B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -533,14 +490,12 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"../../ios-store/build/headers/**",
 					"../SoomlaiOSProfile/**",
-					"../../ios-roadster/SoomlaiOSRoadster/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
 					"$(SRCROOT)/../build/**",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos",
-					"$(SRCROOT)/../../ios-roadster/build",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-hgqjbzjccesicgbhsfwwashvohwm/Build/Products/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = (
@@ -550,7 +505,6 @@
 					"-lSTTwitter",
 					"-lSoomlaiOSProfileGoogle",
 					"-lSoomlaiOSProfileTwitter",
-					"-lAFNetworking",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -575,14 +529,12 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"../../ios-store/build/headers/**",
 					"../SoomlaiOSProfile/**",
-					"../../ios-roadster/SoomlaiOSRoadster/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
 					"$(SRCROOT)/../build/**",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos",
-					"$(SRCROOT)/../../ios-roadster/build",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-hgqjbzjccesicgbhsfwwashvohwm/Build/Products/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = (
@@ -592,7 +544,6 @@
 					"-lSTTwitter",
 					"-lSoomlaiOSProfileGoogle",
 					"-lSoomlaiOSProfileTwitter",
-					"-lAFNetworking",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

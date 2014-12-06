@@ -23,8 +23,6 @@
 #import "SoomlaUtils.h"
 #import "ViewController.h"
 #import "SoomlaConfig.h"
-#import "SoomlaHighway.h"
-#import "HighwayConfig.h"
 #import "Schedule.h"
 
 @implementation AppDelegate
@@ -38,16 +36,6 @@ static NSString* TAG = @"SOOMLA AppDelegate";
     DEBUG_LOG = YES;
     
     [Soomla initializeWithSecret:@"LukeSkywalker"];
-    
-    [[SoomlaHighway getInstance] initializeWithGameKey:@"ebc1aaf5-02fd-4f62-8492-faf053094789" andEnvKey:@"c3ab08a6-bd81-4293-8869-d34e5dd18717"];
-    [SoomlaHighway getInstance].config.url = @"http://10.0.0.16:3002";
-    //    [growService registerEventHandlerForKey:@"TEST_EVENT" withBlock:^NSDictionary *(NSString *eventKey, NSDictionary *extra) {
-    //        return @{
-    //                @"field1": extra[@"data"],
-    //                @"field2": @"value2"
-    //        };
-    //    }];
-    [[SoomlaHighway getInstance] start];
     
     id<IStoreAssets> storeAssets = [[MuffinRushAssets alloc] init];
     [[SoomlaStore getInstance] initializeWithStoreAssets:storeAssets];
