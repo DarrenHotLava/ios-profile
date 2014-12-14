@@ -20,6 +20,7 @@
 #import "SocialController.h"
 #import "UserProfileUtils.h"
 #import "ProfileEventHandling.h"
+#import "UserProfileNotFoundException.h"
 
 #import <UIKit/UIKit.h>
 
@@ -103,8 +104,22 @@ BOOL UsingExternalProvider;
     @catch (NSException *exception) {
         
         // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController getStoredUserProfileWithProvider:provider];
+        return [socialController getStoredUserProfileWithProvider:provider];
     }
+}
+
+- (NSArray *)getStoredUserProfiles {
+    NSArray* providers = [UserProfileUtils availableProviders];
+    NSMutableArray* userProfiles = [NSMutableArray array];
+    for(NSNumber* providerNum in providers) {
+        @try {
+            UserProfile* userProfile = [self getStoredUserProfileWithProvider:(Provider)[providerNum intValue]];
+            [userProfiles addObject:userProfile];
+        }@catch (NSException *exception) {
+            int i = 1;
+        }
+    }
+    return userProfiles;
 }
 
 - (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward {

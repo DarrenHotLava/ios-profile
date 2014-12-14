@@ -100,6 +100,8 @@
  */
 - (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider;
 
+- (NSArray *)getStoredUserProfiles;
+
 /**
  Shares the given status to the user's feed and grants the user a reward.
  

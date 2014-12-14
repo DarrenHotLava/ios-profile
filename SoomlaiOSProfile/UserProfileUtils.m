@@ -18,6 +18,10 @@
 
 @implementation UserProfileUtils
 
++ (NSArray*)availableProviders {
+    return @[ @(FACEBOOK), @(GOOGLE), @(TWITTER) ];
+}
+
 + (NSString *)providerEnumToString:(Provider)provider {
     
     switch(provider) {

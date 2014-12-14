@@ -18,4 +18,9 @@
 
 @implementation UserProfileNotFoundException
 
+- (id) init {
+    self = [super initWithName:@"UserProfileNotFoundException" reason:@"Couldn't find a UserProfile for the given Provider" userInfo:nil];
+    return self;
+}
+
 @end

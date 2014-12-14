@@ -30,6 +30,9 @@ typedef enum {
  */
 @interface UserProfileUtils : NSObject
 
+
++ (NSArray*)availableProviders;
+
 /**
  Converts `Provider` enum to a string representation
  
