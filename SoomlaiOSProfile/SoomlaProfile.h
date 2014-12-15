@@ -100,6 +100,11 @@
  */
 - (UserProfile *)getStoredUserProfileWithProvider:(Provider)provider;
 
+/**
+ Retrives user profiles which are stored on the device
+ 
+ @return an Array of `UserProfile`s which have been stored on the device
+ */
 - (NSArray *)getStoredUserProfiles;
 
 /**

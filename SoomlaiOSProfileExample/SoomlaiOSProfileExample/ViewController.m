@@ -28,8 +28,9 @@
 @implementation ViewController
 
 static NSString* TAG = @"SOOMLA ViewController";
-// Change this to test different social networks
 static Provider TARGET_PROVIDER = FACEBOOK;
+
+BOOL isLoginState = YES;
 
 - (void)viewDidLoad
 {
@@ -58,7 +59,7 @@ static Provider TARGET_PROVIDER = FACEBOOK;
     [[SoomlaProfile getInstance] initialize:providerParams];
     
     if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
-        [self showSocialUI];
+        [self setLoginVisibility:NO];
     }
 }
 
@@ -69,16 +70,34 @@ static Provider TARGET_PROVIDER = FACEBOOK;
 }
 - (IBAction)buttonTouched:(id)sender {
     
-    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
+    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER] && !isLoginState) {
         
         [[SoomlaProfile getInstance] logoutWithProvider:TARGET_PROVIDER];
     } else {
-        
-        // Retrieve the app delegate
-        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-
-        [[SoomlaProfile getInstance] loginWithProvider:TARGET_PROVIDER andPayload:@"" andReward:appDelegate.loginReward];
+        TARGET_PROVIDER = FACEBOOK;
+        [self loginToCurrentProvider];
     }
+}
+
+- (IBAction)loginTwitterButtonTouched:(id)sender {
+    TARGET_PROVIDER = TWITTER;
+    [self loginToCurrentProvider];
+}
+
+- (IBAction)loginGoogleButtonTouched:(id)sender {
+    TARGET_PROVIDER = GOOGLE;
+    [self loginToCurrentProvider];
+}
+
+- (void) loginToCurrentProvider {
+    // Retrieve the app delegate
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    [[SoomlaProfile getInstance] loginWithProvider:TARGET_PROVIDER andPayload:@"" andReward:appDelegate.loginReward];
+}
+
+- (IBAction)backTouched:(id)sender {
+    [self setLoginVisibility:YES];
 }
 
 - (IBAction)shareStatusButtontouched:(id)sender {
@@ -122,55 +141,53 @@ static Provider TARGET_PROVIDER = FACEBOOK;
 }
 
 - (void)loginFinished:(NSNotification*)notification {
+    LogDebug(TAG, @"Login Success: you are now logged in to Facebook");
     // TODO: extract user profile object from notification
     // NSDictionary* userInfo = notification.userInfo;
     
-    [self showSocialUI];
+    [self setLoginVisibility:NO];
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    if (appDelegate.likeReward.canGive == YES) {
-        [[SoomlaProfile getInstance] like:TARGET_PROVIDER andPageName:@"The.SOOMLA.Project" andReward:appDelegate.likeReward];
-    }
-}
-
-- (void)showSocialUI {
-    LogDebug(TAG, @"Login Success: you are now logged in to Facebook");
-    
-    if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
-        [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
-    }
-    
-    [self.updateStatusButton setHidden:NO];
-    [self.updateStoryButton setHidden:NO];
-    [self.uploadImageButton setHidden:NO];
-    [self.getContactsButton setHidden:NO];
-    [self.getFeedButton setHidden:NO];
+//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//    if (appDelegate.likeReward.canGive == YES) {
+//        [[SoomlaProfile getInstance] like:TARGET_PROVIDER andPageName:@"The.SOOMLA.Project" andReward:appDelegate.likeReward];
+//    }
 }
 
 - (void)loginFailed:(NSNotification*)notification {
     LogError(TAG, ([NSString stringWithFormat:@"Login Failed: %@", notification.userInfo[DICT_ELEMENT_MESSAGE]]));
-    [self.updateStatusButton setHidden:YES];
-    [self.updateStoryButton setHidden:YES];
-    [self.uploadImageButton setHidden:YES];
-    [self.getContactsButton setHidden:YES];
+    [self setLoginVisibility:YES];
 }
 
 - (void)loginCancelled:(NSNotification*)notification {
     LogDebug(TAG, @"Login Cancelled: you cancelled the login process");
-    [self.updateStatusButton setHidden:YES];
-    [self.updateStoryButton setHidden:YES];
-    [self.uploadImageButton setHidden:YES];
-    [self.getContactsButton setHidden:YES];
-    [self.getFeedButton setHidden:YES];
+    [self setLoginVisibility:YES];
 }
 
 - (void)logoutFinished:(NSNotification*)notification {
-    [self.loginButton setTitle:@"Login with Facebook to earn 100 coins" forState:UIControlStateNormal];
-    [self.updateStatusButton setHidden:YES];
-    [self.updateStoryButton setHidden:YES];
-    [self.uploadImageButton setHidden:YES];
-    [self.getContactsButton setHidden:YES];
-    [self.getFeedButton setHidden:YES];
+    [self setLoginVisibility:YES];
+}
+
+- (void)setLoginVisibility:(BOOL)visible {
+    if (!visible) {
+        if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
+            [self.loginButton setTitle:@"Logout" forState:UIControlStateNormal];
+        }
+    }
+    else {
+        [self.loginButton setTitle:@"Login with Facebook to earn 100 coins" forState:UIControlStateNormal];
+    }
+    
+    [self.loginTwitterButton setHidden:!visible];
+    [self.loginGoogleButton setHidden:!visible];
+    
+    [self.updateStatusButton setHidden:visible];
+    [self.updateStoryButton setHidden:visible];
+    [self.uploadImageButton setHidden:visible];
+    [self.getContactsButton setHidden:visible];
+    [self.getFeedButton setHidden:visible];
+    [self.backButton setHidden:visible];
+    
+    isLoginState = visible;
 }
 
 - (void)currencyBalanceChanged:(NSNotification *)notification {
@@ -205,7 +222,7 @@ static Provider TARGET_PROVIDER = FACEBOOK;
 }
 
 - (void)rewardGiven:(NSNotification*)notification {
-    NSLog(@"Reward Given: %@", [(Reward *)notification.userInfo[DICT_ELEMENT_REWARD] name]);
+    NSLog(@"Reward Given: %@", notification.userInfo[DICT_ELEMENT_REWARD]);
 }
 
 - (void)profileInitialized:(NSNotification*)notification {

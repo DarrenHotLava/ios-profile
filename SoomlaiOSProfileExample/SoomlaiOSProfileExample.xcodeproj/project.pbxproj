@@ -492,12 +492,7 @@
 					"../SoomlaiOSProfile/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
-					"$(SRCROOT)/../build/**",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-hgqjbzjccesicgbhsfwwashvohwm/Build/Products/Debug-iphoneos",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../build/**";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -531,12 +526,7 @@
 					"../SoomlaiOSProfile/**",
 				);
 				INFOPLIST_FILE = "SoomlaiOSProfileExample/SoomlaiOSProfileExample-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-facsgdhsgmbjpbcpnmjyixjtbmqb/Build/Products/Debug-iphoneos",
-					"$(SRCROOT)/../build/**",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-fvezqvurtmtmrpbjvlhnczptfjeg/Build/Products/Debug-iphoneos",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/SoomlaiOSProfileExample-hgqjbzjccesicgbhsfwwashvohwm/Build/Products/Debug-iphoneos",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../build/**";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",

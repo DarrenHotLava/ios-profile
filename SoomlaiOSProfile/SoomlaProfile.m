@@ -116,7 +116,7 @@ BOOL UsingExternalProvider;
             UserProfile* userProfile = [self getStoredUserProfileWithProvider:(Provider)[providerNum intValue]];
             [userProfiles addObject:userProfile];
         }@catch (NSException *exception) {
-            int i = 1;
+            // Skip
         }
     }
     return userProfiles;

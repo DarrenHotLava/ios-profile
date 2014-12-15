@@ -25,17 +25,24 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *currencyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginTwitterButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginGoogleButton;
 @property (weak, nonatomic) IBOutlet UIButton *updateStatusButton;
 @property (weak, nonatomic) IBOutlet UIButton *updateStoryButton;
 @property(nonatomic, weak) IBOutlet UIButton *uploadImageButton;
 @property(nonatomic, weak) IBOutlet UIButton *getContactsButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property(nonatomic, weak) IBOutlet UIButton *getFeedButton;
+
+- (IBAction)buttonTouched:(id)sender;
+- (IBAction)loginTwitterButtonTouched:(id)sender;
+- (IBAction)loginGoogleButtonTouched:(id)sender;
 
 - (IBAction)uploadImageTouched:(id)sender;
 
-@property(nonatomic, weak) IBOutlet UIButton *getFeedButton;
-
 - (IBAction)getContactsButtonTouched:(id)sender;
 
-
 - (IBAction)getFeedTouched:(id)sender;
+
+- (IBAction)backTouched:(id)sender;
 @end
