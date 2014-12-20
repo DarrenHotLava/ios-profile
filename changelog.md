@@ -1,3 +1,9 @@
+### v1.0.2 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.1...v1.0.2)
+
+* New Features
+  * Adding getStoredUserProfiles
+  * Upgrading example functionality
+
 ### v1.0.1 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.0...v1.0.1)
 
 * Changes
