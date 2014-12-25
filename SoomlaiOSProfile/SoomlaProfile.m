@@ -21,6 +21,7 @@
 #import "UserProfileUtils.h"
 #import "ProfileEventHandling.h"
 #import "UserProfileNotFoundException.h"
+#import "UserProfileStorage.h"
 
 #import <UIKit/UIKit.h>
 
@@ -113,8 +114,10 @@ BOOL UsingExternalProvider;
     NSMutableArray* userProfiles = [NSMutableArray array];
     for(NSNumber* providerNum in providers) {
         @try {
-            UserProfile* userProfile = [self getStoredUserProfileWithProvider:(Provider)[providerNum intValue]];
-            [userProfiles addObject:userProfile];
+            UserProfile* userProfile = [UserProfileStorage getUserProfile:(Provider)[providerNum intValue]];
+            if (userProfile) {
+                [userProfiles addObject:userProfile];
+            }
         }@catch (NSException *exception) {
             // Skip
         }
