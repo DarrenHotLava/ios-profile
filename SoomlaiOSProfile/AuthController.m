@@ -62,11 +62,11 @@ static NSString* TAG = @"SOOMLA AuthController";
         [authProvider login:^(Provider provider) {
             [authProvider getUserProfile: ^(UserProfile *userProfile) {
                 [UserProfileStorage setUserProfile:userProfile];
-                [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
-
                 if (reward) {
                     [reward give];
                 }
+                
+                [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
             } fail:^(NSString *message) {
                 [ProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
             }];
