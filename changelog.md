@@ -1,3 +1,9 @@
+### v1.0.3 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.2...v1.0.3)
+
+* Fixes
+  * Giving rewards before sending completion events
+  * Making getStoredUserProfiles unrelated to profile init
+
 ### v1.0.2 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.1...v1.0.2)
 
 * New Features
