@@ -263,8 +263,25 @@
                      andReward:(Reward *)reward;
 
 /**
+ Shares a photo using image data to the user's feed and grants the user a reward.
+
+ @param provider The provider to use
+ @param message A text that will accompany the image
+ @param fielName The desired image's name
+ @param imageData The desired image's data
+ @param payload a String to receive when the function returns.
+ @param reward The reward to give the user
+ */
+- (void)uploadImageWithProvider:(Provider)provider
+                     andMessage:(NSString *)message
+               andImageFileName: (NSString *)fileName
+                   andImageData:(NSData *)imageData
+                     andPayload:(NSString *)payload
+                      andReward:(Reward *)reward;
+
+/**
  Shares a photo to the user's feed and grants the user a reward.
- 
+
  @param provider The provider to use
  @param message A text that will accompany the image
  @param filePath The desired image's location on the device

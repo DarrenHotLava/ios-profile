@@ -212,6 +212,24 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [shareBuilder open];
 }
 
+- (void)uploadImageWithMessage:(NSString *)message
+              andImageFileName: (NSString *)fileName
+                  andImageData: (NSData *)imageData
+                       success:(socialActionSuccess)success
+                          fail:(socialActionFail)fail{
+    LogDebug(TAG, @"uploadImage");
+    [self setSocialActionBlocks:success fail:fail];
+    [GPPShare sharedInstance].delegate = self;
+    id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+
+    [shareBuilder setPrefillText:message];
+
+    UIImage *image = [UIImage imageWithData:imageData];
+    [shareBuilder attachImage:image];
+
+    [shareBuilder open];
+}
+
 // share delegate
 - (void)finishedSharingWithError:(NSError *)error {
     

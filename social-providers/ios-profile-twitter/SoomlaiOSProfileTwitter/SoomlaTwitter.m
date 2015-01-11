@@ -399,6 +399,35 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
               }];
 }
 
+- (void)uploadImageWithMessage:(NSString *)message
+              andImageFileName: (NSString *)fileName
+                  andImageData: (NSData *)imageData
+                       success:(socialActionSuccess)success
+                          fail:(socialActionFail)fail{
+    if (![self testLoggedIn:fail]) {
+        return;
+    }
+
+    LogDebug(TAG, @"Uploading image");
+
+    [self.twitter postMediaUploadData:imageData fileName:fileName uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+        // nothing to do here
+    } successBlock:^(NSDictionary *imageDictionary, NSString *mediaID, NSString *size) {
+        [self.twitter postStatusUpdate:message inReplyToStatusID:nil
+                              mediaIDs:[NSArray arrayWithObject:mediaID] latitude:nil longitude:nil placeID:nil displayCoordinates:@(NO) trimUser:nil
+                          successBlock:^(NSDictionary *status) {
+                              LogDebug(TAG, ([NSString stringWithFormat:@"Upload image (status) success: %@", status]));
+                              success();
+                          } errorBlock:^(NSError *error) {
+                              LogError(TAG, ([NSString stringWithFormat:@"Upload image (status) error: %@", error]));
+                              fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+                          }];
+    } errorBlock:^(NSError *error) {
+        LogError(TAG, ([NSString stringWithFormat:@"Upload image error: %@", error]));
+        fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+    }];
+}
+
 - (void)like:(NSString *)pageName {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://www.twitter.com/", pageName]];
     [[UIApplication sharedApplication] openURL:url];

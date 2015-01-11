@@ -484,6 +484,40 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 }
 
+- (void)uploadImageWithMessage:(NSString *)message
+              andImageFileName: (NSString *)fileName
+                  andImageData: (NSData *)imageData
+                       success:(socialActionSuccess)success
+                          fail:(socialActionFail)fail{
+
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES
+                   success:^() {
+                       UIImage *image = [UIImage imageWithData:imageData];
+                       // Put together the dialog parameters
+                       NSDictionary *params = @{
+                                                @"picture": UIImagePNGRepresentation(image),
+                                                @"message" : message
+                                                };
+
+                       // Make the request
+                       [FBRequestConnection startWithGraphPath:@"/me/photos"
+                                                    parameters:params
+                                                    HTTPMethod:@"POST"
+                                             completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                                                 if (!error) {
+                                                     success();
+                                                 } else {
+                                                     fail(error.description);
+                                                 }
+                                             }];
+
+
+                   } fail:^(NSString *errorMessage) {
+                       fail(errorMessage);
+                   }];
+
+}
+
 - (void)like:(NSString *)pageName {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://www.facebook.com/", pageName]];
     [[UIApplication sharedApplication] openURL:url];

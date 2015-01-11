@@ -117,6 +117,21 @@
                           fail:(socialActionFail)fail;
 
 /**
+ Shares a photo to the user's feed using image data
+
+ @param message A text that will accompany the image
+ @param fileName The desired image's location on the device
+ @param imageData The desierd image's data
+ @param success an upload image success callback
+ @param fail an upload image failure callback
+ */
+- (void)uploadImageWithMessage:(NSString *)message
+              andImageFileName: (NSString *)fileName
+                  andImageData: (NSData *)imageData
+                       success:(socialActionSuccess)success
+                          fail:(socialActionFail)fail;
+
+/**
  Opens up a page to like for the user (external)
  
  @param pageName The page to open on the provider

@@ -199,6 +199,16 @@ BOOL UsingExternalProvider;
 
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
+               andImageFileName: (NSString *)fileName
+                   andImageData:(NSData *)imageData
+                     andPayload:(NSString *)payload
+                      andReward:(Reward *)reward{
+
+    [socialController uploadImageWithProvider:provider andMessage:message andImageFileName:fileName andImageData:imageData andPayload:payload andReward:reward];
+}
+
+- (void)uploadImageWithProvider:(Provider)provider
+                     andMessage:(NSString *)message
                     andFilePath:(NSString *)filePath
                       andReward:(Reward *)reward {
     [self uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:@"" andReward:reward];

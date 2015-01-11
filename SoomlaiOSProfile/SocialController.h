@@ -128,6 +128,24 @@
                       andReward:(Reward *)reward;
 
 /**
+ Shares a photo to the user's feed.  This is very oriented for Facebook.
+
+ @param provider The provider to use
+ @param message A text that will accompany the image
+ @param fileName The desired image's name
+ @param imageData The desired image's data
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant for sharing the photo
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)uploadImageWithProvider:(Provider)provider
+                     andMessage:(NSString *)message
+               andImageFileName:(NSString *)fileName
+                   andImageData:(NSData *)imageData
+                     andPayload:(NSString *)payload
+                      andReward:(Reward *)reward;
+
+/**
  Fetches the user's contact list
  
  @param provider The provider to use
