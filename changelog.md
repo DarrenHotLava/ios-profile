@@ -1,3 +1,8 @@
+### v1.0.4 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.3...v1.0.4)
+
+* New Features
+  * Supporting uploadImage with NSData
+
 ### v1.0.3 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.2...v1.0.3)
 
 * Fixes
