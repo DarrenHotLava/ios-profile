@@ -1,3 +1,8 @@
+### v1.0.5 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.4...v1.0.5)
+
+* Changes
+  * Fixes to KVS from submodule
+
 ### v1.0.4 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.3...v1.0.4)
 
 * New Features
