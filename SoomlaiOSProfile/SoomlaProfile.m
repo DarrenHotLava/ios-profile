@@ -230,8 +230,8 @@ BOOL UsingExternalProvider;
     [self getFeedWithProvider:provider andPayload:@"" andReward:reward];
 }
 
-- (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
-    [socialController like:provider andPageName:pageName andReward:reward];
+- (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward {
+    [socialController like:provider andPageId:pageId andReward:reward];
 }
 
 - (void)openAppRatingPage {

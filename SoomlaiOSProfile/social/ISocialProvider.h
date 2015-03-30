@@ -137,6 +137,6 @@
  @param pageName The page to open on the provider
  @param reward The reward to grant when page is liked
  */
-- (void)like:(NSString *)pageName;
+- (void)like:(NSString *)pageId;
 
 @end

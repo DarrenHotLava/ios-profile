@@ -169,12 +169,12 @@
  Opens up a page to like for the user (external)
  
  @param provider The provider to like page on
- @param pageName The page to open on the provider
+ @param pageId The page to open on the provider
  @param reward The reward to grant when page is liked
  @exception ProviderNotFoundException if the provider is not supported
  */
 - (void)like:(Provider)provider
-            andPageName:(NSString *)pageName
+            andPageId:(NSString *)pageId
             andReward:(Reward *)reward;
 
 @end

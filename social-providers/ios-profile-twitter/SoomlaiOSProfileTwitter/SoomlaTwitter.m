@@ -194,14 +194,11 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (void) applyOauthTokens:(NSString *)token andVerifier:(NSString *)verifier {
-    // No tokens when user cancels
     if (!token || !verifier) {
         self.loginCancel([self getProvider]);
         return;
     }
     
-    // Uses provided OAuth tokens from callback URL to verify credentials
-    // Final step in authentication
     [self.twitter postAccessTokenRequestWithPIN:verifier successBlock:^(NSString *oauthToken, NSString *oauthTokenSecret, NSString *userID, NSString *screenName) {
         
         [KeyValueStorage setValue:oauthToken forKey:[self getTwitterStorageKey:TWITTER_OAUTH_TOKEN]];
@@ -245,7 +242,6 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     
     NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
     
-    // Gets OAuth authentication tokens from URL
     NSString *token = d[@"oauth_token"];
     NSString *verifier = d[@"oauth_verifier"];
     
@@ -428,9 +424,16 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     }];
 }
 
-- (void)like:(NSString *)pageName {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://www.twitter.com/", pageName]];
-    [[UIApplication sharedApplication] openURL:url];
+- (void)like:(NSString *)pageId {
+    
+    NSString *baseURL = @"twitter:///user?screen_name=";
+    
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:baseURL]])
+    {
+        baseURL = @"https://www.twitter.com/";
+    }
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, pageId]]];
 }
 
 - (NSString *) getURLScheme {

@@ -46,13 +46,11 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 }
 
 - (void)innerHandleOpenURL:(NSNotification *)notification {
-    // TODO: Check it
     if ([[notification name] isEqualToString:@"kUnityOnOpenURL"]) {
         LogDebug(TAG, @"Successfully received the kUnityOnOpenURL notification!");
 
         NSURL *url = [[notification userInfo] valueForKey:@"url"];
         NSString *sourceApplication = [[notification userInfo] valueForKey:@"sourceApplication"];
-//        id annotation = [[notification userInfo] valueForKey:@"annotation"];
         BOOL urlWasHandled = [FBAppCall handleOpenURL:url
                                     sourceApplication:sourceApplication
                                       fallbackHandler:^(FBAppCall *call) {
@@ -85,7 +83,6 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         // The session state handler (in the app delegate) will be called automatically
         [FBSession.activeSession closeAndClearTokenInformation];
 
-        // If the session state is not any of the two "open" states when the button is clicked
     } else {
         // Open a session showing the user the login UI
         // You must ALWAYS ask for public_profile permissions when opening a session
@@ -114,7 +111,6 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             if (!error) {
-                // Success! Include your code to handle the results here
                 LogDebug(TAG, ([NSString stringWithFormat:@"user info: %@", result]));
 
                 UserProfile *userProfile = [[UserProfile alloc] initWithProvider:FACEBOOK
@@ -131,8 +127,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
                 success(userProfile);
             } else {
-                // An error occurred, we need to handle the error
-                // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+
                 LogError(TAG, error.description);
                 fail(error.description);
             }
@@ -518,9 +513,20 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 }
 
-- (void)like:(NSString *)pageName {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://www.facebook.com/", pageName]];
-    [[UIApplication sharedApplication] openURL:url];
+- (void)like:(NSString *)pageId {
+    
+    NSURL *providerURL = nil;
+    NSString *baseURL = @"fb://profile/";
+    
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:baseURL]] &&
+        ([pageId rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound))
+    {
+        providerURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, pageId]];
+    } else {
+        providerURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.facebook.com/%@", pageId]];
+    }
+    
+    [[UIApplication sharedApplication] openURL:providerURL];
 }
 
 //

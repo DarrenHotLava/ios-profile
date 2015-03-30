@@ -203,10 +203,10 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward {
+- (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward {
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
-    [socialProvider like:pageName];
+    [socialProvider like:pageId];
     if (reward) {
         [reward give];
     }

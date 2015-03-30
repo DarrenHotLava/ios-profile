@@ -334,7 +334,7 @@ Fetches the user's feed and grants the user a reward.
  @param pageName The page to open on the provider
  @param reward The reward to grant when page is liked
  */
-- (void)like:(Provider)provider andPageName:(NSString *)pageName andReward:(Reward *)reward;
+- (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward;
 
 /**
  Utility method to open up the market application rating page

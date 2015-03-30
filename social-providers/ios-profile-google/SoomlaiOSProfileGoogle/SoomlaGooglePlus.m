@@ -73,15 +73,12 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     signIn.clientID = self.clientId;
     signIn.scopes = scopes;
     
-    //sign in, share and disconnect delegates: finishedWithAuth, finishedSharingWithError, didDisconnectWithError
     signIn.delegate = self;
     share.delegate = self;
     
-    //trigger google+ authentication
     [signIn authenticate];
 }
 
-//sign in delegate
 - (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
                    error: (NSError *) error {
     if (error) {
@@ -94,10 +91,9 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     }
 }
 
-//check if authentication status and update
+
 -(void)refreshInterfaceBasedOnSignIn {
     if ([[GPPSignIn sharedInstance] authentication]) {
-        // The user is signed in.
         self.loginSuccess(GOOGLE);
     } else {
         [self clearLoginBlocks];
@@ -133,12 +129,10 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [[GPPSignIn sharedInstance] disconnect];
 }
 
-//disconnect delegate
 - (void)didDisconnectWithError:(NSError *)error {
     if (error) {
         self.logoutFail([error localizedDescription]);
     } else {
-        // The user is signed out and disconnected.
         [self clearLoginBlocks];
         self.logoutSuccess();
     }
@@ -230,7 +224,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [shareBuilder open];
 }
 
-// share delegate
 - (void)finishedSharingWithError:(NSError *)error {
     
     if (!error) {
@@ -260,7 +253,6 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                     LogError(TAG, @"Failed getting contacts");
                     fail([error localizedDescription]);
                 } else {
-                    // Get an array of people from GTLPlusPeopleFeed
                     NSArray* rawContacts = peopleFeed.items;
                     
                     NSMutableArray *contacts = [NSMutableArray array];
@@ -285,9 +277,21 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     return GOOGLE;
 }
 
-- (void)like:(NSString *)pageName{
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://plus.google.com/+", pageName]];
-    [[UIApplication sharedApplication] openURL:url];
+- (void)like:(NSString *)pageId{
+    
+    NSString *baseURL = @"gplus://plus.google.com/";
+
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:baseURL]])
+    {
+        baseURL = @"https://plus.google.com/";
+    }
+    
+    if ([pageId rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound)
+    {
+        pageId = [NSString stringWithFormat:@"+%@", pageId];
+    }
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, pageId]]];
 }
 
 -(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{
