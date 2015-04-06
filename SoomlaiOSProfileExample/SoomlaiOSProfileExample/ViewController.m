@@ -52,10 +52,10 @@ BOOL isLoginState = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(profileInitialized:) name:EVENT_UP_PROFILE_INITIALIZED object:nil];
     
     NSDictionary* providerParams = @{ @(TWITTER) :
-                                          @{ @"consumerKey": @"T8NMGwKq6USYCjZox86Bxd2RJ",
-                                             @"consumerSecret": @"TO88J9QjIJlSGfuyfza9Ox2OgTsLc1rjcmaJknlIMuUw0T1I30" },
+                                          @{ @"consumerKey": @"[YOUR CONSUMER KEY]",
+                                             @"consumerSecret": @"[YOUR CONSUMER SECRET]" },
                                       @(GOOGLE) :
-                                          @ {@"clientId": @"833688084302-aojkncr5afnj8ddh6peviri2f8orckai.apps.googleusercontent.com"} };
+                                          @ {@"clientId": @"[YOUR CLIENT ID"} };
     [[SoomlaProfile getInstance] initialize:providerParams];
     
     if ([[SoomlaProfile getInstance] isLoggedInWithProvider:TARGET_PROVIDER]) {
