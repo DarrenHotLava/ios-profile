@@ -38,6 +38,7 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 
 @property (strong, nonatomic) STTwitterAPI *twitter;
 
+@property(nonatomic) NSString* lastContactCursor;
 @end
 
 @implementation SoomlaTwitter
@@ -313,31 +314,37 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     fail(@"Dialogs are not available in Twitter");
 }
 
-- (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail {
+- (void)getContacts:(bool)fromStart success:(contactsActionSuccess)success fail:(contactsActionFail)fail {
     if (![self testLoggedIn:fail]) {
         return;
     }
     
     LogDebug(TAG, @"Getting contacts");
-    
-    [self.twitter getFriendsListForUserID:loggedInUser orScreenName:loggedInUser cursor:nil count:@"200" skipStatus:@(YES) includeUserEntities:@(YES)
+
+    NSString *cursor = fromStart ? nil : self.lastContactCursor;
+    self.lastContactCursor = nil;
+
+    [self.twitter getFriendsListForUserID:loggedInUser orScreenName:loggedInUser cursor:cursor count:@"20" skipStatus:@(YES) includeUserEntities:@(YES)
                              successBlock:^(NSArray *users, NSString *previousCursor, NSString *nextCursor) {
+
+                                 self.lastContactCursor = nextCursor;
+
                                  LogDebug(TAG, ([NSString stringWithFormat:@"Get contacts success: %@", users]));
-                                 
+
                                  NSMutableArray *contacts = [NSMutableArray array];
-                                 
+
                                  for (NSDictionary *userDict in users) {
                                      UserProfile *contact = [self parseUserProfile:userDict];
                                      [contacts addObject:contact];
                                  }
-                                 
-                                 success(contacts);
-                                 
+
+                                 success(contacts, [nextCursor longLongValue] != 0);
+
                              } errorBlock:^(NSError *error) {
-                                 LogError(TAG, ([NSString stringWithFormat:@"Get contacts error: %@", error.localizedDescription]));
-                                 
-                                 fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
-                             }];
+                LogError(TAG, ([NSString stringWithFormat:@"Get contacts error: %@", error.localizedDescription]));
+
+                fail([NSString stringWithFormat:@"%ld: %@", (long) error.code, error.localizedDescription]);
+            }];
 }
 
 - (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail {

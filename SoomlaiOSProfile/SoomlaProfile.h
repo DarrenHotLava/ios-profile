@@ -306,6 +306,16 @@
  Fetches the user's contact list and grants the user a reward.
 
  @param provider The provider to use
+ @param fromStart Should we reset pagination or request the next page
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ */
+- (void)getContactsWithProvider:(Provider)provider andFromStart: (bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward;
+
+/**
+ Fetches the user's contact list and grants the user a reward.
+
+ @param provider The provider to use
  @param reward The reward to grant
  */
 - (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward;

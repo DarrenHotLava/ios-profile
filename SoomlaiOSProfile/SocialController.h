@@ -153,7 +153,7 @@
  @param reward The reward to grant
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)getContactsWith:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
+- (void)getContactsWith:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Fetches the user's feed.

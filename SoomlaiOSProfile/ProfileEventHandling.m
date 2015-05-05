@@ -115,24 +115,35 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SOCIAL_ACTION_FAILED object:self userInfo:userInfo];
 }
 
-+ (void)postGetContactsStarted:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType), DICT_ELEMENT_PAYLOAD: payload};
++ (void)postGetContactsStarted:(Provider)provider withType:(SocialActionType)socialActionType withFromStart:(bool)fromStart withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+            DICT_ELEMENT_FROM_START: @(fromStart),
+            DICT_ELEMENT_PAYLOAD: payload
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postGetContactsFinished:(Provider)provider withType:(SocialActionType)socialActionType withContacts:(NSArray *)contacts withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
-                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
-                               DICT_ELEMENT_CONTACTS: contacts,
-                               DICT_ELEMENT_PAYLOAD: payload};
++ (void)postGetContactsFinished:(Provider)provider withType:(SocialActionType)socialActionType withContacts:(NSArray *)contacts withPayload:(NSString *)payload withHasNext:(bool)hasNext {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+            DICT_ELEMENT_CONTACTS: contacts,
+            DICT_ELEMENT_PAYLOAD: payload,
+            DICT_ELEMENT_HAS_NEXT: @(hasNext)
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_FINISHED object:self userInfo:userInfo];
 }
 
-+ (void)postGetContactsFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
-                               DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
-                               DICT_ELEMENT_MESSAGE: message,
-                               DICT_ELEMENT_PAYLOAD: payload};
++ (void)postGetContactsFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withFromStart:(bool)fromStart withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+            DICT_ELEMENT_MESSAGE: message,
+            DICT_ELEMENT_FROM_START: @(fromStart),
+            DICT_ELEMENT_PAYLOAD: payload
+    };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_CONTACTS_FAILED object:self userInfo:userInfo];
 }
 

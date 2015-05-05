@@ -169,20 +169,29 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)getContactsWith:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
+- (void)getContactsWith:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
     
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     
     // Perform get contacts process
-    [ProfileEventHandling postGetContactsStarted:provider withType:GET_CONTACTS withPayload:payload];
-    [socialProvider getContacts:^(NSArray *contacts) {
-
+    [ProfileEventHandling postGetContactsStarted:provider withType:GET_CONTACTS withFromStart:fromStart withPayload:payload];
+    [socialProvider getContacts: fromStart
+                        success:^(NSArray *contacts, bool hasNext) {
         if (reward) {
             [reward give];
         }
-        [ProfileEventHandling postGetContactsFinished:provider withType:GET_CONTACTS withContacts:contacts withPayload:payload];
-    } fail:^(NSString *message) {
-        [ProfileEventHandling postGetContactsFailed:provider withType:GET_CONTACTS withMessage:message withPayload:payload];
+        [ProfileEventHandling postGetContactsFinished:provider
+                                             withType:GET_CONTACTS
+                                         withContacts:contacts
+                                          withPayload:payload
+                                          withHasNext:hasNext];
+
+    }                      fail:^(NSString *message) {
+                [ProfileEventHandling postGetContactsFailed:provider
+                                                   withType:GET_CONTACTS
+                                                withMessage:message
+                                              withFromStart:fromStart
+                                                withPayload:payload];
     }];
 }
 

@@ -215,7 +215,11 @@ BOOL UsingExternalProvider;
 }
 
 - (void)getContactsWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andPayload:payload andReward:reward];
+    [socialController getContactsWith:provider andFromStart:false andPayload:payload andReward:reward];
+}
+
+- (void)getContactsWithProvider:(Provider)provider andFromStart: (bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
 }
 
 - (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward {

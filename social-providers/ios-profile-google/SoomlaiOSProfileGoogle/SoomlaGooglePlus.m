@@ -19,6 +19,10 @@
 #import "SoomlaUtils.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
+@interface SoomlaGooglePlus ()
+@property(nonatomic, strong) id lastPageToken;
+@end
+
 @implementation SoomlaGooglePlus
 
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, socialActionSuccess, socialActionFail, clientId;
@@ -236,7 +240,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     [self clearSocialActionBlocks];
 }
 
-- (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail{
+- (void)getContacts:(bool)fromStart success:(contactsActionSuccess)success fail:(contactsActionFail)fail {
     LogDebug(TAG, @"getContacts");
     GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
     plusService.retryEnabled = YES;
@@ -245,14 +249,25 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     GTLQueryPlus *query =
     [GTLQueryPlus queryForPeopleListWithUserId:@"me"
                                     collection:kGTLPlusCollectionVisible];
+
+    NSString *pageToken = fromStart ? nil : self.lastPageToken;
+    self.lastPageToken = nil;
+    if (pageToken) {
+        [query setPageToken: pageToken];
+    }
+
     [plusService executeQuery:query
             completionHandler:^(GTLServiceTicket *ticket,
                                 GTLPlusPeopleFeed *peopleFeed,
                                 NSError *error) {
+
+                self.lastPageToken = peopleFeed.nextPageToken;
+
                 if (error) {
                     LogError(TAG, @"Failed getting contacts");
                     fail([error localizedDescription]);
                 } else {
+
                     NSArray* rawContacts = peopleFeed.items;
                     
                     NSMutableArray *contacts = [NSMutableArray array];
@@ -263,7 +278,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
                         [contacts addObject:contact];
                     }
                     
-                    success(contacts);
+                    success(contacts, peopleFeed.nextPageToken != nil);
                 }
             }];
 }

@@ -20,6 +20,13 @@
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+#define DEFAULT_PAGE_SIZE 20
+
+@interface SoomlaFacebook ()
+@property(nonatomic) NSNumber *lastContactPage;
+@end
+
 @implementation SoomlaFacebook
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -358,15 +365,22 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     [self openDialog:link andName:name andCaption:caption andDescription:description andPicture:picture success:success fail:fail];
 }
 
-- (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail {
+- (void)getContacts:(bool)fromStart success:(contactsActionSuccess)success fail:(contactsActionFail)fail {
 //    NSLog(@"============================ getContacts ============================");
+
+    int offset = DEFAULT_PAGE_SIZE * (fromStart ? 0 : (self.lastContactPage != nil ? [self.lastContactPage integerValue] : 0));
+    self.lastContactPage = nil;
 
     [self checkPermissions: @[@"user_friends"] withWrite:NO
                    success:^() {
 
         /* make the API call */
         [FBRequestConnection startWithGraphPath:@"/me/friends"
-                                     parameters:@{@"fields": @"id,email,first_name,last_name,gender,birthday,location"}
+                                     parameters:@{
+                                             @"fields": @"id,email,first_name,last_name,gender,birthday,location",
+                                             @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
+                                             @"offset": @(offset).stringValue
+                                     }
                                      HTTPMethod:@"GET"
                               completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
 
@@ -376,9 +390,12 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 LogError(TAG, ([NSString stringWithFormat:@"Get contacts error: %@", error.description]));
                 fail(error.description);
             } else {
-
                 // Success
                 LogDebug(TAG, ([NSString stringWithFormat:@"Get contacts success: %@", result]));
+
+                if (result[@"paging"][@"next"] != nil) {
+                    self.lastContactPage = @(offset + 1);
+                }
 
                 NSArray *rawContacts = [result data];
                 NSMutableArray *contacts = [NSMutableArray array];
@@ -400,7 +417,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                     [contacts addObject:contact];
                 }
 
-                success(contacts);
+                success(contacts, self.lastContactPage != nil);
             }
         }];
     } fail:^(NSString *errorMessage) {
