@@ -19,7 +19,7 @@
 
 typedef void (^socialActionSuccess)();
 typedef void (^socialActionFail)(NSString* message);
-typedef void (^contactsActionSuccess)(NSArray* userProfiles, bool hasNext);
+typedef void (^contactsActionSuccess)(NSArray* userProfiles, bool hasMore);
 typedef void (^contactsActionFail)(NSString* message);
-typedef void (^feedsActionSuccess)(NSArray* feeds);
+typedef void (^feedsActionSuccess)(NSArray* feeds, bool hasMore);
 typedef void (^feedsActionFail)(NSString* message);

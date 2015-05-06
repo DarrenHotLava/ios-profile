@@ -32,6 +32,8 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
+#define DEFAULT_PAGE_SIZE 20
+
 // Private properties
 
 @interface SoomlaTwitter ()
@@ -39,6 +41,7 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 @property (strong, nonatomic) STTwitterAPI *twitter;
 
 @property(nonatomic) NSString* lastContactCursor;
+@property(nonatomic) NSString* lastFeedCursor;
 @end
 
 @implementation SoomlaTwitter
@@ -347,16 +350,21 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
             }];
 }
 
-- (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail {
+- (void)getFeed:(bool)fromStart success:(feedsActionSuccess)success fail:(feedsActionFail)fail {
     if (![self testLoggedIn:fail]) {
         return;
     }
     
     LogDebug(TAG, @"Getting feed");
-    
-    [self.twitter getUserTimelineWithScreenName:loggedInUser count:200
+
+    NSString *cursor = fromStart ? nil : self.lastFeedCursor;
+    self.lastFeedCursor = nil;
+
+    [self.twitter getUserTimelineWithScreenName:loggedInUser sinceID:cursor maxID:nil count:DEFAULT_PAGE_SIZE
                                    successBlock:^(NSArray *statuses) {
                                        LogDebug(TAG, ([NSString stringWithFormat:@"Get feed success: %@", statuses]));
+
+                                       id lastId = nil;
                                        
                                        NSMutableArray *feeds = [NSMutableArray array];
                                        for (NSDictionary *statusDict in statuses) {
@@ -365,12 +373,16 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
                                            if (str) {
                                                [feeds addObject:str];
                                            }
+                                           lastId = statusDict[@"id"];
                                        }
-                                       success(feeds);
-                                       
-                                   } errorBlock:^(NSError *error) {
-                                       LogError(TAG, ([NSString stringWithFormat:@"Get feed error: %@", error]));
-                                   }];
+                                       if (feeds.count >= DEFAULT_PAGE_SIZE) {
+                                           self.lastFeedCursor = lastId;
+                                       }
+                                       success(feeds, self.lastFeedCursor != nil);
+                                   }
+                                     errorBlock:^(NSError *error) {
+                                         LogError(TAG, ([NSString stringWithFormat:@"Get feed error: %@", error]));
+                                     }];
 }
 
 - (void)uploadImageWithMessage:(NSString *)message

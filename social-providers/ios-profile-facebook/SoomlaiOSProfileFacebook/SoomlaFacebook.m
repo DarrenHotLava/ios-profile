@@ -25,6 +25,7 @@
 
 @interface SoomlaFacebook ()
 @property(nonatomic) NSNumber *lastContactPage;
+@property(nonatomic) NSNumber *lastFeedPage;
 @end
 
 @implementation SoomlaFacebook
@@ -425,15 +426,21 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     }];
 }
 
-- (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail {
+- (void)getFeed:(bool)fromStart success:(feedsActionSuccess)success fail:(feedsActionFail)fail {
 //    NSLog(@"============================ getFeed ============================");
+
+    int offset = DEFAULT_PAGE_SIZE * (fromStart ? 0 : (self.lastFeedPage != nil ? [self.lastFeedPage integerValue] : 0));
+    self.lastFeedPage = nil;
 
     [self checkPermissions: @[@"read_stream"] withWrite:NO
                    success:^() {
 
         /* make the API call */
         [FBRequestConnection startWithGraphPath:@"/me/feed"
-                                     parameters:nil
+                                     parameters:@{
+                                             @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
+                                             @"offset": @(offset).stringValue
+                                     }
                                      HTTPMethod:@"GET"
                               completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             if (error) {
@@ -444,6 +451,9 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 fail(error.description);
             } else {
                 // Success
+                if (result[@"paging"][@"next"] != nil) {
+                    self.lastFeedPage = @(offset + 1);
+                }
                 LogDebug(TAG, ([NSString stringWithFormat:@"Get feeds success: %@", result]));
                 NSMutableArray *feeds = [NSMutableArray array];
                 NSArray *rawFeeds = [result data];
@@ -454,7 +464,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                         [feeds addObject:str];
                     }
                 }
-                success(feeds);
+                success(feeds, self.lastFeedPage != nil);
             }
         }];
 

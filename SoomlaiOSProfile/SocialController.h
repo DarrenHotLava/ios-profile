@@ -163,7 +163,7 @@
  @param reward The reward to grant
  @exception ProviderNotFoundException if the provider is not supported
 */
-- (void)getFeed:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
+- (void)getFeedProvider:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Opens up a page to like for the user (external)

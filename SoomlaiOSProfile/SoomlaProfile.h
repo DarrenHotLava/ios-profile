@@ -327,7 +327,7 @@ Fetches the user's feed and grants the user a reward.
  @param payload a String to receive when the function returns.
  @param reward The reward to grant
 */
-- (void)getFeedWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
+- (void)getFeedWithProvider:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Fetches the user's feed and grants the user a reward.

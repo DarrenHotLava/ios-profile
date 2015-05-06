@@ -283,7 +283,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
             }];
 }
 
-- (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail{
+- (void)getFeed:(bool)fromFirst success:(feedsActionSuccess)success fail:(feedsActionFail)fail {
     LogDebug(TAG, @"getFeed");
     fail(@"getFeed is not implemented!");
 }
