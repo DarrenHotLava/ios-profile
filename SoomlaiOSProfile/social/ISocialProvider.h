@@ -90,10 +90,11 @@
 /**
  Fetches the user's contact list
 
+ @param fromStart Should we reset pagination or request the next page
  @param success a contacts fetch success callback
  @param fail a contacts fetch failure callback
  */
-- (void)getContacts:(contactsActionSuccess)success fail:(contactsActionFail)fail;
+- (void)getContacts:(bool)fromStart success:(contactsActionSuccess)success fail:(contactsActionFail)fail;
 
 /**
  Fetches the user's feed
@@ -101,7 +102,7 @@
  @param success a contacts fetch success callback
  @param fail a contacts fetch failure callback
  */
-- (void)getFeed:(feedsActionSuccess)success fail:(feedsActionFail)fail;
+- (void)getFeed:(bool)fromStart success:(feedsActionSuccess)success fail:(feedsActionFail)fail;
 
 /**
  Shares a photo to the user's feed

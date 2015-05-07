@@ -215,19 +215,23 @@ BOOL UsingExternalProvider;
 }
 
 - (void)getContactsWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andPayload:payload andReward:reward];
+    [socialController getContactsWith:provider andFromStart:false andPayload:payload andReward:reward];
+}
+
+- (void)getContactsWithProvider:(Provider)provider andFromStart: (bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
 }
 
 - (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward {
     [self getContactsWithProvider:provider andPayload:@"" andReward:reward];
 }
 
-- (void)getFeedWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getFeed:provider andPayload:payload andReward:reward];
+- (void)getFeedWithProvider:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController getFeedProvider:provider andFromStart:false andPayload:payload andReward:reward];
 }
 
 - (void)getFeedWithProvider:(Provider)provider andReward:(Reward *)reward {
-    [self getFeedWithProvider:provider andPayload:@"" andReward:reward];
+    [self getFeedWithProvider:provider andFromStart:NO andPayload:@"" andReward:reward];
 }
 
 - (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward {
