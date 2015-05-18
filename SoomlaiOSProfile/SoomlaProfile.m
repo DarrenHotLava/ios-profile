@@ -125,12 +125,16 @@ BOOL UsingExternalProvider;
     return userProfiles;
 }
 
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation {
+    [socialController updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward andConfirmation:showConfirmation];
+}
+
 - (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward];
+    [self updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward andConfirmation:false];
 }
 
 - (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
-    [self updateStatusWithProvider:provider andStatus:status andPayload:@"" andReward:reward];
+    [self updateStatusWithProvider:provider andStatus:status andPayload:@"" andReward:reward andConfirmation:false];
 }
 
 - (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andPayload:(NSString *)payload andReward:(Reward *)reward {

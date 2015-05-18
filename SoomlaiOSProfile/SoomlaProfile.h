@@ -115,7 +115,7 @@
  @param payload a String to receive when the function returns.
  @param reward The reward to give the user
  */
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation;
 
 /**
  Shares the given status to the user's feed and grants the user a reward.

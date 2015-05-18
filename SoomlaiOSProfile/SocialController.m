@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import <UIKit/UIKit.h>
 #import "SocialController.h"
 #import "ISocialProvider.h"
 #import "ProfileEventHandling.h"
@@ -21,6 +22,11 @@
 #import "Reward.h"
 #import "SoomlaUtils.h"
 #import "ISocialProvider.h"
+#import "ConfirmationDialog.h"
+
+@interface SocialController ()
+@property(nonatomic, strong) ConfirmationDialog *confirmationDialog;
+@end
 
 @implementation SocialController
 
@@ -42,22 +48,31 @@ static NSString* TAG = @"SOOMLA SocialController";
     return self;
 }
 
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward {
-    
-    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
-    
-    
-    // Perform update status process
-    [ProfileEventHandling postSocialActionStarted:provider withType:UPDATE_STATUS withPayload:payload];
-    [socialProvider updateStatus:status success:^{
-        if (reward) {
-            [reward give];
-        }
-        
-        [ProfileEventHandling postSocialActionFinished:provider withType:UPDATE_STATUS withPayload:payload];
-    } fail:^(NSString *message) {
-        [ProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STATUS withMessage:message withPayload:payload];
-    }];
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation {
+
+    if (showConfirmation) {
+
+        self.confirmationDialog = [ConfirmationDialog showWithTitle:@"Confirmation"
+                                                        withMessage:[NSString
+                                                                stringWithFormat:@"Are you sure you want to publish this message to %@: %@?",
+                                                                                 [UserProfileUtils providerEnumToString:provider],
+                                                                                 status
+                                                        ]
+                                                         withResult:^(bool result){
+                                                             self.confirmationDialog = nil;
+                                                             if (result) {
+                                                                 [self internalUpdateStatusWithProvider:provider
+                                                                                              andStatus:status
+                                                                                             andPayload:payload
+                                                                                              andReward:reward];
+                                                             }
+                                                         }];
+    } else {
+        [self internalUpdateStatusWithProvider:provider
+                                     andStatus:status
+                                    andPayload:payload
+                                     andReward:reward];
+    }
 }
 
 - (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andPayload:(NSString *)payload andReward:(Reward *)reward {
@@ -224,6 +239,23 @@ static NSString* TAG = @"SOOMLA SocialController";
     if (reward) {
         [reward give];
     }
+}
+
+- (void)internalUpdateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward {
+
+    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
+
+    // Perform update status process
+    [ProfileEventHandling postSocialActionStarted:provider withType:UPDATE_STATUS withPayload:payload];
+    [socialProvider updateStatus:status success:^{
+        if (reward) {
+            [reward give];
+        }
+
+        [ProfileEventHandling postSocialActionFinished:provider withType:UPDATE_STATUS withPayload:payload];
+    } fail:^(NSString *message) {
+        [ProfileEventHandling postSocialActionFailed:provider withType:UPDATE_STATUS withMessage:message withPayload:payload];
+    }];
 }
 
 @end

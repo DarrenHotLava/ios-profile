@@ -43,9 +43,10 @@
  @param status the text to share
  @param payload a String to receive when the function returns.
  @param reward the reward to grant for sharing
+ @param showConfirmation If true, shows confirmation dialog before the action
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation;
 
 /**
  Shares the given status and link to the user's feed using the provider's
