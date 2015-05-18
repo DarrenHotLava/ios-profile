@@ -154,9 +154,44 @@ BOOL UsingExternalProvider;
                      andPicture:(NSString *)picture
                      andPayload:(NSString *)payload
                       andReward:(Reward *)reward {
-    [socialController updateStoryWithProvider:provider andMessage:message andName:name andCaption:caption
-                               andDescription:description andLink:link andPicture:picture andPayload:payload andReward:reward];
+
+    [self updateStoryWithProvider:provider
+                       andMessage:message
+                          andName:name
+                       andCaption:caption
+                   andDescription:description
+                          andLink:link
+                       andPicture:picture
+                       andPayload:payload
+                        andReward:reward
+              andShowConfirmation:false
+    ];
 }
+
+- (void)updateStoryWithProvider:(Provider)provider
+                     andMessage:(NSString *)message
+                        andName:(NSString *)name
+                     andCaption:(NSString *)caption
+                 andDescription:(NSString *)description
+                        andLink:(NSString *)link
+                     andPicture:(NSString *)picture
+                     andPayload:(NSString *)payload
+                      andReward:(Reward *)reward
+        andShowConfirmation:(bool)showConfirmation {
+
+    [socialController updateStoryWithProvider:provider
+                                   andMessage:message
+                                      andName:name
+                                   andCaption:caption
+                               andDescription:description
+                                      andLink:link
+                                   andPicture:picture
+                                   andPayload:payload
+                                    andReward:reward
+                          andShowConfirmation:showConfirmation];
+}
+
+
 
 - (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
@@ -198,7 +233,13 @@ BOOL UsingExternalProvider;
                     andFilePath:(NSString *)filePath
                      andPayload:(NSString *)payload
                       andReward:(Reward *)reward {
-    [socialController uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:payload andReward:reward];
+
+    [self uploadImageWithProvider:provider
+                       andMessage:message
+                      andFilePath:filePath
+                       andPayload:payload
+                        andReward:reward
+              andShowConfirmation:false];
 }
 
 - (void)uploadImageWithProvider:(Provider)provider
@@ -206,10 +247,23 @@ BOOL UsingExternalProvider;
                andImageFileName: (NSString *)fileName
                    andImageData:(NSData *)imageData
                      andPayload:(NSString *)payload
-                      andReward:(Reward *)reward{
+                      andReward:(Reward *)reward {
 
-    [socialController uploadImageWithProvider:provider andMessage:message andImageFileName:fileName andImageData:imageData andPayload:payload andReward:reward];
+    [socialController uploadImageWithProvider:provider andMessage:message andImageFileName:fileName andImageData:imageData andPayload:payload andReward:reward andShowConfirmation: false];
 }
+
+
+- (void)uploadImageWithProvider:(Provider)provider
+                     andMessage:(NSString *)message
+                    andFilePath:(NSString *)filePath
+                     andPayload:(NSString *)payload
+                      andReward:(Reward *)reward
+            andShowConfirmation:(bool)showConfirmation {
+
+    [socialController uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:payload andReward:reward andShowConfirmation: showConfirmation];
+}
+
+
 
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
