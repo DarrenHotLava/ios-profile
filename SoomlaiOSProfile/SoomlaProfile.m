@@ -306,6 +306,22 @@ BOOL UsingExternalProvider;
     [ProfileEventHandling postUserRating];
 }
 
+- (void)shareNativelyWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {
+    NSArray *postItems;
+    if (imageFilePath && imageFilePath.length > 0) {
+        UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
+        postItems = @[text, image];
+    } else {
+        postItems = @[text];
+    }
+
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]
+            initWithActivityItems:postItems
+            applicationActivities:nil];
+
+    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:activityVC animated:YES completion:nil];
+}
+
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [socialController tryHandleOpenURL:provider openURL:url sourceApplication:sourceApplication annotation:annotation];
 }

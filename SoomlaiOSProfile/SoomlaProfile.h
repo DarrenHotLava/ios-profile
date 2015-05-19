@@ -383,6 +383,14 @@ Fetches the user's feed and grants the user a reward.
 - (void)openAppRatingPage;
 
 /**
+* Shares text and/or image using native sharing functionality of your target platform.
+* @param text Text to share
+* @param imageFilePath Path to an image file to share
+* @param soomlaError Any errors will be returned in this parameter
+*/
+- (void)shareNativelyWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath;
+
+/**
  Helper method to assist with browser-based authentication using a sepcific
  underlying authentication provider.
 
