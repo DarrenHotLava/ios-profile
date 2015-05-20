@@ -115,8 +115,11 @@
  @param payload a String to receive when the function returns.
  @param reward The reward to give the user
  @param showConfirmation If true, shows confirmation dialog before the action
+ @param customMessage the message to show in the dialog
  */
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage;
+
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Shares the given status to the user's feed and grants the user a reward.
@@ -192,8 +195,9 @@ integrated in the story
 @param payload a String to receive when the function returns.
 @param reward The reward to give the user
 @param showConfirmation If true, shows confirmation dialog before the action
+@param customMessage the message to show in the dialog
 */
-- (void)updateStoryWithProvider:(Provider)provider andMessage:(NSString *)message andName:(NSString *)name andCaption:(NSString *)caption andDescription:(NSString *)description andLink:(NSString *)link andPicture:(NSString *)picture andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation;
+- (void)updateStoryWithProvider:(Provider)provider andMessage:(NSString *)message andName:(NSString *)name andCaption:(NSString *)caption andDescription:(NSString *)description andLink:(NSString *)link andPicture:(NSString *)picture andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage;
 
 /**
  Shares a story to the user's feed and grants the user a reward.
@@ -319,10 +323,10 @@ integrated in the story
 * @param message A text that will accompany the image
 * @param filePath The desired image's location on the device
 * @param reward The reward to give the user
-*  @param showConfirmation If true, shows confirmation dialog before the action
-*
+* @param showConfirmation If true, shows confirmation dialog before the action
+* @param customMessage the message to show in the dialog
 */
-- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(BOOL)showConfirmation;
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage;
 
 /**
  Fetches the user's contact list and grants the user a reward.
@@ -386,9 +390,8 @@ Fetches the user's feed and grants the user a reward.
 * Shares text and/or image using native sharing functionality of your target platform.
 * @param text Text to share
 * @param imageFilePath Path to an image file to share
-* @param soomlaError Any errors will be returned in this parameter
 */
-- (void)shareNativelyWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath;
+- (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath;
 
 /**
  Helper method to assist with browser-based authentication using a sepcific

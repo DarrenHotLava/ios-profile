@@ -48,16 +48,18 @@ static NSString* TAG = @"SOOMLA SocialController";
     return self;
 }
 
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation {
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage {
 
     if (showConfirmation) {
 
+        NSString *messageToShow = customMessage ? customMessage : [NSString
+                stringWithFormat:@"Are you sure you want to publish this message to %@: \"%@\"?",
+                        [UserProfileUtils providerEnumToString:provider],
+                        status
+        ];
+
         self.confirmationDialog = [ConfirmationDialog showWithTitle:@"Confirmation"
-                                                        withMessage:[NSString
-                                                                stringWithFormat:@"Are you sure you want to publish this message to %@: \"%@\"?",
-                                                                                 [UserProfileUtils providerEnumToString:provider],
-                                                                                 status
-                                                        ]
+                                                        withMessage:messageToShow
                                                          withResult:^(bool result){
                                                              self.confirmationDialog = nil;
                                                              if (result) {
@@ -92,13 +94,14 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
-- (void)updateStoryWithProvider:(Provider)provider andMessage:(NSString *)message andName:(NSString *)name andCaption:(NSString *)caption andDescription:(NSString *)description andLink:(NSString *)link andPicture:(NSString *)picture andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation {
+- (void)updateStoryWithProvider:(Provider)provider andMessage:(NSString *)message andName:(NSString *)name andCaption:(NSString *)caption andDescription:(NSString *)description andLink:(NSString *)link andPicture:(NSString *)picture andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage {
     if (showConfirmation) {
+        NSString *messageToShow = customMessage ? customMessage :
+                [NSString stringWithFormat:@"Are you sure you want to publish to %@?",
+                                [UserProfileUtils providerEnumToString:provider]];
+
         self.confirmationDialog = [ConfirmationDialog showWithTitle:@"Confirmation"
-                                                        withMessage:[NSString
-                                                                stringWithFormat:@"Are you sure you want to publish to %@?",
-                                                                                 [UserProfileUtils providerEnumToString:provider]
-                                                        ]
+                                                        withMessage:messageToShow
                                                          withResult:^(bool result) {
                                                              self.confirmationDialog = nil;
                                                              if (result) {
@@ -151,15 +154,15 @@ static NSString* TAG = @"SOOMLA SocialController";
                             }];
 }
 
-- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation {
-
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage {
 
     if (showConfirmation) {
+        NSString *messageToShow = customMessage ? customMessage :
+                [NSString stringWithFormat:@"Are you sure you want to upload image to %@?",
+                                [UserProfileUtils providerEnumToString:provider]];
+
         self.confirmationDialog = [ConfirmationDialog showWithTitle:@"Confirmation"
-                                                        withMessage:[NSString
-                                                                stringWithFormat:@"Are you sure you want to upload image to %@?",
-                                                                                 [UserProfileUtils providerEnumToString:provider]
-                                                        ]
+                                                        withMessage:messageToShow
                                                          withResult:^(bool result) {
                                                              self.confirmationDialog = nil;
                                                              if (result) {

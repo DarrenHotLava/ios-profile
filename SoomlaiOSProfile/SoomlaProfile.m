@@ -125,16 +125,16 @@ BOOL UsingExternalProvider;
     return userProfiles;
 }
 
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation {
-    [socialController updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward andConfirmation:showConfirmation];
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage {
+    [socialController updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward andConfirmation:showConfirmation andCustomMessage:customMessage];
 }
 
 - (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [self updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward andConfirmation:false];
+    [self updateStatusWithProvider:provider andStatus:status andPayload:payload andReward:reward andConfirmation:false andCustomMessage:nil];
 }
 
 - (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andReward:(Reward *)reward {
-    [self updateStatusWithProvider:provider andStatus:status andPayload:@"" andReward:reward andConfirmation:false];
+    [self updateStatusWithProvider:provider andStatus:status andPayload:@"" andReward:reward andConfirmation:false andCustomMessage:nil];
 }
 
 - (void)updateStatusWithProviderDialog:(Provider)provider andLink:(NSString *)link andPayload:(NSString *)payload andReward:(Reward *)reward {
@@ -155,29 +155,10 @@ BOOL UsingExternalProvider;
                      andPayload:(NSString *)payload
                       andReward:(Reward *)reward {
 
-    [self updateStoryWithProvider:provider
-                       andMessage:message
-                          andName:name
-                       andCaption:caption
-                   andDescription:description
-                          andLink:link
-                       andPicture:picture
-                       andPayload:payload
-                        andReward:reward
-              andShowConfirmation:false
-    ];
+    [self updateStoryWithProvider:provider andMessage:message andName:name andCaption:caption andDescription:description andLink:link andPicture:picture andPayload:payload andReward:reward andShowConfirmation:false andCustomMessage:NULL];
 }
 
-- (void)updateStoryWithProvider:(Provider)provider
-                     andMessage:(NSString *)message
-                        andName:(NSString *)name
-                     andCaption:(NSString *)caption
-                 andDescription:(NSString *)description
-                        andLink:(NSString *)link
-                     andPicture:(NSString *)picture
-                     andPayload:(NSString *)payload
-                      andReward:(Reward *)reward
-        andShowConfirmation:(bool)showConfirmation {
+- (void)updateStoryWithProvider:(Provider)provider andMessage:(NSString *)message andName:(NSString *)name andCaption:(NSString *)caption andDescription:(NSString *)description andLink:(NSString *)link andPicture:(NSString *)picture andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage {
 
     [socialController updateStoryWithProvider:provider
                                    andMessage:message
@@ -188,7 +169,8 @@ BOOL UsingExternalProvider;
                                    andPicture:picture
                                    andPayload:payload
                                     andReward:reward
-                          andShowConfirmation:showConfirmation];
+                          andShowConfirmation:showConfirmation
+                             andCustomMessage: customMessage];
 }
 
 
@@ -234,12 +216,7 @@ BOOL UsingExternalProvider;
                      andPayload:(NSString *)payload
                       andReward:(Reward *)reward {
 
-    [self uploadImageWithProvider:provider
-                       andMessage:message
-                      andFilePath:filePath
-                       andPayload:payload
-                        andReward:reward
-              andShowConfirmation:false];
+    [self uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:payload andReward:reward andConfirmation:false andCustomMessage:nil];
 }
 
 - (void)uploadImageWithProvider:(Provider)provider
@@ -253,14 +230,15 @@ BOOL UsingExternalProvider;
 }
 
 
-- (void)uploadImageWithProvider:(Provider)provider
-                     andMessage:(NSString *)message
-                    andFilePath:(NSString *)filePath
-                     andPayload:(NSString *)payload
-                      andReward:(Reward *)reward
-            andShowConfirmation:(bool)showConfirmation {
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage {
 
-    [socialController uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:payload andReward:reward andShowConfirmation: showConfirmation];
+    [socialController uploadImageWithProvider:provider
+                                   andMessage:message
+                                  andFilePath:filePath
+                                   andPayload:payload
+                                    andReward:reward
+                          andShowConfirmation:showConfirmation
+                             andCustomMessage:customMessage];
 }
 
 
@@ -306,7 +284,7 @@ BOOL UsingExternalProvider;
     [ProfileEventHandling postUserRating];
 }
 
-- (void)shareNativelyWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {
+- (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {
     NSArray *postItems;
     if (imageFilePath && imageFilePath.length > 0) {
         UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
