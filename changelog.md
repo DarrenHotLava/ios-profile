@@ -1,5 +1,7 @@
 ### v1.1.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.5...v1.1.0)
 
+**BREAKING API VERSION**
+
 * New Features
   * Implemented Pagination for getContactsWithProvider and getFeedWithProvider
   * Implemented multi-sharing (sharing with the native functionality of your target platform)
