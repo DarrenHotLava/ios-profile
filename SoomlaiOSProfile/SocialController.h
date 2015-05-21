@@ -43,9 +43,11 @@
  @param status the text to share
  @param payload a String to receive when the function returns.
  @param reward the reward to grant for sharing
+ @param showConfirmation If true, shows confirmation dialog before the action
+ @param customMessage the message to show in the dialog
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward;
+- (void)updateStatusWithProvider:(Provider)provider andStatus:(NSString *)status andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage;
 
 /**
  Shares the given status and link to the user's feed using the provider's
@@ -74,17 +76,11 @@
  @param picture a Link to a picture which will be featured in the link
  @param payload a String to receive when the function returns.
  @param reward The reward to give the user
+ @param showConfirmation If true, shows confirmation dialog before the action
+ @param customMessage the message to show in the dialog
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)updateStoryWithProvider:(Provider)provider
-                     andMessage:(NSString *)message
-                        andName:(NSString *)name
-                     andCaption:(NSString *)caption
-                 andDescription:(NSString *)description
-                        andLink:(NSString *)link
-                     andPicture:(NSString *)picture
-                     andPayload:(NSString *)payload
-                      andReward:(Reward *)reward;
+- (void)updateStoryWithProvider:(Provider)provider andMessage:(NSString *)message andName:(NSString *)name andCaption:(NSString *)caption andDescription:(NSString *)description andLink:(NSString *)link andPicture:(NSString *)picture andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage;
 
 /**
  Shares a story to the user's feed and grants the user a reward, using the 
@@ -119,13 +115,11 @@
  @param filePath The desired image's location on the device (full path)
  @param payload a String to receive when the function returns.
  @param reward The reward to grant for sharing the photo
+ @param showConfirmation If true, shows confirmation dialog before the action
+ @param customMessage the message to show in the dialog
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)uploadImageWithProvider:(Provider)provider
-                     andMessage:(NSString *)message
-                    andFilePath:(NSString *)filePath
-                     andPayload:(NSString *)payload
-                      andReward:(Reward *)reward;
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage;
 
 /**
  Shares a photo to the user's feed.  This is very oriented for Facebook.
@@ -136,14 +130,10 @@
  @param imageData The desired image's data
  @param payload a String to receive when the function returns.
  @param reward The reward to grant for sharing the photo
+ @param showConfirmation If true, shows confirmation dialog before the action
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)uploadImageWithProvider:(Provider)provider
-                     andMessage:(NSString *)message
-               andImageFileName:(NSString *)fileName
-                   andImageData:(NSData *)imageData
-                     andPayload:(NSString *)payload
-                      andReward:(Reward *)reward;
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andImageFileName:(NSString *)fileName andImageData:(NSData *)imageData andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation;
 
 /**
  Fetches the user's contact list

@@ -21,6 +21,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
+#define DEFAULT_PERMISSIONS @[@"public_profile", @"email", @"publish_action", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
 #define DEFAULT_PAGE_SIZE 20
 
 @interface SoomlaFacebook ()
@@ -28,7 +29,9 @@
 @property(nonatomic) NSNumber *lastFeedPage;
 @end
 
-@implementation SoomlaFacebook
+@implementation SoomlaFacebook {
+    NSArray *_permissions;
+}
 
 @synthesize loginSuccess, loginFail, loginCancel,
             logoutSuccess;
@@ -74,7 +77,11 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 }
 
 - (void)applyParams:(NSDictionary *)providerParams {
-    // Nothing to do here, FB deals with AppID and AppName
+    if (providerParams && providerParams[@"permissions"]) {
+        _permissions = [providerParams[@"permissions"] componentsSeparatedByString:@","];
+    } else {
+        _permissions = DEFAULT_PERMISSIONS;
+    }
 }
 
 - (Provider)getProvider {
@@ -94,15 +101,15 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     } else {
         // Open a session showing the user the login UI
         // You must ALWAYS ask for public_profile permissions when opening a session
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
+        [FBSession openActiveSessionWithReadPermissions:_permissions
                                            allowLoginUI:YES
                                       completionHandler:
                                               ^(FBSession *session, FBSessionState state, NSError *error) {
-            self.loginSuccess = success;
-            self.loginFail = fail;
-            self.loginCancel = cancel;
-            [self sessionStateChanged:session state:state error:error];
-        }];
+                                                  self.loginSuccess = success;
+                                                  self.loginFail = fail;
+                                                  self.loginCancel = cancel;
+                                                  [self sessionStateChanged:session state:state error:error];
+                                              }];
     }
 }
 
