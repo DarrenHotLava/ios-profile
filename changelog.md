@@ -1,3 +1,14 @@
+### v1.1.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.5...v1.1.0)
+
+* New Features
+  * Implemented Pagination for getContactsWithProvider and getFeedWithProvider
+  * Implemented multi-sharing (sharing with the native functionality of your target platform)
+  * Implemented methods to show confirmation dialog before some actions
+  * Supporting permissions param in FB
+
+* Changes
+  * Changed signature of `-[SoomlaProfile like:andPageId:andReward:]`
+
 ### v1.0.5 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.4...v1.0.5)
 
 * Changes
