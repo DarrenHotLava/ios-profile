@@ -21,7 +21,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-#define DEFAULT_PERMISSIONS @[@"public_profile", @"email", @"publish_action", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
+#define DEFAULT_PERMISSIONS @[@"public_profile", @"email", @"publish_actions", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
 #define DEFAULT_PAGE_SIZE 20
 
 @interface SoomlaFacebook ()
