@@ -1,3 +1,8 @@
+### v1.1.1 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.0...v1.1.1)
+
+* Fixes
+  * Fix `publish_actions` permission
+
 ### v1.1.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.0.5...v1.1.0)
 
 **BREAKING API VERSION**
