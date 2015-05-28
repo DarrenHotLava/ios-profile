@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import <FacebookSDK/FacebookSDK.h>
 #import "SoomlaFacebook.h"
 #import "UserProfile.h"
 #import "SoomlaUtils.h"
@@ -27,6 +28,7 @@
 @interface SoomlaFacebook ()
 @property(nonatomic) NSNumber *lastContactPage;
 @property(nonatomic) NSNumber *lastFeedPage;
+@property(nonatomic) FBSessionLoginBehavior loginBehavior;
 @end
 
 @implementation SoomlaFacebook {
@@ -47,6 +49,12 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                                              selector:@selector(innerHandleOpenURL:)
                                                  name:@"kUnityOnOpenURL"
                                                object:nil];
+
+    if (![UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"fb://"]]) {
+        self.loginBehavior = FBSessionLoginBehaviorForcingWebView;
+    } else {
+        self.loginBehavior = FBSessionLoginBehaviorWithFallbackToWebView;
+    }
 
     return self;
 }
@@ -99,17 +107,15 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         [FBSession.activeSession closeAndClearTokenInformation];
 
     } else {
-        // Open a session showing the user the login UI
-        // You must ALWAYS ask for public_profile permissions when opening a session
-        [FBSession openActiveSessionWithReadPermissions:_permissions
-                                           allowLoginUI:YES
-                                      completionHandler:
-                                              ^(FBSession *session, FBSessionState state, NSError *error) {
-                                                  self.loginSuccess = success;
-                                                  self.loginFail = fail;
-                                                  self.loginCancel = cancel;
-                                                  [self sessionStateChanged:session state:state error:error];
-                                              }];
+        [FBSession setActiveSession:[[FBSession alloc] initWithPermissions:_permissions]];
+        [[FBSession activeSession]
+                openWithBehavior:self.loginBehavior
+               completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                   self.loginSuccess = success;
+                   self.loginFail = fail;
+                   self.loginCancel = cancel;
+                   [self sessionStateChanged:session state:state error:error];
+               }];
     }
 }
 
