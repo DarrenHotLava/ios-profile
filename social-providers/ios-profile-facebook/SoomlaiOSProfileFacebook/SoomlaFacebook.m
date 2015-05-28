@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import <FacebookSDK/FacebookSDK.h>
 #import "SoomlaFacebook.h"
 #import "UserProfile.h"
 #import "SoomlaUtils.h"
@@ -27,6 +28,7 @@
 @interface SoomlaFacebook ()
 @property(nonatomic) NSNumber *lastContactPage;
 @property(nonatomic) NSNumber *lastFeedPage;
+@property(nonatomic) FBSessionLoginBehavior loginBehavior;
 @end
 
 @implementation SoomlaFacebook {
@@ -47,6 +49,12 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                                              selector:@selector(innerHandleOpenURL:)
                                                  name:@"kUnityOnOpenURL"
                                                object:nil];
+
+    if (![UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"fb://"]]) {
+        self.loginBehavior = FBSessionLoginBehaviorForcingWebView;
+    } else {
+        self.loginBehavior = FBSessionLoginBehaviorWithFallbackToWebView;
+    }
 
     return self;
 }
@@ -99,17 +107,15 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         [FBSession.activeSession closeAndClearTokenInformation];
 
     } else {
-        // Open a session showing the user the login UI
-        // You must ALWAYS ask for public_profile permissions when opening a session
-        [FBSession openActiveSessionWithReadPermissions:_permissions
-                                           allowLoginUI:YES
-                                      completionHandler:
-                                              ^(FBSession *session, FBSessionState state, NSError *error) {
-                                                  self.loginSuccess = success;
-                                                  self.loginFail = fail;
-                                                  self.loginCancel = cancel;
-                                                  [self sessionStateChanged:session state:state error:error];
-                                              }];
+        [FBSession setActiveSession:[[FBSession alloc] initWithPermissions:_permissions]];
+        [[FBSession activeSession]
+                openWithBehavior:self.loginBehavior
+               completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                   self.loginSuccess = success;
+                   self.loginFail = fail;
+                   self.loginCancel = cancel;
+                   [self sessionStateChanged:session state:state error:error];
+               }];
     }
 }
 
@@ -259,26 +265,26 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
             }];
         } else {
             // If the Facebook app is not installed fallback to web dialogs
-            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            NSMutableDictionary *dialogParams = [NSMutableDictionary dictionary];
             if (link) {
-                [params setObject:link forKey:@"link"];
+                dialogParams[@"link"] = link;
                 if (name) {
-                    [params setObject:name forKey:@"name"];
+                    dialogParams[@"name"] = name;
                 }
                 if (caption) {
-                    [params setObject:caption forKey:@"caption"];
+                    dialogParams[@"caption"] = caption;
                 }
                 if (description) {
-                    [params setObject:description forKey:@"description"];
+                    dialogParams[@"description"] = description;
                 }
                 if (picture) {
-                    [params setObject:picture forKey:@"picture"];
+                    dialogParams[@"picture"] = picture;
                 }
             }
             
             // Invoke the dialog
             [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                                   parameters:params
+                                                   parameters:dialogParams
                                                       handler:
              ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                  if (error) {
@@ -569,7 +575,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 
 // This method will handle ALL the session state changes in the app
-- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error {
+- (void)sessionStateChanged:(__unused FBSession *)session state:(FBSessionState)state error:(NSError *)error {
 
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen) {
@@ -645,11 +651,11 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
             } else {
                 //Get more error information from the error
-                NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
+                NSDictionary *errorInformation = [[error.userInfo[@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
 
                 // Show the user an error message
                 alertTitle = @"Something went wrong";
-                alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
+                alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", errorInformation[@"message"]];
 
                 // Callback
                 if (self.loginFail) {
@@ -686,7 +692,7 @@ A helper method for requesting user data from Facebook.
             for (NSString *permission in permissionsNeeded) {
                 BOOL found = NO;
                 for (NSDictionary *currentPermission in currentPermissions) {
-                    if ([permission isEqualToString:[currentPermission objectForKey:@"permission"]]) {
+                    if ([permission isEqualToString:currentPermission[@"permission"]]) {
                         found = YES;
                         break;
                     }
@@ -704,12 +710,12 @@ A helper method for requesting user data from Facebook.
                     [FBSession.activeSession
                      requestNewPublishPermissions:requestPermissions
                      defaultAudience:FBSessionDefaultAudienceFriends 
-                     completionHandler:^(FBSession *session, NSError *error) {
-                         if (!error) {
+                     completionHandler:^(FBSession *session, NSError *newPublishPermissionsError) {
+                         if (!newPublishPermissionsError) {
                              // Permission granted, we can go on
                              success();
                          } else {
-                             fail(error.description);
+                             fail(newPublishPermissionsError.description);
                          }
                      }];
                 }
@@ -717,12 +723,12 @@ A helper method for requesting user data from Facebook.
                     // Ask for the missing publish permissions
                     [FBSession.activeSession
                      requestNewReadPermissions:requestPermissions
-                     completionHandler:^(FBSession *session, NSError *error) {
-                         if (!error) {
+                     completionHandler:^(FBSession *session, NSError *newReadPermissionsError) {
+                         if (!newReadPermissionsError) {
                              // Permission granted, we can go on
                              success();
                          } else {
-                             fail(error.description);
+                             fail(newReadPermissionsError.description);
                          }
                      }];
                 }
