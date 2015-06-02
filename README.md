@@ -24,7 +24,7 @@ This enables to easily reward players with social actions they perform in-game, 
 
 ####Pre baked libraries:
 
-[ios-profile 1.1.0](http://library.soom.la/fetch/ios-profile/1.1.0?cf=github)
+[ios-profile 1.1.1](http://library.soom.la/fetch/ios-profile/1.1.1?cf=github)
 
 Getting Started
 ---
