@@ -42,6 +42,7 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 
 @property(nonatomic) NSString* lastContactCursor;
 @property(nonatomic) NSString* lastFeedCursor;
+@property(nonatomic, strong) UIViewController *webVc;
 @end
 
 @implementation SoomlaTwitter
@@ -153,17 +154,29 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     
     self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:self.consumerKey
                                                  consumerSecret:self.consumerSecret];
-    
+
     // Get request token to launch a browser instance
     // Provides meaningful URL Scheme to make the browser call the application back
     [_twitter postTokenRequest:^(NSURL *url, NSString *oauthToken) {
-        // Launch browser to have the user verify your application
-        // Should eventually return to tryHandleOpenURL
-        self.loginSuccess = success;
-        self.loginFail = fail;
-        self.loginCancel = cancel;
-        [[UIApplication sharedApplication] openURL:url];
-    } authenticateInsteadOfAuthorize:NO
+                // Launch browser to have the user verify your application
+                // Should eventually return to tryHandleOpenURL
+                self.loginSuccess = success;
+                self.loginFail = fail;
+                self.loginCancel = cancel;
+//                [[UIApplication sharedApplication] openURL:url];
+
+                self.webVc = [[UIViewController alloc] init];
+                UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 20, 300, 500)];
+                webView.backgroundColor = [UIColor whiteColor];
+                webView.scalesPageToFit = YES;
+                webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                webView.delegate = self;
+                [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:_webVc animated:YES completion:nil];
+                [self.webVc.view addSubview:webView];
+
+                [webView loadRequest:[NSURLRequest requestWithURL:url]];
+
+            } authenticateInsteadOfAuthorize:NO
                     forceLogin:@(NO)
                     screenName:nil
                  oauthCallback:[NSString stringWithFormat:@"%@://twitter_access_tokens/", [self getURLScheme]]
@@ -242,8 +255,15 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     NSString *expectedScheme = [self getURLScheme];
     
-    if ([[url scheme] isEqualToString:expectedScheme] == NO) return NO;
-    
+    if (![[url scheme] isEqualToString:expectedScheme]) {
+        return NO;
+    }
+
+    if (self.webVc != nil) {
+        [self.webVc dismissViewControllerAnimated:YES completion:nil];
+        self.webVc = nil;
+    }
+
     NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
     
     NSString *token = d[@"oauth_token"];
