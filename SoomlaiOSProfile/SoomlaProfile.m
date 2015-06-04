@@ -297,7 +297,11 @@ BOOL UsingExternalProvider;
             initWithActivityItems:postItems
             applicationActivities:nil];
 
-    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:activityVC animated:YES completion:nil];
+    UIViewController *rootViewController = [[UIApplication sharedApplication] keyWindow].rootViewController;
+    if ( [rootViewController respondsToSelector:@selector(popoverPresentationController)] ) {
+        activityVC.popoverPresentationController.sourceView = rootViewController.view;
+    }
+    [rootViewController presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
