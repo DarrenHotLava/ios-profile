@@ -22,17 +22,18 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-#define DEFAULT_PERMISSIONS @[@"public_profile", @"email", @"publish_actions", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
+#define DEFAULT_LOGIN_PERMISSIONS @[@"public_profile", @"email", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
 #define DEFAULT_PAGE_SIZE 20
 
 @interface SoomlaFacebook ()
 @property(nonatomic) NSNumber *lastContactPage;
 @property(nonatomic) NSNumber *lastFeedPage;
 @property(nonatomic) FBSessionLoginBehavior loginBehavior;
+@property(nonatomic, strong) NSMutableArray *permissions;
 @end
 
 @implementation SoomlaFacebook {
-    NSArray *_permissions;
+    NSArray *_loginPermissions;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -86,9 +87,9 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 - (void)applyParams:(NSDictionary *)providerParams {
     if (providerParams && providerParams[@"permissions"]) {
-        _permissions = [providerParams[@"permissions"] componentsSeparatedByString:@","];
+        _loginPermissions = [providerParams[@"permissions"] componentsSeparatedByString:@","];
     } else {
-        _permissions = DEFAULT_PERMISSIONS;
+        _loginPermissions = DEFAULT_LOGIN_PERMISSIONS;
     }
 }
 
@@ -107,7 +108,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         [FBSession.activeSession closeAndClearTokenInformation];
 
     } else {
-        [FBSession setActiveSession:[[FBSession alloc] initWithPermissions:_permissions]];
+        [FBSession setActiveSession:[[FBSession alloc] initWithPermissions:_loginPermissions]];
         [[FBSession activeSession]
                 openWithBehavior:self.loginBehavior
                completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
@@ -674,74 +675,84 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 A helper method for requesting user data from Facebook.
 */
 
-- (void)checkPermissions: (NSArray*)permissionsNeeded withWrite:(BOOL)writePermissions success:(void (^)())success fail:(void(^)(NSString* message))fail {
-    LogDebug(TAG, @"Getting user profile");
+- (void)checkPermissions: (NSArray*)requestedPermissions withWrite:(BOOL)writePermissions success:(void (^)())success fail:(void(^)(NSString* message))fail {
 
-    // Request the permissions the user currently has
+    void (^checking)() = ^() {
+        NSMutableArray *missedPermissions = [[NSMutableArray alloc] init];
+        for (NSString *permission in requestedPermissions) {
+            if (![self.permissions containsObject:permission]) {
+                [missedPermissions addObject:permission];
+            }
+        }
+
+        if ([missedPermissions count] == 0) {
+            success();
+            return;
+        }
+
+        if (writePermissions) {
+            // Ask for the missing read permissions
+            [FBSession.activeSession
+                    requestNewPublishPermissions:missedPermissions
+                                 defaultAudience:FBSessionDefaultAudienceFriends
+                               completionHandler:^(FBSession *session, NSError *newPublishPermissionsError) {
+                                   if (!newPublishPermissionsError) {
+                                       [[self permissions] addObjectsFromArray:missedPermissions];
+                                       // Permission granted, we can go on
+                                       success();
+                                   } else {
+                                       fail(newPublishPermissionsError.description);
+                                   }
+                               }];
+        }
+        else {
+            // Ask for the missing publish permissions
+            [FBSession.activeSession
+                    requestNewReadPermissions:missedPermissions
+                            completionHandler:^(FBSession *session, NSError *newReadPermissionsError) {
+                                if (!newReadPermissionsError) {
+                                    [[self permissions] addObjectsFromArray:missedPermissions];
+                                    // Permission granted, we can go on
+                                    success();
+                                } else {
+                                    fail(newReadPermissionsError.description);
+                                }
+                            }];
+        }
+
+    };
+
+    if (self.permissions == nil) {
+        [self fetchPermissions:checking fail:fail];
+    } else {
+        checking();
+    }
+}
+
+- (NSMutableArray *)parsePermissions:(id)response {
+    NSMutableArray *permissions = [[NSMutableArray alloc] init];
+
+    NSArray *dataJson = [response data];
+
+    for (NSDictionary *dataItem in dataJson) {
+        if ([@"granted" isEqual:dataItem[@"status"]]) {
+            [permissions addObject:dataItem[@"permission"]];
+        }
+    }
+
+    return permissions;
+}
+
+- (void) fetchPermissions:(void (^)())success fail:(void(^)(NSString* message))fail {
     [FBRequestConnection startWithGraphPath:@"/me/permissions"
                           completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        if (!error) {
-            // These are the current permissions the user has
-            NSArray *currentPermissions = [result data];
-
-            // We will store here the missing permissions that we will have to request
-            NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
-
-            // Check if all the permissions we need are present in the user's current permissions
-            // If they are not present add them to the permissions to be requested
-            for (NSString *permission in permissionsNeeded) {
-                BOOL found = NO;
-                for (NSDictionary *currentPermission in currentPermissions) {
-                    if ([permission isEqualToString:currentPermission[@"permission"]]) {
-                        found = YES;
-                        break;
-                    }
-                }
-                if (!found) {
-                    [requestPermissions addObject:permission];
-                }
-            }
-
-            // If we have permissions to request
-            if ([requestPermissions count] > 0) {
-                
-                if (writePermissions) {
-                    // Ask for the missing read permissions
-                    [FBSession.activeSession
-                     requestNewPublishPermissions:requestPermissions
-                     defaultAudience:FBSessionDefaultAudienceFriends 
-                     completionHandler:^(FBSession *session, NSError *newPublishPermissionsError) {
-                         if (!newPublishPermissionsError) {
-                             // Permission granted, we can go on
-                             success();
-                         } else {
-                             fail(newPublishPermissionsError.description);
-                         }
-                     }];
-                }
-                else {
-                    // Ask for the missing publish permissions
-                    [FBSession.activeSession
-                     requestNewReadPermissions:requestPermissions
-                     completionHandler:^(FBSession *session, NSError *newReadPermissionsError) {
-                         if (!newReadPermissionsError) {
-                             // Permission granted, we can go on
-                             success();
-                         } else {
-                             fail(newReadPermissionsError.description);
-                         }
-                     }];
-                }
-            } else {
-                // Permissions are present
-                // We can go on
-                success();
-            }
-
-        } else {
-            fail(error.description);
-        }
-    }];
+                              if (error) {
+                                  fail(error.description);
+                              }
+                              self.permissions = [self parsePermissions:result];
+                              success();
+                          }
+    ];
 }
 
 /*
