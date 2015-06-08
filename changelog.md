@@ -1,3 +1,12 @@
+### v1.1.2 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.1...v1.1.2)
+
+* Fixes
+  * multiShare crash on iPad with iOS8
+* Changes
+  * avoid Safari login in FB
+  * avoid Safari login in Twitter
+  * improve working with the permissions in FB
+
 ### v1.1.1 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.0...v1.1.1)
 
 * Fixes
