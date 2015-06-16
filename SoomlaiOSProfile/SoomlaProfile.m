@@ -30,6 +30,8 @@ BOOL UsingExternalProvider;
 
 @implementation SoomlaProfile
 
+
+
 + (void)usingExternalProvider:(BOOL)isExternal {
     
     UsingExternalProvider = isExternal;
@@ -275,14 +277,25 @@ BOOL UsingExternalProvider;
 }
 
 - (void)openAppRatingPage {
-    NSString* templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
+
     NSString* appID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    NSString* reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
+    float iOSVersion = [[UIDevice currentDevice].systemVersion floatValue];
+    NSString *reviewURL;
+    
+    if (iOSVersion<7) { //IOS version is less than 7
+        NSString *templateReviewURLiOS6 = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
+        reviewURL = [templateReviewURLiOS6 stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
+        
+    } else { //IOS version is 7 or more
+        NSString *templateReviewURLiOS7 = @"itms-apps://itunes.apple.com/app/idAPP_ID";
+        reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", appID]];
+    }
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
-    
     [ProfileEventHandling postUserRating];
+    
 }
+
 
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {
     NSArray *postItems;
