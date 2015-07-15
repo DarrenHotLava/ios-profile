@@ -171,8 +171,23 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
                 webView.scalesPageToFit = YES;
                 webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
                 webView.delegate = self;
+                [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
                 [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:_webVc animated:YES completion:nil];
                 [self.webVc.view addSubview:webView];
+
+                NSDictionary *views = NSDictionaryOfVariableBindings(webView);
+
+                [self.webVc.view addConstraints:
+                        [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|"
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:views]];
+
+                [self.webVc.view addConstraints:
+                        [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView]|"
+                                                                options:0
+                                                                metrics:nil
+                                                                  views:views]];
 
                 [webView loadRequest:[NSURLRequest requestWithURL:url]];
 
