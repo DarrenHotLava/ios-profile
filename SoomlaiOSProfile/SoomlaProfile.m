@@ -173,8 +173,6 @@ BOOL UsingExternalProvider;
                              andCustomMessage: customMessage];
 }
 
-
-
 - (void)updateStoryWithProvider:(Provider)provider
                      andMessage:(NSString *)message
                         andName:(NSString *)name
@@ -229,7 +227,6 @@ BOOL UsingExternalProvider;
     [socialController uploadImageWithProvider:provider andMessage:message andImageFileName:fileName andImageData:imageData andPayload:payload andReward:reward andShowConfirmation: false];
 }
 
-
 - (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage {
 
     [socialController uploadImageWithProvider:provider
@@ -240,8 +237,6 @@ BOOL UsingExternalProvider;
                           andShowConfirmation:showConfirmation
                              andCustomMessage:customMessage];
 }
-
-
 
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
@@ -275,13 +270,23 @@ BOOL UsingExternalProvider;
 }
 
 - (void)openAppRatingPage {
-    NSString* templateReviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
+
     NSString* appID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    NSString* reviewURL = [templateReviewURL stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
+    float iOSVersion = [[UIDevice currentDevice].systemVersion floatValue];
+    NSString *reviewURL;
+    
+    if (iOSVersion<7) { //IOS < 7.0
+        NSString *templateReviewURLiOS6 = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
+        reviewURL = [templateReviewURLiOS6 stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
+        
+    } else { //IOS >= 7.0
+        NSString *templateReviewURLiOS7 = @"itms-apps://itunes.apple.com/app/idAPP_ID";
+        reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", appID]];
+    }
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
-    
     [ProfileEventHandling postUserRating];
+    
 }
 
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {

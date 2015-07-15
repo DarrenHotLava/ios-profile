@@ -2,6 +2,8 @@
 
 * Fixes
   * multiShare crash on iPad with iOS8
+  * Fix for rating on iOS 7+
+
 * Changes
   * avoid Safari login in FB
   * avoid Safari login in Twitter
