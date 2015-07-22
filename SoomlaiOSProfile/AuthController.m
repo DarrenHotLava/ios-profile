@@ -22,8 +22,12 @@
 #import "IAuthProvider.h"
 #import "Reward.h"
 #import "SoomlaUtils.h"
+#import "KeyValueStorage.h"
 
-@implementation AuthController
+@implementation AuthController {
+}
+
+static NSString* DB_KEY_PREFIX  = @"soomla.profile.common";
 
 static NSString* TAG = @"SOOMLA AuthController";
 
@@ -54,22 +58,16 @@ static NSString* TAG = @"SOOMLA AuthController";
     
     
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
+
+    [self setLoggedInForProvider:provider toValue:NO];
+
     [ProfileEventHandling postLoginStarted:provider withPayload:payload];
     
     // Perform login process
     // TODO: Check if need to change any nonatomic properties
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [authProvider login:^(Provider provider) {
-            [authProvider getUserProfile: ^(UserProfile *userProfile) {
-                [UserProfileStorage setUserProfile:userProfile];
-                if (reward) {
-                    [reward give];
-                }
-                
-                [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
-            } fail:^(NSString *message) {
-                [ProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
-            }];
+            [self afterLoginWithAuthProvider:authProvider withReward:reward withPayload:payload];
         } fail:^(NSString *message) {
             [ProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
         } cancel:^{
@@ -91,6 +89,7 @@ static NSString* TAG = @"SOOMLA AuthController";
     }
     
     // Perform logout process
+    [self setLoggedInForProvider:provider toValue:NO];
     [ProfileEventHandling postLogoutStarted:provider];
     [authProvider logout:^() {
         if (userProfile) {
@@ -123,7 +122,7 @@ static NSString* TAG = @"SOOMLA AuthController";
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     for(id key in self.providers) {
-        id<IAuthProvider> value = [self.providers objectForKey:key];
+        id<IAuthProvider> value = self.providers[key];
         if ([value tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation]) {
             return YES;
         }
@@ -132,5 +131,53 @@ static NSString* TAG = @"SOOMLA AuthController";
     return NO;
 }
 
+- (void)setLoggedInForProvider:(Provider)provider toValue:(BOOL)loggedIn {
+    NSString *key = [self getLoggedInStorageKeyForProvider:provider];
+    if (loggedIn) {
+        [KeyValueStorage setValue:@"true" forKey:key];
+    } else {
+        [KeyValueStorage deleteValueForKey:key];
+    }
+}
+
+- (BOOL)wasLoggedInWithProvider:(Provider)provider {
+    return [@"true" isEqualToString:[KeyValueStorage getValueForKey: [self getLoggedInStorageKeyForProvider:provider]]];
+}
+
+- (NSString *)getLoggedInStorageKeyForProvider:(Provider)provider {
+    return [NSString stringWithFormat:@"%@.%@", DB_KEY_PREFIX, [UserProfileUtils providerEnumToString:provider]];
+}
+
+- (void)performAutoLogin {
+    for (id key in self.providers) {
+        id<IAuthProvider> authProvider = self.providers[key];
+        Provider provider = [authProvider getProvider];
+        if ([self wasLoggedInWithProvider:provider]) {
+            NSString *payload = @"";
+            Reward *reward = nil;
+            if ([authProvider isLoggedIn]) {
+                [self setLoggedInForProvider:provider toValue:NO];
+                [ProfileEventHandling postLoginStarted:provider withPayload:payload];
+                [self afterLoginWithAuthProvider:authProvider withReward:nil withPayload:payload];
+            } else {
+                [self loginWithProvider:provider andPayload:payload andReward:reward];
+            }
+        }
+    }
+ }
+
+- (void)afterLoginWithAuthProvider:(id <IAuthProvider>)authProvider withReward:(Reward *)reward withPayload:(NSString *)payload {
+    [authProvider getUserProfile:^(UserProfile *userProfile) {
+        [UserProfileStorage setUserProfile:userProfile];
+        if (reward) {
+            [reward give];
+        }
+
+        [self setLoggedInForProvider:[authProvider getProvider] toValue:YES];
+        [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
+    } fail:^(NSString *message) {
+        [ProfileEventHandling postLoginFailed:[authProvider getProvider] withMessage:message withPayload:payload];
+    }];
+}
 
 @end

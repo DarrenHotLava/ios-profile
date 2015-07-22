@@ -30,6 +30,8 @@ BOOL UsingExternalProvider;
 
 @implementation SoomlaProfile
 
+NSNumber *_autoLogin;
+
 + (void)usingExternalProvider:(BOOL)isExternal {
     
     UsingExternalProvider = isExternal;
@@ -44,6 +46,7 @@ BOOL UsingExternalProvider;
 }
 
 - (void)initialize:(NSDictionary *)customParams {
+    _autoLogin = customParams[@"autoLogin"] ?: @NO;
     if (UsingExternalProvider) {
         authController = [[AuthController alloc] initWithoutLoadingProviders];
         socialController = [[SocialController alloc] initWithoutLoadingProviders];
@@ -52,8 +55,13 @@ BOOL UsingExternalProvider;
         authController = [[AuthController alloc] initWithParameters:customParams];
         socialController = [[SocialController alloc] initWithParameters:customParams];
     }
-    
+
     [ProfileEventHandling postProfileInitialized];
+
+    if (_autoLogin) {
+        [authController performAutoLogin];
+        [socialController performAutoLogin];
+    }
 }
 
 - (void)loginWithProvider:(Provider)provider {
