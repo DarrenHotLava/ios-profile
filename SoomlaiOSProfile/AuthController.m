@@ -169,12 +169,12 @@ static NSString* TAG = @"SOOMLA AuthController";
 - (void)afterLoginWithAuthProvider:(id <IAuthProvider>)authProvider withReward:(Reward *)reward withPayload:(NSString *)payload {
     [authProvider getUserProfile:^(UserProfile *userProfile) {
         [UserProfileStorage setUserProfile:userProfile];
+        [self setLoggedInForProvider:[authProvider getProvider] toValue:YES];
+        [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
+
         if (reward) {
             [reward give];
         }
-
-        [self setLoggedInForProvider:[authProvider getProvider] toValue:YES];
-        [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
     } fail:^(NSString *message) {
         [ProfileEventHandling postLoginFailed:[authProvider getProvider] withMessage:message withPayload:payload];
     }];
