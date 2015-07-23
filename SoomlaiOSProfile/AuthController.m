@@ -145,7 +145,7 @@ static NSString* TAG = @"SOOMLA AuthController";
 }
 
 - (NSString *)getLoggedInStorageKeyForProvider:(Provider)provider {
-    return [NSString stringWithFormat:@"%@.%@", DB_KEY_PREFIX, [UserProfileUtils providerEnumToString:provider]];
+    return [NSString stringWithFormat:@"%@.%@.%@", DB_KEY_PREFIX, @"autoLogin", [UserProfileUtils providerEnumToString:provider]];
 }
 
 - (void)performAutoLogin {
