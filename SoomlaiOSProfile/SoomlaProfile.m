@@ -227,15 +227,30 @@ NSNumber *_autoLogin;
 
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
-               andImageFileName: (NSString *)fileName
+               andImageFileName:(NSString *)imageFileName
                    andImageData:(NSData *)imageData
                      andPayload:(NSString *)payload
-                      andReward:(Reward *)reward {
+                      andReward:(Reward *)reward
+                andConfirmation:(BOOL)confirmation
+               andCustomMessage:(NSString *)customMessage {
 
-    [socialController uploadImageWithProvider:provider andMessage:message andImageFileName:fileName andImageData:imageData andPayload:payload andReward:reward andShowConfirmation: false];
+    [socialController uploadImageWithProvider:provider
+                                   andMessage:message
+                             andImageFileName:imageFileName
+                                 andImageData:imageData
+                                   andPayload:payload
+                                    andReward:reward
+                          andShowConfirmation:confirmation
+                             andCustomMessage:customMessage
+    ];
 }
-
-- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage {
+- (void)uploadImageWithProvider:(Provider)provider
+                     andMessage:(NSString *)message
+                    andFilePath:(NSString *)filePath
+                     andPayload:(NSString *)payload
+                      andReward:(Reward *)reward
+                andConfirmation:(BOOL)showConfirmation
+               andCustomMessage:(NSString *)customMessage {
 
     [socialController uploadImageWithProvider:provider
                                    andMessage:message

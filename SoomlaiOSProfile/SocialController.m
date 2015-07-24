@@ -183,14 +183,13 @@ static NSString* TAG = @"SOOMLA SocialController";
 
 }
 
-- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andImageFileName:(NSString *)fileName andImageData:(NSData *)imageData andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation {
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andImageFileName:(NSString *)fileName andImageData:(NSData *)imageData andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage {
 
     if (showConfirmation) {
+        NSString *messageToShow = customMessage ? customMessage :
+                [NSString stringWithFormat:@"Are you sure you want to upload image to %@?", [UserProfileUtils providerEnumToString:provider]];
         self.confirmationDialog = [ConfirmationDialog showWithTitle:@"Confirmation"
-                                                        withMessage:[NSString
-                                                                stringWithFormat:@"Are you sure you want to upload image to %@?",
-                                                                                 [UserProfileUtils providerEnumToString:provider]
-                                                        ]
+                                                        withMessage:messageToShow
                                                          withResult:^(bool result) {
                                                              self.confirmationDialog = nil;
                                                              if (result) {

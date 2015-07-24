@@ -291,17 +291,21 @@ integrated in the story
 
  @param provider The provider to use
  @param message A text that will accompany the image
- @param fielName The desired image's name
+ @param imageFileName The desired image's name
  @param imageData The desired image's data
  @param payload a String to receive when the function returns.
  @param reward The reward to give the user
+ @param showConfirmation If true, shows confirmation dialog before the action
+ @param customMessage the message to show in the dialog
  */
 - (void)uploadImageWithProvider:(Provider)provider
                      andMessage:(NSString *)message
-               andImageFileName: (NSString *)fileName
+               andImageFileName:(NSString *)imageFileName
                    andImageData:(NSData *)imageData
                      andPayload:(NSString *)payload
-                      andReward:(Reward *)reward;
+                      andReward:(Reward *)reward
+                andConfirmation:(BOOL)confirmation
+               andCustomMessage:(NSString *)customMessage;
 
 /**
  Shares a photo to the user's feed and grants the user a reward.

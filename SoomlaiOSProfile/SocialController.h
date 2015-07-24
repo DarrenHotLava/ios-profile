@@ -133,7 +133,7 @@
  @param showConfirmation If true, shows confirmation dialog before the action
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andImageFileName:(NSString *)fileName andImageData:(NSData *)imageData andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation;
+- (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andImageFileName:(NSString *)fileName andImageData:(NSData *)imageData andPayload:(NSString *)payload andReward:(Reward *)reward andShowConfirmation:(bool)showConfirmation andCustomMessage:(NSString *)customMessage;
 
 /**
  Fetches the user's contact list
