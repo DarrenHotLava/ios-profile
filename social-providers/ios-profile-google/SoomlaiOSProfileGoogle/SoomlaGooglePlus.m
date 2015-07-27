@@ -153,7 +153,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (BOOL)isAutoLogin {
-    return _autoLogin;
+    return [_autoLogin boolValue];
 }
 
 

@@ -273,7 +273,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (BOOL)isAutoLogin {
-    return _autoLogin;
+    return [_autoLogin boolValue];
 }
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

@@ -185,7 +185,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 }
 
 - (BOOL)isAutoLogin {
-    return _autoLogin;
+    return [_autoLogin boolValue];
 }
 
 
