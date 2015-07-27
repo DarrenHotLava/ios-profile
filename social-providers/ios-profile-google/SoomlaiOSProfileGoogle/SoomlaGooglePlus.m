@@ -23,7 +23,9 @@
 @property(nonatomic, strong) id lastPageToken;
 @end
 
-@implementation SoomlaGooglePlus
+@implementation SoomlaGooglePlus {
+    NSNumber *_autoLogin;
+}
 
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, socialActionSuccess, socialActionFail, clientId;
 
@@ -47,7 +49,10 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
-        clientId = [providerParams objectForKey:@"clientId"];
+        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
+        clientId = providerParams[@"clientId"];
+    } else {
+        _autoLogin = @NO;
     }
 }
 
@@ -146,6 +151,11 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     LogDebug(TAG, @"isLoggedIn");
     return ([GPPSignIn sharedInstance].authentication != nil);
 }
+
+- (BOOL)isAutoLogin {
+    return _autoLogin;
+}
+
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     return [GPPURLHandler handleURL:url

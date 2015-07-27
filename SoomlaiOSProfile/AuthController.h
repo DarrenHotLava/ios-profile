@@ -109,5 +109,5 @@
  */
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
-- (void)performAutoLogin;
+- (void)settleAutoLogin;
 @end

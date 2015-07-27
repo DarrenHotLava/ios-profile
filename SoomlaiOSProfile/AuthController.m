@@ -27,7 +27,7 @@
 @implementation AuthController {
 }
 
-static NSString* DB_KEY_PREFIX  = @"soomla.profile.common";
+static NSString* DB_KEY_PREFIX  = @"soomla.profile";
 
 static NSString* TAG = @"SOOMLA AuthController";
 
@@ -145,22 +145,24 @@ static NSString* TAG = @"SOOMLA AuthController";
 }
 
 - (NSString *)getLoggedInStorageKeyForProvider:(Provider)provider {
-    return [NSString stringWithFormat:@"%@.%@.%@", DB_KEY_PREFIX, @"autoLogin", [UserProfileUtils providerEnumToString:provider]];
+    return [NSString stringWithFormat:@"%@.%@.%@", DB_KEY_PREFIX, [UserProfileUtils providerEnumToString:provider], @"loggedIn"];
 }
 
-- (void)performAutoLogin {
+- (void)settleAutoLogin {
     for (id key in self.providers) {
         id<IAuthProvider> authProvider = self.providers[key];
         Provider provider = [authProvider getProvider];
-        if ([self wasLoggedInWithProvider:provider]) {
-            NSString *payload = @"";
-            Reward *reward = nil;
-            if ([authProvider isLoggedIn]) {
-                [self setLoggedInForProvider:provider toValue:NO];
-                [ProfileEventHandling postLoginStarted:provider withPayload:payload];
-                [self afterLoginWithAuthProvider:authProvider withReward:nil withPayload:payload];
-            } else {
-                [self loginWithProvider:provider andPayload:payload andReward:reward];
+        if ([authProvider isAutoLogin]) {
+            if ([self wasLoggedInWithProvider:provider]) {
+                NSString *payload = @"";
+                Reward *reward = nil;
+                if ([authProvider isLoggedIn]) {
+                    [self setLoggedInForProvider:provider toValue:NO];
+                    [ProfileEventHandling postLoginStarted:provider withPayload:payload];
+                    [self afterLoginWithAuthProvider:authProvider withReward:nil withPayload:payload];
+                } else {
+                    [self loginWithProvider:provider andPayload:payload andReward:reward];
+                }
             }
         }
     }
