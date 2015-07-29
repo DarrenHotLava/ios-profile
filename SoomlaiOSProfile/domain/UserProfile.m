@@ -21,7 +21,7 @@
 
 @implementation UserProfile
 
-@synthesize provider, profileId, email, username, firstName, lastName, avatarLink, location, gender, language, birthday;
+@synthesize provider, profileId, email, username, firstName, lastName, avatarLink, location, gender, language, birthday, extra;
 
 
 - (id)initWithProvider:(Provider)oProvider
@@ -38,8 +38,25 @@
         self.email = oEmail;
         self.firstName = oFirstName;
         self.lastName = oLastName;
+        extra = @{};
     }
     
+    return self;
+}
+
+- (id)initWithProvider:(Provider)oProvider
+          andProfileId:(NSString *)oProfileId
+           andUsername:(NSString *)oUsername
+              andEmail:(NSString *)oEmail
+          andFirstName:(NSString *)oFirstName
+           andLastName:(NSString *)oLastName
+              andExtra:(NSDictionary *)oExtra {
+
+    if (self = [self initWithProvider:oProvider andProfileId:oProfileId andUsername:oUsername andEmail:oEmail
+                         andFirstName:oFirstName andLastName:oLastName]) {
+        extra = oExtra;
+    }
+
     return self;
 }
 
@@ -56,6 +73,7 @@
         self.gender = [dict objectForKey:UP_GENDER];
         self.language = [dict objectForKey:UP_LANGUAGE];
         self.birthday = [dict objectForKey:UP_BIRTHDAY];
+        extra = [dict objectForKey:UP_EXTRA];
     }
     
     return self;
@@ -75,6 +93,7 @@
             (self.gender ?: [NSNull null]), UP_GENDER,
             (self.language ?: [NSNull null]), UP_LANGUAGE,
             (self.birthday ?: [NSNull null]), UP_BIRTHDAY,
+            (self.extra ?: [NSNull null]), UP_EXTRA,
             nil];
 }
 

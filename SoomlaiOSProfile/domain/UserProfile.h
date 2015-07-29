@@ -34,6 +34,7 @@
     NSString* gender;
     NSString* language;
     NSString* birthday;
+    NSDictionary* extra;
 }
 
 @property (readonly, nonatomic) Provider provider;
@@ -47,6 +48,7 @@
 @property (strong, nonatomic) NSString* gender;
 @property (strong, nonatomic) NSString* language;
 @property (strong, nonatomic) NSString* birthday;
+@property (strong, nonatomic, readonly) NSDictionary *extra;
 
 /**
  Constructor
@@ -64,6 +66,25 @@
               andEmail:(NSString *)oEmail
           andFirstName:(NSString *)oFirstName
            andLastName:(NSString *)oLastName;
+
+/**
+Constructor
+
+@param oProvider the provider which the user's data is associated to
+@param oProfileId the profile ID for the given provider
+@param oUsername the user's username as used with the given provider
+@param oEmail the user's email
+@param oFirstName the user's first name
+@param oLastName the user's last name
+@param oExtra additional information provided by SN
+*/
+- (id)initWithProvider:(Provider)oProvider
+          andProfileId:(NSString *)oProfileId
+           andUsername:(NSString *)oUsername
+              andEmail:(NSString *)oEmail
+          andFirstName:(NSString *)oFirstName
+           andLastName:(NSString *)oLastName
+              andExtra:(NSDictionary *)oExtra;
 
 /**
  Constructor
