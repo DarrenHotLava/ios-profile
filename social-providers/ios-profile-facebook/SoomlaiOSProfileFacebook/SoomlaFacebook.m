@@ -135,12 +135,19 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
             if (!error) {
                 LogDebug(TAG, ([NSString stringWithFormat:@"user info: %@", result]));
 
+                FBAccessTokenData *tokenData = [FBSession activeSession].accessTokenData;
+                NSDictionary *extraDict = @{
+                        @"access_token": tokenData.accessToken,
+                        @"permissions": tokenData.permissions,
+                        @"expiration_date": @(tokenData.expirationDate.timeIntervalSince1970)
+                };
                 UserProfile *userProfile = [[UserProfile alloc] initWithProvider:FACEBOOK
                                                                     andProfileId:result[@"id"]
                                                                      andUsername:result[@"email"]
                                                                         andEmail:result[@"email"]
                                                                     andFirstName:result[@"first_name"]
-                                                                     andLastName:result[@"last_name"]];
+                                                                     andLastName:result[@"last_name"]
+                                                                        andExtra:extraDict];
 
                 userProfile.gender = result[@"gender"];
                 userProfile.birthday = result[@"birthday"];
