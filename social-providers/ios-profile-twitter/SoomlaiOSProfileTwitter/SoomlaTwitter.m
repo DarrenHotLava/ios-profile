@@ -548,12 +548,18 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     // According to: https://dev.twitter.com/rest/reference/get/users/show
     //
     // - Twitter does not supply email access: https://dev.twitter.com/faq#26
+    NSDictionary *extraDict = @{
+            @"access_token": (_twitter.oauthAccessToken ? _twitter.oauthAccessToken : [NSNull null]),
+            @"access_token_secret": (_twitter.oauthAccessTokenSecret ? _twitter.oauthAccessTokenSecret : [NSNull null]),
+            @"bearer_token": (_twitter.bearerToken ? _twitter.bearerToken : [NSNull null])
+    };
     UserProfile *userProfile = [[UserProfile alloc] initWithProvider:TWITTER
                                                         andProfileId:user[@"id_str"]
                                                          andUsername:user[@"screen_name"]
                                                             andEmail:@""
                                                         andFirstName:firstName
-                                                         andLastName:lastName];
+                                                         andLastName:lastName
+                                                            andExtra:extraDict];
     
     // No gender information on Twitter:
     // https://twittercommunity.com/t/how-to-find-male-female-accounts-in-following-list/7367
