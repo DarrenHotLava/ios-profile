@@ -109,5 +109,8 @@
  */
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
+/**
+* Perform login to providers, if (where) it's needed.
+*/
 - (void)settleAutoLogin;
 @end
