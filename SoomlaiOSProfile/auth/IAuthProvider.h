@@ -68,6 +68,8 @@ typedef void (^logoutFail)(NSString* message);
  */
 - (BOOL)isLoggedIn;
 
+- (BOOL)isAutoLogin;
+
 /**
  Helper method to assist with browser-based authentication for the provider.
  Based on the URL scheme defined for the provider, it will try and handle the

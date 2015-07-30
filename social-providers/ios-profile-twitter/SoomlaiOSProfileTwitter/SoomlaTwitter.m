@@ -45,7 +45,9 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 @property(nonatomic, strong) UIViewController *webVc;
 @end
 
-@implementation SoomlaTwitter
+@implementation SoomlaTwitter {
+    NSNumber *_autoLogin;
+}
 
 @synthesize loginSuccess, loginFail, loginCancel,
             logoutSuccess;
@@ -87,15 +89,18 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (void)applyParams:(NSDictionary *)providerParams {
+    
+
     if (providerParams) {
+        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
         _consumerKey = providerParams[@"consumerKey"];
         _consumerSecret = providerParams[@"consumerSecret"];
         
         // Allows the user to force web browser authentication
         NSNumber *forceWeb = providerParams[@"forceWeb"];
         webOnly = forceWeb ? [forceWeb boolValue] : NO;
-    }
-    else {
+    } else {
+        _autoLogin = @NO;
         webOnly = NO;
     }
     
@@ -265,6 +270,10 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (BOOL)isLoggedIn {
     return ![self isEmptyString:loggedInUser] && self.twitter;
+}
+
+- (BOOL)isAutoLogin {
+    return [_autoLogin boolValue];
 }
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

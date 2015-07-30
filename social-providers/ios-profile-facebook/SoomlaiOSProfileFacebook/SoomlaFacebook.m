@@ -34,6 +34,7 @@
 
 @implementation SoomlaFacebook {
     NSArray *_loginPermissions;
+    NSNumber *_autoLogin;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -86,10 +87,14 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 }
 
 - (void)applyParams:(NSDictionary *)providerParams {
-    if (providerParams && providerParams[@"permissions"]) {
-        _loginPermissions = [providerParams[@"permissions"] componentsSeparatedByString:@","];
+    _loginPermissions = DEFAULT_LOGIN_PERMISSIONS;
+    if (providerParams) {
+        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
+        if (providerParams[@"permissions"]) {
+            _loginPermissions = [providerParams[@"permissions"] componentsSeparatedByString:@","];
+        }
     } else {
-        _loginPermissions = DEFAULT_LOGIN_PERMISSIONS;
+        _autoLogin = @NO;
     }
 }
 
@@ -185,6 +190,11 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     return ((FBSession.activeSession != nil) && ((FBSession.activeSession.state == FBSessionStateOpen
                                                   || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)));
 }
+
+- (BOOL)isAutoLogin {
+    return [_autoLogin boolValue];
+}
+
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [FBAppCall handleOpenURL:url
