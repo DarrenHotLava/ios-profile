@@ -549,9 +549,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     //
     // - Twitter does not supply email access: https://dev.twitter.com/faq#26
     NSDictionary *extraDict = @{
-            @"access_token": (_twitter.oauthAccessToken ? _twitter.oauthAccessToken : [NSNull null]),
-            @"access_token_secret": (_twitter.oauthAccessTokenSecret ? _twitter.oauthAccessTokenSecret : [NSNull null]),
-            @"bearer_token": (_twitter.bearerToken ? _twitter.bearerToken : [NSNull null])
+            @"access_token": (_twitter.oauthAccessToken ? _twitter.oauthAccessToken : [NSNull null])
     };
     UserProfile *userProfile = [[UserProfile alloc] initWithProvider:TWITTER
                                                         andProfileId:user[@"id_str"]

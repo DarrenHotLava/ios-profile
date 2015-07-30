@@ -30,18 +30,8 @@
               andEmail:(NSString *)oEmail
           andFirstName:(NSString *)oFirstName
            andLastName:(NSString *)oLastName {
-
-    if (self = [super init]) {
-        provider = oProvider;
-        self.profileId = oProfileId;
-        self.username = oUsername;
-        self.email = oEmail;
-        self.firstName = oFirstName;
-        self.lastName = oLastName;
-        extra = @{};
-    }
-    
-    return self;
+    return [self initWithProvider:oProvider andProfileId:oProfileId andUsername:oUsername andEmail:oEmail
+                     andFirstName:oFirstName andLastName:oLastName andExtra:@{}];
 }
 
 - (id)initWithProvider:(Provider)oProvider
@@ -52,8 +42,13 @@
            andLastName:(NSString *)oLastName
               andExtra:(NSDictionary *)oExtra {
 
-    if (self = [self initWithProvider:oProvider andProfileId:oProfileId andUsername:oUsername andEmail:oEmail
-                         andFirstName:oFirstName andLastName:oLastName]) {
+    if (self = [super init]) {
+        provider = oProvider;
+        self.profileId = oProfileId;
+        self.username = oUsername;
+        self.email = oEmail;
+        self.firstName = oFirstName;
+        self.lastName = oLastName;
         extra = oExtra;
     }
 
