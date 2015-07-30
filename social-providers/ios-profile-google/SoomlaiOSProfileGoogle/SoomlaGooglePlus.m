@@ -74,7 +74,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 - (void)startGooglePlusAuth{
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     GPPShare *share = [GPPShare sharedInstance];
-    NSArray* scopes = [NSArray arrayWithObjects:kGTLAuthScopePlusLogin,kGTLAuthScopePlusUserinfoProfile, nil];
+    NSArray* scopes = @[kGTLAuthScopePlusLogin, kGTLAuthScopePlusUserinfoProfile];
     
     signIn.shouldFetchGoogleUserEmail = YES;
     signIn.shouldFetchGooglePlusUser = YES;
@@ -334,7 +334,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
         }
     }
     
-    GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
+    GTLPlusPersonEmailsItem *email = googleContact.emails[0];
     UserProfile * profile =
     [[UserProfile alloc] initWithProvider:GOOGLE
                              andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
