@@ -24,7 +24,7 @@
 @end
 
 @implementation SoomlaGooglePlus {
-    NSNumber *_autoLogin;
+    BOOL _autoLogin;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, socialActionSuccess, socialActionFail, clientId;
@@ -49,10 +49,10 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
-        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
+        _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
         clientId = providerParams[@"clientId"];
     } else {
-        _autoLogin = @NO;
+        _autoLogin = NO;
     }
 }
 
@@ -153,7 +153,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (BOOL)isAutoLogin {
-    return [_autoLogin boolValue];
+    return _autoLogin;
 }
 
 

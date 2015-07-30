@@ -46,7 +46,7 @@ NSString *const TWITTER_OAUTH_SECRET    = @"oauth.secret";
 @end
 
 @implementation SoomlaTwitter {
-    NSNumber *_autoLogin;
+    BOOL _autoLogin;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -92,7 +92,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     
 
     if (providerParams) {
-        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
+        _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
         _consumerKey = providerParams[@"consumerKey"];
         _consumerSecret = providerParams[@"consumerSecret"];
         
@@ -100,7 +100,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         NSNumber *forceWeb = providerParams[@"forceWeb"];
         webOnly = forceWeb ? [forceWeb boolValue] : NO;
     } else {
-        _autoLogin = @NO;
+        _autoLogin = NO;
         webOnly = NO;
     }
     
@@ -273,7 +273,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 }
 
 - (BOOL)isAutoLogin {
-    return [_autoLogin boolValue];
+    return _autoLogin;
 }
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
