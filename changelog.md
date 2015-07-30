@@ -1,3 +1,12 @@
+### v1.1.3 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.2...v1.1.3)
+
+* New Features
+  * Implemented auto login
+
+* Fixes
+  * Fixed WebView in Twitter login does not look well in landscape orientation
+  * Fixed uploadImage signature
+
 ### v1.1.2 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.1...v1.1.2)
 
 * Fixes
