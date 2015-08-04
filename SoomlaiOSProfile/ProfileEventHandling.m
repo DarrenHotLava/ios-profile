@@ -57,23 +57,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_USER_PROFILE_UPDATED object:self userInfo:userInfo];
 }
 
-+ (void)postLoginStarted:(Provider)provider withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: [NSNumber numberWithInt:provider], DICT_ELEMENT_PAYLOAD: payload};
++ (void)postLoginStarted:(Provider)provider withAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_AUTO_LOGIN: @(autoLogin), DICT_ELEMENT_PAYLOAD: payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_STARTED object:self userInfo:userInfo];
 }
 
-+ (void)postLoginFinished:(UserProfile *)userProfile withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_USER_PROFILE: userProfile, DICT_ELEMENT_PAYLOAD: payload};
++ (void)postLoginFinished:(UserProfile *)userProfile withAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_USER_PROFILE: userProfile, DICT_ELEMENT_AUTO_LOGIN: @(autoLogin), DICT_ELEMENT_PAYLOAD: payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_FINISHED object:self userInfo:userInfo];
 }
 
-+ (void)postLoginCancelled:(Provider)provider withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_PAYLOAD: payload};
++ (void)postLoginCancelled:(Provider)provider withAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_AUTO_LOGIN: @(autoLogin), DICT_ELEMENT_PAYLOAD: payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_CANCELLED object:self userInfo:userInfo];
 }
 
-+ (void)postLoginFailed:(Provider)provider withMessage:(NSString *)message withPayload:(NSString *)payload {
-    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_MESSAGE: message, DICT_ELEMENT_PAYLOAD: payload};
++ (void)postLoginFailed:(Provider)provider withMessage:(NSString *)message andAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER : @(provider), DICT_ELEMENT_MESSAGE : message, DICT_ELEMENT_AUTO_LOGIN : @(autoLogin), DICT_ELEMENT_PAYLOAD : payload};
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LOGIN_FAILED object:self userInfo:userInfo];
 }
 

@@ -69,12 +69,12 @@ BOOL UsingExternalProvider;
 
 - (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
     @try {
-        [authController loginWithProvider:provider andPayload:payload andReward:reward];
+        [authController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
     }
     @catch (NSException *exception) {
 
         // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController loginWithProvider:provider andPayload:payload andReward:reward];
+        [socialController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
     }
 }
 
