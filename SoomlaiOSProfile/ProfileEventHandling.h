@@ -54,6 +54,7 @@
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
 #define DICT_ELEMENT_PROVIDER                   @"provider"
 #define DICT_ELEMENT_FROM_START                 @"fromStart"
+#define DICT_ELEMENT_AUTO_LOGIN                 @"autoLogin"
 #define DICT_ELEMENT_PAYLOAD                    @"payload"
 #define DICT_ELEMENT_HAS_MORE                   @"hasMore"
 #define DICT_ELEMENT_SOCIAL_ACTION_TYPE         @"socialActiontype"
@@ -105,7 +106,7 @@ Called when the service has been initializedt.
  
  @param provider The provider on where the login has started
  */
-+ (void)postLoginStarted:(Provider)provider withPayload:(NSString *)payload;
++ (void)postLoginStarted:(Provider)provider withAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload;
 
 /**
  Called when the login process finishes successfully. Which fires the
@@ -113,7 +114,7 @@ Called when the service has been initializedt.
  
  @param userProfile The user's profile from the logged in provider
  */
-+ (void)postLoginFinished:(UserProfile *)userProfile withPayload:(NSString *)payload;
++ (void)postLoginFinished:(UserProfile *)userProfile withAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload;
 
 /**
  Called when the login process to a provider has failed. Which fires the
@@ -122,7 +123,7 @@ Called when the service has been initializedt.
  @param provider The provider on which the login has failed
  @param message a Description of the reason for failure
  */
-+ (void)postLoginFailed:(Provider)provider withMessage:(NSString *)message withPayload:(NSString *)payload;
++ (void)postLoginFailed:(Provider)provider withMessage:(NSString *)message andAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload;
 
 /**
  Called the login process to a provider has been cancelled. Which fires the
@@ -130,7 +131,7 @@ Called when the service has been initializedt.
  
  @param provider The provider on which the login has failed
  */
-+ (void)postLoginCancelled:(Provider)provider withPayload:(NSString *)payload;
++ (void)postLoginCancelled:(Provider)provider withAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload;
 
 /**
  Called when the logout process from a provider has started. Which fires the

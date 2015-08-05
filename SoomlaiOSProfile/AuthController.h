@@ -53,6 +53,17 @@
 - (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
+ Logs into the given provider and grants the user a reward.
+
+ @param provider The provider to login with
+ @param autoLogin comes "true" if user log in automatically
+ @param reward The reward to grant the user for logging in
+ @param payload a String to receive when the function returns.
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)loginWithProvider:(Provider)provider andAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload andReward:(Reward *)reward;
+
+/**
  Logs out of the given provider
  
  @param provider The provider to logout from
@@ -109,5 +120,8 @@
  */
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
+/**
+* Perform login to providers, if (where) it's needed.
+*/
 - (void)settleAutoLogin;
 @end

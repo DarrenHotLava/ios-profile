@@ -34,7 +34,7 @@
 
 @implementation SoomlaFacebook {
     NSArray *_loginPermissions;
-    NSNumber *_autoLogin;
+    BOOL _autoLogin;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -89,12 +89,12 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 - (void)applyParams:(NSDictionary *)providerParams {
     _loginPermissions = DEFAULT_LOGIN_PERMISSIONS;
     if (providerParams) {
-        _autoLogin = providerParams[@"autoLogin"] ?: @NO;
+        _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
         if (providerParams[@"permissions"]) {
             _loginPermissions = [providerParams[@"permissions"] componentsSeparatedByString:@","];
         }
     } else {
-        _autoLogin = @NO;
+        _autoLogin = NO;
     }
 }
 
@@ -192,7 +192,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 }
 
 - (BOOL)isAutoLogin {
-    return [_autoLogin boolValue];
+    return _autoLogin;
 }
 
 

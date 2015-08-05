@@ -54,27 +54,31 @@ static NSString* TAG = @"SOOMLA AuthController";
     return self;
 }
 
-- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    
-    
+- (void)loginWithProvider:(Provider)provider andAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload andReward:(Reward *)reward {
+
     id<IAuthProvider> authProvider = (id<IAuthProvider>)[self getProvider:provider];
 
     [self setLoggedInForProvider:provider toValue:NO];
 
-    [ProfileEventHandling postLoginStarted:provider withPayload:payload];
-    
+    [ProfileEventHandling postLoginStarted:provider withAutoLogin:autoLogin andPayload:payload];
+
     // Perform login process
     // TODO: Check if need to change any nonatomic properties
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [authProvider login:^(Provider provider) {
-            [self afterLoginWithAuthProvider:authProvider withReward:reward withPayload:payload];
+            [self afterLoginWithAuthProvider:authProvider withReward:reward andAutoLogin:autoLogin andPayload:payload];
         } fail:^(NSString *message) {
-            [ProfileEventHandling postLoginFailed:provider withMessage:message withPayload:payload];
+            [ProfileEventHandling postLoginFailed:provider withMessage:message andAutoLogin:autoLogin andPayload:payload];
         } cancel:^{
-            [ProfileEventHandling postLoginCancelled:provider withPayload:payload];
+            [ProfileEventHandling postLoginCancelled:provider withAutoLogin:autoLogin andPayload:payload];
         }];
     }];
+
 }
+- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
+    [self loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+}
+
 
 - (void)logoutWithProvider:(Provider)provider {
     
@@ -158,27 +162,27 @@ static NSString* TAG = @"SOOMLA AuthController";
                 Reward *reward = nil;
                 if ([authProvider isLoggedIn]) {
                     [self setLoggedInForProvider:provider toValue:NO];
-                    [ProfileEventHandling postLoginStarted:provider withPayload:payload];
-                    [self afterLoginWithAuthProvider:authProvider withReward:nil withPayload:payload];
+                    [ProfileEventHandling postLoginStarted:provider withAutoLogin:YES andPayload:payload];
+                    [self afterLoginWithAuthProvider:authProvider withReward:nil andAutoLogin:YES andPayload:payload];
                 } else {
-                    [self loginWithProvider:provider andPayload:payload andReward:reward];
+                    [self loginWithProvider:provider andAutoLogin:YES andPayload:payload andReward:reward];
                 }
             }
         }
     }
  }
 
-- (void)afterLoginWithAuthProvider:(id <IAuthProvider>)authProvider withReward:(Reward *)reward withPayload:(NSString *)payload {
+- (void)afterLoginWithAuthProvider:(id <IAuthProvider>)authProvider withReward:(Reward *)reward andAutoLogin:(BOOL)autoLogin andPayload:(NSString *)payload {
     [authProvider getUserProfile:^(UserProfile *userProfile) {
         [UserProfileStorage setUserProfile:userProfile];
         [self setLoggedInForProvider:[authProvider getProvider] toValue:YES];
-        [ProfileEventHandling postLoginFinished:userProfile withPayload:payload];
+        [ProfileEventHandling postLoginFinished:userProfile withAutoLogin:autoLogin andPayload:payload];
 
         if (reward) {
             [reward give];
         }
     } fail:^(NSString *message) {
-        [ProfileEventHandling postLoginFailed:[authProvider getProvider] withMessage:message withPayload:payload];
+        [ProfileEventHandling postLoginFailed:[authProvider getProvider] withMessage:message andAutoLogin:autoLogin andPayload:payload];
     }];
 }
 
