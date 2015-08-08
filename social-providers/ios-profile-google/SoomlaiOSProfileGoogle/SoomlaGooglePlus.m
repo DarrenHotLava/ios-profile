@@ -334,14 +334,21 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
         }
     }
     
-    GTLPlusPersonEmailsItem *email = googleContact.emails[0];
+    GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
+    GTMOAuth2Authentication *auth = [GPPSignIn sharedInstance].authentication;
+    NSDictionary *extraDict = @{
+            @"access_token": auth.accessToken,
+            @"refresh_token": auth.refreshToken,
+            @"expiration_date": @(auth.expirationDate.timeIntervalSince1970)
+    };
     UserProfile * profile =
     [[UserProfile alloc] initWithProvider:GOOGLE
                              andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
                               andUsername: @""
                                  andEmail:[self parseGoogleContactInfoString:[email value]]
                              andFirstName:firstName
-                              andLastName:lastName];
+                              andLastName:lastName
+                                 andExtra:extraDict];
     
     profile.username = @"";
     profile.gender = [self parseGoogleContactInfoString:googleContact.gender];
