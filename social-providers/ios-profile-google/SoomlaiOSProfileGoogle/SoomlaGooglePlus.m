@@ -17,10 +17,14 @@
 #import "SoomlaGooglePlus.h"
 #import "UserProfile.h"
 #import "SoomlaUtils.h"
+#import "SoomlaProfile.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
 @interface SoomlaGooglePlus ()
-@property(nonatomic, strong) id lastPageToken;
+
+@property (nonatomic, strong) id lastPageToken;
+@property (nonatomic, strong) UIViewController *webVC;
+
 @end
 
 @implementation SoomlaGooglePlus {
@@ -30,13 +34,59 @@
 @synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, socialActionSuccess, socialActionFail, clientId;
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
+static NSString *GoogleKeychainName;
 
-- (id)init{
+-(NSArray *)scopes {
+    static NSArray *_scopes = nil;
+    dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _scopes = @[
+                kGTLAuthScopePlusLogin,
+                kGTLAuthScopePlusUserinfoProfile
+        ];
+    });
+    return _scopes;
+}
+
+#pragma mark Swizzle URL-schemes routing
+
+static IMP originalImplementation = nil;
+static Method originalMethod = nil;
+static Method swizzledMethod = nil;
+
+-(BOOL)openURL:(NSURL *)url {
+    //when original method is swizzled, swizzled method will contain original implementation
+    return [[SoomlaProfile getInstance] tryHandleOpenURL:url sourceApplication:[[NSBundle mainBundle] bundleIdentifier] annotation:nil] ||
+            ((BOOL (*)(id, Method, ...))method_invoke)([UIApplication sharedApplication], swizzledMethod, url);
+}
+
+/*
+    swizzling [UIApplication openURL:] method to intercept opening URLs with 'http'-scheme
+    it's working like method overriding (we'll call original method if swizzled method returns NO) but better
+    it's better than overriding because brings some flavour of DI and doesn't oblige user to make changes with his code :)
+    @param forward sets direction of swizzling: if YES - we're replacing original method with our own, else - we're setting original method
+ */
+-(void)openURLSwizzle:(BOOL)forward {
+    static BOOL methodReplaced = NO;
+    if (!(forward ^ methodReplaced)) //we can swap method implementations only if this condition if true
+        return;
+    if (originalMethod == nil) {
+        originalMethod = class_getInstanceMethod([UIApplication class], @selector(openURL:));
+        swizzledMethod = class_getInstanceMethod([self class], @selector(openURL:));
+    }
+    method_exchangeImplementations(originalMethod, swizzledMethod);
+    methodReplaced = !methodReplaced; //signalize that implementations was swapped
+    LogDebug(TAG, forward ? @"Method openURL of UIApplication was overrided." : @"Method openURL of UIApplication was re-setted to original.");
+
+}
+
+- (id)init {
     self = [super init];
     
     if (!self)
         return nil;
-    
+
+    GoogleKeychainName = [NSString stringWithFormat:@"SoomlaGooglePlus: %@", [[NSBundle mainBundle] bundleIdentifier]];
     //subscribe to notification from unity via UnityAppController AppController_SendNotificationWithArg(kUnityOnOpenURL, notifData)
     LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -51,9 +101,13 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     if (providerParams){
         _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
         clientId = providerParams[@"clientId"];
+        NSNumber *forceWeb = providerParams[@"forceWeb"];
+        webOnly = forceWeb ? [forceWeb boolValue] : NO;
     } else {
         _autoLogin = NO;
+        webOnly = NO;
     }
+    [self openURLSwizzle:webOnly];
 }
 
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
@@ -67,8 +121,39 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
         fail([NSString stringWithFormat:@"Authentication params check failed: %@", authParamsCheckResult]);
         return;
     }
-    
+
     [self startGooglePlusAuth];
+}
+
+-(BOOL)startWebGooglePlusAuth:(NSURL *)url {
+    if (![self checkIsFallbackURL:url]) {
+        return NO;
+    }
+    self.webVC = [[UIViewController alloc] init];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 20, 300, 500)];
+    webView.backgroundColor = [UIColor whiteColor];
+    webView.scalesPageToFit = YES;
+    webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:self.webVC animated:YES completion:nil];
+    [self.webVC.view addSubview:webView];
+
+    NSDictionary *views = NSDictionaryOfVariableBindings(webView);
+
+    [self.webVC.view addConstraints:
+            [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|"
+                                                    options:0
+                                                    metrics:nil
+                                                      views:views]];
+
+    [self.webVC.view addConstraints:
+            [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView]|"
+                                                    options:0
+                                                    metrics:nil
+                                                      views:views]];
+
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    return YES;
 }
 
 - (void)startGooglePlusAuth{
@@ -80,11 +165,12 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     signIn.shouldFetchGooglePlusUser = YES;
     signIn.attemptSSO = YES; // tries to use other installed Google apps
     signIn.clientID = self.clientId;
+    signIn.keychainName = GoogleKeychainName;
     signIn.scopes = scopes;
     
     signIn.delegate = self;
     share.delegate = self;
-    
+
     [signIn authenticate];
 }
 
@@ -156,11 +242,38 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
     return _autoLogin;
 }
 
+-(BOOL)checkIsFallbackURL:(NSURL *)url {
+    if (![url.host isEqualToString:@"accounts.google.com"]) {
+        return NO;
+    }
+    if ([url.absoluteString componentsSeparatedByString:@"?"].count < 2) {
+        return NO;
+    }
+    NSArray *rawParameters = [[url.absoluteString componentsSeparatedByString:@"?"][1] componentsSeparatedByString:@"&"];
+    NSMutableDictionary *processedParameters = [NSMutableDictionary new];
+    for (NSString *current in rawParameters) {
+        if ([current componentsSeparatedByString:@"="].count < 2) {
+            return NO;
+        }
+        NSArray *params = [current componentsSeparatedByString:@"="];
+        processedParameters[params[0]] = params[1];
+    }
+    return [processedParameters[@"redirect_uri"] isEqualToString:[[[NSBundle mainBundle] bundleIdentifier] stringByAppendingString:@"%3A%2Foauth2callback"]] &&
+            [processedParameters[@"client_id"] isEqualToString:clientId];
+}
 
-- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    return [GPPURLHandler handleURL:url
-           sourceApplication:sourceApplication
-                         annotation:annotation];
+- (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    sourceApplication = @"com.apple.mobilesafari"; //GPPURLHandler doesn't want to catch URLSchemas from another apps (excluding google apps)
+    BOOL handledByGoogle = [GPPURLHandler handleURL:url
+                                  sourceApplication:sourceApplication
+                                         annotation:annotation];
+    if (handledByGoogle) {
+        if (self.webVC != nil) {
+            [self.webVC dismissViewControllerAnimated:YES completion:nil];
+            self.webVC = nil;
+        }
+    }
+    return handledByGoogle || [self startWebGooglePlusAuth:url];
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail{
@@ -403,6 +516,7 @@ static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 }
 
 - (void)dealloc {
+    [self openURLSwizzle:NO];
     LogDebug(TAG, @"removeObserver kUnityOnOpenURL notification");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

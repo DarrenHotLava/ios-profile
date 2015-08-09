@@ -17,12 +17,13 @@
 #import "ISocialProvider.h"
 #import <GooglePlus/GooglePlus.h>
 
-@interface SoomlaGooglePlus : NSObject<ISocialProvider, GPPSignInDelegate, GPPShareDelegate>{
+@interface SoomlaGooglePlus : NSObject<ISocialProvider, GPPSignInDelegate, GPPShareDelegate> {
     loginSuccess loginSuccess;
     loginFail loginFail;
     loginCancel loginCancel;
     logoutSuccess logoutSuccess;
     logoutFail logoutFail;
+    @private BOOL webOnly;
 }
 
 @property (strong, nonatomic) loginSuccess loginSuccess;
