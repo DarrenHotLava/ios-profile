@@ -23,7 +23,6 @@
     loginCancel loginCancel;
     logoutSuccess logoutSuccess;
     logoutFail logoutFail;
-    @private BOOL webOnly;
 }
 
 @property (strong, nonatomic) loginSuccess loginSuccess;
