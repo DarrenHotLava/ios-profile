@@ -86,6 +86,9 @@ static Method swizzledMethod = nil;
     if (!self)
         return nil;
 
+    //replace `openURL:` original method
+    [self openURLSwizzle:YES];
+
     GoogleKeychainName = [NSString stringWithFormat:@"SoomlaGooglePlus: %@", [[NSBundle mainBundle] bundleIdentifier]];
     //subscribe to notification from unity via UnityAppController AppController_SendNotificationWithArg(kUnityOnOpenURL, notifData)
     LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
@@ -101,13 +104,9 @@ static Method swizzledMethod = nil;
     if (providerParams){
         _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
         clientId = providerParams[@"clientId"];
-        NSNumber *forceWeb = providerParams[@"forceWeb"];
-        webOnly = forceWeb ? [forceWeb boolValue] : NO;
     } else {
         _autoLogin = NO;
-        webOnly = NO;
     }
-    [self openURLSwizzle:webOnly];
 }
 
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
