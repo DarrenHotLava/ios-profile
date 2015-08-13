@@ -25,6 +25,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define SOOMLA_PROFILE_VERSION @"1.1.4"
+
 // if using Unity social provider this is YES
 BOOL UsingExternalProvider;
 
@@ -37,6 +39,10 @@ BOOL UsingExternalProvider;
 
 + (BOOL)isUsingExternalProvider {
     return UsingExternalProvider;
+}
+
++ (NSString*)getVersion {
+    return SOOMLA_PROFILE_VERSION;
 }
 
 - (void)initialize {
