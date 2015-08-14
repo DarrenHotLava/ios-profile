@@ -6,6 +6,7 @@
 
 * Changes
   * Added version in code
+  * G+. Allow to log in from WebView instead of Safari on iOS
 
 ### v1.1.3 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.2...v1.1.3)
 
