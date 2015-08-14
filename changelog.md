@@ -1,3 +1,12 @@
+### v1.1.4 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.3...v1.1.4)
+
+* New Features
+  * Implemented Auto Login
+  * Support extra params in UserProfile
+
+* Changes
+  * Added version in code
+
 ### v1.1.3 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.2...v1.1.3)
 
 * New Features
