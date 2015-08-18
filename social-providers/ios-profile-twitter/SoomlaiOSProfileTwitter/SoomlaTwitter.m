@@ -251,7 +251,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail {
     [self.twitter getUserInformationFor:loggedInUser successBlock:^(NSDictionary *user) {
-        UserProfile *userProfile = [self parseUserProfile:user];
+        UserProfile *userProfile = [self parseUserProfile:user withExtraData:YES];
         success(userProfile);
     } errorBlock:^(NSError *error) {
         fail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
@@ -538,7 +538,7 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     return YES;
 }
 
-- (UserProfile *)parseUserProfile:(NSDictionary *)user {
+-(UserProfile *)parseUserProfile:(NSDictionary *)user withExtraData:(BOOL)withExtraData{
     NSString *fullName = user[@"name"];
     NSString *firstName = @"";
     NSString *lastName = @"";
@@ -551,13 +551,16 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
             }
         }
     }
-    
+
     // According to: https://dev.twitter.com/rest/reference/get/users/show
     //
     // - Twitter does not supply email access: https://dev.twitter.com/faq#26
-    NSDictionary *extraDict = @{
-            @"access_token": (_twitter.oauthAccessToken ? _twitter.oauthAccessToken : [NSNull null])
-    };
+    NSDictionary *extraDict = nil;
+    if (withExtraData) {
+        extraDict = @{
+                @"access_token": (_twitter.oauthAccessToken ? _twitter.oauthAccessToken : [NSNull null])
+        };
+    }
     UserProfile *userProfile = [[UserProfile alloc] initWithProvider:TWITTER
                                                         andProfileId:user[@"id_str"]
                                                          andUsername:user[@"screen_name"]
@@ -565,19 +568,23 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
                                                         andFirstName:firstName
                                                          andLastName:lastName
                                                             andExtra:extraDict];
-    
+
     // No gender information on Twitter:
     // https://twittercommunity.com/t/how-to-find-male-female-accounts-in-following-list/7367
     userProfile.gender = @"";
-    
+
     // No birthday on Twitter:
     // https://twittercommunity.com/t/how-can-i-get-email-of-user-if-i-use-api/7019/16
     userProfile.birthday = @"";
-    
+
     userProfile.language = user[@"lang"];
     userProfile.location = user[@"location"];
     userProfile.avatarLink = user[@"profile_image_url"];
     return userProfile;
+}
+
+- (UserProfile *)parseUserProfile:(NSDictionary *)user {
+    return [self parseUserProfile:user withExtraData:NO];
 }
 
 @end

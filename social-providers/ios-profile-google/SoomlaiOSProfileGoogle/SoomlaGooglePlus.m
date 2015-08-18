@@ -210,7 +210,7 @@ static Method swizzledMethod = nil;
                     LogError(TAG, @"Failed getting user profile");
                     fail([error localizedDescription]);
                 } else {
-                    UserProfile *userProfile = [self parseGoogleContact:person];
+                    UserProfile *userProfile = [self parseGoogleContact:person withExtraData:YES];
                     success(userProfile);
                 }
             }];
@@ -431,10 +431,10 @@ static Method swizzledMethod = nil;
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, pageId]]];
 }
 
--(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{
+-(UserProfile *)parseGoogleContact:(GTLPlusPerson *)googleContact withExtraData:(BOOL)withExtraData {
     NSString* displayName = googleContact.displayName;
     NSString* firstName, *lastName;
-    
+
     if (displayName)
     {
         NSArray *names = [displayName componentsSeparatedByString:@" "];
@@ -445,31 +445,39 @@ static Method swizzledMethod = nil;
             }
         }
     }
-    
+
     GTLPlusPersonEmailsItem *email = [googleContact.emails objectAtIndex:0];
     GTMOAuth2Authentication *auth = [GPPSignIn sharedInstance].authentication;
-    NSDictionary *extraDict = @{
-            @"access_token": auth.accessToken,
-            @"refresh_token": auth.refreshToken,
-            @"expiration_date": @(auth.expirationDate.timeIntervalSince1970)
-    };
+    NSDictionary *extraDict = nil;
+    if (withExtraData) {
+        extraDict = @{
+                @"access_token": auth.accessToken,
+                @"refresh_token": auth.refreshToken,
+                @"expiration_date": @((NSInteger)auth.expirationDate.timeIntervalSince1970)
+        };
+    }
+
     UserProfile * profile =
-    [[UserProfile alloc] initWithProvider:GOOGLE
-                             andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
-                              andUsername: @""
-                                 andEmail:[self parseGoogleContactInfoString:[email value]]
-                             andFirstName:firstName
-                              andLastName:lastName
-                                 andExtra:extraDict];
-    
+            [[UserProfile alloc] initWithProvider:GOOGLE
+                                     andProfileId:[self parseGoogleContactInfoString:googleContact.identifier]
+                                      andUsername: @""
+                                         andEmail:[self parseGoogleContactInfoString:[email value]]
+                                     andFirstName:firstName
+                                      andLastName:lastName
+                                         andExtra:extraDict];
+
     profile.username = @"";
     profile.gender = [self parseGoogleContactInfoString:googleContact.gender];
     profile.birthday = [self parseGoogleContactInfoString:googleContact.birthday];
     profile.location = [self parseGoogleContactInfoString:googleContact.currentLocation];
     profile.avatarLink = [self parseGoogleContactInfoString:[googleContact.image url]];
     profile.language = [self parseGoogleContactInfoString:googleContact.language];
-    
+
     return profile;
+}
+
+-(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{
+    return [self parseGoogleContact:googleContact withExtraData:NO];
 }
 
 - (NSString *)parseGoogleContactInfoString:(NSString * )orig{
