@@ -144,7 +144,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 NSDictionary *extraDict = @{
                         @"access_token": tokenData.accessToken,
                         @"permissions": tokenData.permissions,
-                        @"expiration_date": @(tokenData.expirationDate.timeIntervalSince1970)
+                        @"expiration_date": @((NSInteger)tokenData.expirationDate.timeIntervalSince1970)
                 };
                 UserProfile *userProfile = [[UserProfile alloc] initWithProvider:FACEBOOK
                                                                     andProfileId:result[@"id"]
@@ -490,7 +490,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 NSArray *rawFeeds = [result data];
                 for (NSDictionary *dict in rawFeeds) {
                     NSString *str;
-                    str = dict[@"story"];
+                    str = dict[@"message"];
                     if (str) {
                         [feeds addObject:str];
                     }

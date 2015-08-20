@@ -31,7 +31,7 @@
           andFirstName:(NSString *)oFirstName
            andLastName:(NSString *)oLastName {
     return [self initWithProvider:oProvider andProfileId:oProfileId andUsername:oUsername andEmail:oEmail
-                     andFirstName:oFirstName andLastName:oLastName andExtra:@{}];
+                     andFirstName:oFirstName andLastName:oLastName andExtra:nil];
 }
 
 - (id)initWithProvider:(Provider)oProvider
