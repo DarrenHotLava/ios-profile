@@ -490,7 +490,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 NSArray *rawFeeds = [result data];
                 for (NSDictionary *dict in rawFeeds) {
                     NSString *str;
-                    str = dict[@"story"];
+                    str = dict[@"message"];
                     if (str) {
                         [feeds addObject:str];
                     }
