@@ -133,7 +133,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
  */
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail {
     LogDebug(TAG, @"Getting user profile");
-    [self checkPermissions: @[@"public_profile", @"user_birthday"] withWrite:NO
+    [self checkPermissions: @[@"public_profile", @"user_birthday", @"user_location", @"user_likes"] withWrite:NO
                    success:^() {
 
         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -157,6 +157,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 userProfile.gender = result[@"gender"];
                 userProfile.birthday = result[@"birthday"];
                 userProfile.location = result[@"location"][@"name"];
+                userProfile.language = result[@"languages"][0][@"name"];
                 userProfile.avatarLink = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=large", result[@"id"]];
 
                 success(userProfile);
