@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "STTwitterProtocol.h"
 
-NS_ENUM(NSUInteger, STTwitterOSErrorCode) {
-    STTwitterOSSystemCannotAccessTwitter,
+extern NS_ENUM(NSUInteger, STTwitterOSErrorCode) {
+    STTwitterOSSystemCannotAccessTwitter = 0,
     STTwitterOSCannotFindTwitterAccount,
     STTwitterOSUserDeniedAccessToTheirAccounts,
     STTwitterOSNoTwitterAccountIsAvailable
@@ -20,12 +20,16 @@ NS_ENUM(NSUInteger, STTwitterOSErrorCode) {
 
 @interface STTwitterOS : NSObject <STTwitterProtocol>
 
+@property (nonatomic) NSTimeInterval timeoutInSeconds;
+
 + (instancetype)twitterAPIOSWithAccount:(ACAccount *)account;
 + (instancetype)twitterAPIOSWithFirstAccount;
 
-- (BOOL)canVerifyCredentials;
-- (void)verifyCredentialsWithSuccessBlock:(void(^)(NSString *username))successBlock errorBlock:(void(^)(NSError *error))errorBlock;
-
 - (NSString *)username;
+- (NSString *)userID;
+
+// useful for the so-called 'OAuth Echo' https://dev.twitter.com/twitter-kit/ios/oauth-echo
+
+- (NSDictionary *)OAuthEchoHeadersToVerifyCredentials;
 
 @end
