@@ -1,12 +1,12 @@
 /*
  Copyright (C) 2012-2014 Soomla Inc.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define SOOMLA_PROFILE_VERSION @"1.1.4"
+#define SOOMLA_PROFILE_VERSION @"1.1.5"
 
 // if using Unity social provider this is YES
 BOOL UsingExternalProvider;
@@ -33,7 +33,7 @@ BOOL UsingExternalProvider;
 @implementation SoomlaProfile
 
 + (void)usingExternalProvider:(BOOL)isExternal {
-    
+
     UsingExternalProvider = isExternal;
 }
 
@@ -100,7 +100,7 @@ BOOL UsingExternalProvider;
         return [authController isLoggedInWithProvider:provider];
     }
     @catch (NSException *exception) {
-        
+
         // TODO: implement logic like in java that will raise the exception. Currently not raised
         return [socialController isLoggedInWithProvider:provider];
     }
@@ -112,7 +112,7 @@ BOOL UsingExternalProvider;
         return [authController getStoredUserProfileWithProvider:provider];
     }
     @catch (NSException *exception) {
-        
+
         // TODO: implement logic like in java that will raise the exception. Currently not raised
         return [socialController getStoredUserProfileWithProvider:provider];
     }
@@ -298,19 +298,19 @@ BOOL UsingExternalProvider;
     NSString* appID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
     float iOSVersion = [[UIDevice currentDevice].systemVersion floatValue];
     NSString *reviewURL;
-    
+
     if (iOSVersion<7) { //IOS < 7.0
         NSString *templateReviewURLiOS6 = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
         reviewURL = [templateReviewURLiOS6 stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
-        
+
     } else { //IOS >= 7.0
         NSString *templateReviewURLiOS7 = @"itms-apps://itunes.apple.com/app/idAPP_ID";
         reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", appID]];
     }
-    
+
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
     [ProfileEventHandling postUserRating];
-    
+
 }
 
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {
@@ -345,13 +345,13 @@ BOOL UsingExternalProvider;
 
 + (SoomlaProfile*)getInstance {
     static SoomlaProfile* _instance = nil;
-    
+
     @synchronized( self ) {
         if( _instance == nil ) {
             _instance = [[SoomlaProfile alloc ] init];
         }
     }
-    
+
     return _instance;
 }
 

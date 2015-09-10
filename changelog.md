@@ -1,3 +1,9 @@
+### v1.1.5 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.4...v1.1.5)
+
+* Fixes
+  * Minor issues in extraParams
+  * Changed getFeed in iOS according Android implementation
+
 ### v1.1.4 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.3...v1.1.4)
 
 * New Features
