@@ -20,12 +20,14 @@
  ...
  */
 
-NS_ENUM(NSUInteger, STTwitterOAuthErrorCode) {
-    STTwitterOAuthCannotPostAccessTokenRequestWithoutPIN,
+extern NS_ENUM(NSUInteger, STTwitterOAuthErrorCode) {
+    STTwitterOAuthCannotPostAccessTokenRequestWithoutPIN = 0,
     STTwitterOAuthBadCredentialsOrConsumerTokensNotXAuthEnabled
 };
 
 @interface STTwitterOAuth : NSObject <STTwitterProtocol>
+
+@property (nonatomic) NSTimeInterval timeoutInSeconds;
 
 + (instancetype)twitterOAuthWithConsumerName:(NSString *)consumerName
                                  consumerKey:(NSString *)consumerKey
@@ -50,6 +52,8 @@ authenticateInsteadOfAuthorize:(BOOL)authenticateInsteadOfAuthorize
            oauthCallback:(NSString *)oauthCallback
               errorBlock:(void(^)(NSError *error))errorBlock;
 
+- (void)signRequest:(STHTTPRequest *)r isMediaUpload:(BOOL)isMediaUpload oauthCallback:(NSString *)oauthCallback;
+
 // convenience
 - (void)postTokenRequest:(void(^)(NSURL *url, NSString *oauthToken))successBlock
            oauthCallback:(NSString *)oauthCallback
@@ -69,9 +73,9 @@ authenticateInsteadOfAuthorize:(BOOL)authenticateInsteadOfAuthorize
 - (void)postReverseOAuthTokenRequest:(void(^)(NSString *authenticationHeader))successBlock
                           errorBlock:(void(^)(NSError *error))errorBlock;
 
-- (BOOL)canVerifyCredentials;
+// useful for the so-called 'OAuth Echo' https://dev.twitter.com/twitter-kit/ios/oauth-echo
 
-- (void)verifyCredentialsWithSuccessBlock:(void(^)(NSString *username))successBlock errorBlock:(void(^)(NSError *error))errorBlock;
+- (NSDictionary *)OAuthEchoHeadersToVerifyCredentials;
 
 @end
 
