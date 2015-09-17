@@ -52,7 +52,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (BOOL)initialize {
-    [self initialize:nil];
+    return [self initialize:nil];
 }
 
 - (BOOL)initialize:(NSDictionary *)customParams {
