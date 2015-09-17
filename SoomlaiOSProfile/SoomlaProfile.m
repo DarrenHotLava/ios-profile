@@ -22,6 +22,7 @@
 #import "ProfileEventHandling.h"
 #import "UserProfileNotFoundException.h"
 #import "UserProfileStorage.h"
+#import "SoomlaUtils.h"
 
 #import <UIKit/UIKit.h>
 
@@ -31,6 +32,11 @@
 BOOL UsingExternalProvider;
 
 @implementation SoomlaProfile
+
+@synthesize initialized;
+
+static NSString* TAG = @"SOOMLA SoomlaProfile";
+
 
 + (void)usingExternalProvider:(BOOL)isExternal {
 
@@ -45,11 +51,17 @@ BOOL UsingExternalProvider;
     return SOOMLA_PROFILE_VERSION;
 }
 
-- (void)initialize {
-    [self initialize:nil];
+- (BOOL)initialize {
+    return [self initialize:nil];
 }
 
-- (void)initialize:(NSDictionary *)customParams {
+- (BOOL)initialize:(NSDictionary *)customParams {
+
+    if (self.initialized) {
+        LogDebug(TAG, @"SoomlaProfile already initialized.");
+        return NO;
+    }
+
     if (UsingExternalProvider) {
         authController = [[AuthController alloc] initWithoutLoadingProviders];
         socialController = [[SocialController alloc] initWithoutLoadingProviders];
@@ -59,10 +71,14 @@ BOOL UsingExternalProvider;
         socialController = [[SocialController alloc] initWithParameters:customParams];
     }
 
+    self.initialized = YES;
+
     [ProfileEventHandling postProfileInitialized];
 
     [authController settleAutoLogin];
     [socialController settleAutoLogin];
+
+    return YES;
 }
 
 - (void)loginWithProvider:(Provider)provider {

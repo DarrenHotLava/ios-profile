@@ -7,12 +7,15 @@
 //
 
 #import "STHTTPRequest.h"
+#import "STTwitterRequestProtocol.h"
 
-@interface STHTTPRequest (STTwitter)
+@interface STHTTPRequest (STTwitter) <STTwitterRequestProtocol>
 
 + (STHTTPRequest *)twitterRequestWithURLString:(NSString *)urlString
+                                    HTTPMethod:(NSString *)HTTPMethod
+                              timeoutInSeconds:(NSTimeInterval)timeoutInSeconds
                   stTwitterUploadProgressBlock:(void(^)(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite))uploadProgressBlock
-                stTwitterDownloadProgressBlock:(void(^)(id json))downloadProgressBlock
+                stTwitterDownloadProgressBlock:(void(^)(NSData *data, NSUInteger totalBytesReceived, long long totalBytesExpectedToReceive))stTwitterDownloadProgressBlock
                          stTwitterSuccessBlock:(void(^)(NSDictionary *requestHeaders, NSDictionary *responseHeaders, id json))successBlock
                            stTwitterErrorBlock:(void(^)(NSDictionary *requestHeaders, NSDictionary *responseHeaders, NSError *error))errorBlock;
 
