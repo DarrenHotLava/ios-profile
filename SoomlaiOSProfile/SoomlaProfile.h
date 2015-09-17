@@ -29,9 +29,12 @@
 @interface SoomlaProfile : NSObject {
 
     @private
+    BOOL initialized;
     AuthController* authController;
     SocialController* socialController;
 }
+
+@property BOOL initialized;
 
 + (void)usingExternalProvider:(BOOL)isExternal;
 + (BOOL)isUsingExternalProvider;
@@ -41,7 +44,7 @@
 
  Initializes the Profile module.  Call this method after <code>Soomla.initialize()</code>
  */
-- (void)initialize;
+- (BOOL)initialize;
 
 /**
  Constructor.
@@ -49,7 +52,7 @@
  Initializes the Profile module.  Call this method after <code>Soomla.initialize()</code>
  @param customParams provides custom values for specific social providers
  */
-- (void)initialize:(NSDictionary *)customParams;
+- (BOOL)initialize:(NSDictionary *)customParams;
 
 /**
  Login to the given provider
