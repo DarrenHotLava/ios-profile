@@ -1,3 +1,12 @@
+### v1.1.6 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.5...v1.1.6)
+
+* Fixes
+  * libSTTwitter updated to fix various issues.
+  * Calling SoomlaProfile.login from within OnSoomlaProfileInitialized triggers a CC_ASSERT(mInited);
+
+* Changes
+  * Removed binaries and improved build scripts
+
 ### v1.1.5 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.4...v1.1.5)
 
 * Fixes
