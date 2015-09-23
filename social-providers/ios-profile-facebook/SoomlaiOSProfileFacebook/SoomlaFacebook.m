@@ -15,6 +15,8 @@
  */
 
 #import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+
 #import "SoomlaFacebook.h"
 #import "UserProfile.h"
 #import "SoomlaUtils.h"
@@ -25,7 +27,7 @@
 #define DEFAULT_LOGIN_PERMISSIONS @[@"public_profile", @"email", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
 #define DEFAULT_PAGE_SIZE 20
 
-@interface SoomlaFacebook ()
+@interface SoomlaFacebook () <FBSDKGameRequestDialogDelegate>
 @property(nonatomic) NSNumber *lastContactPage;
 @property(nonatomic) NSNumber *lastFeedPage;
 @property(nonatomic) FBSessionLoginBehavior loginBehavior;
@@ -35,6 +37,10 @@
 @implementation SoomlaFacebook {
     NSArray *_loginPermissions;
     BOOL _autoLogin;
+    
+    inviteSuccess _inviteSuccessHandler;
+    inviteCancel _inviteCancelHandler;
+    inviteFail _inviteFailHandler;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -503,6 +509,49 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     } fail:^(NSString *errorMessage) {
         fail(errorMessage);
     }];
+}
+
+- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success fail:(inviteFail)fail cancel:(inviteCancel)cancel {
+    _inviteSuccessHandler = success;
+    _inviteFailHandler = fail;
+    _inviteCancelHandler = cancel;
+    
+    FBSDKGameRequestDialog *dialog = [FBSDKGameRequestDialog new];
+    FBSDKGameRequestContent *content = [FBSDKGameRequestContent new];
+    content.title = dialogTitle;
+    content.message = inviteMessage;
+    
+    dialog.content = content;
+    dialog.delegate = self;
+    [dialog show];
+}
+
+
+-(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didCompleteWithResults:(NSDictionary *)results {
+    NSRegularExpression *invitedRegExp = [NSRegularExpression regularExpressionWithPattern:@"to\\[\\d\\]"
+                                                                                   options:NSRegularExpressionUseUnicodeWordBoundaries
+                                                                                     error:nil];
+    NSString *requestId = results[@"request"];
+    NSArray *invitedIds = [results.allValues objectsAtIndexes:[results.allValues indexesOfObjectsPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *relatedKey = [results allKeysForObject:obj][0];
+        NSRange found = [invitedRegExp firstMatchInString:relatedKey options:0 range:NSMakeRange(0, relatedKey.length)].range;
+        return found.location == 0 && found.length == relatedKey.length;
+    }]];
+    if (_inviteSuccessHandler) {
+        _inviteSuccessHandler(requestId, invitedIds);
+    }
+}
+
+-(void)gameRequestDialog:(FBSDKGameRequestDialog *)gameRequestDialog didFailWithError:(NSError *)error {
+    if (_inviteFailHandler) {
+        _inviteFailHandler(error.localizedDescription);
+    }
+}
+
+-(void)gameRequestDialogDidCancel:(FBSDKGameRequestDialog *)gameRequestDialog {
+    if (_inviteCancelHandler) {
+        _inviteCancelHandler();
+    }
 }
 
 - (void)uploadImageWithMessage:(NSString *)message
