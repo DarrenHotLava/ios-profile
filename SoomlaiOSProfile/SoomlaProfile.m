@@ -305,6 +305,16 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     [self getFeedWithProvider:provider andFromStart:NO andPayload:@"" andReward:reward];
 }
 
+- (void)inviteWithProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle
+                   payload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController inviteProvider:provider inviteMessage:inviteMessage dialogTitle:dialogTitle payload:payload
+                           andReward:reward];
+}
+
+- (void)inviteWithProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage andReward:(Reward *)reward {
+    [self inviteWithProvider:provider inviteMessage:inviteMessage dialogTitle:nil payload:@"" andReward:nil];
+}
+
 - (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward {
     [socialController like:provider andPageId:pageId andReward:reward];
 }
