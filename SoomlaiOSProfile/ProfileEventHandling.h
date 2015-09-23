@@ -45,9 +45,14 @@
 #define EVENT_UP_GET_CONTACTS_FINISHED          @"up_get_contacts_finished"
 #define EVENT_UP_GET_CONTACTS_FAILED            @"up_get_contacts_failed"
 
-#define EVENT_UP_GET_FEED_STARTED           @"up_get_feed_started"
-#define EVENT_UP_GET_FEED_FINISHED          @"up_get_feed_finished"
-#define EVENT_UP_GET_FEED_FAILED            @"up_get_feed_failed"
+#define EVENT_UP_GET_FEED_STARTED               @"up_get_feed_started"
+#define EVENT_UP_GET_FEED_FINISHED              @"up_get_feed_finished"
+#define EVENT_UP_GET_FEED_FAILED                @"up_get_feed_failed"
+
+#define EVENT_UP_INVITE_STARTED                 @"up_invite_started"
+#define EVENT_UP_INVITE_FINISHED                @"up_invite_finished"
+#define EVENT_UP_INVITE_CANCELLED               @"up_invite_cancelled"
+#define EVENT_UP_INVITE_FAILED                  @"up_invite_failed"
 
 
 // UserProfile Elements
@@ -61,6 +66,8 @@
 #define DICT_ELEMENT_MESSAGE                    @"message"
 #define DICT_ELEMENT_CONTACTS                   @"contacts"
 #define DICT_ELEMENT_FEEDS                      @"feeds"
+#define DICT_ELEMENT_REQUEST_ID                 @"requestId"
+#define DICT_ELEMENT_INVITED_LIST               @"invitedIds"
 #define DICT_ELEMENT_REWARD                     @"reward"
 #define DICT_ELEMENT_IS_BADGE                   @"isBadge"
 
@@ -254,5 +261,45 @@ Called when the service has been initializedt.
  @param message a Description of the reason for failure
  */
 + (void)postGetFeedFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withFromStart:(bool)fromStart withPayload:(NSString *)payload;
+
+/**
+ Called when a generic social action on a provider has started. Which fires the
+ `EVENT_UP_INVITE_STARTED` event.
+
+ @param provider The provider on which the social action has started
+ @param socialActionType The social action which started
+ */
++ (void)postInviteStarted:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
+
+/**
+ Called when a generic social action on a provider has finished. Which fires the
+ `EVENT_UP_INVITE_FINISHED` event.
+
+ @param provider The provider on which the social action has finished
+ @param socialActionType The social action which finished
+ */
++ (void)postInviteFinished:(Provider)provider withType:(SocialActionType)socialActionType requestId:(NSString *)requestId
+                                            invitedIds:(NSArray *)invitedIds withPayload:(NSString *)payload;
+
+/**
+ Called when a generic social action on a provider has been cancelled. Which fires
+ the `EVENT_UP_INVITE_CANCELLED` event.
+
+ @param provider The provider on which the social action has been cancelled
+ @param socialActionType The social action which was cancelled
+ */
++ (void)postInviteCancelled:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload;
+
+/**
+ Called when a generic social action on a provider has failed. Which fires the
+ `EVENT_UP_INVITE_FAILED` event.
+
+ @param provider The provider on which the social action has failed
+ @param socialActionType The social action which failed
+ @param message a Description of the reason for failure
+ */
++ (void)postInviteFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message
+             withPayload:(NSString *)payload;
+
 
 @end

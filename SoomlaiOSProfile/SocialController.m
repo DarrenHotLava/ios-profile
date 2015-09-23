@@ -265,12 +265,15 @@ static NSString* TAG = @"SOOMLA SocialController";
                payload:(NSString *)payload andReward:(Reward *)reward {
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
 
-    [ProfileEventHandling postSocialActionStarted:provider withType:INVITE withPayload:payload];
-
-    [socialProvider invite:inviteMessage dialogTitle:dialogTitle success:^{
-        [ProfileEventHandling postSocialActionFinished:provider withType:INVITE withPayload:payload];
+    SocialActionType currentActionType = INVITE;
+    [ProfileEventHandling postInviteStarted:provider withType:currentActionType withPayload:payload];
+    [socialProvider invite:inviteMessage dialogTitle:dialogTitle success:^(NSString *requestId, NSArray *invitedIds) {
+        [ProfileEventHandling postInviteFinished:provider withType:currentActionType requestId:requestId
+                                      invitedIds:invitedIds withPayload:payload];
     } fail:^(NSString *message) {
-        [ProfileEventHandling postSocialActionFailed:provider withType:INVITE withMessage:message withPayload:payload];
+        [ProfileEventHandling postInviteFailed:provider withType:currentActionType withMessage:message withPayload:payload];
+    } cancel:^{
+        [ProfileEventHandling postInviteCancelled:provider withType:currentActionType withPayload:payload];
     }];
 }
 

@@ -23,3 +23,7 @@ typedef void (^contactsActionSuccess)(NSArray* userProfiles, bool hasMore);
 typedef void (^contactsActionFail)(NSString* message);
 typedef void (^feedsActionSuccess)(NSArray* feeds, bool hasMore);
 typedef void (^feedsActionFail)(NSString* message);
+typedef void (^inviteSuccess)(NSString * requestId, NSArray *invitedIds);
+typedef void (^inviteFail)(NSString *message);
+typedef void (^inviteCancel)();
+
