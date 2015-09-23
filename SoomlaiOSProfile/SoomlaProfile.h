@@ -335,6 +335,13 @@ integrated in the story
 */
 - (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage;
 
+//public static void UploadCurrentScreenShot(MonoBehaviour mb, Provider provider, string title, string message, string payload="", Reward reward = null)
+
+- (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message;
+
+- (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message
+                        payload:(NSString *)payload andReward:(Reward *)reward;
+
 /**
  Fetches the user's contact list and grants the user a reward.
 
