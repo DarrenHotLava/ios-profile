@@ -479,7 +479,7 @@ static Method swizzledMethod = nil;
 - (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
           fail:(inviteFail)fail cancel:(inviteCancel)cancel {
     if (fail) {
-        fail(@"Invitation doesn't support in Google+.");
+        fail(@"Invitation isn't supported in Google+.");
     }
 }
 
