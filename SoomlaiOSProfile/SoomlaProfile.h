@@ -335,10 +335,25 @@ integrated in the story
 */
 - (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage;
 
-//public static void UploadCurrentScreenShot(MonoBehaviour mb, Provider provider, string title, string message, string payload="", Reward reward = null)
 
+/**
+* Shares a current screenshot to the user's feed and grants the user a reward.
+*
+* @param provider The provider to use
+* @param title A text that will used as title
+* @param message A text that will accompany the image
+*/
 - (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message;
 
+/**
+* Shares a current screenshot to the user's feed and grants the user a reward.
+*
+* @param provider The provider to use
+* @param title A text that will used as title
+* @param message A text that will accompany the image
+* @param payload a String to receive when the function returns.
+* @param reward The reward to give the user
+*/
 - (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message
                         payload:(NSString *)payload andReward:(Reward *)reward;
 
