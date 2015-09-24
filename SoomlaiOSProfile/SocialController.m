@@ -268,6 +268,9 @@ static NSString* TAG = @"SOOMLA SocialController";
     SocialActionType currentActionType = INVITE;
     [ProfileEventHandling postInviteStarted:provider withType:currentActionType withPayload:payload];
     [socialProvider invite:inviteMessage dialogTitle:dialogTitle success:^(NSString *requestId, NSArray *invitedIds) {
+        if (reward) {
+            [reward give];
+        }
         [ProfileEventHandling postInviteFinished:provider withType:currentActionType requestId:requestId
                                       invitedIds:invitedIds withPayload:payload];
     } fail:^(NSString *message) {
