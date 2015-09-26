@@ -23,6 +23,8 @@
 @interface SoomlaGooglePlus ()
 
 @property (nonatomic, strong) id lastPageToken;
+@property (nonatomic, strong) id lastFeedPageToken;
+
 @property (nonatomic, strong) UIViewController *webVC;
 
 @end
@@ -407,7 +409,34 @@ static Method swizzledMethod = nil;
 
 - (void)getFeed:(bool)fromFirst success:(feedsActionSuccess)success fail:(feedsActionFail)fail {
     LogDebug(TAG, @"getFeed");
-    fail(@"getFeed is not implemented!");
+
+    GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+    plusService.retryEnabled = YES;
+    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+
+    GTLQueryPlus *query = [GTLQueryPlus queryForActivitiesListWithUserId:@"me" collection:kGTLPlusCollectionPublic];
+
+    NSString *pageToken = fromFirst ? nil : self.lastFeedPageToken;
+    self.lastFeedPageToken = nil;
+    if (pageToken) {
+        [query setPageToken:pageToken];
+    }
+
+    [plusService executeQuery:query completionHandler:^(GTLServiceTicket *ticket, GTLPlusActivityFeed * feed, NSError *error) {
+        if (!error) {
+            NSMutableArray *feedsResult = [NSMutableArray new];
+            for (GTLPlusActivity *activity in feed.items) {
+                NSString *stringToFeed = @"";
+                if (activity.object && activity.object.content) {
+                    stringToFeed = activity.object.content;
+                }
+                [feedsResult addObject:stringToFeed];
+            }
+            success(feedsResult, feed.nextPageToken != nil);
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
 }
 
 - (Provider)getProvider {
@@ -474,6 +503,13 @@ static Method swizzledMethod = nil;
     profile.language = [self parseGoogleContactInfoString:googleContact.language];
 
     return profile;
+}
+
+- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
+          fail:(inviteFail)fail cancel:(inviteCancel)cancel {
+    if (fail) {
+        fail(@"Invitation isn't supported in Google+.");
+    }
 }
 
 -(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{

@@ -261,6 +261,25 @@ static NSString* TAG = @"SOOMLA SocialController";
     }];
 }
 
+- (void)inviteProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle
+               payload:(NSString *)payload andReward:(Reward *)reward {
+    id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
+
+    SocialActionType currentActionType = INVITE;
+    [ProfileEventHandling postInviteStarted:provider withType:currentActionType withPayload:payload];
+    [socialProvider invite:inviteMessage dialogTitle:dialogTitle success:^(NSString *requestId, NSArray *invitedIds) {
+        if (reward) {
+            [reward give];
+        }
+        [ProfileEventHandling postInviteFinished:provider withType:currentActionType requestId:requestId
+                                      invitedIds:invitedIds withPayload:payload];
+    } fail:^(NSString *message) {
+        [ProfileEventHandling postInviteFailed:provider withType:currentActionType withMessage:message withPayload:payload];
+    } cancel:^{
+        [ProfileEventHandling postInviteCancelled:provider withType:currentActionType withPayload:payload];
+    }];
+}
+
 - (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward {
     id<ISocialProvider> socialProvider = (id<ISocialProvider>)[self getProvider:provider];
     

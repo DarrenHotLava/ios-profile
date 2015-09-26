@@ -335,6 +335,28 @@ integrated in the story
 */
 - (void)uploadImageWithProvider:(Provider)provider andMessage:(NSString *)message andFilePath:(NSString *)filePath andPayload:(NSString *)payload andReward:(Reward *)reward andConfirmation:(BOOL)showConfirmation andCustomMessage:(NSString *)customMessage;
 
+
+/**
+* Shares a current screenshot to the user's feed and grants the user a reward.
+*
+* @param provider The provider to use
+* @param title A text that will used as title
+* @param message A text that will accompany the image
+*/
+- (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message;
+
+/**
+* Shares a current screenshot to the user's feed and grants the user a reward.
+*
+* @param provider The provider to use
+* @param title A text that will used as title
+* @param message A text that will accompany the image
+* @param payload a String to receive when the function returns.
+* @param reward The reward to give the user
+*/
+- (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message
+                        payload:(NSString *)payload andReward:(Reward *)reward;
+
 /**
  Fetches the user's contact list and grants the user a reward.
 
@@ -378,6 +400,27 @@ Fetches the user's feed and grants the user a reward.
  @param reward The reward to grant
  */
 - (void)getFeedWithProvider:(Provider)provider andReward:(Reward *)reward;
+
+/**
+ Send an invite and grants the user a reward.
+
+ @param provider The provider to use.
+ @param inviteMessage The message was sent in invite.
+ @param dialogTitle Title of invite dialog.
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant.
+ */
+- (void)inviteWithProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle
+                   payload:(NSString *)payload andReward:(Reward *)reward;
+
+/**
+ Send an invite and grants the user a reward.
+
+ @param provider The provider to use.
+ @param inviteMessage The message was sent in invite.
+ @param reward The reward to grant.
+ */
+- (void)inviteWithProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage andReward:(Reward *)reward;
 
 /**
  Opens up a page to like for the user (external)

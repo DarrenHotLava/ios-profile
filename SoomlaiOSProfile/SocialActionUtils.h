@@ -22,7 +22,8 @@ typedef enum {
     UPDATE_STORY = 1,
     UPLOAD_IMAGE = 2,
     GET_CONTACTS = 3,
-    GET_FEED = 4
+    GET_FEED = 4,
+    INVITE = 5
 } SocialActionType;
 
 /**

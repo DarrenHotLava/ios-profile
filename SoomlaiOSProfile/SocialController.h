@@ -156,6 +156,19 @@
 - (void)getFeedProvider:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
+ Send an invite and grants the user a reward.
+
+ @param provider The provider to use.
+ @param inviteMessage The message was sent in invite.
+ @param dialogTitle Title of invite dialog.
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant.
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)inviteProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle
+               payload:(NSString *)payload andReward:(Reward *)reward;
+
+/**
  Opens up a page to like for the user (external)
  
  @param provider The provider to like page on
