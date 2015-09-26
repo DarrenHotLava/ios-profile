@@ -104,6 +104,17 @@
  */
 - (void)getFeed:(bool)fromStart success:(feedsActionSuccess)success fail:(feedsActionFail)fail;
 
+
+/**
+ Sends an invite
+
+ @param success a invite success callback
+ @param fail a invite failure callback
+ @param cancel a invite cancel callback
+ */
+- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
+          fail:(inviteFail)fail cancel:(inviteCancel)cancel;
+
 /**
  Shares a photo to the user's feed
 

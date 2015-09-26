@@ -27,7 +27,7 @@
  to reward your users with coins (or any other virtual items) in exchange 
  for social actions they perform.
  */
-@interface SoomlaFacebook : NSObject <ISocialProvider> {
+@interface SoomlaFacebook : NSObject <ISocialProvider, FBSDKGameRequestDialogDelegate> {
     loginSuccess loginSuccess;
     loginFail loginFail;
     loginCancel loginCancel;

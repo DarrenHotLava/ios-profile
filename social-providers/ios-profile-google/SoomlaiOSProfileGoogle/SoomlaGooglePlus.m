@@ -505,6 +505,13 @@ static Method swizzledMethod = nil;
     return profile;
 }
 
+- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
+          fail:(inviteFail)fail cancel:(inviteCancel)cancel {
+    if (fail) {
+        fail(@"Invitation isn't supported in Google+.");
+    }
+}
+
 -(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{
     return [self parseGoogleContact:googleContact withExtraData:NO];
 }

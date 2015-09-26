@@ -25,6 +25,7 @@
 #import "SoomlaUtils.h"
 
 #import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 #define SOOMLA_PROFILE_VERSION @"1.1.5"
 
@@ -285,6 +286,32 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     [self uploadImageWithProvider:provider andMessage:message andFilePath:filePath andPayload:@"" andReward:reward];
 }
 
+- (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message {
+    [self uploadCurrentScreenshot:provider title:title message:message payload:@"" andReward:nil];
+}
+
++ (UIImage *)getScreenshot {
+    UIGraphicsBeginImageContextWithOptions(((UIWindow *)[UIApplication sharedApplication].windows[0]).bounds.size, NO, [UIScreen mainScreen].scale);
+
+    [((UIWindow *)[UIApplication sharedApplication].windows[0]) drawViewHierarchyInRect:((UIWindow *)[UIApplication sharedApplication].windows[0]).bounds
+                                                                     afterScreenUpdates:YES];
+
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (void)uploadCurrentScreenshot:(Provider)provider title:(NSString *)title message:(NSString *)message
+                        payload:(NSString *)payload andReward:(Reward *)reward {
+    UIImage *screenshot = [[self class] getScreenshot];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"current_screenshot.png"];
+
+    [UIImagePNGRepresentation(screenshot) writeToFile:filePath atomically:YES];
+    [self uploadImageWithProvider:provider andMessage:message andFilePath:filePath
+                       andPayload:payload andReward:reward];
+}
+
 - (void)getContactsWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
     [socialController getContactsWith:provider andFromStart:false andPayload:payload andReward:reward];
 }
@@ -303,6 +330,16 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 
 - (void)getFeedWithProvider:(Provider)provider andReward:(Reward *)reward {
     [self getFeedWithProvider:provider andFromStart:NO andPayload:@"" andReward:reward];
+}
+
+- (void)inviteWithProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle
+                   payload:(NSString *)payload andReward:(Reward *)reward {
+    [socialController inviteProvider:provider inviteMessage:inviteMessage dialogTitle:dialogTitle payload:payload
+                           andReward:reward];
+}
+
+- (void)inviteWithProvider:(Provider)provider inviteMessage:(NSString *)inviteMessage andReward:(Reward *)reward {
+    [self inviteWithProvider:provider inviteMessage:inviteMessage dialogTitle:nil payload:@"" andReward:nil];
 }
 
 - (void)like:(Provider)provider andPageId:(NSString *)pageId andReward:(Reward *)reward {

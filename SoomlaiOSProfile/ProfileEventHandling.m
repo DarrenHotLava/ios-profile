@@ -42,6 +42,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_FEED_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_FEED_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_FEED_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_INVITE_STARTED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_INVITE_FINISHED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_INVITE_CANCELLED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_INVITE_FAILED object:nil];
 }
 
 + (void)postProfileInitialized {
@@ -177,6 +181,35 @@
             DICT_ELEMENT_PAYLOAD: payload
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_FEED_FAILED object:self userInfo:userInfo];
+}
+
++ (void)postInviteStarted:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType), DICT_ELEMENT_PAYLOAD: payload};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_INVITE_STARTED object:self userInfo:userInfo];
+}
+
++ (void)postInviteFinished:(Provider)provider withType:(SocialActionType)socialActionType requestId:(NSString *)requestId
+                                            invitedIds:(NSArray *)invitedIds withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+            DICT_ELEMENT_REQUEST_ID: requestId,
+            DICT_ELEMENT_INVITED_LIST: invitedIds,
+            DICT_ELEMENT_PAYLOAD: payload};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_INVITE_FINISHED object:self userInfo:userInfo];
+}
+
++ (void)postInviteCancelled:(Provider)provider withType:(SocialActionType)socialActionType withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider), DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType), DICT_ELEMENT_PAYLOAD: payload};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_INVITE_CANCELLED object:self userInfo:userInfo];
+}
+
++ (void)postInviteFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_SOCIAL_ACTION_TYPE: @(socialActionType),
+            DICT_ELEMENT_MESSAGE: message,
+            DICT_ELEMENT_PAYLOAD: payload};
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_INVITE_FAILED object:self userInfo:userInfo];
 }
 
 @end

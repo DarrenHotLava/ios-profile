@@ -485,6 +485,13 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
     }];
 }
 
+- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
+          fail:(inviteFail)fail cancel:(inviteCancel)cancel {
+    if (fail) {
+        fail(@"Invitation isn't supported in Twitter.");
+    }
+}
+
 - (void)like:(NSString *)pageId {
     
     NSString *baseURL = @"twitter:///user?screen_name=";

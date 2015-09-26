@@ -35,7 +35,9 @@
         case GET_FEED:
             return @"GET_FEED";
             break;
-            
+        case INVITE:
+            return @"INVITE";
+            break;
         default:
             break;
     }
@@ -61,6 +63,9 @@
     }
     else if([actionTypeString isEqualToString:@"GET_FEED"]) {
         return GET_FEED;
+    }
+    else if ([actionTypeString isEqualToString:@"INVITE"]) {
+        return INVITE;
     }
     else {
         [NSException raise:NSGenericException format:@"Unexpected FormatType."];
