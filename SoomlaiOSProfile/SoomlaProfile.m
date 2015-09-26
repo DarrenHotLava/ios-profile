@@ -27,7 +27,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#define SOOMLA_PROFILE_VERSION @"1.1.6"
+#define SOOMLA_PROFILE_VERSION @"1.1.7"
 
 // if using Unity social provider this is YES
 BOOL UsingExternalProvider;
