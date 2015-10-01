@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4440B7F01BB33D4200BF0620 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4440B7EA1BB33D4200BF0620 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		4440B7F31BB33D4200BF0620 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4440B7ED1BB33D4200BF0620 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
+		44873F7E1BBDD608007A63D9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44873F7C1BBDD608007A63D9 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
+		44873F7F1BBDD608007A63D9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44873F7D1BBDD608007A63D9 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
+		44873F811BBDD647007A63D9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44873F801BBDD647007A63D9 /* FacebookSDK.framework */; settings = {ASSET_TAGS = (); }; };
 		F80C71A019FF92760027AF9A /* libSoomlaiOSProfileFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */; };
 		F80C71B019FFA2610027AF9A /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */; };
 		F80C71B219FFA2910027AF9A /* SoomlaFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C71B419FFA4AA0027AF9A /* Foundation.framework */; };
-		F85EFA4619FFC80D006092AB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F85EFA4519FFC80D006092AB /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +39,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4440B7E81BB33D4200BF0620 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
-		4440B7EA1BB33D4200BF0620 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		4440B7ED1BB33D4200BF0620 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		44873F7B1BBDD608007A63D9 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = libs/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
+		44873F7C1BBDD608007A63D9 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = libs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		44873F7D1BBDD608007A63D9 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = libs/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		44873F801BBDD647007A63D9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = libs/FacebookSDK.framework; sourceTree = "<group>"; };
 		F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80C719F19FF92760027AF9A /* SoomlaiOSProfileFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80C71A519FF92760027AF9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,7 +50,6 @@
 		F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaFacebook.m; sourceTree = "<group>"; };
 		F80C71B419FFA4AA0027AF9A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F80C71BC19FFAEA30027AF9A /* SoomlaiOSProfileFacebook.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoomlaiOSProfileFacebook.pch; path = SoomlaiOSProfileFacebook/SoomlaiOSProfileFacebook.pch; sourceTree = SOURCE_ROOT; };
-		F85EFA4519FFC80D006092AB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = libs/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,10 +57,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4440B7F31BB33D4200BF0620 /* FBSDKShareKit.framework in Frameworks */,
-				4440B7F01BB33D4200BF0620 /* FBSDKCoreKit.framework in Frameworks */,
 				F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */,
-				F85EFA4619FFC80D006092AB /* FacebookSDK.framework in Frameworks */,
+				44873F811BBDD647007A63D9 /* FacebookSDK.framework in Frameworks */,
+				44873F7E1BBDD608007A63D9 /* FBSDKCoreKit.framework in Frameworks */,
+				44873F7F1BBDD608007A63D9 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,10 +123,10 @@
 		F80C71B619FFA4B20027AF9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4440B7E81BB33D4200BF0620 /* FacebookSDKStrings.bundle */,
-				4440B7EA1BB33D4200BF0620 /* FBSDKCoreKit.framework */,
-				4440B7ED1BB33D4200BF0620 /* FBSDKShareKit.framework */,
-				F85EFA4519FFC80D006092AB /* FacebookSDK.framework */,
+				44873F801BBDD647007A63D9 /* FacebookSDK.framework */,
+				44873F7B1BBDD608007A63D9 /* FacebookSDKStrings.bundle */,
+				44873F7C1BBDD608007A63D9 /* FBSDKCoreKit.framework */,
+				44873F7D1BBDD608007A63D9 /* FBSDKShareKit.framework */,
 				F80C71B419FFA4AA0027AF9A /* Foundation.framework */,
 			);
 			name = Frameworks;
