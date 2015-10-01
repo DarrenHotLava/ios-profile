@@ -24,7 +24,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-#define DEFAULT_LOGIN_PERMISSIONS @[@"public_profile", @"email", @"user_birthday", @"user_photos", @"user_friends", @"read_stream"]
+#define DEFAULT_LOGIN_PERMISSIONS @[@"public_profile", @"email", @"user_birthday", @"user_photos", @"user_friends", @"user_posts"]
 #define DEFAULT_PAGE_SIZE 20
 
 @interface SoomlaFacebook () <FBSDKGameRequestDialogDelegate>
@@ -470,7 +470,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     int offset = DEFAULT_PAGE_SIZE * (fromStart ? 0 : (self.lastFeedPage != nil ? [self.lastFeedPage integerValue] : 0));
     self.lastFeedPage = nil;
 
-    [self checkPermissions: @[@"read_stream"] withWrite:NO
+    [self checkPermissions: @[@"user_posts"] withWrite:NO
                    success:^() {
 
         /* make the API call */
