@@ -25,12 +25,17 @@
 #import "SoomlaUtils.h"
 
 #import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
+#import <StoreKit/StoreKit.h>
 
 #define SOOMLA_PROFILE_VERSION @"1.1.7"
 
 // if using Unity social provider this is YES
 BOOL UsingExternalProvider;
+
+@interface SoomlaProfile () <SKStoreProductViewControllerDelegate>
+
+@end
+
 
 @implementation SoomlaProfile
 
@@ -347,24 +352,24 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (void)openAppRatingPage {
-
-    NSString* appID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-    float iOSVersion = [[UIDevice currentDevice].systemVersion floatValue];
-    NSString *reviewURL;
-
-    if (iOSVersion<7) { //IOS < 7.0
-        NSString *templateReviewURLiOS6 = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=APP_ID";
-        reviewURL = [templateReviewURLiOS6 stringByReplacingOccurrencesOfString:@"APP_ID" withString:appID];
-
-    } else { //IOS >= 7.0
-        NSString *templateReviewURLiOS7 = @"itms-apps://itunes.apple.com/app/idAPP_ID";
-        reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", appID]];
+    NSString *appID = [[NSBundle mainBundle] infoDictionary][@"iTunesAppID"];
+    if (!appID) {
+        [NSException raise:NSInvalidArgumentException format:@"To open app review page, add iTunesAppID at your Info.plist."];
+    } else {
+        SKStoreProductViewController *appPageController = [[SKStoreProductViewController alloc] init];
+        [appPageController loadProductWithParameters:@{
+                SKStoreProductParameterITunesItemIdentifier: appID
+        } completionBlock:nil];
+        appPageController.delegate = self;
+        [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:appPageController
+                                                                                       animated:YES completion:nil];
     }
-
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
-    [ProfileEventHandling postUserRating];
-
 }
+
+-(void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath {
     NSArray *postItems;
