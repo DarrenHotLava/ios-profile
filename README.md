@@ -22,9 +22,14 @@ This enables to easily reward players with social actions they perform in-game, 
 
 ## Download
 
-####Pre baked libraries:
+#### Pre baked libraries:
 
-[ios-profile 1.1.7](http://library.soom.la/fetch/ios-profile/1.1.7?cf=github)
+The latest [ios-profile](http://library.soom.la/fetch/ios-profile/latest?cf=github) release.
+
+#### From sources:
+ - Clone this repository;
+ - Run `./build_all` from project directory;
+ - Take created binaries from `build` directory and use it!
 
 Getting Started
 ---
