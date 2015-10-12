@@ -1,3 +1,11 @@
+### v1.1.8 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.7...v1.1.8)
+
+* Fixes
+  * OpenAppRatingPage can’t open app page in AppStore
+
+* Changes
+  * Replaced deprecated read_stream permission with user_posts
+
 ### v1.1.7 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.6...v1.1.7)
 
 * Features
