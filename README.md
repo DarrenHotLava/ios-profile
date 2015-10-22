@@ -24,10 +24,10 @@ This enables to easily reward players with social actions they perform in-game, 
 
 #### Pre baked libraries:
 
-The latest [ios-profile](http://library.soom.la/fetch/ios-profile/latest?cf=github) release.
+[ios-profile 1.1.8](http://library.soom.la/fetch/ios-profile/1.1.8?cf=github)
 
 #### From sources:
- - Clone this repository;
+ - Clone this repository recursively: `git clone --recursive https://github.com/soomla/ios-profile.git`;
  - Run `./build_all` from project directory;
  - Take created binaries from `build` directory and use it!
 
