@@ -117,6 +117,17 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     }
 }
 
+- (void)logoutFromAllProviders {
+    NSArray* providers = [UserProfileUtils availableProviders];
+    for(NSNumber* providerNum in providers) {
+        @try {
+            [self logoutWithProvider:(Provider)[providerNum intValue]];
+        }@catch (NSException *exception) {
+            // Skip
+        }
+    }
+}
+
 - (BOOL)isLoggedInWithProvider:(Provider)provider {
     @try {
         return [authController isLoggedInWithProvider:provider];

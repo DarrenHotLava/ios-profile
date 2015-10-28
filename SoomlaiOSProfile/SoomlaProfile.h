@@ -81,11 +81,16 @@
 - (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
- Logout of the given provider
+ Logout from the given provider
 
  @param provider The provider to use
  */
 - (void)logoutWithProvider:(Provider)provider;
+
+/**
+ Logout from all available providers
+ */
+- (void)logoutFromAllProviders;
 
 /**
  Checks if the user is logged in with given provider
