@@ -95,11 +95,20 @@ static NSString* TAG = @"SOOMLA AuthController";
     // Perform logout process
     [self setLoggedInForProvider:provider toValue:NO];
     [ProfileEventHandling postLogoutStarted:provider];
+    
+    if (![self isLoggedInWithProvider:provider]) {
+        if (userProfile) {
+            [UserProfileStorage removeUserProfile:userProfile];
+        }
+        [ProfileEventHandling postLogoutFinished:provider];
+        return;
+    }
+    
     [authProvider logout:^() {
         if (userProfile) {
             [UserProfileStorage removeUserProfile:userProfile];
-            [ProfileEventHandling postLogoutFinished:provider];
         }
+        [ProfileEventHandling postLogoutFinished:provider];
     }
     fail:^(NSString* message) {
         [ProfileEventHandling postLogoutFailed:provider withMessage:message];
