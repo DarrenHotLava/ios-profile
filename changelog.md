@@ -1,3 +1,8 @@
+### v1.1.9 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.8...v1.1.9)
+
+* Fixes
+  * Minor issues in logout
+
 ### v1.1.8 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.7...v1.1.8)
 
 * Fixes
