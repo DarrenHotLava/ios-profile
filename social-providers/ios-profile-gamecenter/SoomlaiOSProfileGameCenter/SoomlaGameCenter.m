@@ -67,9 +67,13 @@ const Provider currentProvider = GAMECENTER;
             }
         }
         else if ([GKLocalPlayer localPlayer].isAuthenticated) {
-            success(currentProvider);
+            if (success != nil) {
+                success(currentProvider);
+            }
         } else {
-            cancel();
+            if (cancel != nil) {
+                cancel();
+            }
         }
     }];
 }
@@ -85,19 +89,28 @@ const Provider currentProvider = GAMECENTER;
     if (playerId != nil) {
         [GKPlayer loadPlayersForIdentifiers:@[playerId] withCompletionHandler:^(NSArray *players, NSError *error) {
             if (players.count) {
-                UserProfile *userProfile = [self userProfileFromGameKitPlayer:((GKPlayer *)players[0])];
+                if (success != nil) {
+                    success([self userProfileFromGameKitPlayer:((GKPlayer *)players[0])]);
+                }
             } else {
-                fail(@"Cannot read profile: ");
+                if (fail != nil) {
+                    fail(@"Cannot read profile: playerID is incorrect.");
+                }
             }
         }];
     } else {
-        fail(@"Cannot read profile: user ins't authenticated.");
+        if (fail != nil) {
+            fail(@"Cannot read profile: user ins't authenticated.");
+        }
     }
 }
 
 -(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player {
-    return [[UserProfile alloc] initWithProvider:TWITTER andProfileId:player.playerID andUsername:player.displayName
-                                        andEmail:player.alias andFirstName:@"" andLastName:@"" andExtra:nil];
+    NSString *firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
+    NSString *lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
+    return [[UserProfile alloc] initWithProvider:GAMECENTER andProfileId:player.playerID andUsername:player.alias
+                                        andEmail:@"" andFirstName:(firstName ? firstName : @"")
+                                     andLastName:(lastName ? lastName : @"") andExtra:nil];
 }
 
 /**
@@ -262,7 +275,7 @@ const Provider currentProvider = GAMECENTER;
  */
 - (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
           fail:(inviteFail)fail cancel:(inviteCancel)cancel {
-    NSLog(@"GameCenter doesn't support invitations.");
+    fail(@"GameCenter doesn't support invitations.");
 }
 
 /**
