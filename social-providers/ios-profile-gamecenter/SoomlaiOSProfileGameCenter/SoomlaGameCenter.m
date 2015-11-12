@@ -262,7 +262,7 @@ const Provider currentProvider = GAMECENTER;
  */
 - (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
           fail:(inviteFail)fail cancel:(inviteCancel)cancel {
-    NSLog(@"GameCenter doesn't support invitations.")
+    NSLog(@"GameCenter doesn't support invitations.");
 }
 
 /**
@@ -304,7 +304,7 @@ const Provider currentProvider = GAMECENTER;
  @param reward The reward to grant when page is liked
  */
 - (void)like:(NSString *)pageId {
-    NSLog(@"GameCenter doesn't support page liking.")
+    NSLog(@"GameCenter doesn't support page liking.");
 }
 
 @end
