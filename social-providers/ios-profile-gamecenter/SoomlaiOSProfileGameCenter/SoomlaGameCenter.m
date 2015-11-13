@@ -22,7 +22,7 @@
     BOOL _autoLogin;
 }
 
-const Provider currentProvider = GAMECENTER;
+const Provider currentProvider = GAME_CENTER;
 
 /**
  Applies special initialization parameters to the provider
@@ -108,7 +108,7 @@ const Provider currentProvider = GAMECENTER;
 -(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player {
     NSString *firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
     NSString *lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
-    return [[UserProfile alloc] initWithProvider:GAMECENTER andProfileId:player.playerID andUsername:player.alias
+    return [[UserProfile alloc] initWithProvider:currentProvider andProfileId:player.playerID andUsername:player.alias
                                         andEmail:@"" andFirstName:(firstName ? firstName : @"")
                                      andLastName:(lastName ? lastName : @"") andExtra:nil];
 }
