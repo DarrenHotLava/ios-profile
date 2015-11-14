@@ -53,7 +53,7 @@
         result = GOOGLE;
     } else if ([provider isEqualToString:@"twitter"]) {
         result = TWITTER;
-    } if ([provider isEqualToString:@"gameСenter"]) {
+    } else if ([provider isEqualToString:@"gameCenter"]) {
         result = GAME_CENTER;
     } else {
         [NSException raise:NSGenericException format:@"Unexpected FormatType."];
