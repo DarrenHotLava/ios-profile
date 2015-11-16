@@ -22,7 +22,8 @@
 typedef enum {
     FACEBOOK = 0,
     GOOGLE = 2,
-    TWITTER = 5
+    TWITTER = 5,
+    GAME_CENTER = 13
 } Provider;
 
 /**

@@ -20,4 +20,7 @@ cp social-providers/ios-profile-twitter/libs/* $PWD/build/ios-profile-twitter/
 mkdir -p build/ios-profile-google
 xcodebuild -configuration Release -sdk iphoneos -project social-providers/ios-profile-google/SoomlaiOSProfileGoogle.xcodeproj -target SoomlaiOSProfileGoogle clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-google
 
+mkdir -p build/ios-profile-gamecenter
+xcodebuild -configuration Release -sdk iphoneos -project social-providers/ios-profile-gamecenter/SoomlaiOSProfileGameCenter.xcodeproj -target SoomlaiOSProfileGameCenter clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-gamecenter
+
 cd - > /dev/null
