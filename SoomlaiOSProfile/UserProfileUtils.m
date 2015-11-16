@@ -19,7 +19,7 @@
 @implementation UserProfileUtils
 
 + (NSArray*)availableProviders {
-    return @[ @(FACEBOOK), @(GOOGLE), @(TWITTER) ];
+    return @[ @(FACEBOOK), @(GOOGLE), @(TWITTER), @(GAME_CENTER) ];
 }
 
 + (NSString *)providerEnumToString:(Provider)provider {
@@ -31,6 +31,8 @@
             return @"google";
         case TWITTER:
             return @"twitter";
+        case GAME_CENTER:
+            return @"gameСenter";
         default:
             [NSException raise:NSGenericException format:@"Unexpected FormatType."];
     }
@@ -51,6 +53,8 @@
         result = GOOGLE;
     } else if ([provider isEqualToString:@"twitter"]) {
         result = TWITTER;
+    } else if ([provider isEqualToString:@"gameCenter"]) {
+        result = GAME_CENTER;
     } else {
         [NSException raise:NSGenericException format:@"Unexpected FormatType."];
     }
