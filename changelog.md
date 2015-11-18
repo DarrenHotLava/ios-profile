@@ -1,3 +1,8 @@
+### v1.2.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.9...v1.2.0)
+
+* New Features
+  * Added GameCenter as a social provider
+
 ### v1.1.9 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.1.8...v1.1.9)
 
 * Fixes
