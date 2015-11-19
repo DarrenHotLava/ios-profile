@@ -45,6 +45,9 @@ const Provider currentProvider = GAME_CENTER;
     return currentProvider;
 }
 
+
+#pragma mark IGameServicesProvider methods
+
 /**
  Logs in with the authentication provider
 
@@ -159,86 +162,9 @@ const Provider currentProvider = GAME_CENTER;
     return NO;
 }
 
-/**
- Shares the given status to the user's feed
+#pragma mark IGameServicesProvider methods
 
- @param status the text to share
- @param success a status update success callback
- @param fail a status update failure callback
- */
-- (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support status updating.");
-}
-
-/**
- Shares the given status and link to the user's feed using the provider's
- native dialog (when available)
-
- @param link the link to share (could be nil when not needed)
- @param success a status update success callback
- @param fail a status update failure callback
- */
-- (void)updateStatusWithProviderDialog:(NSString *)link success:(socialActionSuccess)success fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support status updating.");
-}
-
-/**
- Share a story to the user's feed.  This is very oriented for Facebook.
-
- @param message The main text which will appear in the story
- @param name The headline for the link which will be integrated in the
- story
- @param caption The sub-headline for the link which will be
- integrated in the story
- @param description The description for the link which will be
- integrated in the story
- @param link The link which will be integrated into the user's story
- @param picture a Link to a picture which will be featured in the link
- @param socialActionListener an update story failure callback
- */
-- (void)updateStoryWithMessage:(NSString *)message
-                       andName:(NSString *)name
-                    andCaption:(NSString *)caption
-                andDescription:(NSString *)description
-                       andLink:(NSString *)link
-                    andPicture:(NSString *)picture
-                       success:(socialActionSuccess)success
-                          fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support story updating.");
-}
-
-/**
- Share a story to the user's feed.  This is very oriented for Facebook.
- Using the provider's native dialog (when available)
-
- @param name The headline for the link which will be integrated in the
- story
- @param caption The sub-headline for the link which will be
- integrated in the story
- @param description The description for the link which will be
- integrated in the story
- @param link The link which will be integrated into the user's story
- @param picture a Link to a picture which will be featured in the link
- @param socialActionListener an update story failure callback
- */
-- (void)updateStoryWithMessageDialog:(NSString *)name
-                          andCaption:(NSString *)caption
-                      andDescription:(NSString *)description
-                             andLink:(NSString *)link
-                          andPicture:(NSString *)picture
-                             success:(socialActionSuccess)success
-                                fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support story updating.");
-}
-
-/**
- Fetches the user's contact list
-
- @param fromStart Should we reset pagination or request the next page
- @param success a contacts fetch success callback
- @param fail a contacts fetch failure callback
- */
-- (void)getContacts:(bool)fromStart success:(contactsActionSuccess)success fail:(contactsActionFail)fail {
+-(void)getFriendsListWithSuccess:(friendsSuccessHandler)success fail:(failureHandler)fail {
     [[GKLocalPlayer localPlayer] loadFriendPlayersWithCompletionHandler:^(NSArray *friendPlayers, NSError *error) {
         if (error == nil) {
             NSMutableArray *result = [NSMutableArray new];
@@ -248,76 +174,48 @@ const Provider currentProvider = GAME_CENTER;
                     [result addObject:parsedProfile];
                 }
             }
-            success(result, NO);
+            success(result);
         } else {
             fail(error.localizedDescription);
         }
     }];
 }
 
-/**
- Fetches the user's feed
-
- @param success a contacts fetch success callback
- @param fail a contacts fetch failure callback
- */
-- (void)getFeed:(bool)fromStart success:(feedsActionSuccess)success fail:(feedsActionFail)fail {
-    fail(@"GameCenter doesn't support feed.");
+-(void)getLeaderboardsWithSuccess:(leaderboardsSuccessHandler)success fail:(failureHandler)fail {
+    [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
+        if (error == nil) {
+            success(leaderboards);
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
 }
 
-
-/**
- Sends an invite
-
- @param success a invite success callback
- @param fail a invite failure callback
- @param cancel a invite cancel callback
- */
-- (void)invite:(NSString *)inviteMessage dialogTitle:(NSString *)dialogTitle success:(inviteSuccess)success
-          fail:(inviteFail)fail cancel:(inviteCancel)cancel {
-    fail(@"GameCenter doesn't support invitations.");
-}
-
-/**
- Shares a photo to the user's feed
-
- @param message A text that will accompany the image
- @param filePath The desired image's location on the device
- @param success an upload image success callback
- @param fail an upload image failure callback
- */
-- (void)uploadImageWithMessage:(NSString *)message
-                   andFilePath:(NSString *)filePath
-                       success:(socialActionSuccess)success
-                          fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support image uploading.");
-}
-
-/**
- Shares a photo to the user's feed using image data
-
- @param message A text that will accompany the image
- @param fileName The desired image's location on the device
- @param imageData The desierd image's data
- @param success an upload image success callback
- @param fail an upload image failure callback
- */
-- (void)uploadImageWithMessage:(NSString *)message
-              andImageFileName: (NSString *)fileName
-                  andImageData: (NSData *)imageData
-                       success:(socialActionSuccess)success
-                          fail:(socialActionFail)fail {
-    fail(@"GameCenter doesn't support image uploading.");
-}
-
-/**
- Opens up a page to like for the user (external)
-
- @param pageId The page to open on the provider
- @param reward The reward to grant when page is liked
- */
-- (void)like:(NSString *)pageId {
-    NSLog(@"GameCenter doesn't support page liking.");
+-(void)getScoresOfLeaderboard:(NSString *)leaderboardId withSuccess:(scoresSuccessHandler)success fail:(failureHandler)fail {
+    [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
+        if (error == nil) {
+            GKLeaderboard *currentLeaderboard = nil;
+            for (GKLeaderboard *lb in leaderboards) {
+                if ([lb.identifier isEqualToString:leaderboardId]) {
+                    currentLeaderboard = lb;
+                    break;
+                }
+            }
+            if (currentLeaderboard) {
+                [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+                    if (error == nil) {
+                        success(scores);
+                    } else {
+                        fail(error.localizedDescription);
+                    }
+                }];
+            } else {
+                fail(@"Leaderboard with specified identifier not found.");
+            }
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
 }
 
 @end
