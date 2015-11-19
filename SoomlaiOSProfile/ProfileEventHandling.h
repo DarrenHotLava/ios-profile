@@ -54,6 +54,14 @@
 #define EVENT_UP_INVITE_CANCELLED               @"up_invite_cancelled"
 #define EVENT_UP_INVITE_FAILED                  @"up_invite_failed"
 
+#define EVENT_UP_GAME_FRIENDS_STARTED           @"up_game_friends_started"
+#define EVENT_UP_GAME_FRIENDS_FINISHED          @"up_game_friends_finished"
+#define EVENT_UP_GAME_FRIENDS_FAILED            @"up_game_friends_failed"
+
+#define EVENT_UP_GAME_LEADERBOARDS_STARTED      @"up_game_leaderboards_started"
+#define EVENT_UP_GAME_LEADERBOARDS_FINISHED     @"up_game_leaderboards_finished"
+#define EVENT_UP_GAME_LEADERBOARDS_FAILED       @"up_game_leaderboards_failed"
+
 
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
@@ -66,6 +74,7 @@
 #define DICT_ELEMENT_MESSAGE                    @"message"
 #define DICT_ELEMENT_CONTACTS                   @"contacts"
 #define DICT_ELEMENT_FEEDS                      @"feeds"
+#define DICT_ELEMENT_LEADERBOARDS               @"leaderboards"
 #define DICT_ELEMENT_REQUEST_ID                 @"requestId"
 #define DICT_ELEMENT_INVITED_LIST               @"invitedIds"
 #define DICT_ELEMENT_REWARD                     @"reward"
@@ -301,5 +310,17 @@ Called when the service has been initializedt.
 + (void)postInviteFailed:(Provider)provider withType:(SocialActionType)socialActionType withMessage:(NSString *)message
              withPayload:(NSString *)payload;
 
+
++(void)postGetGameFriendsStarted:(Provider)provider withPayload:(NSString *)payload;
+
++(void)postGetGameFriendsFinished:(Provider)provider withFriendsList:(NSArray *)friends andPayload:(NSString *)payload;
+
++(void)postGetGameFriendsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload;
+
++(void)postGetLeaderboardsStarted:(Provider)provider withPayload:(NSString *)payload;
+
++(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards andPayload:(NSString *)payload;
+
++(void)postGetLeaderboardsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload;
 
 @end

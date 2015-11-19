@@ -212,4 +212,56 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_INVITE_FAILED object:self userInfo:userInfo];
 }
 
++(void)postGetGameFriendsStarted:(Provider)provider withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_FRIENDS_STARTED object:self userInfo:userInfo];
+}
+
++(void)postGetGameFriendsFinished:(Provider)provider withFriendsList:(NSArray *)friends andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_CONTACTS: friends,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_FRIENDS_FINISHED object:self userInfo:userInfo];
+}
+
++(void)postGetGameFriendsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_MESSAGE: message,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_FRIENDS_FAILED object:self userInfo:userInfo];
+}
+
++(void)postGetLeaderboardsStarted:(Provider)provider withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_STARTED object:self userInfo:userInfo];
+}
+
++(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_LEADERBOARDS: leaderboards,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_FINISHED object:self userInfo:userInfo];
+}
+
++(void)postGetLeaderboardsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_MESSAGE: message,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_FAILED object:self userInfo:userInfo];
+}
+
 @end
