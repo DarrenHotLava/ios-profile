@@ -23,6 +23,7 @@
 #import "UserProfileNotFoundException.h"
 #import "UserProfileStorage.h"
 #import "SoomlaUtils.h"
+#import "GameServicesController.h"
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -71,10 +72,12 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     if (UsingExternalProvider) {
         authController = [[AuthController alloc] initWithoutLoadingProviders];
         socialController = [[SocialController alloc] initWithoutLoadingProviders];
+        gameServicesController = [[GameServicesController alloc] initWithoutLoadingProviders];
     }
     else {
         authController = [[AuthController alloc] initWithParameters:customParams];
         socialController = [[SocialController alloc] initWithParameters:customParams];
+        gameServicesController = [[GameServicesController alloc] initWithParameters:customParams];
     }
 
     self.initialized = YES;
@@ -83,6 +86,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 
     [authController settleAutoLogin];
     [socialController settleAutoLogin];
+    [gameServicesController settleAutoLogin];
 
     return YES;
 }
@@ -111,9 +115,14 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         [authController logoutWithProvider:provider];
     }
     @catch (NSException *exception) {
-
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController logoutWithProvider:provider];
+        @try {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            [socialController logoutWithProvider:provider];
+        }
+        @catch (NSException *exception) {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            [gameServicesController logoutWithProvider:provider];
+        }
     }
 }
 
@@ -133,9 +142,14 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         return [authController isLoggedInWithProvider:provider];
     }
     @catch (NSException *exception) {
-
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        return [socialController isLoggedInWithProvider:provider];
+        @try {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            return [socialController isLoggedInWithProvider:provider];
+        }
+        @catch (NSException *exception) {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            return [gameServicesController isLoggedInWithProvider:provider];
+        }
     }
 
 }
@@ -145,9 +159,14 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         return [authController getStoredUserProfileWithProvider:provider];
     }
     @catch (NSException *exception) {
-
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        return [socialController getStoredUserProfileWithProvider:provider];
+        @try {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            return [socialController getStoredUserProfileWithProvider:provider];
+        }
+        @catch (NSException *exception) {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            return [gameServicesController getStoredUserProfileWithProvider:provider];
+        }
     }
 }
 
@@ -400,6 +419,14 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         activityVC.popoverPresentationController.sourceView = rootViewController.view;
     }
     [rootViewController presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (void)getFriendsListWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController getFriendsListWithProvider:provider payload:payload andReward:reward];
+}
+
+- (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController getLeaderboardsWithProvider:provider payload:payload andReward:reward];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

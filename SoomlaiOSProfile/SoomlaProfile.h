@@ -20,6 +20,7 @@
 @class UserProfile;
 @class AuthController;
 @class SocialController;
+@class GameServicesController;
 
 /**
  This is the main class for the SOOMLA User Profile module.  This class should be initialized once,
@@ -32,6 +33,7 @@
     BOOL initialized;
     AuthController* authController;
     SocialController* socialController;
+    GameServicesController *gameServicesController;
 }
 
 @property BOOL initialized;
@@ -447,6 +449,10 @@ Fetches the user's feed and grants the user a reward.
 * @param imageFilePath Path to an image file to share
 */
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath;
+
+- (void)getFriendsListWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
+
+- (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Helper method to assist with browser-based authentication using a sepcific

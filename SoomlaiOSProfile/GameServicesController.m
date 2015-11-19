@@ -24,6 +24,13 @@
 
 static NSString* TAG = @"SOOMLA GameServicesController";
 
+-(instancetype)initWithParameters:(NSDictionary *)providerParams {
+    if (self = [super init]) {
+
+    }
+    return self;
+}
+
 -(void)getFriendsListWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
