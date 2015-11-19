@@ -18,15 +18,32 @@
 #import "GameServicesController.h"
 #import "IGameServicesProvider.h"
 #import "ProfileEventHandling.h"
+#import "SoomlaUtils.h"
 
 
 @implementation GameServicesController
 
 static NSString* TAG = @"SOOMLA GameServicesController";
 
--(instancetype)initWithParameters:(NSDictionary *)providerParams {
+- (id)initWithParameters:(NSDictionary *)providerParams {
     if (self = [super init]) {
 
+        // TODO: Check if providerPkgPrefix can be omitted completely in iOS
+        if (![self loadProvidersWithProtocol:@protocol(IGameServicesProvider) andProviderParams:providerParams]) {
+            NSString* msg = @"You don't have a IGameServicesProvider service attached. \
+                            Decide which IAuthProvider you want, and add its static libraries \
+                            and headers to the target's search path.";
+            LogDebug(TAG, msg);
+        } else {
+
+        }
+    }
+
+    return self;
+}
+
+- (id)initWithoutLoadingProviders {
+    if (self = [super init]) {
     }
     return self;
 }

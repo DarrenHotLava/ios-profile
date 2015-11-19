@@ -104,9 +104,14 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         [authController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
     }
     @catch (NSException *exception) {
-
-        // TODO: implement logic like in java that will raise the exception. Currently not raised
-        [socialController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+        @try {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            [socialController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+        }
+        @catch (NSException *exception) {
+            // TODO: implement logic like in java that will raise the exception. Currently not raised
+            [gameServicesController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+        }
     }
 }
 
