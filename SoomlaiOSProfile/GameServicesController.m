@@ -41,14 +41,14 @@ static NSString* TAG = @"SOOMLA GameServicesController";
 -(void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
-    //[ProfileEventHandling ]
+    [ProfileEventHandling postGetLeaderboardsStarted:provider withPayload:payload];
     [gsProvider getLeaderboardsWithSuccess:^(NSArray *leaderboards) {
         if (reward) {
             [reward give];
         }
-        //[ProfileEventHandling ]
+        [ProfileEventHandling postGetLeaderboardsFinished:provider withLeaderboardsList:leaderboards andPayload:payload];
     } fail:^(NSString *message) {
-        //[ProfileEventHandling ]
+        [ProfileEventHandling postGetLeaderboardsFailed:provider withMessage:message andPayload:payload];
     }];
 }
 
