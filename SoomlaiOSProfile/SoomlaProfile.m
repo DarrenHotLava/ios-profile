@@ -353,11 +353,16 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (void)getContactsWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andFromStart:false andPayload:payload andReward:reward];
+    [self getContactsWithProvider:provider andFromStart:false andPayload:payload andReward:reward];
 }
 
-- (void)getContactsWithProvider:(Provider)provider andFromStart: (bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
-    [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
+- (void)getContactsWithProvider:(Provider)provider andFromStart:(bool)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
+    @try {
+        [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
+    }
+    @catch (NSException *exception) {
+        [gameServicesController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
+    }
 }
 
 - (void)getContactsWithProvider:(Provider)provider andReward:(Reward *)reward {
@@ -426,12 +431,8 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     [rootViewController presentViewController:activityVC animated:YES completion:nil];
 }
 
-- (void)getFriendsListWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
-    [gameServicesController getFriendsListWithProvider:provider payload:payload andReward:reward];
-}
-
-- (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
-    [gameServicesController getLeaderboardsWithProvider:provider payload:payload andReward:reward];
+- (void)getLeaderboardsWithProvider:(Provider)provider fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController getLeaderboardsWithProvider:provider andFromStart:fromStart payload:payload andReward:reward];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

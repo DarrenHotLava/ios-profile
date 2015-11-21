@@ -33,9 +33,9 @@
  */
 -(id)initWithParameters:(NSDictionary *)providerParams;
 
--(void)getFriendsListWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
+-(void)getContactsWith:(Provider)provider andFromStart:(BOOL)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward;
 
--(void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
+-(void)getLeaderboardsWithProvider:(Provider)provider andFromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
 
 -(void)getScoresWithProvider:(Provider)provider
               forLeaderboard:(NSString *)leaderboardId

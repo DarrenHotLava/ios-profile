@@ -19,6 +19,4 @@
 
 typedef void (^failureHandler)(NSString* message);
 
-typedef void (^friendsSuccessHandler)(NSArray* userProfiles);
-typedef void (^leaderboardsSuccessHandler)(NSArray* leaderboards);
-typedef void (^scoresSuccessHandler)(NSArray* scores);
+typedef void (^successWithArrayHandler)(NSArray* result, BOOL hasMore);

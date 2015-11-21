@@ -23,10 +23,13 @@
 
 @protocol IGameServicesProvider <IAuthProvider>
 
--(void)getFriendsListWithSuccess:(friendsSuccessHandler)success fail:(failureHandler)fail;
+-(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail;
 
--(void)getLeaderboardsWithSuccess:(leaderboardsSuccessHandler)success fail:(failureHandler)fail;
+-(void)getLeaderboards:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail;
 
--(void)getScoresOfLeaderboard:(NSString *)leaderboardId withSuccess:(scoresSuccessHandler)success fail:(failureHandler)fail;
+-(void)getScoresOfLeaderboard:(NSString *)leaderboardId
+                    fromStart:(BOOL)fromStart
+                  withSuccess:(successWithArrayHandler)success
+                         fail:(failureHandler)fail;
 
 @end

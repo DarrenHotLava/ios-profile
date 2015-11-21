@@ -44,29 +44,43 @@ static NSString* TAG = @"SOOMLA GameServicesController";
 
 - (id)initWithoutLoadingProviders {
     if (self = [super init]) {
+
     }
     return self;
 }
 
--(void)getFriendsListWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
-    id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
+-(void)getContactsWith:(Provider)provider andFromStart:(BOOL)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
 
-    [ProfileEventHandling postGetGameFriendsStarted:provider withPayload:payload];
-    [gsProvider getFriendsListWithSuccess:^(NSArray *userProfiles) {
-        if (reward) {
-            [reward give];
-        }
-        [ProfileEventHandling postGetGameFriendsFinished:provider withFriendsList:userProfiles andPayload:payload];
-    } fail:^(NSString *message) {
-        [ProfileEventHandling postGetGameFriendsFailed:provider withMessage:message andPayload:payload];
-    }];
+    id<IGameServicesProvider> gcProvider = (id<IGameServicesProvider>)[self getProvider:provider];
+
+    // Perform get contacts process
+    [ProfileEventHandling postGetContactsStarted:provider withType:GET_CONTACTS withFromStart:fromStart withPayload:payload];
+
+    [gcProvider getContacts:fromStart
+                        success:^(NSArray *contacts, BOOL hasMore) {
+                            if (reward) {
+                                [reward give];
+                            }
+                            [ProfileEventHandling postGetContactsFinished:provider
+                                                                 withType:GET_CONTACTS
+                                                             withContacts:contacts
+                                                              withPayload:payload
+                                                              withHasMore:hasMore];
+
+                        }                      fail:^(NSString *message) {
+                [ProfileEventHandling postGetContactsFailed:provider
+                                                   withType:GET_CONTACTS
+                                                withMessage:message
+                                              withFromStart:fromStart
+                                                withPayload:payload];
+            }];
 }
 
--(void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+-(void)getLeaderboardsWithProvider:(Provider)provider andFromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
     [ProfileEventHandling postGetLeaderboardsStarted:provider withPayload:payload];
-    [gsProvider getLeaderboardsWithSuccess:^(NSArray *leaderboards) {
+    [gsProvider getLeaderboards:fromStart success:^(NSArray *leaderboards, BOOL hasMore) {
         if (reward) {
             [reward give];
         }
@@ -74,6 +88,10 @@ static NSString* TAG = @"SOOMLA GameServicesController";
     } fail:^(NSString *message) {
         [ProfileEventHandling postGetLeaderboardsFailed:provider withMessage:message andPayload:payload];
     }];
+}
+
+-(void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+
 }
 
 -(void)getScoresWithProvider:(Provider)provider

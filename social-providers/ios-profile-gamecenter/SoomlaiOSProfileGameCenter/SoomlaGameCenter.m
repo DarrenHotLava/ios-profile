@@ -164,7 +164,7 @@ const Provider currentProvider = GAME_CENTER;
 
 #pragma mark IGameServicesProvider methods
 
--(void)getFriendsListWithSuccess:(friendsSuccessHandler)success fail:(failureHandler)fail {
+-(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail {
     [[GKLocalPlayer localPlayer] loadFriendPlayersWithCompletionHandler:^(NSArray *friendPlayers, NSError *error) {
         if (error == nil) {
             NSMutableArray *result = [NSMutableArray new];
@@ -174,24 +174,24 @@ const Provider currentProvider = GAME_CENTER;
                     [result addObject:parsedProfile];
                 }
             }
-            success(result);
+            success(result, NO);
         } else {
             fail(error.localizedDescription);
         }
     }];
 }
 
--(void)getLeaderboardsWithSuccess:(leaderboardsSuccessHandler)success fail:(failureHandler)fail {
+-(void)getLeaderboards:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
-            success(leaderboards);
+            success(leaderboards, NO);
         } else {
             fail(error.localizedDescription);
         }
     }];
 }
 
--(void)getScoresOfLeaderboard:(NSString *)leaderboardId withSuccess:(scoresSuccessHandler)success fail:(failureHandler)fail {
+-(void)getScoresOfLeaderboard:(NSString *)leaderboardId fromStart:(BOOL)fromStart withSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
             GKLeaderboard *currentLeaderboard = nil;
@@ -204,7 +204,7 @@ const Provider currentProvider = GAME_CENTER;
             if (currentLeaderboard) {
                 [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
-                        success(scores);
+                        success(scores, NO);
                     } else {
                         fail(error.localizedDescription);
                     }
