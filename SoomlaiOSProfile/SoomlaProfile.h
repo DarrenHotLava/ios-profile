@@ -21,6 +21,8 @@
 @class AuthController;
 @class SocialController;
 @class GameServicesController;
+@class Leaderboard;
+@class Leaderboard;
 
 /**
  This is the main class for the SOOMLA User Profile module.  This class should be initialized once,
@@ -453,6 +455,10 @@ Fetches the user's feed and grants the user a reward.
 - (void)getLeaderboardsWithProvider:(Provider)provider fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
 
 - (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
+
+- (void)getScoresWithProvider:(Provider)provider ForLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
+
+- (void)getScoresWithProvider:(Provider)provider ForLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Helper method to assist with browser-based authentication using a sepcific

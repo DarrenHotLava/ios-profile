@@ -17,6 +17,7 @@
 #import "SoomlaGameCenter.h"
 #import "UserProfile.h"
 #import "Leaderboard+GameCenter.h"
+#import "Score+GameCenter.h"
 
 @implementation SoomlaGameCenter {
     BOOL _autoLogin;
@@ -93,7 +94,7 @@ const Provider currentProvider = GAME_CENTER;
         [GKPlayer loadPlayersForIdentifiers:@[playerId] withCompletionHandler:^(NSArray *players, NSError *error) {
             if (players.count) {
                 if (success != nil) {
-                    success([self userProfileFromGameKitPlayer:((GKPlayer *)players[0])]);
+                    success([[self class] userProfileFromGameKitPlayer:((GKPlayer *)players[0])]);
                 }
             } else {
                 if (fail != nil) {
@@ -108,9 +109,13 @@ const Provider currentProvider = GAME_CENTER;
     }
 }
 
--(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player {
-    NSString *firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
-    NSString *lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
++(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player {
+    NSString *firstName = nil;
+    NSString *lastName = nil;
+    if ([player.displayName componentsSeparatedByString:@" "].count == 2) {
+        firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
+        lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
+    }
     return [[UserProfile alloc] initWithProvider:currentProvider andProfileId:player.playerID andUsername:player.alias
                                         andEmail:@"" andFirstName:(firstName ? firstName : @"")
                                      andLastName:(lastName ? lastName : @"") andExtra:nil];
@@ -169,7 +174,7 @@ const Provider currentProvider = GAME_CENTER;
         if (error == nil) {
             NSMutableArray *result = [NSMutableArray new];
             for (GKPlayer *player in friendPlayers) {
-                UserProfile *parsedProfile = [self userProfileFromGameKitPlayer:player];
+                UserProfile *parsedProfile = [[self class] userProfileFromGameKitPlayer:player];
                 if (parsedProfile) {
                     [result addObject:parsedProfile];
                 }
@@ -211,7 +216,14 @@ const Provider currentProvider = GAME_CENTER;
             if (currentLeaderboard) {
                 [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
-                        success(scores, NO);
+                        NSMutableArray *result = [NSMutableArray new];
+                        for (GKScore *score in scores) {
+                            Score *ourScore = [[Score alloc] initWithGamecenterScore:score];
+                            if (ourScore) {
+                                [result addObject:ourScore];
+                            }
+                        }
+                        success(result, NO);
                     } else {
                         fail(error.localizedDescription);
                     }

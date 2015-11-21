@@ -15,6 +15,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <GameKit/GameKit.h>
 #import "IGameServicesProvider.h"
 
 #pragma clang diagnostic push
@@ -23,6 +24,8 @@
 @interface SoomlaGameCenter : NSObject <IGameServicesProvider> {
     
 }
+
++(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player;
 
 @end
 

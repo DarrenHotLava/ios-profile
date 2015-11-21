@@ -59,6 +59,10 @@
 #define EVENT_UP_GAME_LEADERBOARDS_FINISHED     @"up_game_leaderboards_finished"
 #define EVENT_UP_GAME_LEADERBOARDS_FAILED       @"up_game_leaderboards_failed"
 
+#define EVENT_UP_GAME_SCORES_STARTED            @"up_game_scores_started"
+#define EVENT_UP_GAME_SCORES_FINISHED           @"up_game_scores_finished"
+#define EVENT_UP_GAME_SCORES_FAILED             @"up_game_scores_failed"
+
 
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"

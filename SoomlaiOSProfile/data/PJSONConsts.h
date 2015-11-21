@@ -28,3 +28,7 @@ extern NSString *const UP_GENDER;
 extern NSString *const UP_LANGUAGE;
 extern NSString *const UP_BIRTHDAY;
 extern NSString *const UP_EXTRA;
+
+extern NSString *const UP_IDENTIFIER;
+extern NSString *const UP_USER_PROFILE;
+extern NSString *const UP_SCORE_VALUE;

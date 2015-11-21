@@ -15,11 +15,26 @@
  */
 
 #import "Leaderboard.h"
+#import "PJSONConsts.h"
 
 
 @implementation Leaderboard {
 
 }
 
+-(instancetype)initWithDictionary:(NSDictionary *)dict {
+    if (self = [super initWithDictionary:dict]) {
+        self.identifier = dict[UP_IDENTIFIER];
+    }
+    return self;
+}
+
+-(NSDictionary *)toDictionary {
+    NSMutableDictionary *result = [[super toDictionary] mutableCopy];
+    [result addEntriesFromDictionary:@{
+            UP_IDENTIFIER : self.identifier?: [NSNull null]
+    }];
+    return result;
+}
 
 @end

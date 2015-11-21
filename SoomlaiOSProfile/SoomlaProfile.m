@@ -24,6 +24,7 @@
 #import "UserProfileStorage.h"
 #import "SoomlaUtils.h"
 #import "GameServicesController.h"
+#import "Leaderboard.h"
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -437,6 +438,14 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 
 - (void)getLeaderboardsWithProvider:(Provider)provider fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
     [gameServicesController getLeaderboardsWithProvider:provider andFromStart:fromStart payload:payload andReward:reward];
+}
+
+- (void)getScoresWithProvider:(Provider)provider ForLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
+    [self getScoresWithProvider:provider ForLeaderboard:leaderboard fromStart:NO payload:payload andReward:reward];
+}
+
+- (void)getScoresWithProvider:(Provider)provider ForLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController getScoresWithProvider:provider forLeaderboard:leaderboard andFromStart:fromStart payload:payload andReward:reward];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
