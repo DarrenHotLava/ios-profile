@@ -452,6 +452,8 @@ Fetches the user's feed and grants the user a reward.
 
 - (void)getLeaderboardsWithProvider:(Provider)provider fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
 
+- (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
+
 /**
  Helper method to assist with browser-based authentication using a sepcific
  underlying authentication provider.

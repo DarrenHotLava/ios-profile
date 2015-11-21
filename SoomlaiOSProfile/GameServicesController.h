@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 #import "AuthController.h"
 
+@class Leaderboard;
+
 /**
  A class that loads all game services providers and performs specified
  actions on with them.
@@ -38,7 +40,8 @@
 -(void)getLeaderboardsWithProvider:(Provider)provider andFromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
 
 -(void)getScoresWithProvider:(Provider)provider
-              forLeaderboard:(NSString *)leaderboardId
+              forLeaderboard:(Leaderboard *)leaderboard
+                andFromStart:(BOOL)fromStart
                      payload:(NSString *)payload
                    andReward:(Reward *)reward;
 

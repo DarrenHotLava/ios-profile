@@ -431,6 +431,10 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     [rootViewController presentViewController:activityVC animated:YES completion:nil];
 }
 
+- (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+    [self getLeaderboardsWithProvider:provider fromStart:NO payload:payload andReward:reward];
+}
+
 - (void)getLeaderboardsWithProvider:(Provider)provider fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
     [gameServicesController getLeaderboardsWithProvider:provider andFromStart:fromStart payload:payload andReward:reward];
 }

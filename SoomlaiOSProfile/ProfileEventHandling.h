@@ -19,6 +19,7 @@
 
 @class UserProfile;
 @class Reward;
+@class Leaderboard;
 
 // Events
 #define EVENT_UP_PROFILE_INITIALIZED            @"up_profile_initialized"
@@ -71,6 +72,8 @@
 #define DICT_ELEMENT_CONTACTS                   @"contacts"
 #define DICT_ELEMENT_FEEDS                      @"feeds"
 #define DICT_ELEMENT_LEADERBOARDS               @"leaderboards"
+#define DICT_ELEMENT_LEADERBOARD                @"leaderboard"
+#define DICT_ELEMENT_SCORES                     @"scores"
 #define DICT_ELEMENT_REQUEST_ID                 @"requestId"
 #define DICT_ELEMENT_INVITED_LIST               @"invitedIds"
 #define DICT_ELEMENT_REWARD                     @"reward"
@@ -307,10 +310,16 @@ Called when the service has been initializedt.
              withPayload:(NSString *)payload;
 
 
-+(void)postGetLeaderboardsStarted:(Provider)provider withPayload:(NSString *)payload;
++(void)postGetLeaderboardsStarted:(Provider)provider fromStart:(BOOL)fromStart withPayload:(NSString *)payload;
 
-+(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards andPayload:(NSString *)payload;
++(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards hasMore:(BOOL)hasMore andPayload:(NSString *)payload;
 
-+(void)postGetLeaderboardsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload;
++(void)postGetLeaderboardsFailed:(Provider)provider fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload;
+
++(void)postGetScoresStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withPayload:(NSString *)payload;
+
++(void)postGetScoresFinished:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withScoresList:(NSArray *)scores hasMore:(BOOL)hasMore andPayload:(NSString *)payload;
+
++(void)postGetScoresFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload;
 
 @end

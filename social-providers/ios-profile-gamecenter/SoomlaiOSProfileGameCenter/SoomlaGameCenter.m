@@ -16,7 +16,7 @@
 
 #import "SoomlaGameCenter.h"
 #import "UserProfile.h"
-#import <GameKit/GameKit.h>
+#import "Leaderboard+GameCenter.h"
 
 @implementation SoomlaGameCenter {
     BOOL _autoLogin;
@@ -184,7 +184,14 @@ const Provider currentProvider = GAME_CENTER;
 -(void)getLeaderboards:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
-            success(leaderboards, NO);
+            NSMutableArray *result = [NSMutableArray new];
+            for (GKLeaderboard *leaderboard in leaderboards) {
+                Leaderboard *ourLeaderboard = [[Leaderboard alloc] initWithGamecenterLeaderboard:leaderboard];
+                if (ourLeaderboard) {
+                    [result addObject:ourLeaderboard];
+                }
+            }
+            success(result, NO);
         } else {
             fail(error.localizedDescription);
         }

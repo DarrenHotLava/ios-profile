@@ -15,15 +15,15 @@
  */
 
 #import "UserProfileUtils.h"
+#import "SoomlaSerializableObject.h"
 
 /**
  A domain object that represents the user's profile attributes.
  */
-@interface UserProfile : NSObject {
+@interface UserProfile : SoomlaSerializableObject {
     
     @private
-    
-    Provider provider;
+
     NSString* profileId;
     NSString* username;
     NSString* email;
@@ -37,7 +37,6 @@
     NSDictionary* extra;
 }
 
-@property (readonly, nonatomic) Provider provider;
 @property (strong, nonatomic) NSString* profileId;
 @property (strong, nonatomic) NSString* username;
 @property (strong, nonatomic) NSString* email;

@@ -19,6 +19,7 @@
 #import "IGameServicesProvider.h"
 #import "ProfileEventHandling.h"
 #import "SoomlaUtils.h"
+#import "Leaderboard.h"
 
 
 @implementation GameServicesController
@@ -79,26 +80,30 @@ static NSString* TAG = @"SOOMLA GameServicesController";
 -(void)getLeaderboardsWithProvider:(Provider)provider andFromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
-    [ProfileEventHandling postGetLeaderboardsStarted:provider withPayload:payload];
+    [ProfileEventHandling postGetLeaderboardsStarted:provider fromStart:fromStart withPayload:payload];
     [gsProvider getLeaderboards:fromStart success:^(NSArray *leaderboards, BOOL hasMore) {
         if (reward) {
             [reward give];
         }
-        [ProfileEventHandling postGetLeaderboardsFinished:provider withLeaderboardsList:leaderboards andPayload:payload];
+        [ProfileEventHandling postGetLeaderboardsFinished:provider withLeaderboardsList:leaderboards hasMore:hasMore andPayload:payload];
     } fail:^(NSString *message) {
-        [ProfileEventHandling postGetLeaderboardsFailed:provider withMessage:message andPayload:payload];
+        [ProfileEventHandling postGetLeaderboardsFailed:provider fromStart:fromStart withMessage:message andPayload:payload];
     }];
 }
 
--(void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
+-(void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard andFromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
 
-}
+    id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
--(void)getScoresWithProvider:(Provider)provider
-              forLeaderboard:(NSString *)leaderboardId
-                     payload:(NSString *)payload
-                   andReward:(Reward *)reward {
-
+    [ProfileEventHandling postGetScoresStarted:provider forLeaderboard:leaderboard fromStart:fromStart withPayload:payload];
+    [gsProvider getScoresOfLeaderboard:leaderboard.identifier fromStart:fromStart withSuccess:^(NSArray *result, BOOL hasMore) {
+        if (reward) {
+            [reward give];
+        }
+        [ProfileEventHandling postGetScoresFinished:provider forLeaderboard:leaderboard withScoresList:result hasMore:hasMore andPayload:payload];
+    } fail:^(NSString *message) {
+        [ProfileEventHandling postGetScoresFailed:provider forLeaderboard:leaderboard fromStart:fromStart withMessage:message andPayload:payload];
+    }];
 }
 
 @end
