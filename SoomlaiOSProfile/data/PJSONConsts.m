@@ -32,3 +32,4 @@ NSString *const UP_EXTRA            = @"extra";
 NSString *const UP_IDENTIFIER       = @"id";
 NSString *const UP_USER_PROFILE     = @"userProfile";
 NSString *const UP_SCORE_VALUE      = @"scoreValue";
+NSString *const UP_SCORE_RANK       = @"scoreRank";

@@ -11,6 +11,7 @@
 
 @interface Score : SoomlaSerializableObject
 
+@property (nonatomic, strong) NSNumber *rank;
 @property (nonatomic, strong) UserProfile *player;
 @property (nonatomic, strong) NSNumber *value;
 

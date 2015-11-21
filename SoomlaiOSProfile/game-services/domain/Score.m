@@ -14,6 +14,7 @@
 
 -(instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
+        self.rank = dict[UP_SCORE_RANK];
         self.player = [[UserProfile alloc] initWithDictionary:dict[UP_USER_PROFILE]];
         self.value = dict[UP_SCORE_VALUE];
     }
@@ -23,6 +24,7 @@
 -(NSDictionary *)toDictionary {
     NSMutableDictionary *result = [[super toDictionary] mutableCopy];
     [result addEntriesFromDictionary:@{
+            UP_SCORE_RANK:    self.rank,
             UP_USER_PROFILE:  self.player.toDictionary,
             UP_SCORE_VALUE:   self.value
     }];

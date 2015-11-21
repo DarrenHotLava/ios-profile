@@ -217,6 +217,7 @@ const Provider currentProvider = GAME_CENTER;
                 }
             }
             if (currentLeaderboard) {
+                currentLeaderboard.range = NSMakeRange(1, 100);
                 [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
                         NSMutableArray *result = [NSMutableArray new];
