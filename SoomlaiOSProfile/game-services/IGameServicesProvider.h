@@ -32,4 +32,9 @@
                   withSuccess:(successWithArrayHandler)success
                          fail:(failureHandler)fail;
 
+-(void)reportScore:(NSNumber *)score
+    forLeaderboard:(NSString *)leaderboardId
+       withSuccess:(reportScoreSuccessHandler)success
+              fail:(failureHandler)fail;
+
 @end

@@ -17,6 +17,9 @@
 
 // Define block signatures
 
+@class Score;
+
 typedef void (^failureHandler)(NSString* message);
 
 typedef void (^successWithArrayHandler)(NSArray* result, BOOL hasMore);
+typedef void (^reportScoreSuccessHandler)(Score *score);

@@ -18,6 +18,7 @@
 #import "UserProfile.h"
 #import "BadgeReward.h"
 #import "Leaderboard.h"
+#import "Score.h"
 
 
 @implementation ProfileEventHandling
@@ -239,7 +240,7 @@
             DICT_ELEMENT_MESSAGE: message,
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_SCORES_STARTED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_FAILED object:self userInfo:userInfo];
 }
 
 +(void)postGetScoresStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withPayload:(NSString *)payload {
@@ -249,7 +250,7 @@
             DICT_ELEMENT_FROM_START: @(fromStart),
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_STARTED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_SCORES_STARTED object:self userInfo:userInfo];
 }
 
 +(void)postGetScoresFinished:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withScoresList:(NSArray *)scores hasMore:(BOOL)hasMore andPayload:(NSString *)payload {
@@ -272,6 +273,35 @@
             DICT_ELEMENT_PAYLOAD: payload
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_SCORES_FAILED object:self userInfo:userInfo];
+}
+
++(void)postReportScoreStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_LEADERBOARD: leaderboard,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SCORE_REPORT_STARTED object:self userInfo:userInfo];
+}
+
++(void)postReportScoreFinished:(Provider)provider score:(Score *)score forLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_LEADERBOARD: leaderboard,
+            DICT_ELEMENT_SCORE: score,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SCORE_REPORT_FINISHED object:self userInfo:userInfo];
+}
+
++(void)postReportScoreFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_LEADERBOARD: leaderboard,
+            DICT_ELEMENT_MESSAGE: message,
+            DICT_ELEMENT_PAYLOAD: payload
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SCORE_REPORT_FAILED object:self userInfo:userInfo];
 }
 
 @end

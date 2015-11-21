@@ -45,5 +45,6 @@
                      payload:(NSString *)payload
                    andReward:(Reward *)reward;
 
+-(void)reportScoreWithProvider:(Provider)provider score:(NSNumber *)score forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
 @end

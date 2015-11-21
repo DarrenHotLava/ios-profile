@@ -115,6 +115,9 @@ const Provider currentProvider = GAME_CENTER;
     if ([player.displayName componentsSeparatedByString:@" "].count == 2) {
         firstName = [[player.displayName componentsSeparatedByString:@" "] firstObject];
         lastName = [[player.displayName componentsSeparatedByString:@" "] lastObject];
+    } else if ([player.alias componentsSeparatedByString:@" "].count == 2) {
+        firstName = [[player.alias componentsSeparatedByString:@" "] firstObject];
+        lastName = [[player.alias componentsSeparatedByString:@" "] lastObject];
     }
     return [[UserProfile alloc] initWithProvider:currentProvider andProfileId:player.playerID andUsername:player.alias
                                         andEmail:@"" andFirstName:(firstName ? firstName : @"")
@@ -231,6 +234,20 @@ const Provider currentProvider = GAME_CENTER;
             } else {
                 fail(@"Leaderboard with specified identifier not found.");
             }
+        } else {
+            fail(error.localizedDescription);
+        }
+    }];
+}
+
+-(void)reportScore:(NSNumber *)score forLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
+    GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardId];
+    newScore.value = score.longLongValue;
+    newScore.context = 0;
+
+    [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
+        if (error == nil) {
+            success([[Score alloc] initWithGamecenterScore:newScore]);
         } else {
             fail(error.localizedDescription);
         }

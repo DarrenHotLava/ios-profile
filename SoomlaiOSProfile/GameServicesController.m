@@ -106,4 +106,19 @@ static NSString* TAG = @"SOOMLA GameServicesController";
     }];
 }
 
+-(void)reportScoreWithProvider:(Provider)provider score:(NSNumber *)score forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
+
+    id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
+
+    [ProfileEventHandling postReportScoreStarted:provider forLeaderboard:leaderboard withPayload:payload];
+    [gsProvider reportScore:score forLeaderboard:leaderboard.identifier withSuccess:^(Score *newScore) {
+        if (reward) {
+            [reward give];
+        }
+        [ProfileEventHandling postReportScoreFinished:provider score:newScore forLeaderboard:leaderboard andPayload:payload];
+    } fail:^(NSString *message) {
+        [ProfileEventHandling postReportScoreFailed:provider forLeaderboard:leaderboard withMessage:message andPayload:payload];
+    }];
+}
+
 @end

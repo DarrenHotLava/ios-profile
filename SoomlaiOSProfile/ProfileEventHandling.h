@@ -20,6 +20,7 @@
 @class UserProfile;
 @class Reward;
 @class Leaderboard;
+@class Score;
 
 // Events
 #define EVENT_UP_PROFILE_INITIALIZED            @"up_profile_initialized"
@@ -63,6 +64,9 @@
 #define EVENT_UP_GAME_SCORES_FINISHED           @"up_game_scores_finished"
 #define EVENT_UP_GAME_SCORES_FAILED             @"up_game_scores_failed"
 
+#define EVENT_UP_SCORE_REPORT_STARTED           @"up_game_scores_started"
+#define EVENT_UP_SCORE_REPORT_FINISHED          @"up_game_scores_finished"
+#define EVENT_UP_SCORE_REPORT_FAILED            @"up_game_scores_failed"
 
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
@@ -78,6 +82,7 @@
 #define DICT_ELEMENT_LEADERBOARDS               @"leaderboards"
 #define DICT_ELEMENT_LEADERBOARD                @"leaderboard"
 #define DICT_ELEMENT_SCORES                     @"scores"
+#define DICT_ELEMENT_SCORE                      @"score"
 #define DICT_ELEMENT_REQUEST_ID                 @"requestId"
 #define DICT_ELEMENT_INVITED_LIST               @"invitedIds"
 #define DICT_ELEMENT_REWARD                     @"reward"
@@ -325,5 +330,11 @@ Called when the service has been initializedt.
 +(void)postGetScoresFinished:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withScoresList:(NSArray *)scores hasMore:(BOOL)hasMore andPayload:(NSString *)payload;
 
 +(void)postGetScoresFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload;
+
++(void)postReportScoreStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload;
+
++(void)postReportScoreFinished:(Provider)provider score:(Score *)score forLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload;
+
++(void)postReportScoreFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload;
 
 @end
