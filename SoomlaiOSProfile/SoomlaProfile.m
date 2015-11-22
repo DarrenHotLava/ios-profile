@@ -107,7 +107,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
             [controller loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
             return;
         }
-        @catch (NSException *exception) {
+        @catch (ProviderNotFoundException *exception) {
 
         }
     }
@@ -120,7 +120,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
             [controller logoutWithProvider:provider];
             return;
         }
-        @catch (NSException *exception) {
+        @catch (ProviderNotFoundException *exception) {
 
         }
     }
@@ -132,7 +132,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     for(NSNumber* providerNum in providers) {
         @try {
             [self logoutWithProvider:(Provider)[providerNum intValue]];
-        }@catch (NSException *exception) {
+        }@catch (ProviderNotFoundException *exception) {
             // Skip
         }
     }
@@ -143,7 +143,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         @try {
             return [controller isLoggedInWithProvider:provider];
         }
-        @catch (NSException *exception) {
+        @catch (ProviderNotFoundException *exception) {
 
         }
     }
@@ -155,7 +155,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         @try {
             [controller getStoredUserProfileWithProvider:provider];
         }
-        @catch (NSException *exception) {
+        @catch (ProviderNotFoundException *exception) {
 
         }
     }
