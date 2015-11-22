@@ -56,17 +56,17 @@
 #define EVENT_UP_INVITE_CANCELLED               @"up_invite_cancelled"
 #define EVENT_UP_INVITE_FAILED                  @"up_invite_failed"
 
-#define EVENT_UP_LEADERBOARDS_STARTED           @"up_leaderboards_started"
-#define EVENT_UP_LEADERBOARDS_FINISHED          @"up_leaderboards_finished"
-#define EVENT_UP_LEADERBOARDS_FAILED            @"up_leaderboards_failed"
+#define EVENT_UP_GET_LEADERBOARDS_STARTED       @"up_get_leaderboards_started"
+#define EVENT_UP_GET_LEADERBOARDS_FINISHED      @"up_get_leaderboards_finished"
+#define EVENT_UP_GET_LEADERBOARDS_FAILED        @"up_get_leaderboards_failed"
 
-#define EVENT_UP_SCORES_STARTED                 @"up_scores_started"
-#define EVENT_UP_SCORES_FINISHED                @"up_scores_finished"
-#define EVENT_UP_SCORES_FAILED                  @"up_scores_failed"
+#define EVENT_UP_GET_SCORES_STARTED             @"up_get_scores_started"
+#define EVENT_UP_GET_SCORES_FINISHED            @"up_get_scores_finished"
+#define EVENT_UP_GET_SCORES_FAILED              @"up_get_scores_failed"
 
-#define EVENT_UP_SCORE_REPORT_STARTED           @"up_score_report_started"
-#define EVENT_UP_SCORE_REPORT_FINISHED          @"up_score_report_finished"
-#define EVENT_UP_SCORE_REPORT_FAILED            @"up_score_report_failed"
+#define EVENT_UP_REPORT_SCORE_STARTED           @"up_report_score_started"
+#define EVENT_UP_REPORT_SCORE_FINISHED          @"up_report_score_finished"
+#define EVENT_UP_REPORT_SCORE_FAILED            @"up_report_score_failed"
 
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
