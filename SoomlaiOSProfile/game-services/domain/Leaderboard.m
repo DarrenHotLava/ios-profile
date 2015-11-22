@@ -32,7 +32,6 @@
 -(instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
         _provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
-        ID = dict[UP_IDENTIFIER];
     }
     return self;
 }
