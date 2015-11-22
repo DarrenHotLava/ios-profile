@@ -101,7 +101,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     [self loginWithProvider:provider andPayload:@"" andReward:reward];
 }
 
-- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {)
+- (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
     for (AuthController *controller in @[authController, socialController, gameServicesController]) {
         @try {
             [controller loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
