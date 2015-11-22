@@ -17,15 +17,27 @@
 #import "Score.h"
 #import "UserProfile.h"
 #import "PJSONConsts.h"
+#import "Leaderboard.h"
 
 
 @implementation Score {
 
 }
 
+-(instancetype)init {
+    if (self = [super init]) {
+        //we don't use ID in scores but should be not null
+        ID = @"";
+    }
+    return self;
+}
+
 -(instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
+        //we don't use ID in scores but should be not null
+        ID = @"";
         self.rank = dict[UP_SCORE_RANK];
+        self.leaderboard = [[Leaderboard alloc] initWithDictionary:dict[UP_LEADERBOARD]];
         self.player = [[UserProfile alloc] initWithDictionary:dict[UP_USER_PROFILE]];
         self.value = dict[UP_SCORE_VALUE];
     }
@@ -36,6 +48,7 @@
     NSMutableDictionary *result = [[super toDictionary] mutableCopy];
     [result addEntriesFromDictionary:@{
             UP_SCORE_RANK:    self.rank,
+            UP_LEADERBOARD:   self.leaderboard.toDictionary,
             UP_USER_PROFILE:  self.player.toDictionary,
             UP_SCORE_VALUE:   self.value
     }];

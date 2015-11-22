@@ -21,7 +21,7 @@
 
 @implementation UserProfile
 
-@synthesize profileId, email, username, firstName, lastName, avatarLink, location, gender, language, birthday, extra;
+@synthesize provider, profileId, email, username, firstName, lastName, avatarLink, location, gender, language, birthday, extra;
 
 
 - (id)initWithProvider:(Provider)oProvider
@@ -44,7 +44,7 @@
 
     if (self = [super init]) {
         provider = oProvider;
-        self.profileId = oProfileId;
+        ID = self.profileId = oProfileId;
         self.username = oUsername;
         self.email = oEmail;
         self.firstName = oFirstName;
@@ -57,17 +57,18 @@
 
 - (id)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
-        self.profileId = [dict objectForKey:UP_PROFILEID];
-        self.username = [dict objectForKey:UP_USERNAME];
-        self.email = [dict objectForKey:UP_EMAIL];
-        self.firstName = [dict objectForKey:UP_FIRSTNAME];
-        self.lastName = [dict objectForKey:UP_LASTNAME];
-        self.avatarLink = [dict objectForKey:UP_AVATAR];
-        self.location = [dict objectForKey:UP_LOCATION];
-        self.gender = [dict objectForKey:UP_GENDER];
-        self.language = [dict objectForKey:UP_LANGUAGE];
-        self.birthday = [dict objectForKey:UP_BIRTHDAY];
-        extra = [dict objectForKey:UP_EXTRA];
+        provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
+        ID = self.profileId = dict[UP_PROFILEID];
+        self.username = dict[UP_USERNAME];
+        self.email = dict[UP_EMAIL];
+        self.firstName = dict[UP_FIRSTNAME];
+        self.lastName = dict[UP_LASTNAME];
+        self.avatarLink = dict[UP_AVATAR];
+        self.location = dict[UP_LOCATION];
+        self.gender = dict[UP_GENDER];
+        self.language = dict[UP_LANGUAGE];
+        self.birthday = dict[UP_BIRTHDAY];
+        extra = dict[UP_EXTRA];
     }
     
     return self;
@@ -76,6 +77,7 @@
 - (NSDictionary*)toDictionary {
     NSMutableDictionary *result = [[super toDictionary] mutableCopy];
     [result addEntriesFromDictionary:@{
+            UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider],
             UP_PROFILEID : self.profileId ?: [NSNull null],
             UP_USERNAME : self.username ?: [NSNull null],
             UP_EMAIL : self.email ?: [NSNull null],

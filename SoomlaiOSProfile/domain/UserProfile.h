@@ -14,16 +14,17 @@
  limitations under the License.
  */
 
+#import <SoomlaEntity.h>
 #import "UserProfileUtils.h"
-#import "SoomlaSerializableObject.h"
 
 /**
  A domain object that represents the user's profile attributes.
  */
-@interface UserProfile : SoomlaSerializableObject {
+@interface UserProfile : SoomlaEntity {
     
     @private
-
+    
+    Provider provider;
     NSString* profileId;
     NSString* username;
     NSString* email;
@@ -37,6 +38,7 @@
     NSDictionary* extra;
 }
 
+@property (readonly, nonatomic) Provider provider;
 @property (strong, nonatomic) NSString* profileId;
 @property (strong, nonatomic) NSString* username;
 @property (strong, nonatomic) NSString* email;
@@ -84,20 +86,6 @@ Constructor
           andFirstName:(NSString *)oFirstName
            andLastName:(NSString *)oLastName
               andExtra:(NSDictionary *)oExtra;
-
-/**
- Constructor
- 
- @param dict An `NSDictionary` representation of the `UserProfile.`
- */
-- (id)initWithDictionary:(NSDictionary *)dict;
-
-/**
- Converts the current `UserProfile` to an `NSDictionary`.
- 
- @return This instance of `UserProfile` as an `NSDictionary`.
- */
-- (NSDictionary*)toDictionary;
 
 /**
  Gets the user's first and last name.

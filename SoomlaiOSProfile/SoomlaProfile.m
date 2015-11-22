@@ -101,17 +101,13 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (void)loginWithProvider:(Provider)provider andPayload:(NSString *)payload andReward:(Reward *)reward {
-    @try {
-        [authController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
-    }
-    @catch (NSException *exception) {
+    for (AuthController *controller in @[authController, socialController, gameServicesController]) {
         @try {
-            // TODO: implement logic like in java that will raise the exception. Currently not raised
-            [socialController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+            [controller loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+            break;
         }
         @catch (NSException *exception) {
-            // TODO: implement logic like in java that will raise the exception. Currently not raised
-            [gameServicesController loginWithProvider:provider andAutoLogin:NO andPayload:payload andReward:reward];
+
         }
     }
 }

@@ -22,8 +22,7 @@
 @implementation Score (GameCenter)
 
 -(instancetype)initWithGamecenterScore:(GKScore *)score {
-    if (self = [super init]) {
-        provider = GAME_CENTER;
+    if (self = [self init]) {
         self.rank = @(score.rank);
         self.player = [SoomlaGameCenter userProfileFromGameKitPlayer:score.player];
         self.value = @(score.value);

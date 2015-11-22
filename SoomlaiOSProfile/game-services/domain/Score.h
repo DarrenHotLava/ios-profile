@@ -15,12 +15,15 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SoomlaSerializableObject.h"
+#import <SoomlaEntity.h>
 
 @class UserProfile;
+@class Leaderboard;
 
 
-@interface Score : SoomlaSerializableObject
+@interface Score : SoomlaEntity
+
+@property (nonatomic, strong) Leaderboard *leaderboard;
 
 @property (nonatomic, strong) NSNumber *rank;
 @property (nonatomic, strong) UserProfile *player;

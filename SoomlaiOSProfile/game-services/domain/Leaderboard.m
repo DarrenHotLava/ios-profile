@@ -22,9 +22,17 @@
 
 }
 
+-(instancetype)initWithProvider:(Provider)oProvider {
+    if (self = [super init]) {
+        _provider = oProvider;
+    }
+    return self;
+}
+
 -(instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super initWithDictionary:dict]) {
-        self.identifier = dict[UP_IDENTIFIER];
+        _provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
+        ID = dict[UP_IDENTIFIER];
     }
     return self;
 }
@@ -32,7 +40,7 @@
 -(NSDictionary *)toDictionary {
     NSMutableDictionary *result = [[super toDictionary] mutableCopy];
     [result addEntriesFromDictionary:@{
-            UP_IDENTIFIER : self.identifier?: [NSNull null]
+            UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider]
     }];
     return result;
 }

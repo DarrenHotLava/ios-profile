@@ -26,10 +26,8 @@
 		3AFD6F1C1986E174001360D9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AFD6F1B1986E173001360D9 /* UIKit.framework */; };
 		9D448D971B0A13B400C60D0A /* ConfirmationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D448D951B0A13B400C60D0A /* ConfirmationDialog.h */; };
 		9D448D981B0A13B400C60D0A /* ConfirmationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D448D961B0A13B400C60D0A /* ConfirmationDialog.m */; };
-		B2FA8242F7C604F59E091FA8 /* SoomlaSerializableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA89E4D64964FF22E5241E /* SoomlaSerializableObject.m */; };
 		B2FA824F129B837027472536 /* Score.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8E29C287392244E77F02 /* Score.m */; };
 		B2FA8294885A19F290647EAE /* GameServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA806CBA89DCA1B345F68C /* GameServicesController.m */; };
-		B2FA830ACB705B5D646079B8 /* SoomlaSerializableObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA81096B2C710EABB25E7A /* SoomlaSerializableObject.h */; };
 		B2FA87DEC950CE0EE8D637D5 /* IGameServicesCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA84430689AA1C4F9EFC98 /* IGameServicesCallbacks.h */; };
 		B2FA88E82705372BC658A276 /* GameServicesController.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA88692F60A73A4F8DF575 /* GameServicesController.h */; };
 		B2FA890D73779B0FBB7DB85E /* IGameServicesProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA8551B072D55AF6C4731E /* IGameServicesProvider.h */; };
@@ -71,13 +69,11 @@
 		9D448D951B0A13B400C60D0A /* ConfirmationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmationDialog.h; sourceTree = "<group>"; };
 		9D448D961B0A13B400C60D0A /* ConfirmationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationDialog.m; sourceTree = "<group>"; };
 		B2FA806CBA89DCA1B345F68C /* GameServicesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameServicesController.m; sourceTree = "<group>"; };
-		B2FA81096B2C710EABB25E7A /* SoomlaSerializableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaSerializableObject.h; sourceTree = "<group>"; };
 		B2FA83BD1AEA089E3F3DE623 /* Leaderboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Leaderboard.m; sourceTree = "<group>"; };
 		B2FA84430689AA1C4F9EFC98 /* IGameServicesCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGameServicesCallbacks.h; sourceTree = "<group>"; };
 		B2FA84E9902E5A35D350C9B5 /* Leaderboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leaderboard.h; sourceTree = "<group>"; };
 		B2FA8551B072D55AF6C4731E /* IGameServicesProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGameServicesProvider.h; sourceTree = "<group>"; };
 		B2FA88692F60A73A4F8DF575 /* GameServicesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameServicesController.h; sourceTree = "<group>"; };
-		B2FA89E4D64964FF22E5241E /* SoomlaSerializableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaSerializableObject.m; sourceTree = "<group>"; };
 		B2FA8A3DD9A078FFF6E7DDA0 /* Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score.h; sourceTree = "<group>"; };
 		B2FA8E29C287392244E77F02 /* Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score.m; sourceTree = "<group>"; };
 		EF356EFA193C90560081DCE0 /* libSoomlaiOSProfile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfile.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,8 +242,6 @@
 				EF356F2A193CA52E0081DCE0 /* UserProfile.h */,
 				EF356F2B193CA52E0081DCE0 /* UserProfile.m */,
 				EF356F32193CB2060081DCE0 /* IProvider.h */,
-				B2FA89E4D64964FF22E5241E /* SoomlaSerializableObject.m */,
-				B2FA81096B2C710EABB25E7A /* SoomlaSerializableObject.h */,
 			);
 			name = domain;
 			sourceTree = "<group>";
@@ -308,7 +302,6 @@
 				B2FA890D73779B0FBB7DB85E /* IGameServicesProvider.h in Headers */,
 				B2FA87DEC950CE0EE8D637D5 /* IGameServicesCallbacks.h in Headers */,
 				B2FA88E82705372BC658A276 /* GameServicesController.h in Headers */,
-				B2FA830ACB705B5D646079B8 /* SoomlaSerializableObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +389,6 @@
 				EF356F2C193CA52E0081DCE0 /* UserProfile.m in Sources */,
 				B2FA8294885A19F290647EAE /* GameServicesController.m in Sources */,
 				B2FA89250C718A45CD7B8662 /* Leaderboard.m in Sources */,
-				B2FA8242F7C604F59E091FA8 /* SoomlaSerializableObject.m in Sources */,
 				B2FA824F129B837027472536 /* Score.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

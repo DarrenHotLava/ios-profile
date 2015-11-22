@@ -15,11 +15,15 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SoomlaSerializableObject.h"
+#import <SoomlaEntity.h>
+#import "UserProfileUtils.h"
 
 
-@interface Leaderboard : SoomlaSerializableObject
+@interface Leaderboard : SoomlaEntity {
+}
 
-@property (nonatomic, strong) NSString *identifier;
+@property (readonly, nonatomic) Provider provider;
+
+-(instancetype)initWithProvider:(Provider)oProvider;
 
 @end

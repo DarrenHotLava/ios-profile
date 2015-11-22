@@ -21,9 +21,8 @@
 @implementation Leaderboard (GameCenter)
 
 -(instancetype)initWithGamecenterLeaderboard:(GKLeaderboard *)leaderboard {
-    if (self = [super init]) {
-        provider = GAME_CENTER;
-        self.identifier = leaderboard.identifier;
+    if (self = [self initWithProvider:GAME_CENTER]) {
+        ID = leaderboard.identifier;
     }
     return self;
 }

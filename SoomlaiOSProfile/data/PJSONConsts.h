@@ -31,5 +31,6 @@ extern NSString *const UP_EXTRA;
 
 extern NSString *const UP_IDENTIFIER;
 extern NSString *const UP_USER_PROFILE;
+extern NSString *const UP_LEADERBOARD;
 extern NSString *const UP_SCORE_VALUE;
 extern NSString *const UP_SCORE_RANK;

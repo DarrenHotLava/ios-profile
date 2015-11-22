@@ -20,6 +20,7 @@
 #import "ProfileEventHandling.h"
 #import "SoomlaUtils.h"
 #import "Leaderboard.h"
+#import "Score.h"
 
 
 @implementation GameServicesController
@@ -96,9 +97,12 @@ static NSString* TAG = @"SOOMLA GameServicesController";
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
     [ProfileEventHandling postGetScoresStarted:provider forLeaderboard:leaderboard fromStart:fromStart withPayload:payload];
-    [gsProvider getScoresOfLeaderboard:leaderboard.identifier fromStart:fromStart withSuccess:^(NSArray *result, BOOL hasMore) {
+    [gsProvider getScoresOfLeaderboard:leaderboard.ID fromStart:fromStart withSuccess:^(NSArray *result, BOOL hasMore) {
         if (reward) {
             [reward give];
+        }
+        for (Score *sc in result) {
+            sc.leaderboard = leaderboard;
         }
         [ProfileEventHandling postGetScoresFinished:provider forLeaderboard:leaderboard withScoresList:result hasMore:hasMore andPayload:payload];
     } fail:^(NSString *message) {
@@ -111,7 +115,7 @@ static NSString* TAG = @"SOOMLA GameServicesController";
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
     [ProfileEventHandling postReportScoreStarted:provider forLeaderboard:leaderboard withPayload:payload];
-    [gsProvider reportScore:score forLeaderboard:leaderboard.identifier withSuccess:^(Score *newScore) {
+    [gsProvider reportScore:score forLeaderboard:leaderboard.ID withSuccess:^(Score *newScore) {
         if (reward) {
             [reward give];
         }
