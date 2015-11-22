@@ -220,7 +220,7 @@
             DICT_ELEMENT_FROM_START: @(fromStart),
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_STARTED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LEADERBOARDS_STARTED object:self userInfo:userInfo];
 }
 
 +(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards hasMore:(BOOL)hasMore andPayload:(NSString *)payload {
@@ -230,7 +230,7 @@
             DICT_ELEMENT_HAS_MORE: @(hasMore),
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_FINISHED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LEADERBOARDS_FINISHED object:self userInfo:userInfo];
 }
 
 +(void)postGetLeaderboardsFailed:(Provider)provider fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload {
@@ -240,7 +240,7 @@
             DICT_ELEMENT_MESSAGE: message,
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_LEADERBOARDS_FAILED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_LEADERBOARDS_FAILED object:self userInfo:userInfo];
 }
 
 +(void)postGetScoresStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withPayload:(NSString *)payload {
@@ -250,7 +250,7 @@
             DICT_ELEMENT_FROM_START: @(fromStart),
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_SCORES_STARTED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SCORES_STARTED object:self userInfo:userInfo];
 }
 
 +(void)postGetScoresFinished:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withScoresList:(NSArray *)scores hasMore:(BOOL)hasMore andPayload:(NSString *)payload {
@@ -261,7 +261,7 @@
             DICT_ELEMENT_HAS_MORE: @(hasMore),
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_SCORES_FINISHED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SCORES_FINISHED object:self userInfo:userInfo];
 }
 
 +(void)postGetScoresFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload {
@@ -272,7 +272,7 @@
             DICT_ELEMENT_MESSAGE: message,
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GAME_SCORES_FAILED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SCORES_FAILED object:self userInfo:userInfo];
 }
 
 +(void)postReportScoreStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload {
