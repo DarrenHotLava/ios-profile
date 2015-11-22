@@ -21,7 +21,11 @@
 
 @implementation SoomlaGameCenter {
     BOOL _autoLogin;
+
+    NSMutableDictionary *_scoresOffsets;
 }
+
+const NSUInteger DEFAULT_OFFSET = 25;
 
 const Provider currentProvider = GAME_CENTER;
 
@@ -36,6 +40,8 @@ const Provider currentProvider = GAME_CENTER;
     } else {
         _autoLogin = NO;
     }
+
+    _scoresOffsets = [NSMutableDictionary new];
 }
 
 /**
@@ -217,7 +223,10 @@ const Provider currentProvider = GAME_CENTER;
                 }
             }
             if (currentLeaderboard) {
-                currentLeaderboard.range = NSMakeRange(1, 100);
+                if (!_scoresOffsets[leaderboardId] || fromStart) {
+                    _scoresOffsets[leaderboardId] = @1;
+                }
+                currentLeaderboard.range = NSMakeRange([_scoresOffsets[leaderboardId] unsignedIntegerValue], DEFAULT_OFFSET);
                 [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
                     if (error == nil) {
                         NSMutableArray *result = [NSMutableArray new];
@@ -227,7 +236,10 @@ const Provider currentProvider = GAME_CENTER;
                                 [result addObject:ourScore];
                             }
                         }
-                        success(result, NO);
+                        if (result.count == DEFAULT_OFFSET) {
+                            _scoresOffsets[leaderboardId] = @([_scoresOffsets[leaderboardId] unsignedIntegerValue] + DEFAULT_OFFSET);
+                        }
+                        success(result, result.count == DEFAULT_OFFSET);
                     } else {
                         fail(error.localizedDescription);
                     }
