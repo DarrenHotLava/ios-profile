@@ -78,17 +78,17 @@ static NSString* TAG = @"SOOMLA GameServicesController";
             }];
 }
 
--(void)getLeaderboardsWithProvider:(Provider)provider andFromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward {
+-(void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
-    [ProfileEventHandling postGetLeaderboardsStarted:provider fromStart:fromStart withPayload:payload];
-    [gsProvider getLeaderboards:fromStart success:^(NSArray *leaderboards, BOOL hasMore) {
+    [ProfileEventHandling postGetLeaderboardsStarted:provider withPayload:payload];
+    [gsProvider getLeaderboardsWithSuccess:^(NSArray *leaderboards, BOOL hasMore) {
         if (reward) {
             [reward give];
         }
-        [ProfileEventHandling postGetLeaderboardsFinished:provider withLeaderboardsList:leaderboards hasMore:hasMore andPayload:payload];
+        [ProfileEventHandling postGetLeaderboardsFinished:provider withLeaderboardsList:leaderboards andPayload:payload];
     } fail:^(NSString *message) {
-        [ProfileEventHandling postGetLeaderboardsFailed:provider fromStart:fromStart withMessage:message andPayload:payload];
+        [ProfileEventHandling postGetLeaderboardsFailed:provider withMessage:message andPayload:payload];
     }];
 }
 
@@ -119,6 +119,7 @@ static NSString* TAG = @"SOOMLA GameServicesController";
         if (reward) {
             [reward give];
         }
+        newScore.leaderboard = leaderboard;
         [ProfileEventHandling postReportScoreFinished:provider score:newScore forLeaderboard:leaderboard andPayload:payload];
     } fail:^(NSString *message) {
         [ProfileEventHandling postReportScoreFailed:provider forLeaderboard:leaderboard withMessage:message andPayload:payload];

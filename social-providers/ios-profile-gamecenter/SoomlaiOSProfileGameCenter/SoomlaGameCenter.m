@@ -195,7 +195,7 @@ const Provider currentProvider = GAME_CENTER;
     }];
 }
 
--(void)getLeaderboards:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail {
+-(void)getLeaderboardsWithSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
             NSMutableArray *result = [NSMutableArray new];

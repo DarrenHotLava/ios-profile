@@ -25,7 +25,7 @@
 
 -(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail;
 
--(void)getLeaderboards:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail;
+-(void)getLeaderboardsWithSuccess:(successWithArrayHandler)success fail:(failureHandler)fail;
 
 -(void)getScoresOfLeaderboard:(NSString *)leaderboardId
                     fromStart:(BOOL)fromStart

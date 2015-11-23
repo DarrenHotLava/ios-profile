@@ -223,29 +223,26 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_INVITE_FAILED object:self userInfo:userInfo];
 }
 
-+(void)postGetLeaderboardsStarted:(Provider)provider fromStart:(BOOL)fromStart withPayload:(NSString *)payload {
++(void)postGetLeaderboardsStarted:(Provider)provider withPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
             DICT_ELEMENT_PROVIDER: @(provider),
-            DICT_ELEMENT_FROM_START: @(fromStart),
             DICT_ELEMENT_PAYLOAD: payload
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_LEADERBOARDS_STARTED object:self userInfo:userInfo];
 }
 
-+(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards hasMore:(BOOL)hasMore andPayload:(NSString *)payload {
++(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards andPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
             DICT_ELEMENT_PROVIDER: @(provider),
             DICT_ELEMENT_LEADERBOARDS: leaderboards,
-            DICT_ELEMENT_HAS_MORE: @(hasMore),
             DICT_ELEMENT_PAYLOAD: payload
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_LEADERBOARDS_FINISHED object:self userInfo:userInfo];
 }
 
-+(void)postGetLeaderboardsFailed:(Provider)provider fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload {
++(void)postGetLeaderboardsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
             DICT_ELEMENT_PROVIDER: @(provider),
-            DICT_ELEMENT_FROM_START: @(fromStart),
             DICT_ELEMENT_MESSAGE: message,
             DICT_ELEMENT_PAYLOAD: payload
     };

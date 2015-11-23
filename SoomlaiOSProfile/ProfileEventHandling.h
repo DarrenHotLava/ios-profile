@@ -319,11 +319,11 @@ Called when the service has been initializedt.
              withPayload:(NSString *)payload;
 
 
-+(void)postGetLeaderboardsStarted:(Provider)provider fromStart:(BOOL)fromStart withPayload:(NSString *)payload;
++(void)postGetLeaderboardsStarted:(Provider)provider withPayload:(NSString *)payload;
 
-+(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards hasMore:(BOOL)hasMore andPayload:(NSString *)payload;
++(void)postGetLeaderboardsFinished:(Provider)provider withLeaderboardsList:(NSArray *)leaderboards andPayload:(NSString *)payload;
 
-+(void)postGetLeaderboardsFailed:(Provider)provider fromStart:(BOOL)fromStart withMessage:(NSString *)message andPayload:(NSString *)payload;
++(void)postGetLeaderboardsFailed:(Provider)provider withMessage:(NSString *)message andPayload:(NSString *)payload;
 
 +(void)postGetScoresStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart withPayload:(NSString *)payload;
 

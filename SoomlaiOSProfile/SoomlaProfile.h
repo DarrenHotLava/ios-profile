@@ -452,8 +452,6 @@ Fetches the user's feed and grants the user a reward.
 */
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath;
 
-- (void)getLeaderboardsWithProvider:(Provider)provider fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
-
 - (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
 
 - (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
