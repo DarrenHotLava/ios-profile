@@ -452,12 +452,49 @@ Fetches the user's feed and grants the user a reward.
 */
 - (void)multiShareWithText:(NSString *)text andImageFilePath:(NSString *)imageFilePath;
 
+/**
+ Fetches the game's leaderboards list
+
+ @param provider The provider to use
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
+ */
 - (void)getLeaderboardsWithProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
 
+/**
+ Fetches the game's scores list from specified leaderboard
+
+ @param provider The provider to use
+ @param leaderboard Leaderboard containing desired scores list
+ @param fromStart Should we reset pagination or request the next page
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
+ */
 - (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard fromStart:(BOOL)fromStart payload:(NSString *)payload andReward:(Reward *)reward;
 
+/**
+ Fetches the game's scores list from specified leaderboard
+
+ @param provider The provider to use
+ @param leaderboard Leaderboard containing desired scores list
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
+ */
 - (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
+/**
+ Reports scores for specified leaderboard
+
+ @param provider The provider to use
+ @param score Value to report
+ @param leaderboard Target leaderboard
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
+ */
 - (void)reportScoreWithProvider:(Provider)provider score:(NSNumber *)score forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
 /**

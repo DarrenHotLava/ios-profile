@@ -21,6 +21,10 @@
 
 @interface Leaderboard (GameCenter)
 
+/**
+ Constructor
+ Constructs SOOMLA leaderboard from Gamekit leaderboard
+ */
 -(instancetype)initWithGamecenterLeaderboard:(GKLeaderboard *)leaderboard;
 
 @end

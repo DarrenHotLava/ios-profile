@@ -24,6 +24,11 @@
 
 @property (readonly, nonatomic) Provider provider;
 
+/**
+ Constructor
+
+ @param oProvider the provider which the leaderboard's data is associated to
+ */
 -(instancetype)initWithProvider:(Provider)oProvider;
 
 @end

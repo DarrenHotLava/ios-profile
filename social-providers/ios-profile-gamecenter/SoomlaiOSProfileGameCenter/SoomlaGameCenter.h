@@ -25,6 +25,9 @@
     
 }
 
+/**
+ Constructs SOOMLA profile from Gamekit profile
+ */
 +(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player;
 
 @end

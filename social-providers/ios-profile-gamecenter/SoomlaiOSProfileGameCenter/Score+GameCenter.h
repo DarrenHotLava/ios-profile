@@ -21,6 +21,10 @@
 
 @interface Score (GameCenter)
 
+/**
+ Constructor
+ Constructs SOOMLA score from Gamekit score
+ */
 -(instancetype)initWithGamecenterScore:(GKScore *)score;
 
 @end

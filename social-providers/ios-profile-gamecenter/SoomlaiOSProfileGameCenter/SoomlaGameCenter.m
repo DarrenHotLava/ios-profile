@@ -178,6 +178,13 @@ const Provider currentProvider = GAME_CENTER;
 
 #pragma mark IGameServicesProvider methods
 
+/**
+ Fetches the user's contact list
+
+ @param fromStart Should we reset pagination or request the next page
+ @param success a contacts fetch success callback
+ @param fail a contacts fetch failure callback
+ */
 -(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail {
     [[GKLocalPlayer localPlayer] loadFriendPlayersWithCompletionHandler:^(NSArray *friendPlayers, NSError *error) {
         if (error == nil) {
@@ -195,6 +202,12 @@ const Provider currentProvider = GAME_CENTER;
     }];
 }
 
+/**
+ Fetches the game's leaderboards list
+
+ @param success a leaderboards fetch success callback
+ @param fail a leaderboards fetch failure callback
+ */
 -(void)getLeaderboardsWithSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
@@ -212,6 +225,14 @@ const Provider currentProvider = GAME_CENTER;
     }];
 }
 
+/**
+ Fetches the game's scores list from specified leaderboard
+
+ @param leaderboardId Leaderboard containing desired scores list
+ @param fromStart Should we reset pagination or request the next page
+ @param success a scores fetch success callback
+ @param fail a scores fetch failure callback
+ */
 -(void)getScoresOfLeaderboard:(NSString *)leaderboardId fromStart:(BOOL)fromStart withSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
@@ -253,6 +274,14 @@ const Provider currentProvider = GAME_CENTER;
     }];
 }
 
+/**
+ Reports scores for specified leaderboard
+
+ @param score Value to report
+ @param leaderboardId Target leaderboard
+ @param success a score report success callback
+ @param fail a score report failure callback
+ */
 -(void)reportScore:(NSNumber *)score forLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
     GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardId];
     newScore.value = score.longLongValue;
