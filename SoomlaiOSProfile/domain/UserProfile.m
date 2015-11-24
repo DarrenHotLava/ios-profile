@@ -44,7 +44,7 @@
 
     if (self = [super init]) {
         provider = oProvider;
-        self.profileId = oProfileId;
+        ID = self.profileId = oProfileId;
         self.username = oUsername;
         self.email = oEmail;
         self.firstName = oFirstName;
@@ -56,40 +56,41 @@
 }
 
 - (id)initWithDictionary:(NSDictionary *)dict {
-    if (self = [super init]) {
-        provider = [UserProfileUtils providerStringToEnum:[dict objectForKey:UP_PROVIDER]];
-        self.profileId = [dict objectForKey:UP_PROFILEID];
-        self.username = [dict objectForKey:UP_USERNAME];
-        self.email = [dict objectForKey:UP_EMAIL];
-        self.firstName = [dict objectForKey:UP_FIRSTNAME];
-        self.lastName = [dict objectForKey:UP_LASTNAME];
-        self.avatarLink = [dict objectForKey:UP_AVATAR];
-        self.location = [dict objectForKey:UP_LOCATION];
-        self.gender = [dict objectForKey:UP_GENDER];
-        self.language = [dict objectForKey:UP_LANGUAGE];
-        self.birthday = [dict objectForKey:UP_BIRTHDAY];
-        extra = [dict objectForKey:UP_EXTRA];
+    if (self = [super initWithDictionary:dict]) {
+        provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
+        ID = self.profileId = dict[UP_PROFILEID];
+        self.username = dict[UP_USERNAME];
+        self.email = dict[UP_EMAIL];
+        self.firstName = dict[UP_FIRSTNAME];
+        self.lastName = dict[UP_LASTNAME];
+        self.avatarLink = dict[UP_AVATAR];
+        self.location = dict[UP_LOCATION];
+        self.gender = dict[UP_GENDER];
+        self.language = dict[UP_LANGUAGE];
+        self.birthday = dict[UP_BIRTHDAY];
+        extra = dict[UP_EXTRA];
     }
     
     return self;
 }
 
 - (NSDictionary*)toDictionary {
-    return [[NSDictionary alloc] initWithObjectsAndKeys:
-            [SoomlaUtils getClassName:self], SOOM_CLASSNAME,
-            [UserProfileUtils providerEnumToString:self.provider], UP_PROVIDER,
-            (self.profileId ?: [NSNull null]), UP_PROFILEID,
-            (self.username ?: [NSNull null]), UP_USERNAME,
-            (self.email ?: [NSNull null]), UP_EMAIL,
-            (self.firstName ?: [NSNull null]), UP_FIRSTNAME,
-            (self.lastName ?: [NSNull null]), UP_LASTNAME,
-            (self.avatarLink ?: [NSNull null]), UP_AVATAR,
-            (self.location ?: [NSNull null]), UP_LOCATION,
-            (self.gender ?: [NSNull null]), UP_GENDER,
-            (self.language ?: [NSNull null]), UP_LANGUAGE,
-            (self.birthday ?: [NSNull null]), UP_BIRTHDAY,
-            (self.extra ?: [NSNull null]), UP_EXTRA,
-            nil];
+    NSMutableDictionary *result = [[super toDictionary] mutableCopy];
+    [result addEntriesFromDictionary:@{
+            UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider],
+            UP_PROFILEID : self.profileId ?: [NSNull null],
+            UP_USERNAME : self.username ?: [NSNull null],
+            UP_EMAIL : self.email ?: [NSNull null],
+            UP_FIRSTNAME : self.firstName ?: [NSNull null],
+            UP_LASTNAME : self.lastName ?: [NSNull null],
+            UP_AVATAR : self.avatarLink ?: [NSNull null],
+            UP_LOCATION : self.location ?: [NSNull null],
+            UP_GENDER : self.gender ?: [NSNull null],
+            UP_LANGUAGE : self.language ?: [NSNull null],
+            UP_BIRTHDAY : self.birthday ?: [NSNull null],
+            UP_EXTRA : self.extra ?: [NSNull null]
+    }];
+    return result;
 }
 
 - (NSString *)getFullName {

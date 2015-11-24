@@ -1,12 +1,12 @@
 /*
  Copyright (C) 2012-2015 Soomla Inc.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,22 +14,17 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
-#import <GameKit/GameKit.h>
-#import "IGameServicesProvider.h"
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedClassInspection"
+#import "Leaderboard+GameCenter.h"
 
-@interface SoomlaGameCenter : NSObject <IGameServicesProvider> {
-    
+
+@implementation Leaderboard (GameCenter)
+
+-(instancetype)initWithGamecenterLeaderboard:(GKLeaderboard *)leaderboard {
+    if (self = [self initWithProvider:GAME_CENTER]) {
+        ID = leaderboard.identifier;
+    }
+    return self;
 }
 
-/**
- Constructs SOOMLA profile from Gamekit profile
- */
-+(UserProfile *)userProfileFromGameKitPlayer:(GKPlayer *)player;
-
 @end
-
-#pragma clang diagnostic pop
