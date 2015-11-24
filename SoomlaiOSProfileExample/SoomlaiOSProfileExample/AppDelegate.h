@@ -17,23 +17,13 @@
 #import <UIKit/UIKit.h>
 //#import <FacebookSDK/FacebookSDK.h>
 
-
-@class VirtualItemReward;
-
 /**
  Main entry point to the application
  */
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
-    
-    @private
-    VirtualItemReward* loginReward;
-    VirtualItemReward* updateStatusReward;
+
 }
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) VirtualItemReward* loginReward;
-@property (strong, nonatomic) VirtualItemReward* updateStatusReward;
-@property (strong, nonatomic) VirtualItemReward* uploadImageReward;
-@property (strong, nonatomic) VirtualItemReward* likeReward;
 
 @end
