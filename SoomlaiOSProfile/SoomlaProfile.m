@@ -347,7 +347,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     @try {
         [socialController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
     }
-    @catch (NSException *exception) {
+    @catch (ProviderNotFoundException *exception) {
         [gameServicesController getContactsWith:provider andFromStart:fromStart andPayload:payload andReward:reward];
     }
 }

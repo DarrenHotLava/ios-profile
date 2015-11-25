@@ -233,7 +233,7 @@ const Provider currentProvider = GAME_CENTER;
  @param success a scores fetch success callback
  @param fail a scores fetch failure callback
  */
--(void)getScoresOfLeaderboard:(NSString *)leaderboardId fromStart:(BOOL)fromStart withSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
+-(void)getScoresFromLeaderboard:(NSString *)leaderboardId fromStart:(BOOL)fromStart withSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
     [GKLeaderboard loadLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
         if (error == nil) {
             GKLeaderboard *currentLeaderboard = nil;

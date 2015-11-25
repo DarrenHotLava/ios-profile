@@ -22,7 +22,6 @@
 @class SocialController;
 @class GameServicesController;
 @class Leaderboard;
-@class Leaderboard;
 
 /**
  This is the main class for the SOOMLA User Profile module.  This class should be initialized once,

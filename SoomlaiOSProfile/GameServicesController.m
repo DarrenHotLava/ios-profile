@@ -53,23 +53,23 @@ static NSString* TAG = @"SOOMLA GameServicesController";
 
 -(void)getContactsWith:(Provider)provider andFromStart:(BOOL)fromStart andPayload:(NSString *)payload andReward:(Reward *)reward {
 
-    id<IGameServicesProvider> gcProvider = (id<IGameServicesProvider>)[self getProvider:provider];
+    id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
     // Perform get contacts process
     [ProfileEventHandling postGetContactsStarted:provider withType:GET_CONTACTS withFromStart:fromStart withPayload:payload];
 
-    [gcProvider getContacts:fromStart
-                        success:^(NSArray *contacts, BOOL hasMore) {
-                            if (reward) {
-                                [reward give];
-                            }
-                            [ProfileEventHandling postGetContactsFinished:provider
-                                                                 withType:GET_CONTACTS
-                                                             withContacts:contacts
-                                                              withPayload:payload
-                                                              withHasMore:hasMore];
+    [gsProvider getContacts:fromStart
+                    success:^(NSArray *contacts, BOOL hasMore) {
+                        if (reward) {
+                            [reward give];
+                        }
+                        [ProfileEventHandling postGetContactsFinished:provider
+                                                             withType:GET_CONTACTS
+                                                         withContacts:contacts
+                                                          withPayload:payload
+                                                          withHasMore:hasMore];
 
-                        }                      fail:^(NSString *message) {
+                    } fail:^(NSString *message) {
                 [ProfileEventHandling postGetContactsFailed:provider
                                                    withType:GET_CONTACTS
                                                 withMessage:message
@@ -97,7 +97,7 @@ static NSString* TAG = @"SOOMLA GameServicesController";
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
     [ProfileEventHandling postGetScoresStarted:provider forLeaderboard:leaderboard fromStart:fromStart withPayload:payload];
-    [gsProvider getScoresOfLeaderboard:leaderboard.ID fromStart:fromStart withSuccess:^(NSArray *result, BOOL hasMore) {
+    [gsProvider getScoresFromLeaderboard:leaderboard.ID fromStart:fromStart withSuccess:^(NSArray *result, BOOL hasMore) {
         if (reward) {
             [reward give];
         }
@@ -105,7 +105,7 @@ static NSString* TAG = @"SOOMLA GameServicesController";
             sc.leaderboard = leaderboard;
         }
         [ProfileEventHandling postGetScoresFinished:provider forLeaderboard:leaderboard withScoresList:result hasMore:hasMore andPayload:payload];
-    } fail:^(NSString *message) {
+    }                               fail:^(NSString *message) {
         [ProfileEventHandling postGetScoresFailed:provider forLeaderboard:leaderboard fromStart:fromStart withMessage:message andPayload:payload];
     }];
 }
