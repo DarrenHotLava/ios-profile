@@ -21,7 +21,7 @@
 @class Leaderboard;
 
 
-@interface Score : SoomlaEntity
+@interface Score : NSObject
 
 @property (nonatomic, strong) Leaderboard *leaderboard;
 

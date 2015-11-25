@@ -19,9 +19,11 @@
 #import "UserProfileUtils.h"
 
 
-@interface Leaderboard : SoomlaEntity {
+@interface Leaderboard : NSObject {
+    NSString* ID;
 }
 
+@property (retain, nonatomic, readonly) NSString* ID;
 @property (readonly, nonatomic) Provider provider;
 
 /**
@@ -30,5 +32,20 @@
  @param oProvider the provider which the leaderboard's data is associated to
  */
 -(instancetype)initWithProvider:(Provider)oProvider;
+
+/**
+ Constructor.
+ Generates an instance of `Leaderboard` from an `NSDictionary`.
+
+ @param dict An `NSDictionary` representation of the wanted `Leaderboard`.
+ */
+- (id)initWithDictionary:(NSDictionary*)dict;
+
+/**
+ Converts the current `Leaderboard` to an `NSDictionary`.
+
+ @return This instance of Leaderboard as an `NSDictionary`.
+ */
+- (NSDictionary*)toDictionary;
 
 @end

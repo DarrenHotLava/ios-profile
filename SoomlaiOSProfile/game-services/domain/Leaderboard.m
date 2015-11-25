@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+#import <JSONConsts.h>
 #import "Leaderboard.h"
 #import "PJSONConsts.h"
 
@@ -30,18 +31,17 @@
 }
 
 -(instancetype)initWithDictionary:(NSDictionary *)dict {
-    if (self = [super initWithDictionary:dict]) {
+    if (self = [super init]) {
         _provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
     }
     return self;
 }
 
 -(NSDictionary *)toDictionary {
-    NSMutableDictionary *result = [[super toDictionary] mutableCopy];
-    [result addEntriesFromDictionary:@{
+    return @{
+            SOOM_ENTITY_ID: self.ID,
             UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider]
-    }];
-    return result;
+    };
 }
 
 @end
