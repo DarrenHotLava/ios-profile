@@ -20,7 +20,8 @@
 
 
 @interface Leaderboard : NSObject {
-    NSString* ID;
+    @protected
+        NSString *_ID;
 }
 
 @property (retain, nonatomic, readonly) NSString* ID;

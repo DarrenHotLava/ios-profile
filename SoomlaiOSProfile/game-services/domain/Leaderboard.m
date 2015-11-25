@@ -23,6 +23,8 @@
 
 }
 
+@synthesize ID;
+
 -(instancetype)initWithProvider:(Provider)oProvider {
     if (self = [super init]) {
         _provider = oProvider;
@@ -32,6 +34,7 @@
 
 -(instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super init]) {
+        _ID = dict[UP_IDENTIFIER];
         _provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
     }
     return self;
@@ -39,7 +42,7 @@
 
 -(NSDictionary *)toDictionary {
     return @{
-            SOOM_ENTITY_ID: self.ID,
+            UP_IDENTIFIER: self.ID,
             UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider]
     };
 }

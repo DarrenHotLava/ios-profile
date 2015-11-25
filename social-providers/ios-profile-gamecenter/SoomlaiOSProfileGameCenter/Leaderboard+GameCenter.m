@@ -22,7 +22,7 @@
 
 -(instancetype)initWithGamecenterLeaderboard:(GKLeaderboard *)leaderboard {
     if (self = [self initWithProvider:GAME_CENTER]) {
-        ID = leaderboard.identifier;
+        _ID = leaderboard.identifier;
     }
     return self;
 }
