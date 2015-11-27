@@ -114,15 +114,15 @@ static NSString* TAG = @"SOOMLA GameServicesController";
 
     id<IGameServicesProvider> gsProvider = (id<IGameServicesProvider>)[self getProvider:provider];
 
-    [ProfileEventHandling postReportScoreStarted:provider forLeaderboard:leaderboard withPayload:payload];
+    [ProfileEventHandling postSubmitScoreStarted:provider toLeaderboard:leaderboard withPayload:payload];
     [gsProvider submitScore:score toLeaderboard:leaderboard.ID withSuccess:^(Score *newScore) {
         if (reward) {
             [reward give];
         }
         newScore.leaderboard = leaderboard;
-        [ProfileEventHandling postReportScoreFinished:provider score:newScore forLeaderboard:leaderboard andPayload:payload];
+        [ProfileEventHandling postSubmitScoreFinished:provider score:newScore toLeaderboard:leaderboard andPayload:payload];
     }                  fail:^(NSString *message) {
-        [ProfileEventHandling postReportScoreFailed:provider forLeaderboard:leaderboard withMessage:message andPayload:payload];
+        [ProfileEventHandling postSubmitScoreFailed:provider toLeaderboard:leaderboard withMessage:message andPayload:payload];
     }];
 }
 

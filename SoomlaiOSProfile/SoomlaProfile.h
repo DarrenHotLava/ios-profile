@@ -485,7 +485,7 @@ Fetches the user's feed and grants the user a reward.
 - (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
- Reports scores for specified leaderboard
+ Submits scores to specified leaderboard
 
  @param provider The provider to use
  @param score Value to report

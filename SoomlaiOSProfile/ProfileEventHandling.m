@@ -54,9 +54,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_SCORES_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_SCORES_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_GET_SCORES_FAILED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_REPORT_SCORE_STARTED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_REPORT_SCORE_FINISHED object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_REPORT_SCORE_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SUBMIT_SCORE_STARTED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SUBMIT_SCORE_FINISHED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SUBMIT_SCORE_FAILED object:nil];
 }
 
 + (void)postProfileInitialized {
@@ -281,33 +281,33 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_GET_SCORES_FAILED object:self userInfo:userInfo];
 }
 
-+(void)postReportScoreStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload {
++(void)postSubmitScoreStarted:(Provider)provider toLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
             DICT_ELEMENT_PROVIDER: @(provider),
             DICT_ELEMENT_LEADERBOARD: leaderboard,
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_REPORT_SCORE_STARTED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SUBMIT_SCORE_STARTED object:self userInfo:userInfo];
 }
 
-+(void)postReportScoreFinished:(Provider)provider score:(Score *)score forLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload {
++(void)postSubmitScoreFinished:(Provider)provider score:(Score *)score toLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
             DICT_ELEMENT_PROVIDER: @(provider),
             DICT_ELEMENT_LEADERBOARD: leaderboard,
             DICT_ELEMENT_SCORE: score,
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_REPORT_SCORE_FINISHED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SUBMIT_SCORE_FINISHED object:self userInfo:userInfo];
 }
 
-+(void)postReportScoreFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload {
++(void)postSubmitScoreFailed:(Provider)provider toLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
             DICT_ELEMENT_PROVIDER: @(provider),
             DICT_ELEMENT_LEADERBOARD: leaderboard,
             DICT_ELEMENT_MESSAGE: message,
             DICT_ELEMENT_PAYLOAD: payload
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_REPORT_SCORE_FAILED object:self userInfo:userInfo];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SUBMIT_SCORE_FAILED object:self userInfo:userInfo];
 }
 
 @end

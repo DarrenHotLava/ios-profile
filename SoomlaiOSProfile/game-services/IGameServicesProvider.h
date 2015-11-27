@@ -54,7 +54,7 @@
                            fail:(failureHandler)fail;
 
 /**
- Reports scores for specified leaderboard
+ Submits scores to specified leaderboard
 
  @param score Value to report
  @param leaderboardId Target leaderboard
