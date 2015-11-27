@@ -430,8 +430,8 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
     [gameServicesController getScoresWithProvider:provider forLeaderboard:leaderboard andFromStart:fromStart payload:payload andReward:reward];
 }
 
-- (void)reportScoreWithProvider:(Provider)provider score:(NSNumber *)score forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
-    [gameServicesController reportScoreWithProvider:provider score:score forLeaderboard:leaderboard payload:payload andReward:reward];
+- (void)submitScoreForProvider:(Provider)provider score:(NSNumber *)score toLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
+    [gameServicesController submitScoreForProvider:provider score:score toLeaderboard:leaderboard payload:payload andReward:reward];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

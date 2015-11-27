@@ -82,10 +82,10 @@
  @param reward The reward to grant
  @exception ProviderNotFoundException if the provider is not supported
  */
--(void)reportScoreWithProvider:(Provider)provider
-                         score:(NSNumber *)score
-                forLeaderboard:(Leaderboard *)leaderboard
-                       payload:(NSString *)payload
-                     andReward:(Reward *)reward;
+-(void)submitScoreForProvider:(Provider)provider
+                        score:(NSNumber *)score
+                toLeaderboard:(Leaderboard *)leaderboard
+                      payload:(NSString *)payload
+                    andReward:(Reward *)reward;
 
 @end

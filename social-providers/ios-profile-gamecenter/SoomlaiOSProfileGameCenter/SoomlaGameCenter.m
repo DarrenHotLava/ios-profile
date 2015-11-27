@@ -282,7 +282,7 @@ const Provider currentProvider = GAME_CENTER;
  @param success a score report success callback
  @param fail a score report failure callback
  */
--(void)reportScore:(NSNumber *)score forLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
+-(void)submitScore:(NSNumber *)score toLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
     GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardId];
     newScore.value = score.longLongValue;
     newScore.context = 0;

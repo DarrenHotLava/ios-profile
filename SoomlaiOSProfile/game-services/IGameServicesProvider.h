@@ -61,8 +61,8 @@
  @param success a score report success callback
  @param fail a score report failure callback
  */
--(void)reportScore:(NSNumber *)score
-    forLeaderboard:(NSString *)leaderboardId
+-(void)submitScore:(NSNumber *)score
+     toLeaderboard:(NSString *)leaderboardId
        withSuccess:(reportScoreSuccessHandler)success
               fail:(failureHandler)fail;
 
