@@ -24,7 +24,18 @@
 		32CDBD461A0AA1B9001DF8A1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD451A0AA1B9001DF8A1 /* Security.framework */; };
 		32CDBD481A0AA1C2001DF8A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD471A0AA1C2001DF8A1 /* SystemConfiguration.framework */; };
 		32CDBD4A1A0AA1CA001DF8A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CDBD491A0AA1CA001DF8A1 /* UIKit.framework */; };
-		B2FA8987BFA30428377080B2 /* SoomlaGoogleAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA87247D03DC8137DCEF65 /* SoomlaGoogleAuth.h */; };
+		44E7FB131C09D39B00D72749 /* gpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB121C09D39B00D72749 /* gpg.framework */; };
+		44E7FB151C09D3BF00D72749 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB141C09D3BF00D72749 /* CoreData.framework */; };
+		44E7FB171C09D3CD00D72749 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB161C09D3CD00D72749 /* CoreTelephony.framework */; };
+		44E7FB191C09D3F000D72749 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB181C09D3F000D72749 /* QuartzCore.framework */; };
+		44E7FB201C09D6E600D72749 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB1F1C09D6E600D72749 /* GoogleSignIn.framework */; };
+		44E7FB231C09DC6400D72749 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB211C09DC6400D72749 /* libc++.1.dylib */; };
+		44E7FB241C09DC6400D72749 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB221C09DC6400D72749 /* libz.1.dylib */; };
+		44E7FB361C0A2AFB00D72749 /* SoomlaGoogleAuth.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2FA87247D03DC8137DCEF65 /* SoomlaGoogleAuth.h */; };
+		44E7FB371C0A2AFB00D72749 /* SoomlaGooglePlusGameServices.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2FA846FFA5F0D9E422BDDAE /* SoomlaGooglePlusGameServices.h */; };
+		B2FA889BFA17FB03B5FA9974 /* SoomlaGooglePlusGameServices.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA846FFA5F0D9E422BDDAE /* SoomlaGooglePlusGameServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2FA8987BFA30428377080B2 /* SoomlaGoogleAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA87247D03DC8137DCEF65 /* SoomlaGoogleAuth.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2FA8CDAA5FE580E885A92A0 /* SoomlaGooglePlusGameServices.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA88FBE364CBEDE17F99AC /* SoomlaGooglePlusGameServices.m */; };
 		B2FA8CDDFF27BAAB29FE5041 /* SoomlaGoogleAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA83563889FB22A1B4FD5E /* SoomlaGoogleAuth.m */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +67,8 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				44E7FB361C0A2AFB00D72749 /* SoomlaGoogleAuth.h in CopyFiles */,
+				44E7FB371C0A2AFB00D72749 /* SoomlaGooglePlusGameServices.h in CopyFiles */,
 				32CDBD051A0A9528001DF8A1 /* SoomlaGooglePlus.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,8 +95,21 @@
 		32CDBD451A0AA1B9001DF8A1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		32CDBD471A0AA1C2001DF8A1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32CDBD491A0AA1CA001DF8A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		44E7FB111C09D39B00D72749 /* gpg.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = gpg.bundle; path = libs/gpg.bundle; sourceTree = "<group>"; };
+		44E7FB121C09D39B00D72749 /* gpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gpg.framework; path = libs/gpg.framework; sourceTree = "<group>"; };
+		44E7FB141C09D3BF00D72749 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		44E7FB161C09D3CD00D72749 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		44E7FB181C09D3F000D72749 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		44E7FB1A1C09D41100D72749 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		44E7FB1C1C09D41800D72749 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		44E7FB1E1C09D6E600D72749 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleSignIn.bundle; path = libs/GoogleSignIn.bundle; sourceTree = "<group>"; };
+		44E7FB1F1C09D6E600D72749 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignIn.framework; path = libs/GoogleSignIn.framework; sourceTree = "<group>"; };
+		44E7FB211C09DC6400D72749 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
+		44E7FB221C09DC6400D72749 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		B2FA83563889FB22A1B4FD5E /* SoomlaGoogleAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaGoogleAuth.m; sourceTree = "<group>"; };
+		B2FA846FFA5F0D9E422BDDAE /* SoomlaGooglePlusGameServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaGooglePlusGameServices.h; sourceTree = "<group>"; };
 		B2FA87247D03DC8137DCEF65 /* SoomlaGoogleAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoomlaGoogleAuth.h; sourceTree = "<group>"; };
+		B2FA88FBE364CBEDE17F99AC /* SoomlaGooglePlusGameServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoomlaGooglePlusGameServices.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,11 +117,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E7FB231C09DC6400D72749 /* libc++.1.dylib in Frameworks */,
+				44E7FB241C09DC6400D72749 /* libz.1.dylib in Frameworks */,
+				44E7FB191C09D3F000D72749 /* QuartzCore.framework in Frameworks */,
+				44E7FB171C09D3CD00D72749 /* CoreTelephony.framework in Frameworks */,
+				44E7FB151C09D3BF00D72749 /* CoreData.framework in Frameworks */,
 				32CDBD4A1A0AA1CA001DF8A1 /* UIKit.framework in Frameworks */,
 				32CDBD481A0AA1C2001DF8A1 /* SystemConfiguration.framework in Frameworks */,
 				32CDBD461A0AA1B9001DF8A1 /* Security.framework in Frameworks */,
 				32CDBD441A0AA1B3001DF8A1 /* MediaPlayer.framework in Frameworks */,
 				32CDBD421A0AA1AC001DF8A1 /* CoreText.framework in Frameworks */,
+				44E7FB131C09D39B00D72749 /* gpg.framework in Frameworks */,
 				32CDBD401A0AA1A5001DF8A1 /* CoreGraphics.framework in Frameworks */,
 				32CDBD3E1A0AA19E001DF8A1 /* CoreMotion.framework in Frameworks */,
 				32CDBD3C1A0AA197001DF8A1 /* CoreLocation.framework in Frameworks */,
@@ -104,6 +136,7 @@
 				32CDBD361A0AA168001DF8A1 /* GooglePlus.framework in Frameworks */,
 				32CDBD341A0AA15B001DF8A1 /* GoogleOpenSource.framework in Frameworks */,
 				32CDBD321A0AA13E001DF8A1 /* Foundation.framework in Frameworks */,
+				44E7FB201C09D6E600D72749 /* GoogleSignIn.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +154,17 @@
 		32CDBCF81A0A9528001DF8A1 = {
 			isa = PBXGroup;
 			children = (
+				44E7FB211C09DC6400D72749 /* libc++.1.dylib */,
+				44E7FB221C09DC6400D72749 /* libz.1.dylib */,
+				44E7FB1E1C09D6E600D72749 /* GoogleSignIn.bundle */,
+				44E7FB1F1C09D6E600D72749 /* GoogleSignIn.framework */,
+				44E7FB1C1C09D41800D72749 /* libc++.tbd */,
+				44E7FB1A1C09D41100D72749 /* libz.tbd */,
+				44E7FB181C09D3F000D72749 /* QuartzCore.framework */,
+				44E7FB161C09D3CD00D72749 /* CoreTelephony.framework */,
+				44E7FB141C09D3BF00D72749 /* CoreData.framework */,
+				44E7FB111C09D39B00D72749 /* gpg.bundle */,
+				44E7FB121C09D39B00D72749 /* gpg.framework */,
 				32CDBD491A0AA1CA001DF8A1 /* UIKit.framework */,
 				32CDBD471A0AA1C2001DF8A1 /* SystemConfiguration.framework */,
 				32CDBD451A0AA1B9001DF8A1 /* Security.framework */,
@@ -157,6 +201,8 @@
 				32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */,
 				B2FA83563889FB22A1B4FD5E /* SoomlaGoogleAuth.m */,
 				B2FA87247D03DC8137DCEF65 /* SoomlaGoogleAuth.h */,
+				B2FA88FBE364CBEDE17F99AC /* SoomlaGooglePlusGameServices.m */,
+				B2FA846FFA5F0D9E422BDDAE /* SoomlaGooglePlusGameServices.h */,
 			);
 			path = SoomlaiOSProfileGoogle;
 			sourceTree = "<group>";
@@ -186,6 +232,7 @@
 			files = (
 				32CDBD291A0A9A8C001DF8A1 /* SoomlaGooglePlus.h in Headers */,
 				B2FA8987BFA30428377080B2 /* SoomlaGoogleAuth.h in Headers */,
+				B2FA889BFA17FB03B5FA9974 /* SoomlaGooglePlusGameServices.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +345,7 @@
 			files = (
 				32CDBD071A0A9528001DF8A1 /* SoomlaGooglePlus.m in Sources */,
 				B2FA8CDDFF27BAAB29FE5041 /* SoomlaGoogleAuth.m in Sources */,
+				B2FA8CDAA5FE580E885A92A0 /* SoomlaGooglePlusGameServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

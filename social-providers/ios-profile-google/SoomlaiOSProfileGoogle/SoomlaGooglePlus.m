@@ -20,7 +20,10 @@
 #import "SoomlaProfile.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 
-@interface SoomlaGooglePlus ()
+@interface SoomlaGooglePlus () <GPPShareDelegate>
+
+@property (strong, nonatomic) socialActionSuccess socialActionSuccess;
+@property (strong, nonatomic) socialActionFail socialActionFail;
 
 @property (nonatomic, strong) id lastPageToken;
 @property (nonatomic, strong) id lastFeedPageToken;
@@ -134,7 +137,7 @@ static NSString *GoogleKeychainName;
     LogDebug(TAG, @"getContacts");
     GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
     plusService.retryEnabled = YES;
-    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+    [plusService setAuthorizer:[GIDSignIn sharedInstance].currentUser.authentication.fetcherAuthorizer];
     
     GTLQueryPlus *query =
     [GTLQueryPlus queryForPeopleListWithUserId:@"me"
@@ -178,7 +181,7 @@ static NSString *GoogleKeychainName;
 
     GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
     plusService.retryEnabled = YES;
-    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+    [plusService setAuthorizer:[GIDSignIn sharedInstance].currentUser.authentication.fetcherAuthorizer];
 
     GTLQueryPlus *query = [GTLQueryPlus queryForActivitiesListWithUserId:@"me" collection:kGTLPlusCollectionPublic];
 

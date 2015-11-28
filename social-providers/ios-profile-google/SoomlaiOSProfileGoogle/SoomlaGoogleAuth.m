@@ -20,66 +20,32 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
+#import <GoogleSignIn/GoogleSignIn.h>
 
 #import "SoomlaProfile.h"
 #import "UserProfile.h"
 #import "SoomlaUtils.h"
 
-@interface SoomlaGoogleAuth ()
+@interface SoomlaGoogleAuth () <GIDSignInDelegate, GIDSignInUIDelegate>
 
-@property (nonatomic, strong) UIViewController *webVC;
+@property (nonatomic, strong) loginSuccess loginSuccess;
+@property (nonatomic, strong) loginFail loginFail;
+@property (nonatomic, strong) loginCancel loginCancel;
+@property (nonatomic, strong) logoutSuccess logoutSuccess;
+@property (nonatomic, strong) logoutFail logoutFail;
 
 @end
+
 
 @implementation SoomlaGoogleAuth {
     BOOL _autoLogin;
 }
 
-@synthesize loginSuccess, loginFail, loginCancel, logoutSuccess, logoutFail, clientId;
-
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
 static NSString *GoogleKeychainName;
 
-#pragma mark Swizzle URL-schemes routing
-
-static Method originalMethod = nil;
-static Method swizzledMethod = nil;
-
 - (Provider)getProvider {
     return GOOGLE;
-}
-
--(BOOL)openURL:(NSURL *)url {
-    //when original method is swizzled, swizzled method will contain original implementation
-    return [[SoomlaProfile getInstance] tryHandleOpenURL:url sourceApplication:[[NSBundle mainBundle] bundleIdentifier] annotation:nil] ||
-            ((BOOL (*)(id, Method, ...))method_invoke)([UIApplication sharedApplication], swizzledMethod, url);
-}
-
-/*
-    swizzling [UIApplication openURL:] method to intercept opening URLs with 'http'-scheme
-    it's working like method overriding (we'll call original method if swizzled method returns NO) but better
-    it's better than overriding because brings some flavour of DI and doesn't oblige user to make changes with his code :)
-    @param forward sets direction of swizzling: if YES - we're replacing original method with our own, else - we're setting original method
- */
--(void)openURLSwizzle:(BOOL)forward {
-    static BOOL methodReplaced = NO;
-    if (!(forward ^ methodReplaced)) //we can swap method implementations only if this condition if true
-        return;
-    if (originalMethod == nil) {
-        originalMethod = class_getInstanceMethod([UIApplication class], @selector(openURL:));
-        swizzledMethod = class_getInstanceMethod([self class], @selector(openURL:));
-    }
-    method_exchangeImplementations(originalMethod, swizzledMethod);
-    methodReplaced = !methodReplaced; //signalize that implementations was swapped
-    LogDebug(TAG, forward ? @"Method openURL of UIApplication was overrided." : @"Method openURL of UIApplication was re-setted to original.");
-
-}
-
--(NSArray *)scopes {
-    return @[
-            kGTLAuthScopePlusLogin,
-            kGTLAuthScopePlusUserinfoProfile
-    ];;
 }
 
 - (id)init {
@@ -88,27 +54,25 @@ static Method swizzledMethod = nil;
     if (!self)
         return nil;
 
-    //replace `openURL:` original method
-    [self openURLSwizzle:YES];
-
     GoogleKeychainName = [NSString stringWithFormat:@"SoomlaGooglePlus: %@", [[NSBundle mainBundle] bundleIdentifier]];
+
     //subscribe to notification from unity via UnityAppController AppController_SendNotificationWithArg(kUnityOnOpenURL, notifData)
     LogDebug(TAG, @"addObserver kUnityOnOpenURL notification");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(innerHandleOpenURL:)
                                                  name:@"kUnityOnOpenURL"
                                                object:nil];
-
     return self;
 }
 
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
         _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
-        clientId = providerParams[@"clientId"];
+        _clientId = providerParams[@"clientId"];
     } else {
         _autoLogin = NO;
     }
+    [GIDSignIn sharedInstance].clientID = self.clientId;
 }
 
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
@@ -122,84 +86,60 @@ static Method swizzledMethod = nil;
         fail([NSString stringWithFormat:@"Authentication params check failed: %@", authParamsCheckResult]);
         return;
     }
-
-    [self startGooglePlusAuth];
+    [GIDSignIn sharedInstance].scopes = @[
+            kGTLAuthScopePlusLogin,
+            kGTLAuthScopePlusUserinfoProfile
+    ];
+    [GIDSignIn sharedInstance].delegate = self;
+    [GIDSignIn sharedInstance].uiDelegate = self;
+    [[GIDSignIn sharedInstance] signIn];
 }
 
--(BOOL)startWebGooglePlusAuth:(NSURL *)url {
-    if (![self checkIsFallbackURL:url]) {
-        return NO;
-    }
-    self.webVC = [[UIViewController alloc] init];
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, 20, 300, 500)];
-    webView.backgroundColor = [UIColor whiteColor];
-    webView.scalesPageToFit = YES;
-    webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:self.webVC animated:YES completion:nil];
-    [self.webVC.view addSubview:webView];
+-(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
+    if (error == nil) {
+        GTMOAuth2Authentication *auth = [[GTMOAuth2Authentication alloc] init];
 
-    NSDictionary *views = NSDictionaryOfVariableBindings(webView);
+        [auth setClientID:signIn.clientID];
+        [auth setClientSecret:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"GoogleClientSecret"]];
+        [auth setUserEmail:user.profile.email];
+        [auth setUserID:user.userID];
+        [auth setAccessToken:user.authentication.accessToken];
+        [auth setRefreshToken:user.authentication.refreshToken];
+        [auth setExpirationDate: user.authentication.accessTokenExpirationDate];
 
-    [self.webVC.view addConstraints:
-            [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[webView]|"
-                                                    options:0
-                                                    metrics:nil
-                                                      views:views]];
-
-    [self.webVC.view addConstraints:
-            [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView]|"
-                                                    options:0
-                                                    metrics:nil
-                                                      views:views]];
-
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
-    return YES;
-}
-
-- (void)startGooglePlusAuth {
-    GPPSignIn *signIn = [GPPSignIn sharedInstance];
-    NSArray* scopes = @[kGTLAuthScopePlusLogin, kGTLAuthScopePlusUserinfoProfile];
-
-    signIn.shouldFetchGoogleUserEmail = YES;
-    signIn.shouldFetchGooglePlusUser = YES;
-    signIn.attemptSSO = YES; // tries to use other installed Google apps
-    signIn.clientID = self.clientId;
-    signIn.keychainName = GoogleKeychainName;
-    signIn.scopes = self.scopes;
-
-    signIn.delegate = self;
-
-    [signIn authenticate];
-}
-
-- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
-                   error: (NSError *) error {
-    if (error) {
-        if ([error code] == -1)
-            self.loginCancel();
-        else
-            self.loginFail([error localizedDescription]);
-    } else {
-        [self refreshInterfaceBasedOnSignIn];
-    }
-}
-
-
--(void)refreshInterfaceBasedOnSignIn {
-    if ([[GPPSignIn sharedInstance] authentication]) {
+        //did this dirty hack because Google can't do his work properly
+        [[GPPSignIn sharedInstance] setValue:auth forKey:@"authentication"];
         self.loginSuccess(GOOGLE);
     } else {
-        [self clearLoginBlocks];
-        self.loginFail(@"GooglePlus Authentication failed.");
+        if (error.code == kGIDSignInErrorCodeCanceled) {
+            self.loginCancel();
+        }
+        self.loginFail([error localizedDescription]);
     }
+}
+
+-(void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
+    if (error == nil) {
+        self.logoutSuccess();
+    } else {
+        self.logoutFail(error.localizedDescription);
+    }
+}
+
+-(void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController {
+    [([UIApplication sharedApplication].windows[0]).rootViewController presentViewController:viewController animated:YES completion:nil];
+}
+
+-(void)signIn:(GIDSignIn *)signIn dismissViewController:(UIViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail{
     LogDebug(TAG, @"getUserProfile");
+
     GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
     plusService.retryEnabled = YES;
-    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+    [plusService setAuthorizer:[GIDSignIn sharedInstance].currentUser.authentication.fetcherAuthorizer];
 
     GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
     [plusService executeQuery:query
@@ -236,13 +176,13 @@ static Method swizzledMethod = nil;
     }
 
     GTLPlusPersonEmailsItem *email = googleContact.emails[0];
-    GTMOAuth2Authentication *auth = [GPPSignIn sharedInstance].authentication;
+    GIDAuthentication *auth = [GIDSignIn sharedInstance].currentUser.authentication;
     NSDictionary *extraDict = nil;
     if (withExtraData) {
         extraDict = @{
                 @"access_token": auth.accessToken,
                 @"refresh_token": auth.refreshToken,
-                @"expiration_date": @((NSInteger)auth.expirationDate.timeIntervalSince1970)
+                @"expiration_date": @((NSInteger)auth.accessTokenExpirationDate.timeIntervalSince1970)
         };
     }
 
@@ -265,67 +205,29 @@ static Method swizzledMethod = nil;
     return profile;
 }
 
-- (NSString *)parseGoogleContactInfoString:(NSString * )orig{
+- (NSString *)parseGoogleContactInfoString:(NSString * )orig {
     return (orig) ? orig : @"";
 }
 
-- (void)logout:(logoutSuccess)success fail:(logoutFail)fail{
+- (void)logout:(logoutSuccess)success fail:(logoutFail)fail {
     LogDebug(TAG, @"logout");
     self.logoutSuccess = success;
     self.logoutFail = fail;
-    [[GPPSignIn sharedInstance] disconnect];
+    [[GIDSignIn sharedInstance] disconnect];
+    self.logoutSuccess();
 }
 
-- (void)didDisconnectWithError:(NSError *)error {
-    if (error) {
-        self.logoutFail([error localizedDescription]);
-    } else {
-        [self clearLoginBlocks];
-        self.logoutSuccess();
-    }
-}
-
-- (BOOL)isLoggedIn{
+- (BOOL)isLoggedIn {
     LogDebug(TAG, @"isLoggedIn");
-    return ([GPPSignIn sharedInstance].authentication != nil);
+    return [GIDSignIn sharedInstance].currentUser != nil;
 }
 
 - (BOOL)isAutoLogin {
     return _autoLogin;
 }
 
--(BOOL)checkIsFallbackURL:(NSURL *)url {
-    if (![url.host isEqualToString:@"accounts.google.com"]) {
-        return NO;
-    }
-    if ([url.absoluteString componentsSeparatedByString:@"?"].count < 2) {
-        return NO;
-    }
-    NSArray *rawParameters = [[url.absoluteString componentsSeparatedByString:@"?"][1] componentsSeparatedByString:@"&"];
-    NSMutableDictionary *processedParameters = [NSMutableDictionary new];
-    for (NSString *current in rawParameters) {
-        if ([current componentsSeparatedByString:@"="].count < 2) {
-            return NO;
-        }
-        NSArray *params = [current componentsSeparatedByString:@"="];
-        processedParameters[params[0]] = params[1];
-    }
-    return [processedParameters[@"redirect_uri"] isEqualToString:[[[NSBundle mainBundle] bundleIdentifier] stringByAppendingString:@"%3A%2Foauth2callback"]] &&
-            [processedParameters[@"client_id"] isEqualToString:clientId];
-}
-
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    sourceApplication = @"com.apple.mobilesafari"; //GPPURLHandler doesn't want to catch URLSchemas from another apps (excluding google apps)
-    BOOL handledByGoogle = [GPPURLHandler handleURL:url
-                                  sourceApplication:sourceApplication
-                                         annotation:annotation];
-    if (handledByGoogle) {
-        if (self.webVC != nil) {
-            [self.webVC dismissViewControllerAnimated:YES completion:nil];
-            self.webVC = nil;
-        }
-    }
-    return handledByGoogle || [self startWebGooglePlusAuth:url];
+    return [[GIDSignIn sharedInstance] handleURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
 - (void)innerHandleOpenURL:(NSNotification *)notification {
@@ -335,9 +237,7 @@ static Method swizzledMethod = nil;
         NSURL *url = [[notification userInfo] valueForKey:@"url"];
         NSString *sourceApplication = [notification.userInfo valueForKey:@"sourceApplication"];
         id annotation = [[notification userInfo] valueForKey:@"annotation"];
-        BOOL urlWasHandled = [GPPURLHandler handleURL:url
-                                    sourceApplication:sourceApplication
-                                           annotation:annotation];
+        BOOL urlWasHandled = [self tryHandleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
 
         LogDebug(TAG,
                 ([NSString stringWithFormat:@"urlWasHandled: %@",
@@ -345,13 +245,13 @@ static Method swizzledMethod = nil;
     }
 }
 
-- (NSString *)checkAuthParams{
-    if (!clientId)
+- (NSString *)checkAuthParams {
+    if (!self.clientId)
         return @"Missing client id";
     return nil;
 }
 
--(void)setLoginBlocks:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel{
+-(void)setLoginBlocks:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel {
     self.loginSuccess = success;
     self.loginFail = fail;
     self.loginCancel = cancel;
@@ -364,7 +264,7 @@ static Method swizzledMethod = nil;
 }
 
 - (void)dealloc {
-    [self openURLSwizzle:NO];
+
     LogDebug(TAG, @"removeObserver kUnityOnOpenURL notification");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

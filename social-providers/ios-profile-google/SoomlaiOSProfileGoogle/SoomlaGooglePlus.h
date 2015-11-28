@@ -18,9 +18,6 @@
 #import "SoomlaGoogleAuth.h"
 #import <GooglePlus/GooglePlus.h>
 
-@interface SoomlaGooglePlus : SoomlaGoogleAuth <ISocialProvider, GPPShareDelegate>
-
-@property (strong, nonatomic) socialActionSuccess socialActionSuccess;
-@property (strong, nonatomic) socialActionFail socialActionFail;
+@interface SoomlaGooglePlus : SoomlaGoogleAuth <ISocialProvider>
 
 @end
