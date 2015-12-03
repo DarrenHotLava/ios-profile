@@ -97,7 +97,6 @@ static NSString* TAG = @"SOOMLA ProviderLoader";
 
     classes = NULL;
     numClasses = objc_getClassList(NULL, 0);
-    BOOL isSocialProvider = protocol == @protocol(ISocialProvider);
 
     if (numClasses > 0 )
     {
@@ -106,19 +105,8 @@ static NSString* TAG = @"SOOMLA ProviderLoader";
         for (int i = 0; i < numClasses; i++) {
             Class nextClass = classes[i];
 
-            // To make sure that only one type of provider (social or auth) is added each time
-            // this method is called, and given that social providers inherit from auth providers,
-            // we must check strict conformity or non-conformity.
-            if (isSocialProvider) {
-                if (class_conformsToProtocol(nextClass, protocol) &&
-                    class_conformsToProtocol(nextClass, @protocol(IAuthProvider))) {
-                    [providersArr addObject:NSClassFromString(NSStringFromClass(classes[i]))];
-                }
-            } else {
-                if (class_conformsToProtocol(nextClass, protocol) &&
-                    !class_conformsToProtocol(nextClass, @protocol(ISocialProvider))) {
-                    [providersArr addObject:NSClassFromString(NSStringFromClass(classes[i]))];
-                }
+            if (class_conformsToProtocol(nextClass, protocol)) {
+                [providersArr addObject:NSClassFromString(NSStringFromClass(classes[i]))];
             }
         }
         free(classes);

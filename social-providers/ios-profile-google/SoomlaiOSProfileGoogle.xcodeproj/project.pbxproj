@@ -31,6 +31,10 @@
 		44E7FB201C09D6E600D72749 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB1F1C09D6E600D72749 /* GoogleSignIn.framework */; };
 		44E7FB231C09DC6400D72749 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB211C09DC6400D72749 /* libc++.1.dylib */; };
 		44E7FB241C09DC6400D72749 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7FB221C09DC6400D72749 /* libz.1.dylib */; };
+		B2FA836C39A59E104BDB00F9 /* Score+GPGS.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8BD0CA9F8F416672A2E9 /* Score+GPGS.m */; };
+		B2FA876EE30D410C33C3E5AC /* Score+GPGS.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA8992C960D9229AF4C555 /* Score+GPGS.h */; };
+		B2FA89AFA21348992FED0227 /* Leaderboard+GPGS.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FA89B7A4C11A2360E14110 /* Leaderboard+GPGS.h */; };
+		B2FA8FD423A5B2B16A02D6DC /* Leaderboard+GPGS.m in Sources */ = {isa = PBXBuildFile; fileRef = B2FA8368124D483A5C1FAC3D /* Leaderboard+GPGS.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -98,6 +102,10 @@
 		44E7FB1F1C09D6E600D72749 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignIn.framework; path = libs/GoogleSignIn.framework; sourceTree = "<group>"; };
 		44E7FB211C09DC6400D72749 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
 		44E7FB221C09DC6400D72749 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		B2FA8368124D483A5C1FAC3D /* Leaderboard+GPGS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Leaderboard+GPGS.m"; sourceTree = "<group>"; };
+		B2FA8992C960D9229AF4C555 /* Score+GPGS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Score+GPGS.h"; sourceTree = "<group>"; };
+		B2FA89B7A4C11A2360E14110 /* Leaderboard+GPGS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Leaderboard+GPGS.h"; sourceTree = "<group>"; };
+		B2FA8BD0CA9F8F416672A2E9 /* Score+GPGS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Score+GPGS.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +195,7 @@
 				32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */,
 				32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */,
 				32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */,
+				B2FA825DFDB8447975FAF95D /* GPGS Categories */,
 			);
 			path = SoomlaiOSProfileGoogle;
 			sourceTree = "<group>";
@@ -207,6 +216,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B2FA825DFDB8447975FAF95D /* GPGS Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B2FA8368124D483A5C1FAC3D /* Leaderboard+GPGS.m */,
+				B2FA89B7A4C11A2360E14110 /* Leaderboard+GPGS.h */,
+				B2FA8BD0CA9F8F416672A2E9 /* Score+GPGS.m */,
+				B2FA8992C960D9229AF4C555 /* Score+GPGS.h */,
+			);
+			path = "GPGS Categories";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -215,6 +235,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				32CDBD291A0A9A8C001DF8A1 /* SoomlaGooglePlus.h in Headers */,
+				B2FA89AFA21348992FED0227 /* Leaderboard+GPGS.h in Headers */,
+				B2FA876EE30D410C33C3E5AC /* Score+GPGS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +348,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				32CDBD071A0A9528001DF8A1 /* SoomlaGooglePlus.m in Sources */,
+				B2FA8FD423A5B2B16A02D6DC /* Leaderboard+GPGS.m in Sources */,
+				B2FA836C39A59E104BDB00F9 /* Score+GPGS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

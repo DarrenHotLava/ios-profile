@@ -16,12 +16,15 @@
 
 #import "SoomlaGooglePlus.h"
 #import "UserProfile.h"
+#import "Leaderboard.h"
 #import "SoomlaUtils.h"
-#import "SoomlaProfile.h"
+#import "Leaderboard+GPGS.h"
+#import "Score+GPGS.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <GoogleSignIn/GoogleSignIn.h>
+#import <gpg/GooglePlayGames.h>
 
-@interface SoomlaGooglePlus () <GIDSignInDelegate, GIDSignInUIDelegate>
+@interface SoomlaGooglePlus () <GIDSignInDelegate, GIDSignInUIDelegate,  GPPShareDelegate, GPGStatusDelegate>
 
 @property (nonatomic, strong) loginSuccess loginSuccess;
 @property (nonatomic, strong) loginFail loginFail;
@@ -32,12 +35,13 @@
 @property (nonatomic, strong) id lastPageToken;
 @property (nonatomic, strong) id lastFeedPageToken;
 
-@property (nonatomic, strong) UIViewController *webVC;
-
 @end
 
 @implementation SoomlaGooglePlus {
     BOOL _autoLogin;
+    BOOL _enableGameServices;
+
+    NSMutableDictionary *_savedLeaderboards;
 }
 
 static NSString *TAG = @"SOOMLA SoomlaGooglePlus";
@@ -68,6 +72,7 @@ static NSString *GoogleKeychainName;
                                              selector:@selector(innerHandleOpenURL:)
                                                  name:@"kUnityOnOpenURL"
                                                object:nil];
+    _savedLeaderboards = [NSMutableDictionary new];
     
     return self;
 }
@@ -75,7 +80,8 @@ static NSString *GoogleKeychainName;
 - (void)applyParams:(NSDictionary *)providerParams{
     if (providerParams){
         _autoLogin = providerParams[@"autoLogin"] != nil ? [providerParams[@"autoLogin"] boolValue] : NO;
-        clientId = providerParams[@"clientId"];
+        _clientId = providerParams[@"clientId"];
+        _enableGameServices = providerParams[@"enableGameServices"] != nil ? [providerParams[@"enableGameServices"] boolValue] : NO;
     } else {
         _autoLogin = NO;
     }
@@ -99,7 +105,41 @@ static NSString *GoogleKeychainName;
     ];
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].uiDelegate = self;
-    [[GIDSignIn sharedInstance] signIn];
+    [GPGManager sharedInstance].statusDelegate = self;
+    if (_enableGameServices) {
+        [[GPGManager sharedInstance] signInWithClientID:self.clientId silently:NO];
+    } else {
+        [[GIDSignIn sharedInstance] signIn];
+    }
+}
+
+-(void)didFinishGamesSignInWithError:(NSError *)error {
+    if (error == nil) {
+        GTMOAuth2Authentication *auth = [[GTMOAuth2Authentication alloc] init];
+
+        [auth setClientID:[GIDSignIn sharedInstance].clientID];
+        [auth setClientSecret:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"GoogleClientSecret"]];
+        [auth setUserEmail:[GIDSignIn sharedInstance].currentUser.profile.email];
+        [auth setUserID:[GIDSignIn sharedInstance].currentUser.userID];
+        [auth setAccessToken:[GIDSignIn sharedInstance].currentUser.authentication.accessToken];
+        [auth setRefreshToken:[GIDSignIn sharedInstance].currentUser.authentication.refreshToken];
+        [auth setExpirationDate: [GIDSignIn sharedInstance].currentUser.authentication.accessTokenExpirationDate];
+
+        //did this dirty hack because Google can't do his work properly
+        [[GPPSignIn sharedInstance] setValue:auth forKey:@"authentication"];
+
+        self.loginSuccess([self getProvider]);
+    } else {
+        self.loginFail(error.localizedDescription);
+    }
+}
+
+-(void)didFinishGamesSignOutWithError:(NSError *)error {
+    if (error == nil) {
+        self.logoutSuccess();
+    } else {
+        self.logoutFail(error.localizedDescription);
+    }
 }
 
 -(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
@@ -166,7 +206,11 @@ static NSString *GoogleKeychainName;
     LogDebug(TAG, @"logout");
     self.logoutSuccess = success;
     self.logoutFail = fail;
-    [[GIDSignIn sharedInstance] disconnect];
+    if (_enableGameServices) {
+        [[GPGManager sharedInstance] signOut];
+    } else {
+        [[GIDSignIn sharedInstance] disconnect];
+    }
 }
 
 - (void)didDisconnectWithError:(NSError *)error {
@@ -441,6 +485,76 @@ static NSString *GoogleKeychainName;
     }
 }
 
+-(void)getLeaderboardsWithSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
+    if (_enableGameServices) {
+        [GPGLeaderboardMetadata allMetadataFromDataSource:GPGDataSourceNetwork completionHandler:^(NSArray *metadataArray, NSError *error) {
+            if (error == nil) {
+                NSMutableArray *result = [NSMutableArray new];
+                for (GPGLeaderboardMetadata *metadata in metadataArray) {
+                    Leaderboard *leaderboard = [[Leaderboard alloc] initWithLeaderboardMetadata:metadata];
+                    if (leaderboard) {
+                        [result addObject:leaderboard];
+                    }
+                }
+                success(result, NO);
+            } else {
+                fail(error.localizedDescription);
+            }
+        }];
+    } else {
+        fail(@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters.");
+    }
+}
+
+-(void)getScoresFromLeaderboard:(NSString *)leaderboardId fromStart:(BOOL)fromStart withSuccess:(successWithArrayHandler)success fail:(failureHandler)fail {
+    if (_enableGameServices) {
+        GPGLeaderboard *currentLeaderboard;
+        if (fromStart || (currentLeaderboard = _savedLeaderboards[leaderboardId]) == nil) {
+            currentLeaderboard = [GPGLeaderboard leaderboardWithId:leaderboardId];
+            currentLeaderboard.timeScope = GPGLeaderboardTimeScopeAllTime;
+        }
+        [currentLeaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+            if (error == nil) {
+                NSMutableArray *result = [NSMutableArray new];
+                for (GPGScore *gpgScore in scores) {
+                    Score *score = [[Score alloc] initWithGooglePlayScore:gpgScore];
+                    if (score) {
+                        [result addObject:score];
+                    }
+                }
+                _savedLeaderboards[leaderboardId] = currentLeaderboard;
+                success(result, currentLeaderboard.hasNextPage);
+            } else {
+                fail(error.localizedDescription);
+            }
+        }];
+    } else {
+        fail(@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters.");
+    }
+}
+
+-(void)submitScore:(NSNumber *)scoreValue toLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
+    if (_enableGameServices) {
+        GPGScore *score = [[GPGScore alloc] initWithLeaderboardId:leaderboardId];
+        score.value = [scoreValue longLongValue];
+        [score submitScoreWithCompletionHandler: ^(GPGScoreReport *report, NSError *error) {
+            if (error == nil) {
+                [GPGPlayer localPlayerWithCompletionHandler:^(GPGPlayer *player, NSError *error) {
+                    if (error == nil) {
+                        success([[Score alloc] initWithGooglePlayScore:report.highScoreForLocalPlayerAllTime andPlayer:player]);
+                    } else {
+                        fail(error.localizedDescription);
+                    }
+                }];
+            } else {
+                fail(error.localizedDescription);
+            }
+        }];
+    } else {
+        fail(@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters.");
+    }
+}
+
 -(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{
     return [self parseGoogleContact:googleContact withExtraData:NO];
 }
@@ -472,30 +586,12 @@ static NSString *GoogleKeychainName;
 }
 
 - (NSString *)checkAuthParams{
-    if (!clientId)
+    if (!_clientId)
         return @"Missing client id";
     return nil;
 }
 
-- (void)innerHandleOpenURL:(NSNotification *)notification {
-    if ([[notification name] isEqualToString:@"kUnityOnOpenURL"]) {
-        LogDebug(TAG, @"Successfully received the kUnityOnOpenURL notification!");
-        
-        NSURL *url = [[notification userInfo] valueForKey:@"url"];
-        NSString *sourceApplication = [[notification userInfo] valueForKey:@"sourceApplication"];
-        id annotation = [[notification userInfo] valueForKey:@"annotation"];
-        BOOL urlWasHandled = [GPPURLHandler handleURL:url
-                                    sourceApplication:sourceApplication
-                                           annotation:annotation];
-        
-        LogDebug(TAG,
-                 ([NSString stringWithFormat:@"urlWasHandled: %@",
-                   urlWasHandled ? @"True" : @"False"]));
-    }
-}
-
 - (void)dealloc {
-    [self openURLSwizzle:NO];
     LogDebug(TAG, @"removeObserver kUnityOnOpenURL notification");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
