@@ -15,9 +15,15 @@
  */
 
 #import "ISocialProvider.h"
-#import "SoomlaGoogleAuth.h"
+#import "IGameServicesProvider.h"
 #import <GooglePlus/GooglePlus.h>
 
-@interface SoomlaGooglePlus : SoomlaGoogleAuth <ISocialProvider>
+@interface SoomlaGooglePlus : NSObject<ISocialProvider, IGameServicesProvider, GPPSignInDelegate, GPPShareDelegate> {
+
+}
+
+@property (strong, nonatomic) socialActionSuccess socialActionSuccess;
+@property (strong, nonatomic) socialActionFail socialActionFail;
+@property (strong, nonatomic, readonly) NSString *clientId;
 
 @end
