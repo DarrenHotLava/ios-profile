@@ -103,6 +103,7 @@ static NSString *GoogleKeychainName;
             kGTLAuthScopePlusLogin,
             kGTLAuthScopePlusUserinfoProfile
     ];
+    [GIDSignIn sharedInstance].clientID = self.clientId;
     [GIDSignIn sharedInstance].delegate = self;
     [GIDSignIn sharedInstance].uiDelegate = self;
     [GPGManager sharedInstance].statusDelegate = self;
@@ -136,6 +137,7 @@ static NSString *GoogleKeychainName;
 
 -(void)didFinishGamesSignOutWithError:(NSError *)error {
     if (error == nil) {
+        [[GPPSignIn sharedInstance] setValue:nil forKey:@"authentication"];
         self.logoutSuccess();
     } else {
         self.logoutFail(error.localizedDescription);
@@ -167,6 +169,7 @@ static NSString *GoogleKeychainName;
 
 -(void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
     if (error == nil) {
+        [[GPPSignIn sharedInstance] setValue:nil forKey:@"authentication"];
         self.logoutSuccess();
     } else {
         self.logoutFail(error.localizedDescription);
