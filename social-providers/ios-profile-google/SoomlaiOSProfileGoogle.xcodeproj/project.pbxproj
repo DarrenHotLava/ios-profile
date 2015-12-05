@@ -100,8 +100,8 @@
 		44E7FB1C1C09D41800D72749 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		44E7FB1E1C09D6E600D72749 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleSignIn.bundle; path = libs/GoogleSignIn.bundle; sourceTree = "<group>"; };
 		44E7FB1F1C09D6E600D72749 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignIn.framework; path = libs/GoogleSignIn.framework; sourceTree = "<group>"; };
-		44E7FB211C09DC6400D72749 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../../../usr/lib/libc++.1.dylib"; sourceTree = "<group>"; };
-		44E7FB221C09DC6400D72749 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		44E7FB211C09DC6400D72749 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "/usr/lib/libc++.dylib"; sourceTree = "<group>"; };
+		44E7FB221C09DC6400D72749 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = /usr/lib/libz.dylib; sourceTree = "<group>"; };
 		B2FA8368124D483A5C1FAC3D /* Leaderboard+GPGS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Leaderboard+GPGS.m"; sourceTree = "<group>"; };
 		B2FA8992C960D9229AF4C555 /* Score+GPGS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Score+GPGS.h"; sourceTree = "<group>"; };
 		B2FA89B7A4C11A2360E14110 /* Leaderboard+GPGS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Leaderboard+GPGS.h"; sourceTree = "<group>"; };
