@@ -21,7 +21,7 @@
  A provider that exposes social capabilities such as sharing, fetching user
  feeds, uploading images etc.
  */
-@protocol ISocialProvider <IAuthProvider>
+@protocol ISocialProvider <IProvider>
 
 /**
  Shares the given status to the user's feed
