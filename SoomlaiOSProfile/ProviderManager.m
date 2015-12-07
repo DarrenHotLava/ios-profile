@@ -89,7 +89,7 @@ static NSString* TAG = @"SOOMLA ProviderManager";
 
 -(id<IProvider>)getProvider:(Provider)provider conformsToProtocol:(Protocol *)protocol {
     id<IProvider> instance = _providers[@(provider)];
-    if (!instance || [instance conformsToProtocol:protocol]) {
+    if (!instance || ![instance conformsToProtocol:protocol]) {
         @throw [[ProviderNotFoundException alloc] initWithProvider:provider];
     }
     return instance;
