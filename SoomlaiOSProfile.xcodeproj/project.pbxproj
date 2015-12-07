@@ -11,7 +11,7 @@
 		3AF01CD21960BCCC0088836B /* SoomlaProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F02193C90560081DCE0 /* SoomlaProfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CD31960BCD60088836B /* ProfileEventHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F2E193CAD580081DCE0 /* ProfileEventHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CD41960BCDB0088836B /* UserProfileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F33193CB6D60081DCE0 /* UserProfileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3AF01CD51960BCE10088836B /* ProviderLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD4193CDEEE0077EF7F /* ProviderLoader.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CD51960BCE10088836B /* ProviderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD4193CDEEE0077EF7F /* ProviderManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3AF01CD61960BCE50088836B /* AuthController.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BE2193DC2B50077EF7F /* AuthController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3AF01CD71960BCE80088836B /* SocialController.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BEA193DDB5D0077EF7F /* SocialController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -42,7 +42,7 @@
 		EF356F30193CAD580081DCE0 /* ProfileEventHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = EF356F2F193CAD580081DCE0 /* ProfileEventHandling.m */; };
 		EF356F35193CB6D60081DCE0 /* UserProfileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EF356F34193CB6D60081DCE0 /* UserProfileUtils.m */; };
 		EF356F39193CBEEB0081DCE0 /* UserProfileStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = EF356F38193CBEEB0081DCE0 /* UserProfileStorage.m */; };
-		EFAE6BD6193CDEEE0077EF7F /* ProviderLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BD5193CDEEE0077EF7F /* ProviderLoader.m */; };
+		EFAE6BD6193CDEEE0077EF7F /* ProviderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BD5193CDEEE0077EF7F /* ProviderManager.m */; };
 		EFAE6BDB193DA38E0077EF7F /* ProviderNotFoundException.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BDA193DA38E0077EF7F /* ProviderNotFoundException.m */; };
 		EFAE6BE4193DC2B50077EF7F /* AuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BE3193DC2B50077EF7F /* AuthController.m */; };
 		EFAE6BE8193DC6310077EF7F /* UserProfileNotFoundException.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAE6BE7193DC6310077EF7F /* UserProfileNotFoundException.m */; };
@@ -97,8 +97,8 @@
 		EF356F38193CBEEB0081DCE0 /* UserProfileStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserProfileStorage.m; path = data/UserProfileStorage.m; sourceTree = "<group>"; };
 		EFAE6BD0193CC7980077EF7F /* IAuthProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAuthProvider.h; path = auth/IAuthProvider.h; sourceTree = "<group>"; };
 		EFAE6BD3193CD3F60077EF7F /* ISocialProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISocialProvider.h; path = social/ISocialProvider.h; sourceTree = "<group>"; };
-		EFAE6BD4193CDEEE0077EF7F /* ProviderLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderLoader.h; sourceTree = "<group>"; };
-		EFAE6BD5193CDEEE0077EF7F /* ProviderLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderLoader.m; sourceTree = "<group>"; };
+		EFAE6BD4193CDEEE0077EF7F /* ProviderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderManager.h; sourceTree = "<group>"; };
+		EFAE6BD5193CDEEE0077EF7F /* ProviderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderManager.m; sourceTree = "<group>"; };
 		EFAE6BD9193DA38E0077EF7F /* ProviderNotFoundException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProviderNotFoundException.h; path = exceptions/ProviderNotFoundException.h; sourceTree = "<group>"; };
 		EFAE6BDA193DA38E0077EF7F /* ProviderNotFoundException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProviderNotFoundException.m; path = exceptions/ProviderNotFoundException.m; sourceTree = "<group>"; };
 		EFAE6BDD193DAD8E0077EF7F /* SoomlaiOSProfile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SoomlaiOSProfile-Info.plist"; sourceTree = "<group>"; };
@@ -191,8 +191,8 @@
 				EF356F2F193CAD580081DCE0 /* ProfileEventHandling.m */,
 				EF356F33193CB6D60081DCE0 /* UserProfileUtils.h */,
 				EF356F34193CB6D60081DCE0 /* UserProfileUtils.m */,
-				EFAE6BD4193CDEEE0077EF7F /* ProviderLoader.h */,
-				EFAE6BD5193CDEEE0077EF7F /* ProviderLoader.m */,
+				EFAE6BD4193CDEEE0077EF7F /* ProviderManager.h */,
+				EFAE6BD5193CDEEE0077EF7F /* ProviderManager.m */,
 				EFAE6BE2193DC2B50077EF7F /* AuthController.h */,
 				EFAE6BE3193DC2B50077EF7F /* AuthController.m */,
 				EFAE6BEA193DDB5D0077EF7F /* SocialController.h */,
@@ -293,7 +293,7 @@
 				3AF01CDE1960BD560088836B /* IProvider.h in Headers */,
 				3AF01CDC1960BD3F0088836B /* IAuthProvider.h in Headers */,
 				3AF01CDB1960BD350088836B /* ISocialProvider.h in Headers */,
-				3AF01CD51960BCE10088836B /* ProviderLoader.h in Headers */,
+				3AF01CD51960BCE10088836B /* ProviderManager.h in Headers */,
 				3AF01CD61960BCE50088836B /* AuthController.h in Headers */,
 				3AF01CD71960BCE80088836B /* SocialController.h in Headers */,
 				3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */,
@@ -377,7 +377,7 @@
 				EFAE6BE4193DC2B50077EF7F /* AuthController.m in Sources */,
 				EFAE6BEC193DDB5D0077EF7F /* SocialController.m in Sources */,
 				EF356F39193CBEEB0081DCE0 /* UserProfileStorage.m in Sources */,
-				EFAE6BD6193CDEEE0077EF7F /* ProviderLoader.m in Sources */,
+				EFAE6BD6193CDEEE0077EF7F /* ProviderManager.m in Sources */,
 				EF356F30193CAD580081DCE0 /* ProfileEventHandling.m in Sources */,
 				9D448D981B0A13B400C60D0A /* ConfirmationDialog.m in Sources */,
 				EF356F35193CB6D60081DCE0 /* UserProfileUtils.m in Sources */,
