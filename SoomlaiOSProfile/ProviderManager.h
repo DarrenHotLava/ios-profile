@@ -42,7 +42,12 @@
  */
 
 -(id<IAuthProvider>)getAuthProvider:(Provider)provider;
+-(NSArray *)getAllAuthProviders;
+
 -(id<ISocialProvider>)getSocialProvider:(Provider)provider;
+-(NSArray *)getAllSocialProviders;
+
 -(id<IGameServicesProvider>)getGameServicesProvider:(Provider)provider;
+-(NSArray *)getAllGameServicesProviders;
 
 @end

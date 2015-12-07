@@ -95,16 +95,38 @@ static NSString* TAG = @"SOOMLA ProviderManager";
     return instance;
 }
 
+-(NSArray *)getAllProvidersConformingToProtocol:(Protocol *)protocol {
+    NSMutableArray *result = [NSMutableArray new];
+    for (id<IProvider> provider in _providers.allValues) {
+        if ([provider conformsToProtocol:protocol]) {
+            [result addObject:provider];
+        }
+    }
+    return result;
+}
+
 -(id<IAuthProvider>)getAuthProvider:(Provider)provider {
     return (id<IAuthProvider>)[self getProvider:provider conformsToProtocol:@protocol(IAuthProvider)];
+}
+
+-(NSArray *)getAllAuthProviders {
+    return [self getAllProvidersConformingToProtocol:@protocol(IAuthProvider)];
 }
 
 -(id<ISocialProvider>)getSocialProvider:(Provider)provider {
     return (id<ISocialProvider>)[self getProvider:provider conformsToProtocol:@protocol(ISocialProvider)];
 }
 
+-(NSArray *)getAllSocialProviders {
+    return [self getAllProvidersConformingToProtocol:@protocol(ISocialProvider)];
+}
+
 -(id<IGameServicesProvider>)getGameServicesProvider:(Provider)provider {
     return (id<IGameServicesProvider>)[self getProvider:provider conformsToProtocol:@protocol(IGameServicesProvider)];
+}
+
+-(NSArray *)getAllGameServicesProviders {
+    return [self getAllProvidersConformingToProtocol:@protocol(IGameServicesProvider)];
 }
 
 @end
