@@ -27,7 +27,7 @@
  to reward your users with coins (or any other virtual items) in exchange 
  for social actions they perform.
  */
-@interface SoomlaTwitter : NSObject <ISocialProvider> {
+@interface SoomlaTwitter : NSObject <IAuthProvider, ISocialProvider> {
     loginSuccess loginSuccess;
     loginFail loginFail;
     loginCancel loginCancel;
