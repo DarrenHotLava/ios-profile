@@ -18,7 +18,7 @@
 #import "IGameServicesProvider.h"
 #import <GooglePlus/GooglePlus.h>
 
-@interface SoomlaGooglePlus : NSObject<ISocialProvider, IGameServicesProvider> {
+@interface SoomlaGooglePlus : NSObject<IAuthProvider, ISocialProvider, IGameServicesProvider> {
 
 }
 
