@@ -21,16 +21,7 @@
  A provider that exposes game services capabilities such as leaderboards, achievements, challenges and scoring
  */
 
-@protocol IGameServicesProvider <IAuthProvider>
-
-/**
- Fetches the user's contact list
-
- @param fromStart Should we reset pagination or request the next page
- @param success a contacts fetch success callback
- @param fail a contacts fetch failure callback
- */
--(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail;
+@protocol IGameServicesProvider <IProvider>
 
 /**
  Fetches the game's leaderboards list

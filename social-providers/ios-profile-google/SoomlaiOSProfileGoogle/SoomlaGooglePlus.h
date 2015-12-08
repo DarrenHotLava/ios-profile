@@ -17,7 +17,7 @@
 #import "ISocialProvider.h"
 #import <GooglePlus/GooglePlus.h>
 
-@interface SoomlaGooglePlus : NSObject<ISocialProvider, GPPSignInDelegate, GPPShareDelegate> {
+@interface SoomlaGooglePlus : NSObject<IAuthProvider, ISocialProvider, GPPSignInDelegate, GPPShareDelegate> {
     loginSuccess loginSuccess;
     loginFail loginFail;
     loginCancel loginCancel;
