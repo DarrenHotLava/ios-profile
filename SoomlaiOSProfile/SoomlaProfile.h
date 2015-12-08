@@ -496,6 +496,8 @@ Fetches the user's feed and grants the user a reward.
  */
 - (void)submitScoreForProvider:(Provider)provider score:(NSNumber *)score toLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
+- (void)showLeaderboardsForProvider:(Provider)provider;
+
 /**
  Helper method to assist with browser-based authentication using a sepcific
  underlying authentication provider.

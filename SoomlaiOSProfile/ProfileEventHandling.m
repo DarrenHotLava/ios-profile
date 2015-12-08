@@ -57,6 +57,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SUBMIT_SCORE_STARTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SUBMIT_SCORE_FINISHED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SUBMIT_SCORE_FAILED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:EVENT_UP_SHOW_LEADERBOARDS object:nil];
 }
 
 + (void)postProfileInitialized {
@@ -308,6 +309,13 @@
             DICT_ELEMENT_PAYLOAD: payload
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SUBMIT_SCORE_FAILED object:self userInfo:userInfo];
+}
+
++(void)postShowLeaderboards:(Provider)provider {
+    NSDictionary *userInfo = @{
+            DICT_ELEMENT_PROVIDER: @(provider)
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SHOW_LEADERBOARDS object:self userInfo:userInfo];
 }
 
 @end

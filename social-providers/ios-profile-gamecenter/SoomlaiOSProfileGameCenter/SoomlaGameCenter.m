@@ -296,4 +296,15 @@ const Provider currentProvider = GAME_CENTER;
     }];
 }
 
+-(void)showLeaderboards {
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil) {
+        gameCenterController.gameCenterDelegate = nil;
+        gameCenterController.leaderboardTimeScope = GKLeaderboardTimeScopeAllTime;
+        [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:gameCenterController
+                                                                                       animated:YES
+                                                                                     completion:nil];
+    }
+}
+
 @end

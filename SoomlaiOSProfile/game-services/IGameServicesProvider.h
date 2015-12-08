@@ -57,4 +57,12 @@
        withSuccess:(reportScoreSuccessHandler)success
               fail:(failureHandler)fail;
 
+/**
+ Shows native leaderboards controller
+
+ @param success a score report success callback
+ @param fail a score report failure callback
+ */
+-(void)showLeaderboards;
+
 @end

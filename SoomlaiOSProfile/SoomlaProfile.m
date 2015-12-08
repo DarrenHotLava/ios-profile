@@ -33,6 +33,7 @@
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
 #import <KeyValueStorage.h>
+#import <Reward.h>
 
 #define SOOMLA_PROFILE_VERSION @"1.2.0"
 
@@ -631,6 +632,7 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
         appPageController.delegate = self;
         [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:appPageController
                                                                                        animated:YES completion:nil];
+        [ProfileEventHandling postUserRating];
     }
 }
 
@@ -697,16 +699,23 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 - (void)submitScoreForProvider:(Provider)provider score:(NSNumber *)score toLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = [_providerManager getGameServicesProvider:provider];
 
-    [ProfileEventHandling postReportScoreStarted:provider forLeaderboard:leaderboard withPayload:payload];
-    [gsProvider reportScore:score forLeaderboard:leaderboard.ID withSuccess:^(Score *newScore) {
+    [ProfileEventHandling postSubmitScoreStarted:provider toLeaderboard:leaderboard withPayload:payload];
+    [gsProvider submitScore:score toLeaderboard:leaderboard.ID withSuccess:^(Score *newScore) {
         if (reward) {
             [reward give];
         }
         newScore.leaderboard = leaderboard;
-        [ProfileEventHandling postReportScoreFinished:provider score:newScore forLeaderboard:leaderboard andPayload:payload];
+        [ProfileEventHandling postSubmitScoreFinished:provider score:newScore toLeaderboard:leaderboard andPayload:payload];
     } fail:^(NSString *message) {
-        [ProfileEventHandling postReportScoreFailed:provider forLeaderboard:leaderboard withMessage:message andPayload:payload];
+        [ProfileEventHandling postSubmitScoreFailed:provider toLeaderboard:leaderboard withMessage:message andPayload:payload];
     }];
+}
+
+- (void)showLeaderboardsForProvider:(Provider)provider  {
+    id<IGameServicesProvider> gsProvider = [_providerManager getGameServicesProvider:provider];
+
+    [gsProvider showLeaderboards];
+    [ProfileEventHandling postShowLeaderboards:provider];
 }
 
 - (BOOL)tryHandleOpenURL:(Provider)provider openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

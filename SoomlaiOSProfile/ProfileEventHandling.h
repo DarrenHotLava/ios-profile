@@ -68,6 +68,8 @@
 #define EVENT_UP_SUBMIT_SCORE_FINISHED          @"up_submit_score_finished"
 #define EVENT_UP_SUBMIT_SCORE_FAILED            @"up_submit_score_failed"
 
+#define EVENT_UP_SHOW_LEADERBOARDS              @"up_show_leaderboards"
+
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
 #define DICT_ELEMENT_PROVIDER                   @"provider"
@@ -401,5 +403,7 @@ Called when the service has been initializedt.
  @param message a Description of the reason for failure
  */
 +(void)postSubmitScoreFailed:(Provider)provider toLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload;
+
++(void)postShowLeaderboards:(Provider)provider;
 
 @end
