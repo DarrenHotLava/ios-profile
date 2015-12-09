@@ -311,9 +311,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SUBMIT_SCORE_FAILED object:self userInfo:userInfo];
 }
 
-+(void)postShowLeaderboards:(Provider)provider {
++(void)postShowLeaderboards:(Provider)provider withPayload:(NSString *)payload {
     NSDictionary *userInfo = @{
-            DICT_ELEMENT_PROVIDER: @(provider)
+            DICT_ELEMENT_PROVIDER: @(provider),
+            DICT_ELEMENT_PAYLOAD: payload
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:EVENT_UP_SHOW_LEADERBOARDS object:self userInfo:userInfo];
 }

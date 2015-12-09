@@ -489,7 +489,14 @@ Fetches the user's feed and grants the user a reward.
  */
 - (void)submitScoreForProvider:(Provider)provider score:(NSNumber *)score toLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
-- (void)showLeaderboardsForProvider:(Provider)provider;
+/**
+ Opens native dialog displaying leaderboards list
+
+ @param provider The provider to use
+ @param payload a String to receive when the function returns.
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)showLeaderboardsForProvider:(Provider)provider andPayload:(NSString *)payload;
 
 /**
  Helper method to assist with browser-based authentication using a sepcific

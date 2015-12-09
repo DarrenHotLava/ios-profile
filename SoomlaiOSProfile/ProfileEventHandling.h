@@ -404,6 +404,6 @@ Called when the service has been initializedt.
  */
 +(void)postSubmitScoreFailed:(Provider)provider toLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload;
 
-+(void)postShowLeaderboards:(Provider)provider;
++(void)postShowLeaderboards:(Provider)provider withPayload:(NSString *)payload;
 
 @end
