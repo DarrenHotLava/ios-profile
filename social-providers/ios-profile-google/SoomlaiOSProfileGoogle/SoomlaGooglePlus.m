@@ -562,7 +562,11 @@ static NSString *GoogleKeychainName;
 }
 
 -(void)showLeaderboards {
-    [[GPGLauncherController sharedInstance] presentLeaderboardList];
+    if (_enableGameServices) {
+        [[GPGLauncherController sharedInstance] presentLeaderboardList];
+    } else {
+        NSLog(@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters.");
+    }
 }
 
 -(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{
