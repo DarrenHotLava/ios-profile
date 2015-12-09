@@ -32,6 +32,9 @@
 @property (nonatomic, strong) logoutSuccess logoutSuccess;
 @property (nonatomic, strong) logoutFail logoutFail;
 
+@property (strong, nonatomic) socialActionSuccess socialActionSuccess;
+@property (strong, nonatomic) socialActionFail socialActionFail;
+
 @property (nonatomic, strong) id lastPageToken;
 @property (nonatomic, strong) id lastFeedPageToken;
 
@@ -556,6 +559,10 @@ static NSString *GoogleKeychainName;
     } else {
         fail(@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters.");
     }
+}
+
+-(void)showLeaderboards {
+    [[GPGLauncherController sharedInstance] presentLeaderboardList];
 }
 
 -(UserProfile *) parseGoogleContact: (GTLPlusPerson *)googleContact{

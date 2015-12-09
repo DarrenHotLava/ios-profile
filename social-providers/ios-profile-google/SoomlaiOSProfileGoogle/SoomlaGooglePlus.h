@@ -22,8 +22,6 @@
 
 }
 
-@property (strong, nonatomic) socialActionSuccess socialActionSuccess;
-@property (strong, nonatomic) socialActionFail socialActionFail;
 @property (strong, nonatomic, readonly) NSString *clientId;
 
 @end

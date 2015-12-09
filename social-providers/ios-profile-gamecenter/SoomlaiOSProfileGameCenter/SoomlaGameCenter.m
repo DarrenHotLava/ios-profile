@@ -19,6 +19,11 @@
 #import "Leaderboard+GameCenter.h"
 #import "Score+GameCenter.h"
 
+@interface SoomlaGameCenter () <GKGameCenterControllerDelegate>
+
+@end
+
+
 @implementation SoomlaGameCenter {
     BOOL _autoLogin;
 
@@ -296,10 +301,15 @@ const Provider currentProvider = GAME_CENTER;
     }];
 }
 
+-(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)showLeaderboards {
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
     if (gameCenterController != nil) {
-        gameCenterController.gameCenterDelegate = nil;
+        gameCenterController.gameCenterDelegate = self;
+        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
         gameCenterController.leaderboardTimeScope = GKLeaderboardTimeScopeAllTime;
         [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:gameCenterController
                                                                                        animated:YES

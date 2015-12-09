@@ -18,9 +18,6 @@
 
 @class Reward;
 @class UserProfile;
-@class AuthController;
-@class SocialController;
-@class GameServicesController;
 @class Leaderboard;
 
 /**
@@ -29,12 +26,8 @@
  actions on behalf of the user that will grant him \ her rewards in your game.
  */
 @interface SoomlaProfile : NSObject {
-
     @private
     BOOL initialized;
-    AuthController* authController;
-    SocialController* socialController;
-    GameServicesController *gameServicesController;
 }
 
 @property BOOL initialized;
