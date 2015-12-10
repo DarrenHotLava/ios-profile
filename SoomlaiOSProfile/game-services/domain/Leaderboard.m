@@ -44,8 +44,8 @@
     return @{
             UP_IDENTIFIER: self.ID,
             UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider],
-            UP_NAME: self.name ? self.name : @"",
-            UP_ICON_URL: self.iconUrl ? self.iconUrl : @"",
+            UP_NAME: self.name ? : @"",
+            UP_ICON_URL: self.iconUrl ? : @""
     };
 }
 
