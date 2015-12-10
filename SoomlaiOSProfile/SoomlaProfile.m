@@ -712,9 +712,16 @@ static NSString* TAG = @"SOOMLA SoomlaProfile";
 }
 
 - (void)showLeaderboardsForProvider:(Provider)provider andPayload:(NSString *)payload  {
+    [self showLeaderboardsForProvider:provider payload:payload andReward:nil];
+}
+
+- (void)showLeaderboardsForProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward {
     id<IGameServicesProvider> gsProvider = [_providerManager getGameServicesProvider:provider];
 
     [gsProvider showLeaderboards];
+    if (reward) {
+        [reward give];
+    }
     [ProfileEventHandling postShowLeaderboards:provider withPayload:payload];
 }
 
