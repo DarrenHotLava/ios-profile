@@ -11,13 +11,22 @@ submodules/build_all
 xcodebuild -configuration Release -sdk iphoneos -project SoomlaiOSProfile.xcodeproj -target SoomlaiOSProfile clean build CREATING_UNIVERSAL_DIR=$PWD/build
 
 mkdir -p build/ios-profile-facebook
+cd social-providers/ios-profile-facebook
+./download_deps.sh
+cd -
 xcodebuild -configuration Release -sdk iphoneos -project social-providers/ios-profile-facebook/SoomlaiOSProfileFacebook.xcodeproj -target SoomlaiOSProfileFacebook clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-facebook
 
 mkdir -p build/ios-profile-twitter
+cd social-providers/ios-profile-twitter
+./download_deps.sh
+cd -
 xcodebuild -configuration Release -sdk iphoneos -project social-providers/ios-profile-twitter/SoomlaiOSProfileTwitter.xcodeproj -target SoomlaiOSProfileTwitter clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-twitter
 cp social-providers/ios-profile-twitter/libs/* $PWD/build/ios-profile-twitter/
 
 mkdir -p build/ios-profile-google
+cd social-providers/ios-profile-google
+./download_deps.sh
+cd -
 xcodebuild -configuration Release -sdk iphoneos -project social-providers/ios-profile-google/SoomlaiOSProfileGoogle.xcodeproj -target SoomlaiOSProfileGoogle clean build CREATING_UNIVERSAL_DIR=$PWD/build/ios-profile-google
 
 mkdir -p build/ios-profile-gamecenter
