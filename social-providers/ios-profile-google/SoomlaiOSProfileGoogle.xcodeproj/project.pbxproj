@@ -195,7 +195,7 @@
 				32CDBD041A0A9528001DF8A1 /* SoomlaGooglePlus.h */,
 				32CDBD061A0A9528001DF8A1 /* SoomlaGooglePlus.m */,
 				32CDBD271A0A98BF001DF8A1 /* SoomlaiOSProfileGoogle.pch */,
-				B2FA825DFDB8447975FAF95D /* GPGS Categories */,
+				B2FA825DFDB8447975FAF95D /* GSCategories */,
 			);
 			path = SoomlaiOSProfileGoogle;
 			sourceTree = "<group>";
@@ -216,7 +216,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B2FA825DFDB8447975FAF95D /* GPGS Categories */ = {
+		B2FA825DFDB8447975FAF95D /* GSCategories */ = {
 			isa = PBXGroup;
 			children = (
 				B2FA8368124D483A5C1FAC3D /* Leaderboard+GPGS.m */,
@@ -224,7 +224,7 @@
 				B2FA8BD0CA9F8F416672A2E9 /* Score+GPGS.m */,
 				B2FA8992C960D9229AF4C555 /* Score+GPGS.h */,
 			);
-			path = "GPGS Categories";
+			path = GSCategories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
