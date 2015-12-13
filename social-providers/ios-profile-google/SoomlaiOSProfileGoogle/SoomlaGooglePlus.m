@@ -565,7 +565,8 @@ static NSString *GoogleKeychainName;
     if (_enableGameServices) {
         [[GPGLauncherController sharedInstance] presentLeaderboardList];
     } else {
-        NSLog(@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters.");
+        [SoomlaUtils LogError:TAG
+                  withMessage:@"To use GPGS features, please set `enableGameServices = YES` in Google provider initialization parameters."];
     }
 }
 
