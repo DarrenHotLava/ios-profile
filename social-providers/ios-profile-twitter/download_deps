@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
+if [ ! -d libs ];
+then
+	mkdir libs
+fi
+
+if [ ! -f libs/libSTTwitter.a ]; 
+then
+    curl -o libs/libSTTwitter.a http://library.soom.la/fetch/ios-profile-libSTTwitter/0.2.2
+fi
