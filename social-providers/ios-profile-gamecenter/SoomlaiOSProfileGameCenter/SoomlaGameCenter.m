@@ -19,6 +19,11 @@
 #import "Leaderboard+GameCenter.h"
 #import "Score+GameCenter.h"
 
+@interface SoomlaGameCenter () <GKGameCenterControllerDelegate>
+
+@end
+
+
 @implementation SoomlaGameCenter {
     BOOL _autoLogin;
 
@@ -282,7 +287,7 @@ const Provider currentProvider = GAME_CENTER;
  @param success a score report success callback
  @param fail a score report failure callback
  */
--(void)reportScore:(NSNumber *)score forLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
+-(void)submitScore:(NSNumber *)score toLeaderboard:(NSString *)leaderboardId withSuccess:(reportScoreSuccessHandler)success fail:(failureHandler)fail {
     GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboardId];
     newScore.value = score.longLongValue;
     newScore.context = 0;
@@ -294,6 +299,22 @@ const Provider currentProvider = GAME_CENTER;
             fail(error.localizedDescription);
         }
     }];
+}
+
+-(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)showLeaderboards {
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil) {
+        gameCenterController.gameCenterDelegate = self;
+        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+        gameCenterController.leaderboardTimeScope = GKLeaderboardTimeScopeAllTime;
+        [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:gameCenterController
+                                                                                       animated:YES
+                                                                                     completion:nil];
+    }
 }
 
 @end

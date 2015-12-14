@@ -18,9 +18,6 @@
 
 @class Reward;
 @class UserProfile;
-@class AuthController;
-@class SocialController;
-@class GameServicesController;
 @class Leaderboard;
 
 /**
@@ -29,12 +26,8 @@
  actions on behalf of the user that will grant him \ her rewards in your game.
  */
 @interface SoomlaProfile : NSObject {
-
     @private
     BOOL initialized;
-    AuthController* authController;
-    SocialController* socialController;
-    GameServicesController *gameServicesController;
 }
 
 @property BOOL initialized;
@@ -485,7 +478,7 @@ Fetches the user's feed and grants the user a reward.
 - (void)getScoresWithProvider:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
- Reports scores for specified leaderboard
+ Submits scores to specified leaderboard
 
  @param provider The provider to use
  @param score Value to report
@@ -494,7 +487,26 @@ Fetches the user's feed and grants the user a reward.
  @param reward The reward to grant
  @exception ProviderNotFoundException if the provider is not supported
  */
-- (void)reportScoreWithProvider:(Provider)provider score:(NSNumber *)score forLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
+- (void)submitScoreForProvider:(Provider)provider score:(NSNumber *)score toLeaderboard:(Leaderboard *)leaderboard payload:(NSString *)payload andReward:(Reward *)reward;
+
+/**
+ Opens native dialog displaying leaderboards list
+
+ @param provider The provider to use
+ @param payload a String to receive when the function returns.
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)showLeaderboardsForProvider:(Provider)provider andPayload:(NSString *)payload;
+
+/**
+ Opens native dialog displaying leaderboards list
+
+ @param provider The provider to use
+ @param payload a String to receive when the function returns.
+ @param reward The reward to grant
+ @exception ProviderNotFoundException if the provider is not supported
+ */
+- (void)showLeaderboardsForProvider:(Provider)provider payload:(NSString *)payload andReward:(Reward *)reward;
 
 /**
  Helper method to assist with browser-based authentication using a sepcific

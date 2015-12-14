@@ -45,16 +45,21 @@
                            fail:(failureHandler)fail;
 
 /**
- Reports scores for specified leaderboard
+ Submits scores to specified leaderboard
 
  @param score Value to report
  @param leaderboardId Target leaderboard
  @param success a score report success callback
  @param fail a score report failure callback
  */
--(void)reportScore:(NSNumber *)score
-    forLeaderboard:(NSString *)leaderboardId
+-(void)submitScore:(NSNumber *)score
+     toLeaderboard:(NSString *)leaderboardId
        withSuccess:(reportScoreSuccessHandler)success
               fail:(failureHandler)fail;
+
+/**
+ Opens native dialog displaying leaderboards list
+ */
+-(void)showLeaderboards;
 
 @end

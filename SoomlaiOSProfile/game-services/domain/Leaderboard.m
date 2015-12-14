@@ -23,8 +23,6 @@
 
 }
 
-@synthesize ID;
-
 -(instancetype)initWithProvider:(Provider)oProvider {
     if (self = [super init]) {
         _provider = oProvider;
@@ -36,6 +34,8 @@
     if (self = [super init]) {
         _ID = dict[UP_IDENTIFIER];
         _provider = [UserProfileUtils providerStringToEnum:dict[UP_PROVIDER]];
+        _iconUrl = dict[UP_ICON_URL];
+        _name = dict[UP_NAME];
     }
     return self;
 }
@@ -43,7 +43,9 @@
 -(NSDictionary *)toDictionary {
     return @{
             UP_IDENTIFIER: self.ID,
-            UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider]
+            UP_PROVIDER : [UserProfileUtils providerEnumToString:self.provider],
+            UP_NAME: self.name ? : @"",
+            UP_ICON_URL: self.iconUrl ? : @""
     };
 }
 
