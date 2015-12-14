@@ -10,5 +10,5 @@ fi
 
 if [ ! -f libs/libSTTwitter.a ]; 
 then
-    curl -o libs/libSTTwitter.a http://library.soom.la/fetch/ios-profile-libSTTwitter/0.2.2
+    curl -L -o libs/libSTTwitter.a http://library.soom.la/fetch/ios-profile-libSTTwitter/0.2.2?cf=dl_deps
 fi
