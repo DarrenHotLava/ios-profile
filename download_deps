@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
+social-providers/ios-profile-facebook/download_deps
+social-providers/ios-profile-twitter/download_deps
+social-providers/ios-profile-google/download_deps
