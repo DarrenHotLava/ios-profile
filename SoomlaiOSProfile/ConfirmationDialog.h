@@ -4,7 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 
 @interface ConfirmationDialog : NSObject<UIAlertViewDelegate>
 @property(nonatomic, strong) UIAlertView *alert;

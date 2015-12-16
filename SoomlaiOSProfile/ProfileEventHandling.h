@@ -64,9 +64,11 @@
 #define EVENT_UP_GET_SCORES_FINISHED            @"up_get_scores_finished"
 #define EVENT_UP_GET_SCORES_FAILED              @"up_get_scores_failed"
 
-#define EVENT_UP_REPORT_SCORE_STARTED           @"up_report_score_started"
-#define EVENT_UP_REPORT_SCORE_FINISHED          @"up_report_score_finished"
-#define EVENT_UP_REPORT_SCORE_FAILED            @"up_report_score_failed"
+#define EVENT_UP_SUBMIT_SCORE_STARTED           @"up_submit_score_started"
+#define EVENT_UP_SUBMIT_SCORE_FINISHED          @"up_submit_score_finished"
+#define EVENT_UP_SUBMIT_SCORE_FAILED            @"up_submit_score_failed"
+
+#define EVENT_UP_SHOW_LEADERBOARDS              @"up_show_leaderboards"
 
 // UserProfile Elements
 #define DICT_ELEMENT_USER_PROFILE               @"userProfile"
@@ -375,31 +377,33 @@ Called when the service has been initializedt.
 
 /**
  Called when the score reporting process from a provider has started. Which fires the
- `EVENT_UP_REPORT_SCORE_STARTED` event.
+ `EVENT_UP_SUBMIT_SCORE_STARTED` event.
 
  @param provider The provider on which the get scores process started
  @param leaderboard The leaderboard score reported to
  */
-+(void)postReportScoreStarted:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload;
++(void)postSubmitScoreStarted:(Provider)provider toLeaderboard:(Leaderboard *)leaderboard withPayload:(NSString *)payload;
 
 /**
  Called when the score reporting process from a provider has finished. Which fires the
- `EVENT_UP_REPORT_SCORE_FINISHED` event.
+ `EVENT_UP_SUBMIT_SCORE_FINISHED` event.
 
  @param provider The provider on which the get scores process finished
  @param leaderboard The leaderboard score reported to
  @param score A new score instance as a result of reporting
  */
-+(void)postReportScoreFinished:(Provider)provider score:(Score *)score forLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload;
++(void)postSubmitScoreFinished:(Provider)provider score:(Score *)score toLeaderboard:(Leaderboard *)leaderboard andPayload:(NSString *)payload;
 
 /**
  Called when the score reporting process from a provider has failed. Which fires the
- `EVENT_UP_REPORT_SCORE_FAILED` event.
+ `EVENT_UP_SUBMIT_SCORE_FAILED` event.
 
  @param provider The provider on which the get scores process has failed
  @param leaderboard The leaderboard score reported to
  @param message a Description of the reason for failure
  */
-+(void)postReportScoreFailed:(Provider)provider forLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload;
++(void)postSubmitScoreFailed:(Provider)provider toLeaderboard:(Leaderboard *)leaderboard withMessage:(NSString *)message andPayload:(NSString *)payload;
+
++(void)postShowLeaderboards:(Provider)provider withPayload:(NSString *)payload;
 
 @end

@@ -21,16 +21,7 @@
  A provider that exposes game services capabilities such as leaderboards, achievements, challenges and scoring
  */
 
-@protocol IGameServicesProvider <IAuthProvider>
-
-/**
- Fetches the user's contact list
-
- @param fromStart Should we reset pagination or request the next page
- @param success a contacts fetch success callback
- @param fail a contacts fetch failure callback
- */
--(void)getContacts:(BOOL)fromStart success:(successWithArrayHandler)success fail:(failureHandler)fail;
+@protocol IGameServicesProvider <IProvider>
 
 /**
  Fetches the game's leaderboards list
@@ -54,16 +45,21 @@
                            fail:(failureHandler)fail;
 
 /**
- Reports scores for specified leaderboard
+ Submits scores to specified leaderboard
 
  @param score Value to report
  @param leaderboardId Target leaderboard
  @param success a score report success callback
  @param fail a score report failure callback
  */
--(void)reportScore:(NSNumber *)score
-    forLeaderboard:(NSString *)leaderboardId
+-(void)submitScore:(NSNumber *)score
+     toLeaderboard:(NSString *)leaderboardId
        withSuccess:(reportScoreSuccessHandler)success
               fail:(failureHandler)fail;
+
+/**
+ Opens native dialog displaying leaderboards list
+ */
+-(void)showLeaderboards;
 
 @end

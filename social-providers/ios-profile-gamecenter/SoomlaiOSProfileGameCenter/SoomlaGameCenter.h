@@ -21,7 +21,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface SoomlaGameCenter : NSObject <IGameServicesProvider> {
+@interface SoomlaGameCenter : NSObject <IAuthProvider, IGameServicesProvider> {
     
 }
 

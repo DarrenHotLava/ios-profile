@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR
+
+if [ ! -d libs ];
+then
+	mkdir libs
+fi
+
+if [ ! -d libs/FBSDKShareKit.framework ];
+then
+	curl -o fb-480.zip https://origincache.facebook.com/developers/resources/?id=FacebookSDKs-iOS-20151111.zip
+	mkdir fb-sources
+	unzip fb-480.zip -d fb-sources
+	rm fb-480.zip
+	cp -r fb-sources/*.framework libs/
+	cp -r fb-sources/*.bundle libs/
+	rm -rf fb-sources
+fi
+
+if [ ! -d libs/FacebookSDK.framework ];
+then
+	curl -L -o libs/FacebookSDK.zip http://library.soom.la/fetch/ios-profile-FacebookSDK/3.15.1
+	unzip libs/FacebookSDK.zip -d libs/
+	rm libs/FacebookSDK.zip
+fi

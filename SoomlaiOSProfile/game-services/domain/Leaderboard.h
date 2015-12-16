@@ -22,10 +22,15 @@
 @interface Leaderboard : NSObject {
     @protected
         NSString *_ID;
+        NSString *_name;
+        NSString *_iconUrl;
 }
 
-@property (retain, nonatomic, readonly) NSString* ID;
 @property (readonly, nonatomic) Provider provider;
+@property (retain, nonatomic, readonly) NSString *ID;
+
+@property (nonatomic, readonly, strong) NSString *name;
+@property (nonatomic, readonly, strong) NSString *iconUrl;
 
 /**
  Constructor
