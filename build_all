@@ -8,10 +8,6 @@ mkdir build
 
 submodules/build_all
 
-social-providers/ios-profile-facebook/download_deps
-social-providers/ios-profile-twitter/download_deps
-social-providers/ios-profile-google/download_deps
-
 xcodebuild -configuration Release -sdk iphoneos -project SoomlaiOSProfile.xcodeproj -target SoomlaiOSProfile clean build CREATING_UNIVERSAL_DIR=$PWD/build
 
 mkdir -p build/ios-profile-facebook
