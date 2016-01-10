@@ -11,7 +11,7 @@ fi
 if [ ! -d libs/FBSDKShareKit.framework ];
 then
 	curl -o fb-480.zip https://origincache.facebook.com/developers/resources/?id=FacebookSDKs-iOS-20151111.zip
-	mkdir fb-sources
+	mkdir -p fb-sources
 	unzip fb-480.zip -d fb-sources
 	rm fb-480.zip
 	cp -r fb-sources/*.framework libs/

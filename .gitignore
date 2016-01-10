@@ -22,6 +22,12 @@ build.log
 
 build/
 
+*.zip
+*.framework
+*.bundle
+
+social-providers/ios-profile-twitter/libs
+
 *.meta
 
 # CocoaPods
