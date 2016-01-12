@@ -3,7 +3,8 @@ set -e
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR
 
-IOS_PROFILE_CACHE=$1
+IOS_PROFILE_CACHE=~/.soomla/cache/ios-profile
+mkdir -p $IOS_PROFILE_CACHE
 
 mkdir -p libs
 
