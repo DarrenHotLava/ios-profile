@@ -13,7 +13,8 @@ if [ ! -d libs/FBSDKShareKit.framework ];
 then
     if [ ! -f $IOS_PROFILE_CACHE/$SHAREKIT_NAME ];
     then
-        curl -o $IOS_PROFILE_CACHE/$SHAREKIT_NAME.tmp https://origincache.facebook.com/developers/resources/?id=FacebookSDKs-iOS-20151111.zip
+        echo "Downloading Facebook ShareKit..."
+        curl -Lo $IOS_PROFILE_CACHE/$SHAREKIT_NAME.tmp https://origincache.facebook.com/developers/resources/?id=FacebookSDKs-iOS-20151111.zip
         mv $IOS_PROFILE_CACHE/$SHAREKIT_NAME.tmp $IOS_PROFILE_CACHE/$SHAREKIT_NAME
     fi
 	mkdir -p fb-sources
@@ -28,7 +29,8 @@ if [ ! -d libs/FacebookSDK.framework ];
 then
     if [ ! -f $IOS_PROFILE_CACHE/$FBSDK_NAME ];
     then
-        curl -L -o $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp http://library.soom.la/fetch/ios-profile-FacebookSDK/3.15.1
+        echo "Downloading Facebook SDK..."
+        curl -Lo $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp http://library.soom.la/fetch/ios-profile-FacebookSDK/3.15.1
         mv $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp $IOS_PROFILE_CACHE/$FBSDK_NAME
     fi
 	unzip $IOS_PROFILE_CACHE/$FBSDK_NAME -d libs/

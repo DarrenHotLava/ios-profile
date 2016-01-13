@@ -15,7 +15,7 @@ then
     if [ ! -f $IOS_PROFILE_CACHE/$SIGNIN_NAME ];
     then
         echo 'Downloading GoogleSignIn.framework...'
-        curl -o $IOS_PROFILE_CACHE/$SIGNIN_NAME.tmp https://developers.google.com/identity/sign-in/ios/sdk/google_signin_sdk_2_4_0.zip
+        curl -Lo $IOS_PROFILE_CACHE/$SIGNIN_NAME.tmp https://developers.google.com/identity/sign-in/ios/sdk/google_signin_sdk_2_4_0.zip
         mv $IOS_PROFILE_CACHE/$SIGNIN_NAME.tmp $IOS_PROFILE_CACHE/$SIGNIN_NAME
     fi
 	unzip $IOS_PROFILE_CACHE/$SIGNIN_NAME
@@ -31,7 +31,7 @@ then
     if [ ! -f $IOS_PROFILE_CACHE/$GPLUS_NAME ];
     then
         echo 'Downloading GooglePlus.framework...'
-    	curl -o $IOS_PROFILE_CACHE/$GPLUS_NAME.tmp https://developers.google.com/+/mobile/ios/sdk/google-plus-ios-sdk-1.7.1.zip
+    	curl -Lo $IOS_PROFILE_CACHE/$GPLUS_NAME.tmp https://developers.google.com/+/mobile/ios/sdk/google-plus-ios-sdk-1.7.1.zip
     	mv $IOS_PROFILE_CACHE/$GPLUS_NAME.tmp $IOS_PROFILE_CACHE/$GPLUS_NAME
     fi
 
@@ -48,7 +48,7 @@ then
     if [ ! -f $IOS_PROFILE_CACHE/$GPG_NAME ];
     then
         echo 'Downloading GPGS.framework...'
-	    curl -o $IOS_PROFILE_CACHE/$GPG_NAME.tmp https://developers.google.com/games/services/downloads/gpg-cpp-sdk.v2.0.zip
+	    curl -Lo $IOS_PROFILE_CACHE/$GPG_NAME.tmp https://developers.google.com/games/services/downloads/gpg-cpp-sdk.v2.0.zip
 	    mv $IOS_PROFILE_CACHE/$GPG_NAME.tmp $IOS_PROFILE_CACHE/$GPG_NAME
     fi
 	unzip $IOS_PROFILE_CACHE/$GPG_NAME
