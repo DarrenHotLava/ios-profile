@@ -3,9 +3,6 @@ set -e
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cd $DIR
 
-IOS_PROFILE_CACHE=~/.soomla/cache/ios-profile
-mkdir -p $IOS_PROFILE_CACHE
-
 social-providers/ios-profile-facebook/download_deps
 social-providers/ios-profile-twitter/download_deps
 social-providers/ios-profile-google/download_deps
