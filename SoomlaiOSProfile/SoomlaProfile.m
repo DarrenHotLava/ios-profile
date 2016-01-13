@@ -35,7 +35,7 @@
 #import <KeyValueStorage.h>
 #import <Reward.h>
 
-#define SOOMLA_PROFILE_VERSION @"1.3.0"
+#define SOOMLA_PROFILE_VERSION @"1.4.0"
 
 #define DB_KEY_PREFIX @"soomla.profile"
 

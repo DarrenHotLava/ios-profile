@@ -1,3 +1,13 @@
+### v1.4.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.3.0...v1.4.0)
+
+* New Features
+  * Added Google-Play Game Services social provider - with Leaderboards
+  * Added Leaderboards support for GameCenter
+
+* Changes
+  * Changed Provider inheritance structure
+  * Removed frameworks and libs from repo - added a download_deps script for it
+
 ### v1.3.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.2.0...v1.3.0)
 
 * New Features
