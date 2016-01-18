@@ -1,3 +1,8 @@
+### v1.4.1 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.4.0...v1.4.1)
+
+* Changes
+  * Removed binaries from repo
+
 ### v1.4.0 [view commit logs](https://github.com/soomla/ios-profile/compare/v1.3.0...v1.4.0)
 
 * New Features
