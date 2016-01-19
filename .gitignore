@@ -22,6 +22,12 @@ build.log
 
 build/
 
+## Other
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
 *.zip
 *.framework
 *.bundle
