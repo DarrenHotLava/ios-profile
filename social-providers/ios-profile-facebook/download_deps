@@ -30,7 +30,7 @@ then
     if [ ! -f $IOS_PROFILE_CACHE/$FBSDK_NAME ];
     then
         echo "Downloading Facebook SDK..."
-        curl -Lo $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp http://library.soom.la/fetch/ios-profile-FacebookSDK/3.15.1
+        curl -Lo $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp http://library.soom.la/fetch/ios-profile-FacebookSDK/3.15.1?cf=dl_deps
         mv $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp $IOS_PROFILE_CACHE/$FBSDK_NAME
     fi
 	unzip $IOS_PROFILE_CACHE/$FBSDK_NAME -d libs/
