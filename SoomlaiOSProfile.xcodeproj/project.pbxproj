@@ -12,7 +12,7 @@
 		3AF01CD31960BCD60088836B /* ProfileEventHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F2E193CAD580081DCE0 /* ProfileEventHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CD41960BCDB0088836B /* UserProfileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EF356F33193CB6D60081DCE0 /* UserProfileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CD51960BCE10088836B /* ProviderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD4193CDEEE0077EF7F /* ProviderManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BEE193DDFC20077EF7F /* SocialActionUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CD91960BD1B0088836B /* ProviderNotFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD9193DA38E0077EF7F /* ProviderNotFoundException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CDA1960BD1E0088836B /* UserProfileNotFoundException.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BE6193DC6310077EF7F /* UserProfileNotFoundException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3AF01CDB1960BD350088836B /* ISocialProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = EFAE6BD3193CD3F60077EF7F /* ISocialProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -269,6 +269,7 @@
 				9D448D971B0A13B400C60D0A /* ConfirmationDialog.h in Headers */,
 				B2FA8B341E2404C706DF4E8A /* Leaderboard.h in Headers */,
 				B2FA89681927AE662788CCFA /* Score.h in Headers */,
+				3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */,
 				3AF01CD41960BCDB0088836B /* UserProfileUtils.h in Headers */,
 				3AF01CD91960BD1B0088836B /* ProviderNotFoundException.h in Headers */,
 				3AF01CDA1960BD1E0088836B /* UserProfileNotFoundException.h in Headers */,
@@ -276,7 +277,6 @@
 				3AF01CDC1960BD3F0088836B /* IAuthProvider.h in Headers */,
 				3AF01CDB1960BD350088836B /* ISocialProvider.h in Headers */,
 				3AF01CD51960BCE10088836B /* ProviderManager.h in Headers */,
-				3AF01CD81960BCEF0088836B /* SocialActionUtils.h in Headers */,
 				3AF01CDF1960BD6E0088836B /* PJSONConsts.h in Headers */,
 				3AF01CE01960BD730088836B /* UserProfileStorage.h in Headers */,
 				B2FA890D73779B0FBB7DB85E /* IGameServicesProvider.h in Headers */,
