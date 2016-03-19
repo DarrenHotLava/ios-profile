@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		44873F7E1BBDD608007A63D9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44873F7C1BBDD608007A63D9 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		44873F7F1BBDD608007A63D9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44873F7D1BBDD608007A63D9 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
-		44873F811BBDD647007A63D9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44873F801BBDD647007A63D9 /* FacebookSDK.framework */; settings = {ASSET_TAGS = (); }; };
+		A681508C1AEC436970023794 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6815D0893EF9EC27CE13A4F /* Bolts.framework */; };
+		A6815BD1A291A3F6F338B7AE /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A681558BCBEB177338CD27A6 /* FBSDKLoginKit.framework */; };
+		A6815C16E5F62CFDE08B11F6 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6815684E9FBC408C9EF2F66 /* FBSDKMessengerShareKit.framework */; };
+		A6815C6153CBC69C2EC154D6 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68153486790D11740674818 /* FBAudienceNetwork.framework */; };
 		F80C71A019FF92760027AF9A /* libSoomlaiOSProfileFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */; };
 		F80C71B019FFA2610027AF9A /* SoomlaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = F80C71AF19FFA2610027AF9A /* SoomlaFacebook.m */; };
 		F80C71B219FFA2910027AF9A /* SoomlaFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = F80C71AE19FFA2610027AF9A /* SoomlaFacebook.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -42,7 +45,10 @@
 		44873F7B1BBDD608007A63D9 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = libs/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
 		44873F7C1BBDD608007A63D9 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = libs/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		44873F7D1BBDD608007A63D9 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = libs/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		44873F801BBDD647007A63D9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = libs/FacebookSDK.framework; sourceTree = "<group>"; };
+		A68153486790D11740674818 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = "/Users/eugenebutusov/Desktop/soomla/ios-profile/social-providers/ios-profile-facebook/libs/FBAudienceNetwork.framework"; sourceTree = "<absolute>"; };
+		A681558BCBEB177338CD27A6 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "/Users/eugenebutusov/Desktop/soomla/ios-profile/social-providers/ios-profile-facebook/libs/FBSDKLoginKit.framework"; sourceTree = "<absolute>"; };
+		A6815684E9FBC408C9EF2F66 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = "/Users/eugenebutusov/Desktop/soomla/ios-profile/social-providers/ios-profile-facebook/libs/FBSDKMessengerShareKit.framework"; sourceTree = "<absolute>"; };
+		A6815D0893EF9EC27CE13A4F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "/Users/eugenebutusov/Desktop/soomla/ios-profile/social-providers/ios-profile-facebook/libs/Bolts.framework"; sourceTree = "<absolute>"; };
 		F80C719419FF92750027AF9A /* libSoomlaiOSProfileFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoomlaiOSProfileFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80C719F19FF92760027AF9A /* SoomlaiOSProfileFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoomlaiOSProfileFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80C71A519FF92760027AF9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,9 +64,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F80C71B719FFA4CB0027AF9A /* Foundation.framework in Frameworks */,
-				44873F811BBDD647007A63D9 /* FacebookSDK.framework in Frameworks */,
 				44873F7E1BBDD608007A63D9 /* FBSDKCoreKit.framework in Frameworks */,
 				44873F7F1BBDD608007A63D9 /* FBSDKShareKit.framework in Frameworks */,
+				A681508C1AEC436970023794 /* Bolts.framework in Frameworks */,
+				A6815C6153CBC69C2EC154D6 /* FBAudienceNetwork.framework in Frameworks */,
+				A6815BD1A291A3F6F338B7AE /* FBSDKLoginKit.framework in Frameworks */,
+				A6815C16E5F62CFDE08B11F6 /* FBSDKMessengerShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,11 +132,14 @@
 		F80C71B619FFA4B20027AF9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				44873F801BBDD647007A63D9 /* FacebookSDK.framework */,
 				44873F7B1BBDD608007A63D9 /* FacebookSDKStrings.bundle */,
 				44873F7C1BBDD608007A63D9 /* FBSDKCoreKit.framework */,
 				44873F7D1BBDD608007A63D9 /* FBSDKShareKit.framework */,
 				F80C71B419FFA4AA0027AF9A /* Foundation.framework */,
+				A6815D0893EF9EC27CE13A4F /* Bolts.framework */,
+				A68153486790D11740674818 /* FBAudienceNetwork.framework */,
+				A681558BCBEB177338CD27A6 /* FBSDKLoginKit.framework */,
+				A6815684E9FBC408C9EF2F66 /* FBSDKMessengerShareKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -364,6 +376,10 @@
 					"$(PROJECT_DIR)/sdk",
 					"$(PROJECT_DIR)/libs",
 					"$(PROJECT_DIR)",
+					"\"${PROJECT_DIR}/libs\"/**",
+					"\"${PROJECT_DIR}/libs\"/**",
+					"\"${PROJECT_DIR}/libs\"/**",
+					"\"${PROJECT_DIR}/libs\"/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -386,6 +402,10 @@
 					"$(PROJECT_DIR)/sdk",
 					"$(PROJECT_DIR)/libs",
 					"$(PROJECT_DIR)",
+					"\"${PROJECT_DIR}/libs\"/**",
+					"\"${PROJECT_DIR}/libs\"/**",
+					"\"${PROJECT_DIR}/libs\"/**",
+					"\"${PROJECT_DIR}/libs\"/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
