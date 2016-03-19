@@ -8,30 +8,18 @@ mkdir -p $IOS_PROFILE_CACHE
 
 mkdir -p libs
 
-SHAREKIT_NAME=facebook-4.8.0.zip
+FB_SDK_NAME=facebook-4.10.1.zip
 if [ ! -d libs/FBSDKShareKit.framework ];
 then
-    if [ ! -f $IOS_PROFILE_CACHE/$SHAREKIT_NAME ];
+    if [ ! -f $IOS_PROFILE_CACHE/$FB_SDK_NAME ];
     then
-        echo "Downloading Facebook ShareKit..."
-        curl -Lo $IOS_PROFILE_CACHE/$SHAREKIT_NAME.tmp https://origincache.facebook.com/developers/resources/?id=FacebookSDKs-iOS-20151111.zip
-        mv $IOS_PROFILE_CACHE/$SHAREKIT_NAME.tmp $IOS_PROFILE_CACHE/$SHAREKIT_NAME
+        echo "Downloading Facebook iOS SDK..."
+        curl -Lo $IOS_PROFILE_CACHE/$FB_SDK_NAME.tmp https://origincache.facebook.com/developers/resources/?id=FacebookSDKs-iOS-20160316.zip
+        mv $IOS_PROFILE_CACHE/$FB_SDK_NAME.tmp $IOS_PROFILE_CACHE/$FB_SDK_NAME
     fi
 	mkdir -p fb-sources
-	unzip $IOS_PROFILE_CACHE/$SHAREKIT_NAME -d fb-sources
+	unzip $IOS_PROFILE_CACHE/$FB_SDK_NAME -d fb-sources
 	cp -r fb-sources/*.framework libs/
 	cp -r fb-sources/*.bundle libs/
 	rm -rf fb-sources
-fi
-
-FBSDK_NAME=FacebookSDK-3.15.1.zip
-if [ ! -d libs/FacebookSDK.framework ];
-then
-    if [ ! -f $IOS_PROFILE_CACHE/$FBSDK_NAME ];
-    then
-        echo "Downloading Facebook SDK..."
-        curl -Lo $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp http://library.soom.la/fetch/ios-profile-FacebookSDK/3.15.1?cf=dl_deps
-        mv $IOS_PROFILE_CACHE/$FBSDK_NAME.tmp $IOS_PROFILE_CACHE/$FBSDK_NAME
-    fi
-	unzip $IOS_PROFILE_CACHE/$FBSDK_NAME -d libs/
 fi
