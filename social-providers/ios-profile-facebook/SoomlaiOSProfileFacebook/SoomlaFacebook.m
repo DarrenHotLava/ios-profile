@@ -14,8 +14,9 @@
  limitations under the License.
  */
 
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #import "SoomlaFacebook.h"
 #import "UserProfile.h"
@@ -27,12 +28,14 @@
 #define DEFAULT_LOGIN_PERMISSIONS @[@"public_profile", @"email", @"user_birthday", @"user_photos", @"user_friends", @"user_posts"]
 #define DEFAULT_PAGE_SIZE 20
 
-@interface SoomlaFacebook () <FBSDKGameRequestDialogDelegate>
+@interface SoomlaFacebook () <FBSDKGameRequestDialogDelegate, FBSDKSharingDelegate>
+
 @property(nonatomic) NSNumber *lastContactPage;
 @property(nonatomic) NSNumber *lastFeedPage;
-@property(nonatomic) FBSessionLoginBehavior loginBehavior;
 @property(nonatomic, strong) NSMutableArray *permissions;
+
 @end
+
 
 @implementation SoomlaFacebook {
     NSArray *_loginPermissions;
@@ -41,6 +44,9 @@
     inviteSuccess _inviteSuccessHandler;
     inviteCancel _inviteCancelHandler;
     inviteFail _inviteFailHandler;
+
+    socialActionSuccess _shareDialogSuccessHandler;
+    socialActionFail _shareDialogFailHandler;
 }
 
 @synthesize loginSuccess, loginFail, loginCancel,
@@ -58,12 +64,6 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                                                  name:@"kUnityOnOpenURL"
                                                object:nil];
 
-    if (![UIApplication.sharedApplication canOpenURL:[NSURL URLWithString:@"fb://"]]) {
-        self.loginBehavior = FBSessionLoginBehaviorForcingWebView;
-    } else {
-        self.loginBehavior = FBSessionLoginBehaviorWithFallbackToWebView;
-    }
-
     return self;
 }
 
@@ -78,13 +78,12 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
         NSURL *url = [[notification userInfo] valueForKey:@"url"];
         NSString *sourceApplication = [[notification userInfo] valueForKey:@"sourceApplication"];
-        BOOL urlWasHandled = [FBAppCall handleOpenURL:url
-                                    sourceApplication:sourceApplication
-                                      fallbackHandler:^(FBAppCall *call) {
-                    LogDebug(TAG, ([NSString stringWithFormat:@"Unhandled deep link: %@", url]));
-                    // Here goes the code to handle the links
-                    // Use the links to show a relevant view of your app to the user
-                }];
+        id annotation = [[notification userInfo] valueForKey:@"annotation"];
+        BOOL urlWasHandled  = [[FBSDKApplicationDelegate sharedInstance]
+                application:[UIApplication sharedApplication]
+                    openURL:url
+          sourceApplication:sourceApplication
+                 annotation:annotation];
 
         LogDebug(TAG,
                         ([NSString stringWithFormat:@"urlWasHandled: %@",
@@ -102,6 +101,8 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     } else {
         _autoLogin = NO;
     }
+    // enable FBSDKProfile to automatically track the currentAccessToken
+    [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
 }
 
 - (Provider)getProvider {
@@ -110,24 +111,18 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel {
 
-    // If the session state is any of the two "open" states when the button is clicked
-    if (FBSession.activeSession.state == FBSessionStateOpen
-            || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-
-        // Close the session and remove the access token from the cache
-        // The session state handler (in the app delegate) will be called automatically
-        [FBSession.activeSession closeAndClearTokenInformation];
-
-    } else {
-        [FBSession setActiveSession:[[FBSession alloc] initWithPermissions:_loginPermissions]];
-        [[FBSession activeSession]
-                openWithBehavior:self.loginBehavior
-               completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                   self.loginSuccess = success;
-                   self.loginFail = fail;
-                   self.loginCancel = cancel;
-                   [self sessionStateChanged:session state:state error:error];
-               }];
+    if (![FBSDKAccessToken currentAccessToken]) {
+        [[FBSDKLoginManager new] logInWithReadPermissions:_loginPermissions
+                                       fromViewController:[[UIApplication sharedApplication].windows[0] rootViewController]
+                                                  handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if (error) {
+                fail(error.localizedDescription);
+            } else if (result.isCancelled) {
+                cancel();
+            } else {
+                success(FACEBOOK);
+            }
+        }];
     }
 }
 
@@ -139,18 +134,17 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
  */
 - (void)getUserProfile:(userProfileSuccess)success fail:(userProfileFail)fail {
     LogDebug(TAG, @"Getting user profile");
-    [self checkPermissions: @[@"public_profile", @"user_birthday", @"user_location", @"user_likes"] withWrite:NO
-                   success:^() {
+    [self checkPermissions: @[@"public_profile", @"user_birthday", @"user_location", @"user_likes"] withWrite:NO success:^() {
 
-        [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me?fields=id,name,email,first_name,last_name,picture,languages,gender,location" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 LogDebug(TAG, ([NSString stringWithFormat:@"user info: %@", result]));
 
-                FBAccessTokenData *tokenData = [FBSession activeSession].accessTokenData;
+
                 NSDictionary *extraDict = @{
-                        @"access_token": tokenData.accessToken,
-                        @"permissions": tokenData.permissions,
-                        @"expiration_date": @((NSInteger)tokenData.expirationDate.timeIntervalSince1970)
+                        @"access_token": [FBSDKAccessToken currentAccessToken].tokenString,
+                        @"permissions": [FBSDKAccessToken currentAccessToken].permissions.allObjects,
+                        @"expiration_date": @((NSInteger)[FBSDKAccessToken currentAccessToken].expirationDate)
                 };
                 UserProfile *userProfile = [[UserProfile alloc] initWithProvider:FACEBOOK
                                                                     andProfileId:result[@"id"]
@@ -168,7 +162,6 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
                 success(userProfile);
             } else {
-
                 LogError(TAG, error.description);
                 fail(error.description);
             }
@@ -181,11 +174,8 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 
 - (void)logout:(logoutSuccess)success fail:(logoutFail)fail {
-
-    self.logoutSuccess = success;
-
-    // Clear this token
-    [FBSession.activeSession closeAndClearTokenInformation];
+    [[FBSDKLoginManager new] logOut];
+    success();
 }
 
 /**
@@ -194,8 +184,8 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
  @return YES if the user is already logged-in using the authentication provider, NO otherwise
  */
 - (BOOL)isLoggedIn {
-    return ((FBSession.activeSession != nil) && ((FBSession.activeSession.state == FBSessionStateOpen
-                                                  || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)));
+    return [FBSDKAccessToken currentAccessToken] != nil
+            && [[FBSDKAccessToken currentAccessToken].expirationDate compare:[NSDate date]] == NSOrderedDescending;
 }
 
 - (BOOL)isAutoLogin {
@@ -204,26 +194,20 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 
 - (BOOL)tryHandleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [FBAppCall handleOpenURL:url
-                           sourceApplication:sourceApplication
-                             fallbackHandler:^(FBAppCall *call) {
-                                 LogDebug(TAG, ([NSString stringWithFormat:@"Unhandled deep link: %@", url]));
-                                 // Here goes the code to handle the links
-                                 // Use the links to show a relevant view of your app to the user
-                             }];
+    return [[FBSDKApplicationDelegate sharedInstance] application:[UIApplication sharedApplication]
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 - (void)updateStatus:(NSString *)status success:(socialActionSuccess)success fail:(socialActionFail)fail {
     LogDebug(TAG, @"Updating status");
 
-    [self checkPermissions: @[@"publish_actions"] withWrite:YES
-                   success:^() {
-
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES success:^() {
         // NOTE: pre-filling fields associated with Facebook posts,
         // unless the user manually generated the content earlier in the workflow of your app,
         // can be against the Platform policies: https://developers.facebook.com/policy
-        [FBRequestConnection startForPostStatusUpdate:status ? status : @""
-                                    completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/feed" parameters:@{@"message" : status} HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 // Status update posted successfully to Facebook
                 success();
@@ -233,7 +217,6 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 fail(error.description);
             }
         }];
-
     } fail:^(NSString *errorMessage) {
         fail(errorMessage);
     }];
@@ -253,102 +236,47 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
            success:(socialActionSuccess)success
               fail:(socialActionFail)fail {
     [self checkPermissions:@[@"publish_actions"] withWrite:YES success:^{
-        
-        FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
+
+        FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
         if (link) {
-            params.link = [NSURL URLWithString:link];
-            if (name) {
-                params.name = name;
-            }
-            if (caption) {
-                params.caption = caption;
-            }
+            content.contentURL = [NSURL URLWithString:link];
             if (description) {
-                params.linkDescription = description;
+                content.contentDescription = description;
             }
             if (picture) {
-                params.picture = [NSURL URLWithString:picture];
+                content.imageURL = [NSURL URLWithString:picture];
+            }
+            if (caption) {
+                content.contentTitle = caption;
             }
         }
-        
-        // If the Facebook app is installed and we can present the share dialog
-        if ([FBDialogs canPresentShareDialogWithParams:params]) {
-            [FBDialogs presentShareDialogWithParams:params clientState:nil handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
-                if (!error) {
-                    NSString *postId = results[@"postId"];
-                    if (postId) {
-                        success();
-                    }
-                    else {
-                        fail(@"User did not complete share operation");
-                    }
-                } else {
-                    // An error occurred, we need to handle the error
-                    // See: https://developers.facebook.com/docs/ios/errors
-                    fail(error.description);
-                }
-            }];
-        } else {
-            // If the Facebook app is not installed fallback to web dialogs
-            NSMutableDictionary *dialogParams = [NSMutableDictionary dictionary];
-            if (link) {
-                dialogParams[@"link"] = link;
-                if (name) {
-                    dialogParams[@"name"] = name;
-                }
-                if (caption) {
-                    dialogParams[@"caption"] = caption;
-                }
-                if (description) {
-                    dialogParams[@"description"] = description;
-                }
-                if (picture) {
-                    dialogParams[@"picture"] = picture;
-                }
-            }
-            
-            // Invoke the dialog
-            [FBWebDialogs presentFeedDialogModallyWithSession:nil
-                                                   parameters:dialogParams
-                                                      handler:
-             ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                 if (error) {
-                     fail(error.description);
-                 } else {
-                     if (result == FBWebDialogResultDialogNotCompleted) {
-                         // User clicked the "x" icon
-                         fail(@"User canceled story publishing.");
-                     } else {
-                         // Handle the publish feed callback
-                         NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
-                         if (![urlParams valueForKey:@"post_id"]) {
-                             // User clicked the Cancel button
-                             fail(@"User canceled story publishing.");
-                         } else {
-                             success();
-                         }
-                     }
-                 }
-             }];
-        }
+
+        [FBSDKShareDialog showFromViewController:[[UIApplication sharedApplication].windows[0] rootViewController]
+                                     withContent:content
+                                        delegate:self];
     } fail:^(NSString *errorMessage) {
         fail(errorMessage);
     }];
 }
 
-/**
- * A function for parsing URL parameters.
- */
-- (NSDictionary*)parseURLParams:(NSString *)query {
-    NSArray *pairs = [query componentsSeparatedByString:@"&"];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    for (NSString *pair in pairs) {
-        NSArray *kv = [pair componentsSeparatedByString:@"="];
-        NSString *val =
-        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        params[kv[0]] = val;
-    }
-    return params;
+-(void)cleanDialogHandlers {
+    _shareDialogSuccessHandler = nil;
+    _shareDialogFailHandler = nil;
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
+    _shareDialogSuccessHandler();
+    [self cleanDialogHandlers];
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
+    _shareDialogFailHandler(error.localizedDescription);
+    [self cleanDialogHandlers];
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
+    _shareDialogFailHandler(@"User canceled story publishing.");
+    [self cleanDialogHandlers];
 }
 
 - (void)updateStoryWithMessage:(NSString *)message
@@ -360,27 +288,25 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail {
 
-    [self checkPermissions: @[@"publish_actions"] withWrite:YES
-                   success:^() {
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES success:^() {
 
-// NOTE: pre-filling fields associated with Facebook posts,
-// unless the user manually generated the content earlier in the workflow of your app,
-// can be against the Platform policies: https://developers.facebook.com/policy
+        // NOTE: pre-filling fields associated with Facebook posts,
+        // unless the user manually generated the content earlier in the workflow of your app,
+        // can be against the Platform policies: https://developers.facebook.com/policy
 
-// Put together the dialog parameters
-        NSMutableDictionary *params = [@{
+        // Put together the dialog parameters
+        NSDictionary *params = @{
                 @"message" : message,
                 @"name" : name,
                 @"caption" : caption,
                 @"description" : description,
                 @"link" : link,
-                @"picture" : picture} mutableCopy];
+                @"picture" : picture
+        };
 
-// Make the request
-        [FBRequestConnection startWithGraphPath:@"/me/feed"
-                                     parameters:params
-                                     HTTPMethod:@"POST"
-                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        // Make the request
+
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/feed" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 success();
             } else {
@@ -410,19 +336,15 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     int offset = DEFAULT_PAGE_SIZE * (fromStart ? 0 : (self.lastContactPage != nil ? [self.lastContactPage integerValue] : 0));
     self.lastContactPage = nil;
 
-    [self checkPermissions: @[@"user_friends"] withWrite:NO
-                   success:^() {
+    [self checkPermissions: @[@"user_friends"] withWrite:NO success:^() {
 
         /* make the API call */
-        [FBRequestConnection startWithGraphPath:@"/me/friends"
-                                     parameters:@{
-                                             @"fields": @"id,email,first_name,last_name,gender,birthday,location",
-                                             @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
-                                             @"offset": @(offset).stringValue
-                                     }
-                                     HTTPMethod:@"GET"
-                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-
+        NSDictionary *parameters = @{
+            @"fields": @"id,email,first_name,last_name,gender,birthday,location",
+            @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
+            @"offset": @(offset).stringValue
+        };
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/friends" parameters:parameters HTTPMethod:@"GET"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (error) {
                 // An error occurred, we need to handle the error
                 // See: https://developers.facebook.com/docs/ios/errors
@@ -441,11 +363,11 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
                 for (NSDictionary *contactDict in rawContacts) {
                     UserProfile *contact = [[UserProfile alloc] initWithProvider:FACEBOOK
-                                                                        andProfileId:contactDict[@"id"]
-                                                                         andUsername:contactDict[@"email"]
-                                                                            andEmail:contactDict[@"email"]
-                                                                        andFirstName:contactDict[@"first_name"]
-                                                                         andLastName:contactDict[@"last_name"]];
+                                                                    andProfileId:contactDict[@"id"]
+                                                                     andUsername:contactDict[@"email"]
+                                                                        andEmail:contactDict[@"email"]
+                                                                    andFirstName:contactDict[@"first_name"]
+                                                                     andLastName:contactDict[@"last_name"]];
                     contact.gender = contactDict[@"gender"];
                     contact.birthday = contactDict[@"birthday"];
                     if (contactDict[@"location"]) {
@@ -470,17 +392,14 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     int offset = DEFAULT_PAGE_SIZE * (fromStart ? 0 : (self.lastFeedPage != nil ? [self.lastFeedPage integerValue] : 0));
     self.lastFeedPage = nil;
 
-    [self checkPermissions: @[@"user_posts"] withWrite:NO
-                   success:^() {
+    [self checkPermissions: @[@"user_posts"] withWrite:NO success:^() {
 
         /* make the API call */
-        [FBRequestConnection startWithGraphPath:@"/me/feed"
-                                     parameters:@{
-                                             @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
-                                             @"offset": @(offset).stringValue
-                                     }
-                                     HTTPMethod:@"GET"
-                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        NSDictionary *parameters = @{
+                @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
+                @"offset": @(offset).stringValue
+        };
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/feed" parameters:parameters HTTPMethod:@"GET"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (error) {
 
                 // An error occurred, we need to handle the error
@@ -505,7 +424,6 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 success(feeds, self.lastFeedPage != nil);
             }
         }];
-
     } fail:^(NSString *errorMessage) {
         fail(errorMessage);
     }];
@@ -532,7 +450,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                                                                                    options:NSRegularExpressionUseUnicodeWordBoundaries
                                                                                      error:nil];
     NSString *requestId = results[@"request"];
-    NSArray *invitedIds = [results.allValues objectsAtIndexes:[results.allValues indexesOfObjectsPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    NSArray *invitedIds = [results.allValues objectsAtIndexes:[results.allValues indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL * stop) {
         NSString *relatedKey = [results allKeysForObject:obj][0];
         NSRange found = [invitedRegExp firstMatchInString:relatedKey options:0 range:NSMakeRange(0, relatedKey.length)].range;
         return found.location == 0 && found.length == relatedKey.length;
@@ -559,8 +477,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail {
 
-    [self checkPermissions: @[@"publish_actions"] withWrite:YES
-                   success:^() {
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES success:^() {
         UIImage *image = [UIImage imageWithContentsOfFile:filePath];
         // Put together the dialog parameters
         NSDictionary *params = @{
@@ -569,18 +486,14 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         };
 
         // Make the request
-        [FBRequestConnection startWithGraphPath:@"/me/photos"
-                                     parameters:params
-                                     HTTPMethod:@"POST"
-                              completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/photos" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 success();
             } else {
                 fail(error.description);
             }
         }];
-
-
     } fail:^(NSString *errorMessage) {
         fail(errorMessage);
     }];
@@ -593,243 +506,89 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                        success:(socialActionSuccess)success
                           fail:(socialActionFail)fail{
 
-    [self checkPermissions: @[@"publish_actions"] withWrite:YES
-                   success:^() {
-                       UIImage *image = [UIImage imageWithData:imageData];
-                       // Put together the dialog parameters
-                       NSDictionary *params = @{
-                                                @"picture": UIImagePNGRepresentation(image),
-                                                @"message" : message
-                                                };
+    [self checkPermissions: @[@"publish_actions"] withWrite:YES success:^() {
 
-                       // Make the request
-                       [FBRequestConnection startWithGraphPath:@"/me/photos"
-                                                    parameters:params
-                                                    HTTPMethod:@"POST"
-                                             completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                                                 if (!error) {
-                                                     success();
-                                                 } else {
-                                                     fail(error.description);
-                                                 }
-                                             }];
+        UIImage *image = [UIImage imageWithData:imageData];
+        // Put together the dialog parameters
+        NSDictionary *params = @{
+                @"picture": UIImagePNGRepresentation(image),
+                @"message" : message
+        };
 
-
-                   } fail:^(NSString *errorMessage) {
-                       fail(errorMessage);
-                   }];
-
+        // Make the request
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/photos" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+            if (!error) {
+                success();
+            } else {
+                fail(error.description);
+            }
+        }];
+     } fail:^(NSString *errorMessage) {
+        fail(errorMessage);
+    }];
 }
 
 - (void)like:(NSString *)pageId {
-    
+
     NSURL *providerURL = nil;
     NSString *baseURL = @"fb://profile/";
-    
+
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:baseURL]] &&
-        ([pageId rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound))
+            ([pageId rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound))
     {
         providerURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, pageId]];
     } else {
         providerURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.facebook.com/%@", pageId]];
     }
-    
+
     [[UIApplication sharedApplication] openURL:providerURL];
-}
-
-//
-// Private Methods
-//
-
-
-// This method will handle ALL the session state changes in the app
-- (void)sessionStateChanged:(__unused FBSession *)session state:(FBSessionState)state error:(NSError *)error {
-
-    // If the session was opened successfully
-    if (!error && state == FBSessionStateOpen) {
-        LogDebug(TAG, @"Session opened");
-
-        // Callback
-        if (self.loginSuccess) {
-            self.loginSuccess(FACEBOOK);
-        }
-        [self clearLoginBlocks];
-        return;
-    }
-    if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed) {
-
-        if (state == FBSessionStateClosedLoginFailed) {
-            if (self.loginCancel) {
-                self.loginCancel();
-            }
-            [self clearLoginBlocks];
-        }
-
-        if (state == FBSessionStateClosed) {
-            if (logoutSuccess) {
-                self.logoutSuccess();
-            }
-            [self clearLoginBlocks];
-        }
-
-        // If the session is closed
-        LogDebug(TAG, @"Session closed");
-    }
-
-    // Handle errors
-    if (error) {
-        LogError(TAG, @"Error");
-        NSString *alertText;
-        NSString *alertTitle;
-
-        // If the error requires people using an app to make an action outside of the app in order to recover
-        if ([FBErrorUtility shouldNotifyUserForError:error]) {
-            alertTitle = @"Something went wrong";
-            alertText = [FBErrorUtility userMessageForError:error];
-
-            // Callback
-            if (self.loginFail) {
-                self.loginFail([NSString stringWithFormat:@"%@: %@", alertTitle, alertText]);
-            }
-            [self clearLoginBlocks];
-        } else {
-
-            // If the user cancelled login, do nothing
-            if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                LogError(TAG, @"User cancelled login");
-
-                // Callback
-                if (self.loginCancel) {
-                    self.loginCancel();
-                }
-                [self clearLoginBlocks];
-
-                // Handle session closures that happen outside of the app
-            } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
-                alertTitle = @"Session Error";
-                alertText = @"Your current session is no longer valid. Please log in again.";
-
-                // Callback
-                if (self.loginFail) {
-                    self.loginFail([NSString stringWithFormat:@"%@: %@", alertTitle, alertText]);
-                }
-                [self clearLoginBlocks];
-
-                // For simplicity, here we just show a generic message for all other errors
-                // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
-            } else {
-                //Get more error information from the error
-                NSDictionary *errorInformation = [[error.userInfo[@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-
-                // Show the user an error message
-                alertTitle = @"Something went wrong";
-                alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", errorInformation[@"message"]];
-
-                // Callback
-                if (self.loginFail) {
-                    self.loginFail([NSString stringWithFormat:@"%@: %@", alertTitle, alertText]);
-                }
-                [self clearLoginBlocks];
-            }
-        }
-
-        // Clear this token
-        [FBSession.activeSession closeAndClearTokenInformation];
-    }
 }
 
 /**
 A helper method for requesting user data from Facebook.
 */
 
-- (void)checkPermissions: (NSArray*)requestedPermissions withWrite:(BOOL)writePermissions success:(void (^)())success fail:(void(^)(NSString* message))fail {
+- (void)checkPermissions:(NSArray*)requestedPermissions withWrite:(BOOL)writePermissions success:(void (^)())success fail:(void(^)(NSString* message))fail {
 
-    void (^checking)() = ^() {
-        NSMutableArray *missedPermissions = [[NSMutableArray alloc] init];
-        for (NSString *permission in requestedPermissions) {
-            if (![self.permissions containsObject:permission]) {
-                [missedPermissions addObject:permission];
+    NSMutableArray *missedPermissions = [[NSMutableArray alloc] init];
+
+    for (NSString *permission in requestedPermissions) {
+        if (![[FBSDKAccessToken currentAccessToken] hasGranted:permission]) {
+            [missedPermissions addObject:permission];
+        }
+    }
+
+    if ([missedPermissions count] == 0) {
+        success();
+        return;
+    }
+
+    if (writePermissions) {
+        // Ask for the missing publish permissions
+        [[FBSDKLoginManager new] logInWithPublishPermissions:missedPermissions
+                                          fromViewController:[[UIApplication sharedApplication].windows[0] rootViewController]
+                                                     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if (error) {
+                [[self permissions] addObjectsFromArray:missedPermissions];
+                fail(error.description);
+            } else {
+                success();
             }
-        }
-
-        if ([missedPermissions count] == 0) {
-            success();
-            return;
-        }
-
-        if (writePermissions) {
-            // Ask for the missing read permissions
-            [FBSession.activeSession
-                    requestNewPublishPermissions:missedPermissions
-                                 defaultAudience:FBSessionDefaultAudienceFriends
-                               completionHandler:^(FBSession *session, NSError *newPublishPermissionsError) {
-                                   if (!newPublishPermissionsError) {
-                                       [[self permissions] addObjectsFromArray:missedPermissions];
-                                       // Permission granted, we can go on
-                                       success();
-                                   } else {
-                                       fail(newPublishPermissionsError.description);
-                                   }
-                               }];
-        }
-        else {
-            // Ask for the missing publish permissions
-            [FBSession.activeSession
-                    requestNewReadPermissions:missedPermissions
-                            completionHandler:^(FBSession *session, NSError *newReadPermissionsError) {
-                                if (!newReadPermissionsError) {
-                                    [[self permissions] addObjectsFromArray:missedPermissions];
-                                    // Permission granted, we can go on
-                                    success();
-                                } else {
-                                    fail(newReadPermissionsError.description);
-                                }
-                            }];
-        }
-
-    };
-
-    if (self.permissions == nil) {
-        [self fetchPermissions:checking fail:fail];
-    } else {
-        checking();
+        }];
     }
-}
-
-- (NSMutableArray *)parsePermissions:(id)response {
-    NSMutableArray *permissions = [[NSMutableArray alloc] init];
-
-    NSArray *dataJson = [response data];
-
-    for (NSDictionary *dataItem in dataJson) {
-        if ([@"granted" isEqual:dataItem[@"status"]]) {
-            [permissions addObject:dataItem[@"permission"]];
-        }
+    else {
+        // Ask for the missing read permissions
+        [[FBSDKLoginManager new] logInWithReadPermissions:missedPermissions
+                                       fromViewController:[[UIApplication sharedApplication].windows[0] rootViewController]
+                                                  handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if (error) {
+                [[self permissions] addObjectsFromArray:missedPermissions];
+                fail(error.description);
+            } else {
+                success();
+            }
+        }];
     }
-
-    return permissions;
-}
-
-- (void) fetchPermissions:(void (^)())success fail:(void(^)(NSString* message))fail {
-    [FBRequestConnection startWithGraphPath:@"/me/permissions"
-                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                              if (error) {
-                                  fail(error.description);
-                              }
-                              self.permissions = [self parsePermissions:result];
-                              success();
-                          }
-    ];
-}
-
-/*
- Helper methods for clearing callback blocks
- */
-
-- (void)clearLoginBlocks {
-    self.loginSuccess = nil;
-    self.loginFail = nil;
-    self.loginCancel = nil;
 }
 
 @end
