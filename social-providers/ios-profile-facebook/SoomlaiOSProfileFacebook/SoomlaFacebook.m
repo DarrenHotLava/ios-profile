@@ -111,7 +111,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 - (void)login:(loginSuccess)success fail:(loginFail)fail cancel:(loginCancel)cancel {
 
-    if (![FBSDKAccessToken currentAccessToken]) {
+    if (!self.isLoggedIn) {
         [[FBSDKLoginManager new] logInWithReadPermissions:_loginPermissions
                                        fromViewController:[[UIApplication sharedApplication].windows[0] rootViewController]
                                                   handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
@@ -123,6 +123,8 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 success(FACEBOOK);
             }
         }];
+    } else {
+        success(FACEBOOK);
     }
 }
 
@@ -136,7 +138,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
     LogDebug(TAG, @"Getting user profile");
     [self checkPermissions: @[@"public_profile", @"user_birthday", @"user_location", @"user_likes"] withWrite:NO success:^() {
 
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me?fields=id,name,email,first_name,last_name,picture,languages,gender,location" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me?fields=id,name,email,first_name,last_name,picture,birthday,languages,gender,location" parameters:nil] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 LogDebug(TAG, ([NSString stringWithFormat:@"user info: %@", result]));
 
@@ -207,7 +209,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         // NOTE: pre-filling fields associated with Facebook posts,
         // unless the user manually generated the content earlier in the workflow of your app,
         // can be against the Platform policies: https://developers.facebook.com/policy
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/feed" parameters:@{@"message" : status} HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/feed" parameters:@{@"message" : status} HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 // Status update posted successfully to Facebook
                 success();
@@ -250,6 +252,9 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 content.contentTitle = caption;
             }
         }
+
+        _shareDialogSuccessHandler = success;
+        _shareDialogFailHandler = fail;
 
         [FBSDKShareDialog showFromViewController:[[UIApplication sharedApplication].windows[0] rootViewController]
                                      withContent:content
@@ -306,7 +311,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
         // Make the request
 
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/feed" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/feed" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 success();
             } else {
@@ -344,7 +349,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
             @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
             @"offset": @(offset).stringValue
         };
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/friends" parameters:parameters HTTPMethod:@"GET"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/friends" parameters:parameters HTTPMethod:@"GET"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (error) {
                 // An error occurred, we need to handle the error
                 // See: https://developers.facebook.com/docs/ios/errors
@@ -358,7 +363,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                     self.lastContactPage = @(offset + 1);
                 }
 
-                NSArray *rawContacts = [result data];
+                NSArray *rawContacts = result[@"data"];
                 NSMutableArray *contacts = [NSMutableArray array];
 
                 for (NSDictionary *contactDict in rawContacts) {
@@ -399,7 +404,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 @"limit":  @(DEFAULT_PAGE_SIZE).stringValue,
                 @"offset": @(offset).stringValue
         };
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/feed" parameters:parameters HTTPMethod:@"GET"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/feed?fields=message" parameters:parameters HTTPMethod:@"GET"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (error) {
 
                 // An error occurred, we need to handle the error
@@ -413,7 +418,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
                 }
                 LogDebug(TAG, ([NSString stringWithFormat:@"Get feeds success: %@", result]));
                 NSMutableArray *feeds = [NSMutableArray array];
-                NSArray *rawFeeds = [result data];
+                NSArray *rawFeeds = result[@"data"];
                 for (NSDictionary *dict in rawFeeds) {
                     NSString *str;
                     str = dict[@"message"];
@@ -486,8 +491,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         };
 
         // Make the request
-
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/photos" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/photos" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 success();
             } else {
@@ -516,7 +520,7 @@ static NSString *TAG = @"SOOMLA SoomlaFacebook";
         };
 
         // Make the request
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"/me/photos" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me/photos" parameters:params HTTPMethod:@"POST"] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 success();
             } else {
