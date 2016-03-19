@@ -26,16 +26,7 @@
  for social actions they perform.
  */
 @interface SoomlaFacebook : NSObject <IAuthProvider, ISocialProvider, FBSDKGameRequestDialogDelegate> {
-    loginSuccess loginSuccess;
-    loginFail loginFail;
-    loginCancel loginCancel;
-    logoutSuccess logoutSuccess;
 }
-
-@property (strong, nonatomic) loginSuccess loginSuccess;
-@property (strong, nonatomic) loginFail loginFail;
-@property (strong, nonatomic) loginCancel loginCancel;
-@property (strong, nonatomic) logoutSuccess logoutSuccess;
 
 @end
 

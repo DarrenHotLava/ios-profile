@@ -49,9 +49,6 @@
     socialActionFail _shareDialogFailHandler;
 }
 
-@synthesize loginSuccess, loginFail, loginCancel,
-            logoutSuccess;
-
 static NSString *TAG = @"SOOMLA SoomlaFacebook";
 
 - (id)init {
