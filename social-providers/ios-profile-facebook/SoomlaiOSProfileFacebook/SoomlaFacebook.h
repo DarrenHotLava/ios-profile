@@ -16,8 +16,6 @@
 
 #import "ISocialProvider.h"
 
-#import <FacebookSDK/FacebookSDK.h>
-
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 /**
@@ -28,30 +26,7 @@
  for social actions they perform.
  */
 @interface SoomlaFacebook : NSObject <IAuthProvider, ISocialProvider, FBSDKGameRequestDialogDelegate> {
-    loginSuccess loginSuccess;
-    loginFail loginFail;
-    loginCancel loginCancel;
-    logoutSuccess logoutSuccess;
 }
-
-@property (strong, nonatomic) loginSuccess loginSuccess;
-@property (strong, nonatomic) loginFail loginFail;
-@property (strong, nonatomic) loginCancel loginCancel;
-@property (strong, nonatomic) logoutSuccess logoutSuccess;
-
-// Make this method public to allow access from App Delegate
-
-/**
- A handler method which is called every time the Facebook session state is changed.
- The Facebook SDK uses a session state machine to control the session lifecycle. 
- These states are used by the Facebook SDK to allow or deny access to the other Facebook APIs, 
- handle access token storage or retrieval, and deal with any error scenarios.
- 
- @param session The current Facebook session object
- @param state The state to which the session just changed
- @param error An error if such occurred
- */
-- (void)sessionStateChanged:(__unused FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 
 @end
 
