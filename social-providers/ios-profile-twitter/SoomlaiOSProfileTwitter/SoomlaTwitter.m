@@ -245,7 +245,9 @@ static NSString *TAG            = @"SOOMLA SoomlaTwitter";
         [self clearLoginBlocks];
     } errorBlock:^(NSError *error) {
         LogError(TAG, @"Unable to login via web");
-        self.loginFail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+        if (self.loginFail != nil) {
+            self.loginFail([NSString stringWithFormat:@"%ld: %@", (long)error.code, error.localizedDescription]);
+        }
     }];
 }
 
